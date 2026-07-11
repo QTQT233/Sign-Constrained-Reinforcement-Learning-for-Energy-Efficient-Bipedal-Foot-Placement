@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+message: "If you use these materials, please cite the associated manuscript and data archive."
+title: "Reproducibility materials for Sign-Constrained Reinforcement Learning for Energy-Efficient Bipedal Foot Placement"
+type: software
+authors:
+  - family-names: Tao
+    given-names: Qi
+  - family-names: Liu
+    given-names: Yiyou
+  - family-names: Degani
+    given-names: Amir
+  - family-names: Liu
+    given-names: Mingyi
+version: 0.1.0
+date-released: 2026-07-11
+repository-code: "https://github.com/QTQT233/Paper_1"
