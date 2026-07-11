@@ -1,0 +1,48 @@
+{
+  "rollouts": "data/four_link/legacy_manuscript/rollouts_active_vs_passive.csv",
+  "reference": "active",
+  "comparison": "passive_sign_selector",
+  "expected_cases_per_controller": 2160,
+  "unique_cases_per_controller": {
+    "active": 2160,
+    "passive_sign_selector": 2160
+  },
+  "case_key_sets_equal": true,
+  "state_fields_checked": [
+    "walk_direction",
+    "reset_phase",
+    "commanded_step_length_m",
+    "commanded_step_height_m",
+    "initial_q1_deg",
+    "initial_q2_deg",
+    "initial_q3_deg",
+    "initial_q4_deg",
+    "initial_dq1_rad_s",
+    "initial_dq2_rad_s",
+    "initial_dq3_rad_s",
+    "initial_dq4_rad_s"
+  ],
+  "state_field_mismatches": {},
+  "initial_state_hash_mismatches": 0,
+  "success": {
+    "active": 975,
+    "passive_sign_selector": 964,
+    "both_success": 906,
+    "active_only": 69,
+    "passive_sign_selector_only": 58,
+    "both_failure": 1127
+  },
+  "both_valid_for_cmt": 419,
+  "cmt_exclusion_reasons": {
+    "active": {
+      "eligible": 458,
+      "task_failure": 1185,
+      "insufficient_forward_displacement": 517
+    },
+    "passive_sign_selector": {
+      "eligible": 480,
+      "task_failure": 1196,
+      "insufficient_forward_displacement": 484
+    }
+  }
+}

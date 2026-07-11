@@ -1,0 +1,2 @@
+D:\L&S\Mas\Project\Paper2\60,30(0.33m),1.28\LQR.py:586: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()

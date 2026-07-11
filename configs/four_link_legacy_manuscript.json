@@ -1,0 +1,56 @@
+{
+  "paper_items": ["Table VII", "Table VIII", "Table IX", "Table X", "Table XI"],
+  "primary_result_version": "legacy_v22_3_v9_2026-07-05",
+  "raw_output_dir": "data/four_link/legacy_manuscript",
+  "source_status": {
+    "historical_extended_evaluator_bytes_retained": false,
+    "statistics_exactly_reproducible_from_trial_level_outputs": true,
+    "reconstruction": {
+      "path": "src/four_link/evaluation/paper_four_link_reachability_cmt_v22_3_grid_extended_legacy_reconstructed.py",
+      "sha256": "f9597d0110e9d317b5c8b428c6850b3be3d2868bd61fe73d12c1c4188cc829c4",
+      "status": "full 2160-case rerun reproduced all 19 archived CSVs byte-for-byte; not represented as the missing original bytes",
+      "validation": "results/four_link_statistics/legacy_manuscript/reconstruction_validation.json"
+    }
+  },
+  "evaluation": {
+    "rng_seeds": [20260702, 20260719, 20260803],
+    "walk_directions": [1.0, -1.0],
+    "step_lengths_m": [0.30, 0.35, 0.40],
+    "step_heights_m": [0.00, 0.01, 0.02],
+    "episodes_per_grid_cell_direction": 40,
+    "shared_cases_per_controller": 2160,
+    "deterministic_policy": true,
+    "hip_torque_limit_nm": 4.0,
+    "knee_torque_limit_nm": 0.2,
+    "touchdown_safe_q_low_deg": [35.0, 8.0, -115.0, 5.0]
+  },
+  "training_sources": {
+    "U1_active_ppo": ["src/four_link/training/v22_3_v9_bi_400_grid.py", "1c70d68ac6cd863f88422b158270f1eeec62c2b298cbacb2e297a8086b7e24a1", 0.026],
+    "U0_active_full": ["src/four_link/training/v22_3_v9_active_full_400_grid.py", "6b86eb447b03aa836f5b41e9548cd6d0e7491139d91d7579a094cb4059014fde", 0.0],
+    "per_step_encoding": ["src/four_link/training/v22_3_v9_per_step_sign_400_grid.py", "70a1b48899903e5bb76d9747be56c2c3cf0187ba65dd10dbd149c4eb887cd0a9", 0.026]
+  },
+  "checkpoints": {
+    "active": ["models/four_link/v22_3_v9_bi_400_grid/V22_3V9Bi400Grid_c090_Policy_best.pth", "0ca5581f39f5598ceb9c3283704e532a5efe441beb499a6c361402bf92e4720f"],
+    "active_full": ["models/four_link/v22_3_v9_active_full_400_grid/V22_3V9ActiveFull400Grid_c090_Policy_best.pth", "43016fd53b43705694466739c70f1817c03e55e6596edb0e22380be1e8370d3f"],
+    "per_step_sign": ["models/four_link/v22_3_v9_per_step_sign_400_grid/V22_3V9PerStepSign400Grid_c091_Policy_258.pth", "655e77cebdffa54b42152fa1a08c8e99653ac162b3cfc45210404067a2782a29"],
+    "positive": ["models/four_link/v22_3_v9_uni_pos_400_grid/V22_3V9UniPos400Grid_c097_Policy_best.pth", "521962b8a3deea4411dc1b1c801cf9d8fcecfafa51d240f6752c07952ec1926a"],
+    "negative": ["models/four_link/v22_3_v9_uni_neg_400_grid/V22_3V9UniNeg400Grid_c100_Policy_best.pth", "4752c0c4632d5958ee64c7f3004a76e9a7bd7f3204dd914fdb7003bce9a92d7c"],
+    "selector": ["models/four_link/paper_four_link_passive_sign_selector_v22_3_grid.pth", "ac09e31f6608960621217e077549e4dc21c38364b858064b3b1ad5d8fe4b4631"]
+  },
+  "raw_output_hashes": {
+    "paired_trials.csv": "ca463228b319468f987d264249e0fc05521da521067895dce7133c8dbb9c6ae8",
+    "rollouts_active_vs_passive.csv": "c29d48f070e749d999accee64f49eb56e03ed5d37838ec5dfb8c40596b0a3bc5"
+  },
+  "expected_counts": {
+    "active_success": 975,
+    "online_selector_success": 964,
+    "oracle_success": 989,
+    "active_selector_both_valid_cmt": 419
+  },
+  "interpretation": {
+    "active_full": "U0 reward-definition diagnostic; single warm-started continuation, not matched-seed causal evidence",
+    "per_step_sign": "same executable 27 torque triples as U1; encoding diagnostic, not an action mask",
+    "oracle": "hindsight two-expert envelope; non-deployable secondary diagnostic",
+    "experimental_unit": "fixed checkpoints on matched evaluation cases; independent training seeds are still required for algorithm-level claims"
+  }
+}

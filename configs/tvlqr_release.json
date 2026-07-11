@@ -1,0 +1,29 @@
+{
+  "case_manifest": "configs/paper2_cases.csv",
+  "source_audit": "data/paper2/readonly_rerun/paper2_rerun_results.csv",
+  "entrypoint_pattern": "src/paper2/entrypoints/{case_id}/LQR.py",
+  "models": {
+    "l1_stand_continuous_1252.pth": {
+      "path": "models/paper2/tvlqr/l1_stand_continuous_1252.pth",
+      "sha256": "97fa16e70260088506a51738f6d7f8909bc8aeaec119e335d93b0cd8630cb296"
+    },
+    "l2_stand_continuous_1329.pth": {
+      "path": "models/paper2/tvlqr/l2_stand_continuous_1329.pth",
+      "sha256": "7a0dfff076d1eb5cd6e44accf760d77bde932df178c563dce1719d956220d38b"
+    },
+    "l1_stand_continuous_1207.pth": {
+      "path": "models/paper2/tvlqr/l1_stand_continuous_1207.pth",
+      "sha256": "9bfddd6828f9647fbe8838a77c3b9ec865d460f358306f3304c3669e6b67f29d"
+    },
+    "l2_stand_continuous_1199.pth": {
+      "path": "models/paper2/tvlqr/l2_stand_continuous_1199.pth",
+      "sha256": "fa4ca098f0ada09fb89e67d2f576978b945f2cc9a42555690d62077b64c706a1"
+    }
+  },
+  "validated_environment": {
+    "python": "3.9.18",
+    "numpy": "1.26.4",
+    "torch": "2.7.0+cu118",
+    "matplotlib": "3.9.2"
+  }
+}

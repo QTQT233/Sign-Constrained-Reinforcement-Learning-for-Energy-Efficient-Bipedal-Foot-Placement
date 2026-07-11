@@ -3,6 +3,9 @@
 Reproducibility materials for the manuscript by Qi Tao, Yiyou Liu, Amir
 Degani, and Mingyi Liu.
 
+Canonical code repository:
+`QTQT233/Sign-Constrained-Reinforcement-Learning-for-Energy-Efficient-Bipedal-Foot-Placement`.
+
 ## What is in this repository
 
 - `src/`: frozen, unmodified experiment and training programs, organized by
@@ -20,27 +23,33 @@ Degani, and Mingyi Liu.
 The older files in the repository root are retained for history. New users
 should follow the structured paths above.
 
+Maintainers should follow `docs/PUBLISHING.md` for the branch, draft-PR, release,
+and DOI workflow; do not force-push the historical repository.
+
 ## Reproducibility status
 
-The manuscript originally reported four-link success rates of 45.1% for active
-PPO and 44.6% for the online selector. Those values came from the 5 July 2026
-output directory, but the exact script revision that produced that directory
-was not retained. The reproducible primary release therefore uses the coherent
-8 July 2026 V23-success-gate dataset and its matching frozen evaluator. It gives
-979/2160 (45.3%) successes for active PPO and 972/2160 (45.0%) for the online
-selector. See `docs/VERSION_AUDIT.md` before citing any number.
-
-The manuscript must not mix values, confidence intervals, or failure counts
-between these two result versions.
+The manuscript-primary four-link release is the V22_3/V9 fixed-checkpoint output
+from 5 July 2026: active PPO succeeded in 975/2160 matched cases (45.1%) and the
+online selector in 964/2160 (44.6%). The release contains all 19 trial-level and
+summary CSVs required to regenerate Tables VII-XI and the paired inference. The
+exact historical extended-evaluator bytes were not retained. A separately named
+legacy reconstruction restores the documented V22_3 touchdown bounds and is
+never represented as the missing original source. A full 2160-case rerun of
+that reconstruction reproduced all 19 archived CSVs byte-for-byte (19/19
+matching SHA-256 hashes); see `docs/VERSION_AUDIT.md` and the released
+reconstruction-validation record.
 
 ## Quick statistical reproduction
 
 ```bash
 python -m pip install -r environment/requirements-analysis.txt
 python analysis/four_link_paired_inference.py \
-  --paired data/four_link/v23_success/paired_trials.csv \
-  --terminal data/four_link/v23_success/terminal_reason_summary.csv \
-  --output results/four_link_statistics
+  --paired data/four_link/legacy_manuscript/paired_trials.csv \
+  --terminal data/four_link/legacy_manuscript/terminal_reason_summary.csv \
+  --output results/four_link_statistics/legacy_manuscript
+python analysis/validate_four_link_pairing.py
+python analysis/recompute_four_link_tables.py \
+  data/four_link/legacy_manuscript results/four_link_tables_legacy_manuscript
 ```
 
 The script verifies the input SHA-256, row count, and pair identifiers before
@@ -48,34 +57,56 @@ computing the paired success table, paired risk-difference intervals, exact
 McNemar test, post-hoc non-inferiority sensitivity analysis, and terminal-reason
 transitions.
 
-To verify the frozen evaluator, checkpoints, and portable path launcher before
-a full 2160-case rerun:
+To verify the reconstructed legacy evaluator, checkpoints, and portable path
+launcher before a full 2160-case rerun:
 
 ```bash
 python tools/run_frozen_four_link_evaluator.py \
-  --output results/rerun_v23_success --check-only
+  --output results/rerun_legacy_v22_3 --check-only
 ```
 
 Remove `--check-only` to execute the full evaluator. The launcher changes only
-two path assignments in a temporary copy and verifies the archived source hash;
-the frozen source file itself remains unmodified.
+the model/output paths in a temporary copy and verifies the reconstruction hash.
+Statistical reproduction from the retained trial-level outputs is exact; the
+reconstruction is an output-validated recovery route rather than a claim that
+the missing historical source bytes were recovered. The release validation run
+completed all 2160 cases and reproduced every one of the 19 archived CSVs
+byte-for-byte.
 
 ## Reproduce revised Tables IV-V
 
-The read-only Paper2 audit completed 59 of 60 non-MPC runs. The sole timeout is
-a TVLQR case with stochastic sampling and an unbounded success-retry loop; no
-traceable PID entry point was found. The revised tables therefore report the
-four complete replay families plus the retained MPC artifacts:
+The initial read-only Paper2 audit completed 59 of 60 non-MPC runs; one
+unseeded TVLQR process exceeded the 180-s audit timeout, and no traceable PID
+entry point was found. The release now includes all four TVLQR checkpoints and
+a portable runner that applies seed 0 only in a temporary copy. This fixed-seed
+protocol completed all 12 TVLQR cases and reproduced the manuscript-level
+reference trend (mean Cmt 0.232348, sample SD 0.015446). Revised Tables IV-V
+therefore report five complete replay families plus retained MPC artifacts:
 
 ```bash
 python analysis/reproduce_paper2_tables.py
 ```
 
-This writes a 60-row combined case table and manuscript-facing summaries under
+This writes a 72-row combined case table and manuscript-facing summaries under
 `results/paper2_current/`. The captured stdout/stderr, source hashes, missing
 landing residual, timeout, and read-only tree checks are retained under
 `data/paper2/readonly_rerun/`. A full rerun additionally requires the DOI case
 bundle because the frozen entry points load relative checkpoints and arrays.
+
+TVLQR can be verified and rerun independently from the larger bundle:
+
+```bash
+python -m pip install -r environment/requirements-tvlqr.txt
+python tools/run_frozen_tvlqr.py --check-only
+python tools/run_frozen_tvlqr.py --all --seed 0 --timeout 60 \
+  --output results/tvlqr_seed0
+```
+
+The 12 frozen source files are not edited. The launcher verifies their hashes,
+substitutes the archived workstation model paths in a temporary copy, and
+captures per-case results. TVLQR is interpreted as a local reference-tracking
+energy comparator, not as an independent global foot-placement controller.
+See `docs/TVLQR_RELEASE.md`.
 
 Run the full read-only audit with an activated locked environment as follows:
 
@@ -87,13 +118,15 @@ python tools/audit_paper2_readonly.py \
 
 ## Important interpretation boundary
 
-The existing `per_step_sign`, `active_full`, and `bidirectional` scripts do not
-form a valid mechanism ablation. `per_step_sign` exposes the same 27 actuator
-torque triples as unrestricted active control at every step, and `active_full`
-and `bidirectional` use the same normalized torque penalty. Their current runs
-are retained only as implementation/checkpoint-sensitivity diagnostics. The
-factorial experiment required for a causal persistence claim is specified in
-`docs/ABLATION_PROTOCOL.md`.
+Active PPO is the penalized unrestricted control (`U1`,
+`action_value_weight=0.026`). Active-full uses the same 27 physical torque
+triples with zero torque penalty (`U0`, `action_value_weight=0`) and is retained
+as a single warm-started reward-ablation diagnostic. It is not a matched-seed
+from-scratch U0 estimate. `per_step_sign` exposes the same 27 physical torque
+triples as U1 and is an encoding diagnostic, not an action-mask baseline. The
+online selector is deployable; the oracle one-sided-policy envelope is a
+non-deployable hindsight diagnostic. The confirmatory experiment required for
+a causal persistence claim is specified in `docs/ABLATION_PROTOCOL.md`.
 
 ## Data and model artifacts
 

@@ -1,0 +1,28 @@
+D:\L-Environment\Anaconda3\envs\Pytorch\lib\site-packages\scs\__init__.py:83: UserWarning: Converting A to a CSC (compressed sparse column) matrix; may take a while.
+  warn(
+D:\L-Environment\Anaconda3\envs\Pytorch\lib\site-packages\scs\__init__.py:113: UserWarning: Converting P to a CSC (compressed sparse column) matrix; may take a while.
+  warn(
+D:\L&S\Mas\Project\Paper2\60,30(0.33m),1.145\LIPM.py:539: UserWarning: Glyph 21452 (\N{CJK UNIFIED IDEOGRAPH-53CC}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+D:\L&S\Mas\Project\Paper2\60,30(0.33m),1.145\LIPM.py:539: UserWarning: Glyph 25670 (\N{CJK UNIFIED IDEOGRAPH-6446}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+D:\L&S\Mas\Project\Paper2\60,30(0.33m),1.145\LIPM.py:539: UserWarning: Glyph 36136 (\N{CJK UNIFIED IDEOGRAPH-8D28}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+D:\L&S\Mas\Project\Paper2\60,30(0.33m),1.145\LIPM.py:539: UserWarning: Glyph 24515 (\N{CJK UNIFIED IDEOGRAPH-5FC3}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+D:\L&S\Mas\Project\Paper2\60,30(0.33m),1.145\LIPM.py:539: UserWarning: Glyph 20248 (\N{CJK UNIFIED IDEOGRAPH-4F18}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+D:\L&S\Mas\Project\Paper2\60,30(0.33m),1.145\LIPM.py:539: UserWarning: Glyph 21270 (\N{CJK UNIFIED IDEOGRAPH-5316}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+D:\L&S\Mas\Project\Paper2\60,30(0.33m),1.145\LIPM.py:539: UserWarning: Glyph 25903 (\N{CJK UNIFIED IDEOGRAPH-652F}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+D:\L&S\Mas\Project\Paper2\60,30(0.33m),1.145\LIPM.py:539: UserWarning: Glyph 25745 (\N{CJK UNIFIED IDEOGRAPH-6491}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+D:\L&S\Mas\Project\Paper2\60,30(0.33m),1.145\LIPM.py:539: UserWarning: Glyph 28857 (\N{CJK UNIFIED IDEOGRAPH-70B9}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+D:\L&S\Mas\Project\Paper2\60,30(0.33m),1.145\LIPM.py:539: UserWarning: Glyph 21151 (\N{CJK UNIFIED IDEOGRAPH-529F}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+D:\L&S\Mas\Project\Paper2\60,30(0.33m),1.145\LIPM.py:539: UserWarning: Glyph 29575 (\N{CJK UNIFIED IDEOGRAPH-7387}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+D:\L&S\Mas\Project\Paper2\60,30(0.33m),1.145\LIPM.py:540: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()
