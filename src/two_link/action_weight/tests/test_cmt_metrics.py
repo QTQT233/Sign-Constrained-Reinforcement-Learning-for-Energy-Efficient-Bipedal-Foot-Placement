@@ -23,10 +23,38 @@ CONDITIONS = (
 )
 LEGACY_DATA_ROOT = "D:/L&S/Mas/Project/Paper1/Energy_Comparison"
 
-from cmt_metrics import positive_actuator_work_increment
+from cmt_metrics import (
+    positive_actuator_work_increment,
+    select_successful_expert_by_cmt,
+)
 
 
 class PositiveActuatorWorkTests(unittest.TestCase):
+    def test_published_fusion_audit_truth_counts(self):
+        evidence_name = "action_weight_fusion_audit_12_cells.csv"
+        candidates = [
+            parent / "results" / evidence_name
+            for parent in (ROOT, *Path(__file__).resolve().parents)
+        ]
+        evidence_csv = next((path for path in candidates if path.is_file()), None)
+        self.assertIsNotNone(evidence_csv, msg=f"missing fusion audit: {candidates}")
+        with evidence_csv.open("r", encoding="utf-8", newline="") as stream:
+            rows = list(csv.DictReader(stream))
+        self.assertEqual(len(rows), 12)
+
+        def total(field):
+            return sum(int(row[field]) for row in rows)
+
+        self.assertEqual(total("dual_success_n"), 125038)
+        self.assertEqual(total("dual_success_minus1_plus1_n"), 0)
+        self.assertEqual(total("dual_success_with_first_action_zero_n"), 125038)
+        self.assertEqual(total("single_success_first_action_zero_n"), 227935)
+        self.assertEqual(total("three_method_common_mask_n"), 443163)
+        self.assertEqual(
+            total("single_success_first_action_zero_pseudozero_on_common_mask_n"),
+            216946,
+        )
+
     def test_published_12_cell_correction_table_matches_raw_divided_by_four(self):
         evidence_name = "action_weight_cmt_correction_12_cells.csv"
         candidates = [
@@ -44,6 +72,8 @@ class PositiveActuatorWorkTests(unittest.TestCase):
 
         self.assertEqual(len(rows), 12)
         for row in rows:
+            self.assertIn("legacy_proposed_forensic_mean", row)
+            self.assertNotIn("proposed_hindsight_envelope_mean", row)
             self.assertGreater(int(row["common_mask_n"]), 0)
             correction_factor = float(
                 row["deterministic_legacy_correction_factor"]
@@ -108,6 +138,45 @@ class PositiveActuatorWorkTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             positive_actuator_work_increment(1.0, 1.0, -0.01)
 
+    def test_success_first_fusion_truth_table(self):
+        """Status zero is success; only -2 is failure."""
+
+        negative_status = np.array([-2, 0, -2, -1, 0, -1, 0])
+        positive_status = np.array([-2, -2, 0, 1, 1, 0, 1])
+        # Failure-side zeros must never win a single-success comparison.
+        negative_cmt = np.array([0.0, 0.31, 0.0, 0.24, 0.41, 0.20, 0.17])
+        positive_cmt = np.array([0.0, 0.0, 0.29, 0.18, 0.35, 0.20, 0.23])
+
+        selector, selected = select_successful_expert_by_cmt(
+            negative_status,
+            negative_cmt,
+            positive_status,
+            positive_cmt,
+            tie_break="positive",
+        )
+        np.testing.assert_array_equal(selector, [-2, -1, 1, 1, 1, 1, -1])
+        np.testing.assert_allclose(selected, [-2.0, 0.31, 0.29, 0.18, 0.35, 0.20, 0.17])
+
+    def test_fusion_tie_rule_is_explicit(self):
+        self.assertEqual(
+            select_successful_expert_by_cmt(0, 0.2, 1, 0.2),
+            (1, 0.2),
+        )
+        self.assertEqual(
+            select_successful_expert_by_cmt(
+                0, 0.2, 1, 0.2, tie_break="negative"
+            ),
+            (-1, 0.2),
+        )
+        with self.assertRaises(ValueError):
+            select_successful_expert_by_cmt(0, 0.2, 1, 0.2, tie_break="implicit")
+
+    def test_successful_rollout_requires_valid_cmt(self):
+        with self.assertRaises(ValueError):
+            select_successful_expert_by_cmt(0, np.nan, -2, 0.0)
+        with self.assertRaises(ValueError):
+            select_successful_expert_by_cmt(-2, 0.0, 1, -0.1)
+
     def test_all_comparison_scripts_use_the_shared_accumulator(self):
         scripts = sorted(
             ROOT.glob("action_weight=*/**/Whole_energy_comparison_low_dim*.py")
@@ -128,6 +197,11 @@ class PositiveActuatorWorkTests(unittest.TestCase):
                 "positive_actuator_work_increment",
                 source,
                 msg=f"shared work metric missing from {script}",
+            )
+            self.assertIn(
+                "select_successful_expert_by_cmt",
+                source,
+                msg=f"success-first expert fusion missing from {script}",
             )
             for pattern in duplicate_scale_patterns:
                 self.assertIsNone(
@@ -207,21 +281,23 @@ class PositiveActuatorWorkTests(unittest.TestCase):
                     msg=f"output bypasses nominal action-weight folder: {script}",
                 )
 
-            envelope_start = active_source.find("Cmt_save_passive =")
+            envelope_start = active_source.find("select_successful_expert_by_cmt(")
             envelope_write = active_source.find("Cmt_save_passive-10-30")
             self.assertGreaterEqual(
                 envelope_start,
                 0,
-                msg=f"in-memory envelope construction missing: {script}",
+                msg=f"success-first fusion missing: {script}",
             )
             self.assertGreater(
                 envelope_write,
                 envelope_start,
-                msg=f"envelope is not saved after construction: {script}",
+                msg=f"fused result is not saved after construction: {script}",
             )
             envelope_source = active_source[envelope_start:envelope_write]
             self.assertIn("Cmt_save01", envelope_source)
             self.assertIn("Cmt_save0_1", envelope_source)
+            self.assertIn('tie_break="positive"', envelope_source)
+            self.assertNotIn("working_save0_1[i, j, k, ll] == 0", envelope_source)
 
 
 if __name__ == "__main__":

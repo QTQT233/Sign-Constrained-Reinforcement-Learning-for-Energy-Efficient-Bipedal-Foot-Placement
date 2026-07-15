@@ -130,9 +130,19 @@ The retained HDF5 arrays are not rewritten. Consequently, the archived
 action-weight sweep remains an exploratory provenance record rather than a
 controlled ablation. The deterministic correction, its validity conditions,
 and the known archive limitations are documented in `docs/CMT_METRIC.md`.
+Its historical `Proposed` row is a non-deployable two-rollout fusion with a
+success-gating defect: 227,935 single-success trajectories had first action
+zero, and 216,946 of them lay on the 443,163-state three-method common mask and
+were minimized against a failed expert's initialized zero (48.954% of that
+mask). The row is retained only for forensic provenance and is not a valid
+method-ranking quantity.
 The evaluator data root is configurable through
 `ENERGY_COMPARISON_DATA_ROOT`; the archived Windows location is retained only
 as the default for provenance.
+The per-cell fusion counts are preserved in
+`results/action_weight_fusion_audit_12_cells.csv`; the non-published local-copy
+sync and 16-script verification procedure is in
+`docs/ACTION_WEIGHT_LOCAL_SYNC.md`.
 
 ```bash
 cd src/two_link/action_weight

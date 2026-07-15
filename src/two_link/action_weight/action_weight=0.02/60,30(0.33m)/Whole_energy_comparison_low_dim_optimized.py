@@ -12,7 +12,10 @@ from tqdm import tqdm
 
 _ENERGY_COMPARISON_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(_ENERGY_COMPARISON_ROOT))
-from cmt_metrics import positive_actuator_work_increment
+from cmt_metrics import (
+    positive_actuator_work_increment,
+    select_successful_expert_by_cmt,
+)
 
 
 # Preserve the archived location as the default while allowing portable reruns.
@@ -382,40 +385,16 @@ def combine_passive_results(
     working_minus10: np.ndarray,
     cmt_minus10: np.ndarray,
 ) -> Tuple[np.ndarray, np.ndarray]:
-    working_passive = np.zeros_like(working_01)
-
-    remaining = np.ones_like(working_01, dtype=bool)
-
-    mask = remaining & (working_minus10 == -1) & (working_01 != 0)
-    working_passive[mask] = -1
-    remaining[mask] = False
-
-    mask = remaining & (working_minus10 != 0) & (working_01 == 1)
-    working_passive[mask] = 1
-    remaining[mask] = False
-
-    mask = remaining & ((working_minus10 == 0) | (working_01 == 0))
-    working_passive[mask] = 0
-    remaining[mask] = False
-
-    # Keep the original if/elif order exactly. This branch is unreachable for
-    # (-1, 1), because the first branch has already consumed those points.
-    mask = remaining & (working_minus10 == -1) & (working_01 == 1)
-    working_passive[mask] = np.where(cmt_01[mask] > cmt_minus10[mask], -1, 1)
-    remaining[mask] = False
-
-    mask = remaining & (working_minus10 == -2) & (working_01 == -2)
-    working_passive[mask] = -2
-
-    cmt_passive = np.full_like(cmt_01, -2.0)
-    mask = working_passive == -1
-    cmt_passive[mask] = cmt_minus10[mask]
-    mask = working_passive == 1
-    cmt_passive[mask] = cmt_01[mask]
-    mask = working_passive == 0
-    cmt_passive[mask] = np.minimum(cmt_01[mask], cmt_minus10[mask])
-
-    return working_passive, cmt_passive
+    # Status 0 records a successful rollout whose first action was zero.  Only
+    # -2 is failure.  Gate on success before comparing Cmt so a failed expert's
+    # initialized zero can never create a spurious fused zero.
+    return select_successful_expert_by_cmt(
+        working_minus10,
+        cmt_minus10,
+        working_01,
+        cmt_01,
+        tie_break="positive",
+    )
 
 
 def save_h5(file_key: str, dataset_name: str, data: np.ndarray) -> None:

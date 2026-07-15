@@ -57,14 +57,29 @@ because the audited evaluator snapshot had additional provenance defects:
 - 11 of 12 negative-expert Cmt files received the positive-expert Cmt array;
 - 3 of 12 evaluator snapshots wrote at least one output outside the nominal
   action-weight directory; and
-- the row called `Proposed` is an outcome-aware hindsight envelope over two
-  expert rollouts, not the deployed transition-start route.
+- the row called `Proposed` is an offline fusion of two completed expert
+  rollouts, not the deployed transition-start route.  The stored expert status
+  is the successful rollout's first action (`-1`, `0`, or `+1`), while only
+  `-2` denotes failure.  The legacy fusion incorrectly treated status `0` as a
+  special numerical-minimum branch before separating success from failure.
 
-The evaluator constructs `Cmt_save_passive` in memory from `Cmt_save01` and
-`Cmt_save0_1` before writing the envelope to its own file.  The historical
-negative-file target error therefore did not alter that in-memory envelope,
-but it does prevent an independent reconstruction of the envelope from the two
-retained expert Cmt files.
+Across the 12 retained cells, 125,038 dual-success states were observed.  The
+literal `(-1,+1)` status pair occurred zero times; every retained dual-success
+pair contained at least one first-action zero and therefore reached the legacy
+`min(Cmt_negative, Cmt_positive)` branch.  Of 227,935 single-success states whose
+successful expert's first action was zero, 216,946 lay on the 443,163-state
+three-method common mask (48.954%).  Those states also reached `min`, now against the failed
+expert's initialized Cmt of zero, and consequently produced a spurious zero.
+The archived `Proposed` means are therefore low-biased forensic quantities and
+must not be ranked against active PPO or interpreted as a selector result.
+
+The evaluator constructed `Cmt_save_passive` in memory before writing the
+fused result.  The historical negative-file target error did not retroactively
+change that array, but it prevents an independent corrected reconstruction
+from the two retained expert Cmt files.  The retained HDF5 arrays are not
+rewritten.  The source patch is prospective: it defines success as
+`status != -2`, preserves the sole successful expert, compares valid Cmt only
+when both experts succeeded, and emits `-2` only when both failed.
 
 The patched evaluators correct the negative-expert array and nominal output
 directory for future reruns.  Existing HDF5 values are intentionally retained
@@ -72,8 +87,8 @@ unchanged so that source corrections are not confused with regenerated data.
 
 ## Patch contents and verification
 
-The patch includes the shared metric module, 12 canonical action-weight
-evaluators, one optimized evaluator, and regression tests.  Every evaluator
+The public patch includes the shared metric/fusion module, 12 canonical
+action-weight evaluators, one optimized evaluator, and regression tests.  Every evaluator
 accepts the data/model/output root through the `ENERGY_COMPARISON_DATA_ROOT`
 environment variable.  The historical Windows path remains only as the
 documented default so that the source snapshot retains its provenance.
@@ -85,10 +100,12 @@ python -m unittest discover -s tests -v
 ```
 
 The tests verify units and sign gating, the deterministic factor-of-four
-identity, use of the shared accumulator in all 13 included evaluators, correct
+identity, the success-first fusion truth table (including single-success status
+zero), use of both shared functions in all 13 included evaluators, correct
 negative-expert Cmt writes in all 12 canonical evaluators, and nominal output
 directory placement.  They also read the published 12-cell CSV and verify all
-12 `legacy_raw / 4 = corrected` rows numerically.
+12 `legacy_raw / 4 = corrected` rows numerically.  A separate 12-cell fusion
+audit CSV records the retained status-pair and spurious-zero counts.
 
 For a portable run of the optimized evaluator in a checkout containing the
 required checkpoints, set the data root explicitly:

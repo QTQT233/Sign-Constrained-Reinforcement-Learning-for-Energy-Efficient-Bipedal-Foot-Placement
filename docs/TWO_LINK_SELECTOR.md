@@ -25,10 +25,15 @@ negative-only PPO policy, and keeps that policy until termination. This path
 does enforce transition-level sign persistence.
 
 However, the table is built offline by running both candidate policies and
-using their success/Cmt outcomes. It is an oracle-like initial-state routing
-map, not an online comparison of two critic return estimates. Its coding also
-overloads 0 and -2, and the retained workflow does not establish a held-out
-selector-design/test split.
+using their outcomes. It is an outcome-informed initial-state routing map, not
+an online comparison of two critic return estimates. The frozen producers do
+not share a single success-priority or Cmt-tie rule: the primary flat producer
+is negative-first, whereas the raised producer is positive-first and has
+different source provenance. These cannot be collapsed into a universal
+"lower-Cmt tie breaker." In deployment, only
+stored value -1 selects the negative expert; +1, 0, -2, and unrecognized table
+values fall through to the positive expert. The retained workflow does not
+establish a held-out route-design/test split.
 
 ## Required manuscript distinction
 
@@ -36,8 +41,9 @@ Use separate names throughout:
 
 - `direct state-action lookup` for `working_save-ATC-50`;
 - `offline transition-locked policy routing` for `working_save_passive-10-30`;
-- `offline oracle envelope` when both full trajectories are run and the lower
-  Cmt result is selected after the fact; and
+- `legacy action-weight fusion` for its retained HDF5 row; its dual-success
+  cells used the in-memory minimum, but single-success/first-action-zero cells
+  were corrupted by a failed expert's initialized zero; and
 - `learned online transition-onset selector` for the four-link experiment.
 
 For a defensible offline selector, store an unambiguous policy ID and status,

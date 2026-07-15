@@ -16,7 +16,10 @@ import sys
 
 _ENERGY_COMPARISON_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(_ENERGY_COMPARISON_ROOT))
-from cmt_metrics import positive_actuator_work_increment
+from cmt_metrics import (
+    positive_actuator_work_increment,
+    select_successful_expert_by_cmt,
+)
 
 
 # Preserve the archived location as the default while allowing portable reruns.
@@ -293,37 +296,17 @@ with h5py.File(f'{ENERGY_COMPARISON_DATA_ROOT}/action_weight=0.02/70,20,(0.225m)
 with h5py.File(f'{ENERGY_COMPARISON_DATA_ROOT}/action_weight=0.02/70,20,(0.225m),0.01m/Energy_save(-1,0)-10-30', 'w') as h5f:
     h5f.create_dataset('Energy_save', data=Energy_save0_1)
 
-working_save_passive = np.zeros((N1, N2, N1, N2))
-Cmt_save_passive = np.zeros((N1, N2, N1, N2))
-for i in tqdm(range(N1)):
-    for j in range(N2):
-        for k in range(N1):
-            for ll in range(N2):
-                if working_save0_1[i, j, k, ll] == -1 and working_save01[i, j, k, ll] != 0:
-                    working_save_passive[i, j, k, ll] = -1
-                elif working_save0_1[i, j, k, ll] != 0 and working_save01[i, j, k, ll] == 1:
-                    working_save_passive[i, j, k, ll] = 1
-                elif working_save0_1[i, j, k, ll] == 0 or working_save01[i, j, k, ll] == 0:
-                    working_save_passive[i, j, k, ll] = 0
-                elif working_save0_1[i, j, k, ll] == -1 and working_save01[i, j, k, ll] == 1:
-                    if Cmt_save01[i, j, k, ll] > Cmt_save0_1[i, j, k, ll]:
-                        working_save_passive[i, j, k, ll] = -1
-                    else:
-                        working_save_passive[i, j, k, ll] = 1
-                elif working_save0_1[i, j, k, ll] == -2 and working_save01[i, j, k, ll] == -2:
-                    working_save_passive[i, j, k, ll] = -2
-for i in tqdm(range(N1)):
-    for j in range(N2):
-        for k in range(N1):
-            for ll in range(N2):
-                if working_save_passive[i, j, k, ll] == -1:
-                    Cmt_save_passive[i, j, k, ll] = Cmt_save0_1[i, j, k, ll]
-                elif working_save_passive[i, j, k, ll] == 1:
-                    Cmt_save_passive[i, j, k, ll] = Cmt_save01[i, j, k, ll]
-                elif working_save_passive[i, j, k, ll] == 0:
-                    Cmt_save_passive[i, j, k, ll] = min(Cmt_save01[i, j, k, ll], Cmt_save0_1[i, j, k, ll])
-                else:
-                    Cmt_save_passive[i, j, k, ll] = -2
+# Future reruns use an explicit success gate: status 0 is a successful
+# first-action label, and only -2 denotes rollout failure.  The exact-tie rule
+# is local to this action-weight evaluator and is not a claim about other
+# archived selector producers.
+working_save_passive, Cmt_save_passive = select_successful_expert_by_cmt(
+    working_save0_1,
+    Cmt_save0_1,
+    working_save01,
+    Cmt_save01,
+    tie_break="positive",
+)
 with h5py.File(f'{ENERGY_COMPARISON_DATA_ROOT}/action_weight=0.02/70,20,(0.225m),0.01m/working_save_passive-10-30', 'w') as h5f:
     h5f.create_dataset('working_save_passive', data=working_save_passive)
 with h5py.File(f'{ENERGY_COMPARISON_DATA_ROOT}/action_weight=0.02/70,20,(0.225m),0.01m/Cmt_save_passive-10-30', 'w') as h5f:
