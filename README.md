@@ -130,6 +130,9 @@ The retained HDF5 arrays are not rewritten. Consequently, the archived
 action-weight sweep remains an exploratory provenance record rather than a
 controlled ablation. The deterministic correction, its validity conditions,
 and the known archive limitations are documented in `docs/CMT_METRIC.md`.
+The evaluator data root is configurable through
+`ENERGY_COMPARISON_DATA_ROOT`; the archived Windows location is retained only
+as the default for provenance.
 
 ```bash
 cd src/two_link/action_weight

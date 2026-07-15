@@ -1,4 +1,5 @@
 from pathlib import Path
+import os
 import sys
 from time import perf_counter
 from typing import Dict, Optional, Tuple
@@ -14,6 +15,13 @@ sys.path.insert(0, str(_ENERGY_COMPARISON_ROOT))
 from cmt_metrics import positive_actuator_work_increment
 
 
+# Preserve the archived location as the default while allowing portable reruns.
+ENERGY_COMPARISON_DATA_ROOT = os.environ.get(
+    "ENERGY_COMPARISON_DATA_ROOT",
+    "D:/L&S/Mas/Project/Paper1/Energy_Comparison",
+).rstrip("/\\")
+
+
 # =========================
 # User editable settings
 # =========================
@@ -21,25 +29,21 @@ from cmt_metrics import positive_actuator_work_increment
 # Change these four paths when you want to read different trained models.
 MODEL_PATHS = {
     "passive_01": Path(
-        r"D:/L&S/Mas/Project/Paper1/Energy_Comparison/"
-        r"action_weight=0.02/60,30(0.33m)/Policy_Net_Pytorch(1,0)_846.pth"
-    ),
+        ENERGY_COMPARISON_DATA_ROOT
+    ) / "action_weight=0.02/60,30(0.33m)/Policy_Net_Pytorch(1,0)_846.pth",
     "passive_minus10": Path(
-        r"D:/L&S/Mas/Project/Paper1/Energy_Comparison/"
-        r"action_weight=0.02/60,30(0.33m)/Policy_Net_Pytorch(-1,0)_830.pth"
-    ),
+        ENERGY_COMPARISON_DATA_ROOT
+    ) / "action_weight=0.02/60,30(0.33m)/Policy_Net_Pytorch(-1,0)_830.pth",
     "active_discrete": Path(
-        r"D:/L&S/Mas/Project/Paper1/Energy_Comparison/"
-        r"action_weight=0.02/60,30(0.33m)/Policy_Net_Pytorch(-1,0,1)_1663.pth"
-    ),
+        ENERGY_COMPARISON_DATA_ROOT
+    ) / "action_weight=0.02/60,30(0.33m)/Policy_Net_Pytorch(-1,0,1)_1663.pth",
     "active_continuous": Path(
-        r"D:/L&S/Mas/Project/Paper1/Energy_Comparison/"
-        r"action_weight=0.02/60,30(0.33m)/Policy_Net_Pytorch(-1,0,1)_1421_continuous.pth"
-    ),
+        ENERGY_COMPARISON_DATA_ROOT
+    ) / "action_weight=0.02/60,30(0.33m)/Policy_Net_Pytorch(-1,0,1)_1421_continuous.pth",
 }
 
 # Change this directory and these names when you want different output files.
-OUTPUT_DIR = Path(r"D:/L&S/Mas/Project/Paper1/Energy_Comparison/action_weight=0.02/60,30(0.33m)/")
+OUTPUT_DIR = Path(ENERGY_COMPARISON_DATA_ROOT) / "action_weight=0.02/60,30(0.33m)"
 OUTPUT_FILES = {
     "working_01": "working_save(0,1)-10-30",
     "cmt_01": "Cmt_save(0,1)-10-30",

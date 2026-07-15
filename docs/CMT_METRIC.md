@@ -60,6 +60,12 @@ because the audited evaluator snapshot had additional provenance defects:
 - the row called `Proposed` is an outcome-aware hindsight envelope over two
   expert rollouts, not the deployed transition-start route.
 
+The evaluator constructs `Cmt_save_passive` in memory from `Cmt_save01` and
+`Cmt_save0_1` before writing the envelope to its own file.  The historical
+negative-file target error therefore did not alter that in-memory envelope,
+but it does prevent an independent reconstruction of the envelope from the two
+retained expert Cmt files.
+
 The patched evaluators correct the negative-expert array and nominal output
 directory for future reruns.  Existing HDF5 values are intentionally retained
 unchanged so that source corrections are not confused with regenerated data.
@@ -67,9 +73,10 @@ unchanged so that source corrections are not confused with regenerated data.
 ## Patch contents and verification
 
 The patch includes the shared metric module, 12 canonical action-weight
-evaluators, one optimized evaluator, and regression tests.  The evaluator
-snapshots retain the legacy experiment-specific model and output paths; repository
-integration should parameterize those paths before a portable public rerun.
+evaluators, one optimized evaluator, and regression tests.  Every evaluator
+accepts the data/model/output root through the `ENERGY_COMPARISON_DATA_ROOT`
+environment variable.  The historical Windows path remains only as the
+documented default so that the source snapshot retains its provenance.
 
 From `src/two_link/action_weight`, run:
 
@@ -80,4 +87,13 @@ python -m unittest discover -s tests -v
 The tests verify units and sign gating, the deterministic factor-of-four
 identity, use of the shared accumulator in all 13 included evaluators, correct
 negative-expert Cmt writes in all 12 canonical evaluators, and nominal output
-directory placement.
+directory placement.  They also read the published 12-cell CSV and verify all
+12 `legacy_raw / 4 = corrected` rows numerically.
+
+For a portable run of the optimized evaluator in a checkout containing the
+required checkpoints, set the data root explicitly:
+
+```bash
+ENERGY_COMPARISON_DATA_ROOT=/path/to/Energy_Comparison \
+python "action_weight=0.02/60,30(0.33m)/Whole_energy_comparison_low_dim_optimized.py"
+```

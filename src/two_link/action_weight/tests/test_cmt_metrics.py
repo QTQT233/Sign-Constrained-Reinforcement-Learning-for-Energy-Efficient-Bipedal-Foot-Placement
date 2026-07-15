@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import csv
 import re
 import sys
 import unittest
@@ -20,11 +21,49 @@ CONDITIONS = (
     "70,20(0.225m)",
     "70,20,(0.225m),0.01m",
 )
+LEGACY_DATA_ROOT = "D:/L&S/Mas/Project/Paper1/Energy_Comparison"
 
 from cmt_metrics import positive_actuator_work_increment
 
 
 class PositiveActuatorWorkTests(unittest.TestCase):
+    def test_published_12_cell_correction_table_matches_raw_divided_by_four(self):
+        evidence_name = "action_weight_cmt_correction_12_cells.csv"
+        candidates = [
+            parent / "results" / evidence_name
+            for parent in (ROOT, *Path(__file__).resolve().parents)
+        ]
+        evidence_csv = next((path for path in candidates if path.is_file()), None)
+        self.assertIsNotNone(
+            evidence_csv,
+            msg=f"missing published audit table; searched: {candidates}",
+        )
+
+        with evidence_csv.open("r", encoding="utf-8", newline="") as stream:
+            rows = list(csv.DictReader(stream))
+
+        self.assertEqual(len(rows), 12)
+        for row in rows:
+            self.assertGreater(int(row["common_mask_n"]), 0)
+            correction_factor = float(
+                row["deterministic_legacy_correction_factor"]
+            )
+            self.assertEqual(correction_factor, 4.0)
+            raw_mean = float(row["continuous_legacy_raw_mean"])
+            corrected_mean = float(row["continuous_corrected_mean"])
+            self.assertTrue(
+                np.isclose(
+                    raw_mean / correction_factor,
+                    corrected_mean,
+                    rtol=1e-12,
+                    atol=1e-12,
+                ),
+                msg=(
+                    "published correction mismatch for "
+                    f"w={row['action_weight']}, {row['archived_condition']}"
+                ),
+            )
+
     def test_legacy_raw_divided_by_four_matches_corrected_fixed_scale(self):
         """The deterministic legacy factor-of-four correction is exact at T=4."""
 
@@ -95,6 +134,19 @@ class PositiveActuatorWorkTests(unittest.TestCase):
                     pattern.search(source),
                     msg=f"duplicate torque scale remains in {script}",
                 )
+            self.assertIn(
+                'ENERGY_COMPARISON_DATA_ROOT = os.environ.get(',
+                source,
+                msg=f"portable data-root configuration missing from {script}",
+            )
+            self.assertEqual(
+                source.count(LEGACY_DATA_ROOT),
+                1,
+                msg=(
+                    "the archived absolute path may appear only as the "
+                    f"documented default in {script}"
+                ),
+            )
 
     def test_each_canonical_evaluator_writes_negative_cmt_and_outputs_correctly(self):
         canonical_scripts = []
@@ -134,8 +186,8 @@ class PositiveActuatorWorkTests(unittest.TestCase):
                 msg=f"negative Cmt file receives wrong array: {script}",
             )
 
-            expected_prefix = (
-                f"Energy_Comparison/action_weight={weight}/{condition}/"
+            expected_condition_path = (
+                f"/action_weight={weight}/{condition}/"
             )
             write_args = [
                 match.group(1)
@@ -145,10 +197,31 @@ class PositiveActuatorWorkTests(unittest.TestCase):
             self.assertGreater(len(write_args), 0, msg=f"no output writes: {script}")
             for arguments in write_args:
                 self.assertIn(
-                    expected_prefix,
+                    "ENERGY_COMPARISON_DATA_ROOT",
+                    arguments,
+                    msg=f"output does not use the configured data root: {script}",
+                )
+                self.assertIn(
+                    expected_condition_path,
                     arguments,
                     msg=f"output bypasses nominal action-weight folder: {script}",
                 )
+
+            envelope_start = active_source.find("Cmt_save_passive =")
+            envelope_write = active_source.find("Cmt_save_passive-10-30")
+            self.assertGreaterEqual(
+                envelope_start,
+                0,
+                msg=f"in-memory envelope construction missing: {script}",
+            )
+            self.assertGreater(
+                envelope_write,
+                envelope_start,
+                msg=f"envelope is not saved after construction: {script}",
+            )
+            envelope_source = active_source[envelope_start:envelope_write]
+            self.assertIn("Cmt_save01", envelope_source)
+            self.assertIn("Cmt_save0_1", envelope_source)
 
 
 if __name__ == "__main__":
