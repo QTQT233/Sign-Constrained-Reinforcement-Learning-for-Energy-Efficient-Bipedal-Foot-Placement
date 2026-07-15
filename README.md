@@ -116,6 +116,26 @@ python tools/audit_paper2_readonly.py \
   --output-root paper2_rerun_logs
 ```
 
+## Two-link action-weight Cmt correction
+
+The continuous-action evaluator had treated the clipped policy output as the
+physical hip torque in the equations of motion but multiplied it by the fixed
+4 N m torque bound a second time in the positive-work accumulator. The
+corrected evaluators under `src/two_link/action_weight/` now accumulate
+`max(tau_h * omega_h, 0) * dt` with the applied torque exactly once. They also
+correct the negative-expert Cmt output array and keep every write inside its
+nominal action-weight condition directory.
+
+The retained HDF5 arrays are not rewritten. Consequently, the archived
+action-weight sweep remains an exploratory provenance record rather than a
+controlled ablation. The deterministic correction, its validity conditions,
+and the known archive limitations are documented in `docs/CMT_METRIC.md`.
+
+```bash
+cd src/two_link/action_weight
+python -m unittest discover -s tests -v
+```
+
 ## Important interpretation boundary
 
 Active PPO is the penalized unrestricted control (`U1`,
