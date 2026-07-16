@@ -8,8 +8,9 @@ Canonical code repository:
 
 ## What is in this repository
 
-- `src/`: frozen, unmodified experiment and training programs, organized by
-  experiment family.
+- `src/`: versioned experiment and training programs, organized by experiment
+  family. The 12 Table II evaluators include the documented negative-expert
+  output fix and fixed evaluation seed.
 - `analysis/`: external read-only scripts that regenerate manuscript-facing
   statistics from frozen CSV outputs.
 - `data/`: small derived tables and instructions for obtaining the DOI-backed
@@ -116,38 +117,37 @@ python tools/audit_paper2_readonly.py \
   --output-root paper2_rerun_logs
 ```
 
-## Two-link action-weight Cmt correction
+## Two-link action-weight evaluation (Table II)
 
-The continuous-action evaluator had treated the clipped policy output as the
-physical hip torque in the equations of motion but multiplied it by the fixed
-4 N m torque bound a second time in the positive-work accumulator. The
-corrected evaluators under `src/two_link/action_weight/` now accumulate
-`max(tau_h * omega_h, 0) * dt` with the applied torque exactly once. They also
-correct the negative-expert Cmt output array and keep every write inside its
-nominal action-weight condition directory.
+The 12 canonical `Whole_energy_comparison_low_dim.py` files under
+`src/two_link/action_weight/` are byte-matched copies of the local evaluators
+used for the completed Table II rerun. Each evaluator uses random seed
+`20260716`, writes the negative expert's Cmt array to the negative-expert file,
+and accumulates continuous-controller positive commanded work from the applied
+physical torque exactly once. The completed fusion branch is preserved: when
+both experts succeed their Cmt values are compared; when only one expert
+succeeds that expert's value is retained. Only status `-2` denotes expert
+failure.
 
-The retained HDF5 arrays are not rewritten. Consequently, the archived
-action-weight sweep remains an exploratory provenance record rather than a
-controlled ablation. The deterministic correction, its validity conditions,
-and the known archive limitations are documented in `docs/CMT_METRIC.md`.
-Its historical `Proposed` row is a non-deployable two-rollout fusion with a
-success-gating defect: 227,935 single-success trajectories had first action
-zero, and 216,946 of them lay on the 443,163-state three-method common mask and
-were minimized against a failed expert's initialized zero (48.954% of that
-mask). The row is retained only for forensic provenance and is not a valid
-method-ranking quantity.
-The evaluator data root is configurable through
-`ENERGY_COMPARISON_DATA_ROOT`; the archived Windows location is retained only
-as the default for provenance.
-The per-cell fusion counts are preserved in
-`results/action_weight_fusion_audit_12_cells.csv`; the non-published local-copy
-sync and 16-script verification procedure is in
-`docs/ACTION_WEIGHT_LOCAL_SYNC.md`.
+Table II is recomputed on the condition-specific common-feasible mask shared by
+the Proposed, Active PPO, and Continuous PPO evaluations. The paper-facing
+values and counts are in
+`results/action_weight_table_ii_seed_20260716.csv`; full mean, median, sample
+SD, 99th percentile, maximum, source hashes, and HDF5 hashes are in the
+companion audit CSV and JSON manifest. No post-hoc division or rescaling is
+applied to the continuous results.
 
 ```bash
+python analysis/recompute_action_weight_table_ii.py \
+  --data-root /path/to/Energy_Comparison
 cd src/two_link/action_weight
 python -m unittest discover -s tests -v
 ```
+
+The analysis is a fixed-checkpoint action-weight performance ablation. It does
+not by itself estimate variability across independent training seeds. See
+`docs/TABLE_II_AUDIT.md`, `docs/CMT_METRIC.md`, and
+`docs/ACTION_WEIGHT_LOCAL_SYNC.md` for the exact protocol and provenance.
 
 ## Important interpretation boundary
 

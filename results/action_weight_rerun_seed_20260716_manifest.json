@@ -1,0 +1,1152 @@
+{
+  "protocol": "Table II fixed-checkpoint action-weight evaluation",
+  "random_seed": 20260716,
+  "common_mask": "(proposed_status != -2) & (active_status != -2) & (continuous_status != -6)",
+  "fusion_validation": "complete evaluator branch; only -2 denotes expert failure",
+  "audit_csv": "action_weight_rerun_seed_20260716.csv",
+  "manuscript_csv": "action_weight_table_ii_seed_20260716.csv",
+  "canonical_scripts": [
+    {
+      "path": "src/two_link/action_weight/action_weight=0.02/60,30(0.33m)/Whole_energy_comparison_low_dim.py",
+      "bytes": 29444,
+      "sha256": "ccd042e7b4fe0657a855784ed8c28e526f5726390e963a499dcfb030e9c0a513"
+    },
+    {
+      "path": "src/two_link/action_weight/action_weight=0.02/70,20(0.225m)/Whole_energy_comparison_low_dim.py",
+      "bytes": 29461,
+      "sha256": "819f12b38ca365b055fb391827d78b8f0a9292dd08ca64a880a68cdb20c1f74e"
+    },
+    {
+      "path": "src/two_link/action_weight/action_weight=0.02/60,30(0.33m),0.01m/Whole_energy_comparison_low_dim.py",
+      "bytes": 29583,
+      "sha256": "f617299f63da00329bb03dd48f61ea099dc14b0f78d96bb17609e4b3ee759ad0"
+    },
+    {
+      "path": "src/two_link/action_weight/action_weight=0.02/70,20,(0.225m),0.01m/Whole_energy_comparison_low_dim.py",
+      "bytes": 29619,
+      "sha256": "34a032120b63cb3131c2792232bb2b686b8e01c2ec651d9fbb398f5eb9a12e76"
+    },
+    {
+      "path": "src/two_link/action_weight/action_weight=0.04/60,30(0.33m)/Whole_energy_comparison_low_dim.py",
+      "bytes": 29217,
+      "sha256": "8bb94c971ba0a1b3ae5d69fdd42015c602fdf1e1ca8d44d9863794e143abf0aa"
+    },
+    {
+      "path": "src/two_link/action_weight/action_weight=0.04/70,20(0.225m)/Whole_energy_comparison_low_dim.py",
+      "bytes": 29461,
+      "sha256": "db2b1cc59e341c1fff72bb3ef7e248d15d4ba930395dc62a4a95478affa76438"
+    },
+    {
+      "path": "src/two_link/action_weight/action_weight=0.04/60,30(0.33m),0.01m/Whole_energy_comparison_low_dim.py",
+      "bytes": 29580,
+      "sha256": "0c2e475e5018b2c6bcf2fccd831180e6d71a2e78e0cc3fc8dd5c3544a4acc5cd"
+    },
+    {
+      "path": "src/two_link/action_weight/action_weight=0.04/70,20,(0.225m),0.01m/Whole_energy_comparison_low_dim.py",
+      "bytes": 29607,
+      "sha256": "029a70c1d587c18e0f312fb1fcf1066135f6bf2490b76ed8dc846b32534e51fd"
+    },
+    {
+      "path": "src/two_link/action_weight/action_weight=0.06/60,30(0.33m)/Whole_energy_comparison_low_dim.py",
+      "bytes": 29443,
+      "sha256": "80b9de8743466fe2dd80474324219695c08eba33e95c6e44fa0ecdb6fdf52007"
+    },
+    {
+      "path": "src/two_link/action_weight/action_weight=0.06/70,20(0.225m)/Whole_energy_comparison_low_dim.py",
+      "bytes": 29461,
+      "sha256": "5c3416789fe4f9ed444d8e1f172c788cca3f76f8be62670dfc736ea369682f95"
+    },
+    {
+      "path": "src/two_link/action_weight/action_weight=0.06/60,30(0.33m),0.01m/Whole_energy_comparison_low_dim.py",
+      "bytes": 29571,
+      "sha256": "92eaeaa658b79f37fc08e34f88013da2dcb5c2859c0dddb1b734d6f20fef34d6"
+    },
+    {
+      "path": "src/two_link/action_weight/action_weight=0.06/70,20,(0.225m),0.01m/Whole_energy_comparison_low_dim.py",
+      "bytes": 29607,
+      "sha256": "29a07cc7da5e31add1f66a5e8b2c961ddfd9ba7c21bf7d84d9ba5f1bc142a9e8"
+    }
+  ],
+  "input_hdf5": [
+    {
+      "action_weight": "0.02",
+      "condition": "60,30(0.33m)",
+      "logical_array": "negative_status",
+      "file_name": "working_save(-1,0)-10-30",
+      "dataset": "working_save",
+      "bytes": 722048,
+      "sha256": "87f5cfbb97582998ee614ca5f47c3cc07ad8efb9d3309915cc77340f0f99c5b6"
+    },
+    {
+      "action_weight": "0.02",
+      "condition": "60,30(0.33m)",
+      "logical_array": "negative_cmt",
+      "file_name": "Cmt_save(-1,0)-10-30",
+      "dataset": "Cmt_save",
+      "bytes": 722048,
+      "sha256": "f50fca75eb2db6e321f5ef4d1c74cb483d143cf1123499f85d0ac6671cb45f77"
+    },
+    {
+      "action_weight": "0.02",
+      "condition": "60,30(0.33m)",
+      "logical_array": "positive_status",
+      "file_name": "working_save(0,1)-10-30",
+      "dataset": "working_save",
+      "bytes": 722048,
+      "sha256": "36f6924766e130c0206f5765ee1b381e2bb30cd48978170e1c911657087af583"
+    },
+    {
+      "action_weight": "0.02",
+      "condition": "60,30(0.33m)",
+      "logical_array": "positive_cmt",
+      "file_name": "Cmt_save(0,1)-10-30",
+      "dataset": "Cmt_save",
+      "bytes": 722048,
+      "sha256": "788f272d0864bcd0cd2c6b18199ace36fe835e82bfbe51ca8a8e35875d53e800"
+    },
+    {
+      "action_weight": "0.02",
+      "condition": "60,30(0.33m)",
+      "logical_array": "proposed_status",
+      "file_name": "working_save_passive-10-30",
+      "dataset": "working_save_passive",
+      "bytes": 722048,
+      "sha256": "df9e6b4f89be70314206806dc03a223270293786c259705d68dd817aa32c6607"
+    },
+    {
+      "action_weight": "0.02",
+      "condition": "60,30(0.33m)",
+      "logical_array": "proposed_cmt",
+      "file_name": "Cmt_save_passive-10-30",
+      "dataset": "Cmt_save_passive",
+      "bytes": 722048,
+      "sha256": "288ba4cc182c4af1cf3a9990262ea786873db41f90bcbcd4710327393ec12521"
+    },
+    {
+      "action_weight": "0.02",
+      "condition": "60,30(0.33m)",
+      "logical_array": "active_status",
+      "file_name": "working_save_active_discrete-10-30",
+      "dataset": "working_save_active_discrete",
+      "bytes": 722048,
+      "sha256": "af60e4329ed64a97fe3f52d5940c08d2186d63299beb7a3c9e47d33cda31071c"
+    },
+    {
+      "action_weight": "0.02",
+      "condition": "60,30(0.33m)",
+      "logical_array": "active_cmt",
+      "file_name": "Cmt_save_active_discrete(0,1)-10-30",
+      "dataset": "Cmt_save",
+      "bytes": 722048,
+      "sha256": "541fe0452f6cf9d849354d6fe3cc3199fb15e0e1e05f799442c38e269d6b08a5"
+    },
+    {
+      "action_weight": "0.02",
+      "condition": "60,30(0.33m)",
+      "logical_array": "continuous_status",
+      "file_name": "working_save_active_continuous-10-30",
+      "dataset": "working_save_active_continuous",
+      "bytes": 722048,
+      "sha256": "8665216d64f7b0d03588ea8bd99798ecf74a46ee1d9d320940b275c5611fb3da"
+    },
+    {
+      "action_weight": "0.02",
+      "condition": "60,30(0.33m)",
+      "logical_array": "continuous_cmt",
+      "file_name": "Cmt_save_active_continuous-10-30",
+      "dataset": "Cmt_save",
+      "bytes": 722048,
+      "sha256": "62a4dd5a04fc2a8ca4fd77d37f4123498db3c5cd35578b349510e4b32ce3f761"
+    },
+    {
+      "action_weight": "0.02",
+      "condition": "70,20(0.225m)",
+      "logical_array": "negative_status",
+      "file_name": "working_save(-1,0)-10-30",
+      "dataset": "working_save",
+      "bytes": 722048,
+      "sha256": "07b4851196024e3f945e376f68fe97061fb4d20c8eb6a99077ee166fe1f5170c"
+    },
+    {
+      "action_weight": "0.02",
+      "condition": "70,20(0.225m)",
+      "logical_array": "negative_cmt",
+      "file_name": "Cmt_save(-1,0)-10-30",
+      "dataset": "Cmt_save",
+      "bytes": 722048,
+      "sha256": "aa8742ee4232a7bc03ac987180497f650d0126c14ebd86820cc446b0681660ed"
+    },
+    {
+      "action_weight": "0.02",
+      "condition": "70,20(0.225m)",
+      "logical_array": "positive_status",
+      "file_name": "working_save(0,1)-10-30",
+      "dataset": "working_save",
+      "bytes": 722048,
+      "sha256": "0ee90c3bb851a4c26df6151ff44dd2867544a49cfa028581e0fd22c71a5c8399"
+    },
+    {
+      "action_weight": "0.02",
+      "condition": "70,20(0.225m)",
+      "logical_array": "positive_cmt",
+      "file_name": "Cmt_save(0,1)-10-30",
+      "dataset": "Cmt_save",
+      "bytes": 722048,
+      "sha256": "7e156e24a961a6eb151c86714bad72b57ba985d6a87ebeec98a3dafdfc9e9412"
+    },
+    {
+      "action_weight": "0.02",
+      "condition": "70,20(0.225m)",
+      "logical_array": "proposed_status",
+      "file_name": "working_save_passive-10-30",
+      "dataset": "working_save_passive",
+      "bytes": 722048,
+      "sha256": "2fac5cf3e16b3aec83053f14dbab88a94631ce54bde255c3cff677e4b6f51b8f"
+    },
+    {
+      "action_weight": "0.02",
+      "condition": "70,20(0.225m)",
+      "logical_array": "proposed_cmt",
+      "file_name": "Cmt_save_passive-10-30",
+      "dataset": "Cmt_save_passive",
+      "bytes": 722048,
+      "sha256": "839dedb901cce521db21289aba0cac09482d7d37732c8950807902db28a434d9"
+    },
+    {
+      "action_weight": "0.02",
+      "condition": "70,20(0.225m)",
+      "logical_array": "active_status",
+      "file_name": "working_save_active_discrete-10-30",
+      "dataset": "working_save_active_discrete",
+      "bytes": 722048,
+      "sha256": "a86e3971ae8f8ee38203976b14082cb46bcbbc071594d07bd50b6f96879c52d4"
+    },
+    {
+      "action_weight": "0.02",
+      "condition": "70,20(0.225m)",
+      "logical_array": "active_cmt",
+      "file_name": "Cmt_save_active_discrete(0,1)-10-30",
+      "dataset": "Cmt_save",
+      "bytes": 722048,
+      "sha256": "a60f29ad28df6c57372d488f5e943ab3bd8f996f1f728b492ac55900d5ed8ec1"
+    },
+    {
+      "action_weight": "0.02",
+      "condition": "70,20(0.225m)",
+      "logical_array": "continuous_status",
+      "file_name": "working_save_active_continuous-10-30",
+      "dataset": "working_save_active_continuous",
+      "bytes": 722048,
+      "sha256": "6116ec5c45cfd4f03e1044dd775d8a51667a8b71f31ac480b95c9fd8cea80fd5"
+    },
+    {
+      "action_weight": "0.02",
+      "condition": "70,20(0.225m)",
+      "logical_array": "continuous_cmt",
+      "file_name": "Cmt_save_active_continuous-10-30",
+      "dataset": "Cmt_save",
+      "bytes": 722048,
+      "sha256": "fe37a4ad289f160470678a3b5c7f19a11d903568e0bdf5836d4142c5d924e091"
+    },
+    {
+      "action_weight": "0.02",
+      "condition": "60,30(0.33m),0.01m",
+      "logical_array": "negative_status",
+      "file_name": "working_save(-1,0)-10-30",
+      "dataset": "working_save",
+      "bytes": 722048,
+      "sha256": "eb3bab0833616745be72985abe222da02e2bd7936f388486573b315145e7aa95"
+    },
+    {
+      "action_weight": "0.02",
+      "condition": "60,30(0.33m),0.01m",
+      "logical_array": "negative_cmt",
+      "file_name": "Cmt_save(-1,0)-10-30",
+      "dataset": "Cmt_save",
+      "bytes": 722048,
+      "sha256": "b1f7d6fff916c2f92b73891b968ae0f9e7f29eaa9fc84dc347b49f86617d5946"
+    },
+    {
+      "action_weight": "0.02",
+      "condition": "60,30(0.33m),0.01m",
+      "logical_array": "positive_status",
+      "file_name": "working_save(0,1)-10-30",
+      "dataset": "working_save",
+      "bytes": 722048,
+      "sha256": "728f247cff1597b5e77757aa8331b4a46776cb43186af846e153c6c958be1240"
+    },
+    {
+      "action_weight": "0.02",
+      "condition": "60,30(0.33m),0.01m",
+      "logical_array": "positive_cmt",
+      "file_name": "Cmt_save(0,1)-10-30",
+      "dataset": "Cmt_save",
+      "bytes": 722048,
+      "sha256": "87991ac4bc1a641620f6b658c4862152f805075083adb8521b0c8810fa281fa1"
+    },
+    {
+      "action_weight": "0.02",
+      "condition": "60,30(0.33m),0.01m",
+      "logical_array": "proposed_status",
+      "file_name": "working_save_passive-10-30",
+      "dataset": "working_save_passive",
+      "bytes": 722048,
+      "sha256": "9dd3cd5948a6efe3af2aa748a05dee998e612f0d8b57dd25321f0be372e14395"
+    },
+    {
+      "action_weight": "0.02",
+      "condition": "60,30(0.33m),0.01m",
+      "logical_array": "proposed_cmt",
+      "file_name": "Cmt_save_passive-10-30",
+      "dataset": "Cmt_save_passive",
+      "bytes": 722048,
+      "sha256": "59f19fa8af02f61752ea57e672202518fcdfce92411f79922f489986e062251d"
+    },
+    {
+      "action_weight": "0.02",
+      "condition": "60,30(0.33m),0.01m",
+      "logical_array": "active_status",
+      "file_name": "working_save_active_discrete-10-30",
+      "dataset": "working_save_active_discrete",
+      "bytes": 722048,
+      "sha256": "98d8e7e2ccb4ac454434e725d6981f3f1258af0649618c1c149e5b936cc94370"
+    },
+    {
+      "action_weight": "0.02",
+      "condition": "60,30(0.33m),0.01m",
+      "logical_array": "active_cmt",
+      "file_name": "Cmt_save_active_discrete(0,1)-10-30",
+      "dataset": "Cmt_save",
+      "bytes": 722048,
+      "sha256": "df76231606100f3ea563d973478114161d11875f3231c3863f80faf5123c4485"
+    },
+    {
+      "action_weight": "0.02",
+      "condition": "60,30(0.33m),0.01m",
+      "logical_array": "continuous_status",
+      "file_name": "working_save_active_continuous-10-30",
+      "dataset": "working_save_active_continuous",
+      "bytes": 722048,
+      "sha256": "bcbac309da89d68af80066bccc34198a0d54a9c1a55ca353ab5b8af4cf86594e"
+    },
+    {
+      "action_weight": "0.02",
+      "condition": "60,30(0.33m),0.01m",
+      "logical_array": "continuous_cmt",
+      "file_name": "Cmt_save_active_continuous-10-30",
+      "dataset": "Cmt_save",
+      "bytes": 722048,
+      "sha256": "738e598b1d7dc599cc716c3ca39b077436b7dc2272af248b79bcd34daf8f44e1"
+    },
+    {
+      "action_weight": "0.02",
+      "condition": "70,20,(0.225m),0.01m",
+      "logical_array": "negative_status",
+      "file_name": "working_save(-1,0)-10-30",
+      "dataset": "working_save",
+      "bytes": 722048,
+      "sha256": "4b5d7412caa006cf6e364c0839fb5083c2f27bc78505ef334feed7aa0bc35fb2"
+    },
+    {
+      "action_weight": "0.02",
+      "condition": "70,20,(0.225m),0.01m",
+      "logical_array": "negative_cmt",
+      "file_name": "Cmt_save(-1,0)-10-30",
+      "dataset": "Cmt_save",
+      "bytes": 722048,
+      "sha256": "043eed546d57959b005d02008ffcf44a7726bd43bd83faca295a09390dcb989a"
+    },
+    {
+      "action_weight": "0.02",
+      "condition": "70,20,(0.225m),0.01m",
+      "logical_array": "positive_status",
+      "file_name": "working_save(0,1)-10-30",
+      "dataset": "working_save",
+      "bytes": 722048,
+      "sha256": "4201ae4c2e704aa9ded7af5617f091273aa75694e4f23fbee28bd89848bf6c3c"
+    },
+    {
+      "action_weight": "0.02",
+      "condition": "70,20,(0.225m),0.01m",
+      "logical_array": "positive_cmt",
+      "file_name": "Cmt_save(0,1)-10-30",
+      "dataset": "Cmt_save",
+      "bytes": 722048,
+      "sha256": "965ee023169f1e5499e8c9a2cf4e0ccb8b9e839808c6d0927cf39616238f00cb"
+    },
+    {
+      "action_weight": "0.02",
+      "condition": "70,20,(0.225m),0.01m",
+      "logical_array": "proposed_status",
+      "file_name": "working_save_passive-10-30",
+      "dataset": "working_save_passive",
+      "bytes": 722048,
+      "sha256": "ee3e31f167ae96bb0e888a3292aebe463576f6a20e26363166a02eea7199374f"
+    },
+    {
+      "action_weight": "0.02",
+      "condition": "70,20,(0.225m),0.01m",
+      "logical_array": "proposed_cmt",
+      "file_name": "Cmt_save_passive-10-30",
+      "dataset": "Cmt_save_passive",
+      "bytes": 722048,
+      "sha256": "29c46a2c53f3ded076a8342978ffac04c4b16bfe334cd8c090585063152d6805"
+    },
+    {
+      "action_weight": "0.02",
+      "condition": "70,20,(0.225m),0.01m",
+      "logical_array": "active_status",
+      "file_name": "working_save_active_discrete-10-30",
+      "dataset": "working_save_active_discrete",
+      "bytes": 722048,
+      "sha256": "9375113c6d792981ee7522f091edd3132481cbdbd2455ae9e32187cac8af49cd"
+    },
+    {
+      "action_weight": "0.02",
+      "condition": "70,20,(0.225m),0.01m",
+      "logical_array": "active_cmt",
+      "file_name": "Cmt_save_active_discrete(0,1)-10-30",
+      "dataset": "Cmt_save",
+      "bytes": 722048,
+      "sha256": "1eadedfeeef3300985e96a33ad5764e5561d98d2c3c64957bc00e54267ffd31c"
+    },
+    {
+      "action_weight": "0.02",
+      "condition": "70,20,(0.225m),0.01m",
+      "logical_array": "continuous_status",
+      "file_name": "working_save_active_continuous-10-30",
+      "dataset": "working_save_active_continuous",
+      "bytes": 722048,
+      "sha256": "a016b22a7eb47990e5d958bbbb638d41fad909838cc43e4f28e8419ae373fe02"
+    },
+    {
+      "action_weight": "0.02",
+      "condition": "70,20,(0.225m),0.01m",
+      "logical_array": "continuous_cmt",
+      "file_name": "Cmt_save_active_continuous-10-30",
+      "dataset": "Cmt_save",
+      "bytes": 722048,
+      "sha256": "8b9d640849f1fb6d0bec38fbb2928480e8a25f02268147c00c356f1d4ba141c4"
+    },
+    {
+      "action_weight": "0.04",
+      "condition": "60,30(0.33m)",
+      "logical_array": "negative_status",
+      "file_name": "working_save(-1,0)-10-30",
+      "dataset": "working_save",
+      "bytes": 722048,
+      "sha256": "bfe1838bf940973f4599465769dba64de7e8924e42d0a8d31f62233379d16908"
+    },
+    {
+      "action_weight": "0.04",
+      "condition": "60,30(0.33m)",
+      "logical_array": "negative_cmt",
+      "file_name": "Cmt_save(-1,0)-10-30",
+      "dataset": "Cmt_save",
+      "bytes": 722048,
+      "sha256": "092fed0c8fde5ea6546ebf203dcc2342535da63e1634c73c0e5015ad2c1c185b"
+    },
+    {
+      "action_weight": "0.04",
+      "condition": "60,30(0.33m)",
+      "logical_array": "positive_status",
+      "file_name": "working_save(0,1)-10-30",
+      "dataset": "working_save",
+      "bytes": 722048,
+      "sha256": "b94de41e0042751d37eef0bfb5004d19c170f901a88d9bcea97e8ae2d78ba962"
+    },
+    {
+      "action_weight": "0.04",
+      "condition": "60,30(0.33m)",
+      "logical_array": "positive_cmt",
+      "file_name": "Cmt_save(0,1)-10-30",
+      "dataset": "Cmt_save",
+      "bytes": 722048,
+      "sha256": "b552ce6f5d2ed325c9c1e9f13e5605fdda07ba6c37abbeca2a74d437b12570b6"
+    },
+    {
+      "action_weight": "0.04",
+      "condition": "60,30(0.33m)",
+      "logical_array": "proposed_status",
+      "file_name": "working_save_passive-10-30",
+      "dataset": "working_save_passive",
+      "bytes": 722048,
+      "sha256": "dc7c3d3b561cd75f6bed38753e4ce7a045f716f3155cd2b81616c2300a7224ca"
+    },
+    {
+      "action_weight": "0.04",
+      "condition": "60,30(0.33m)",
+      "logical_array": "proposed_cmt",
+      "file_name": "Cmt_save_passive-10-30",
+      "dataset": "Cmt_save_passive",
+      "bytes": 722048,
+      "sha256": "01564428f21a908f77865640767f3e05146cc2ce50ce359c22d0fb03a64731d6"
+    },
+    {
+      "action_weight": "0.04",
+      "condition": "60,30(0.33m)",
+      "logical_array": "active_status",
+      "file_name": "working_save_active_discrete-10-30",
+      "dataset": "working_save_active_discrete",
+      "bytes": 722048,
+      "sha256": "c29d1d1871d3a28fb2b8e22fee5f8eb2bb812defed88bd44ca8bb9b23f9bead8"
+    },
+    {
+      "action_weight": "0.04",
+      "condition": "60,30(0.33m)",
+      "logical_array": "active_cmt",
+      "file_name": "Cmt_save_active_discrete(0,1)-10-30",
+      "dataset": "Cmt_save",
+      "bytes": 722048,
+      "sha256": "1c95042fc2fe771529547e38e9739efbe048ddb3b902f5d02f0839a5e6f4f308"
+    },
+    {
+      "action_weight": "0.04",
+      "condition": "60,30(0.33m)",
+      "logical_array": "continuous_status",
+      "file_name": "working_save_active_continuous-10-30",
+      "dataset": "working_save_active_continuous",
+      "bytes": 722048,
+      "sha256": "5cdfe9c07be7095634dccf680117e7603bc96d13132ab1cab98193c3f0114aa6"
+    },
+    {
+      "action_weight": "0.04",
+      "condition": "60,30(0.33m)",
+      "logical_array": "continuous_cmt",
+      "file_name": "Cmt_save_active_continuous-10-30",
+      "dataset": "Cmt_save",
+      "bytes": 722048,
+      "sha256": "34dd9ba36ba9a55692b092ce04716939b142923a4d1638d989cf053802394ffe"
+    },
+    {
+      "action_weight": "0.04",
+      "condition": "70,20(0.225m)",
+      "logical_array": "negative_status",
+      "file_name": "working_save(-1,0)-10-30",
+      "dataset": "working_save",
+      "bytes": 722048,
+      "sha256": "468bcb2a5af6743aeddb0af3892927551a9ab6a5a1b934432540a81ec9564500"
+    },
+    {
+      "action_weight": "0.04",
+      "condition": "70,20(0.225m)",
+      "logical_array": "negative_cmt",
+      "file_name": "Cmt_save(-1,0)-10-30",
+      "dataset": "Cmt_save",
+      "bytes": 722048,
+      "sha256": "c4077c4333417091188cbf28797445fc164fd01feabed0caf3d7e60cae1902af"
+    },
+    {
+      "action_weight": "0.04",
+      "condition": "70,20(0.225m)",
+      "logical_array": "positive_status",
+      "file_name": "working_save(0,1)-10-30",
+      "dataset": "working_save",
+      "bytes": 722048,
+      "sha256": "e7bb8f444af9e282cdbf3e0de5f0f946ede7ed7c9d38073a726e9210184946e3"
+    },
+    {
+      "action_weight": "0.04",
+      "condition": "70,20(0.225m)",
+      "logical_array": "positive_cmt",
+      "file_name": "Cmt_save(0,1)-10-30",
+      "dataset": "Cmt_save",
+      "bytes": 722048,
+      "sha256": "5e81415c92e25bba66c11d92b5adafa7ae61254797efa7e49dee07c7f7a80927"
+    },
+    {
+      "action_weight": "0.04",
+      "condition": "70,20(0.225m)",
+      "logical_array": "proposed_status",
+      "file_name": "working_save_passive-10-30",
+      "dataset": "working_save_passive",
+      "bytes": 722048,
+      "sha256": "8b4eac7813932e566c7365004c7b37449b383eb5bd3b23aa764b573ddbd994f7"
+    },
+    {
+      "action_weight": "0.04",
+      "condition": "70,20(0.225m)",
+      "logical_array": "proposed_cmt",
+      "file_name": "Cmt_save_passive-10-30",
+      "dataset": "Cmt_save_passive",
+      "bytes": 722048,
+      "sha256": "c205c5fe983081f8355128463c16a0e02c1d2fbde50d8bfafb566dadb97a9ab5"
+    },
+    {
+      "action_weight": "0.04",
+      "condition": "70,20(0.225m)",
+      "logical_array": "active_status",
+      "file_name": "working_save_active_discrete-10-30",
+      "dataset": "working_save_active_discrete",
+      "bytes": 722048,
+      "sha256": "b8507e40da3e8cc39b95759967349108f8c6638e1f4e32cda03730abd6e2f932"
+    },
+    {
+      "action_weight": "0.04",
+      "condition": "70,20(0.225m)",
+      "logical_array": "active_cmt",
+      "file_name": "Cmt_save_active_discrete(0,1)-10-30",
+      "dataset": "Cmt_save",
+      "bytes": 722048,
+      "sha256": "4cb05a13782a78412528ee15e74d4a9048ef2cb6aaa516f5d6e15ab3633c955d"
+    },
+    {
+      "action_weight": "0.04",
+      "condition": "70,20(0.225m)",
+      "logical_array": "continuous_status",
+      "file_name": "working_save_active_continuous-10-30",
+      "dataset": "working_save_active_continuous",
+      "bytes": 722048,
+      "sha256": "ac00d8c7115c67fcce8c641eb27fd903e8e98250dc32a9111fb56504d2ade45a"
+    },
+    {
+      "action_weight": "0.04",
+      "condition": "70,20(0.225m)",
+      "logical_array": "continuous_cmt",
+      "file_name": "Cmt_save_active_continuous-10-30",
+      "dataset": "Cmt_save",
+      "bytes": 722048,
+      "sha256": "676c556a76f5ce57d2be0604c35fa6c5d55e51dc4dc7ac6a6bc46e83c4a031df"
+    },
+    {
+      "action_weight": "0.04",
+      "condition": "60,30(0.33m),0.01m",
+      "logical_array": "negative_status",
+      "file_name": "working_save(-1,0)-10-30",
+      "dataset": "working_save",
+      "bytes": 722048,
+      "sha256": "8995a1bbcafc0ee3ad067c96a751e8da345a96476af67ca7e0d61fb994eda93e"
+    },
+    {
+      "action_weight": "0.04",
+      "condition": "60,30(0.33m),0.01m",
+      "logical_array": "negative_cmt",
+      "file_name": "Cmt_save(-1,0)-10-30",
+      "dataset": "Cmt_save",
+      "bytes": 722048,
+      "sha256": "ef81bc74eb50fae0d3d2739eb3f2261c9c1f43b0af860311d406780231a1dcf6"
+    },
+    {
+      "action_weight": "0.04",
+      "condition": "60,30(0.33m),0.01m",
+      "logical_array": "positive_status",
+      "file_name": "working_save(0,1)-10-30",
+      "dataset": "working_save",
+      "bytes": 722048,
+      "sha256": "ca3ccf41293f18c6752ef7a8a449f58cc3a7ec209a06b8d8f54ff548d4d4164a"
+    },
+    {
+      "action_weight": "0.04",
+      "condition": "60,30(0.33m),0.01m",
+      "logical_array": "positive_cmt",
+      "file_name": "Cmt_save(0,1)-10-30",
+      "dataset": "Cmt_save",
+      "bytes": 722048,
+      "sha256": "5f97ed65b12cae6a7376306a842567e021861f5eaf86320cd8d1a941f562b15b"
+    },
+    {
+      "action_weight": "0.04",
+      "condition": "60,30(0.33m),0.01m",
+      "logical_array": "proposed_status",
+      "file_name": "working_save_passive-10-30",
+      "dataset": "working_save_passive",
+      "bytes": 722048,
+      "sha256": "cb5d03794d6173fe86582e4cadd7edca4904705c5062e6722faaf4a14d241691"
+    },
+    {
+      "action_weight": "0.04",
+      "condition": "60,30(0.33m),0.01m",
+      "logical_array": "proposed_cmt",
+      "file_name": "Cmt_save_passive-10-30",
+      "dataset": "Cmt_save_passive",
+      "bytes": 722048,
+      "sha256": "08bbb436cc25394572b48b75de5a211df16a232678dffe7701b5e5ae597aca4e"
+    },
+    {
+      "action_weight": "0.04",
+      "condition": "60,30(0.33m),0.01m",
+      "logical_array": "active_status",
+      "file_name": "working_save_active_discrete-10-30",
+      "dataset": "working_save_active_discrete",
+      "bytes": 722048,
+      "sha256": "9a22351a4d53a34a24e4df2c108001d6ea2de1db8db3836c49d41e2d17118ec2"
+    },
+    {
+      "action_weight": "0.04",
+      "condition": "60,30(0.33m),0.01m",
+      "logical_array": "active_cmt",
+      "file_name": "Cmt_save_active_discrete(0,1)-10-30",
+      "dataset": "Cmt_save",
+      "bytes": 722048,
+      "sha256": "242d06fd8c345c68c64ed6523d2e9c84bc6a5acb2f7ee6c135f006158f074f4a"
+    },
+    {
+      "action_weight": "0.04",
+      "condition": "60,30(0.33m),0.01m",
+      "logical_array": "continuous_status",
+      "file_name": "working_save_active_continuous-10-30",
+      "dataset": "working_save_active_continuous",
+      "bytes": 722048,
+      "sha256": "067f37264795b5b21fd9314d6a339e47b5783bf57e150601d2f31ef4a5718e0c"
+    },
+    {
+      "action_weight": "0.04",
+      "condition": "60,30(0.33m),0.01m",
+      "logical_array": "continuous_cmt",
+      "file_name": "Cmt_save_active_continuous-10-30",
+      "dataset": "Cmt_save",
+      "bytes": 722048,
+      "sha256": "724de052b050a6682743e95b9c062845a8f98eff89fce52820d8e179be1d3851"
+    },
+    {
+      "action_weight": "0.04",
+      "condition": "70,20,(0.225m),0.01m",
+      "logical_array": "negative_status",
+      "file_name": "working_save(-1,0)-10-30",
+      "dataset": "working_save",
+      "bytes": 722048,
+      "sha256": "225714749b32aca1ccbd853319d34a325b02b03b71f6b782f12e43b770735581"
+    },
+    {
+      "action_weight": "0.04",
+      "condition": "70,20,(0.225m),0.01m",
+      "logical_array": "negative_cmt",
+      "file_name": "Cmt_save(-1,0)-10-30",
+      "dataset": "Cmt_save",
+      "bytes": 722048,
+      "sha256": "51d46391cadf60fd6c75c10c9a7dfde34228d2a75123e385832d59737f5baa69"
+    },
+    {
+      "action_weight": "0.04",
+      "condition": "70,20,(0.225m),0.01m",
+      "logical_array": "positive_status",
+      "file_name": "working_save(0,1)-10-30",
+      "dataset": "working_save",
+      "bytes": 722048,
+      "sha256": "161b4a1716edcd41efc2ba457c4876418a7bdabc00cd4629b3a8d722983067f4"
+    },
+    {
+      "action_weight": "0.04",
+      "condition": "70,20,(0.225m),0.01m",
+      "logical_array": "positive_cmt",
+      "file_name": "Cmt_save(0,1)-10-30",
+      "dataset": "Cmt_save",
+      "bytes": 722048,
+      "sha256": "afd3100ef6391c5ae1f9cacc78180d644275afbdaaa40a81b971c2ec6fed226d"
+    },
+    {
+      "action_weight": "0.04",
+      "condition": "70,20,(0.225m),0.01m",
+      "logical_array": "proposed_status",
+      "file_name": "working_save_passive-10-30",
+      "dataset": "working_save_passive",
+      "bytes": 722048,
+      "sha256": "e662bce0427c173577d66b4cd2b575814ded7c32e25a99fa060a30857cbe8828"
+    },
+    {
+      "action_weight": "0.04",
+      "condition": "70,20,(0.225m),0.01m",
+      "logical_array": "proposed_cmt",
+      "file_name": "Cmt_save_passive-10-30",
+      "dataset": "Cmt_save_passive",
+      "bytes": 722048,
+      "sha256": "1bbe394afc6ddf4d249fa5f7e5b311d866d365270d439fc1daef74b9f66a5889"
+    },
+    {
+      "action_weight": "0.04",
+      "condition": "70,20,(0.225m),0.01m",
+      "logical_array": "active_status",
+      "file_name": "working_save_active_discrete-10-30",
+      "dataset": "working_save_active_discrete",
+      "bytes": 722048,
+      "sha256": "8eee04d4ad656ea52399a2d0ec3462d402ba01f8f8036590214b19f908504381"
+    },
+    {
+      "action_weight": "0.04",
+      "condition": "70,20,(0.225m),0.01m",
+      "logical_array": "active_cmt",
+      "file_name": "Cmt_save_active_discrete(0,1)-10-30",
+      "dataset": "Cmt_save",
+      "bytes": 722048,
+      "sha256": "ef50c25a85f4585562a804cbaf799b3e95ec022421dd3ea267d434a90aabae14"
+    },
+    {
+      "action_weight": "0.04",
+      "condition": "70,20,(0.225m),0.01m",
+      "logical_array": "continuous_status",
+      "file_name": "working_save_active_continuous-10-30",
+      "dataset": "working_save_active_continuous",
+      "bytes": 722048,
+      "sha256": "edfe89a3f5eeb7bd08b84edfab8ecf0d5b6652f3230a2fe94bca4633dee03ef4"
+    },
+    {
+      "action_weight": "0.04",
+      "condition": "70,20,(0.225m),0.01m",
+      "logical_array": "continuous_cmt",
+      "file_name": "Cmt_save_active_continuous-10-30",
+      "dataset": "Cmt_save",
+      "bytes": 722048,
+      "sha256": "b8f9600a668966919ff1d0b202ae0c70bb4fc791a1f9cea57846730c239c6911"
+    },
+    {
+      "action_weight": "0.06",
+      "condition": "60,30(0.33m)",
+      "logical_array": "negative_status",
+      "file_name": "working_save(-1,0)-10-30",
+      "dataset": "working_save",
+      "bytes": 722048,
+      "sha256": "a9831635816a7527f03fb9c5581650ff8ebbe05fecf0ac5eea9abc46d5b10fb2"
+    },
+    {
+      "action_weight": "0.06",
+      "condition": "60,30(0.33m)",
+      "logical_array": "negative_cmt",
+      "file_name": "Cmt_save(-1,0)-10-30",
+      "dataset": "Cmt_save",
+      "bytes": 722048,
+      "sha256": "c712aae2c0af2cf7e20e02f94508d2366bcb97ac92695278a80d2a5137203466"
+    },
+    {
+      "action_weight": "0.06",
+      "condition": "60,30(0.33m)",
+      "logical_array": "positive_status",
+      "file_name": "working_save(0,1)-10-30",
+      "dataset": "working_save",
+      "bytes": 722048,
+      "sha256": "bc09a03b577bf274884073a79691cf824903b89a065990766574b5cbe403c00b"
+    },
+    {
+      "action_weight": "0.06",
+      "condition": "60,30(0.33m)",
+      "logical_array": "positive_cmt",
+      "file_name": "Cmt_save(0,1)-10-30",
+      "dataset": "Cmt_save",
+      "bytes": 722048,
+      "sha256": "1eaa7d1ad089005b190839f67b9d555b44605b30a5e8bcc5771bc2cdf55a311e"
+    },
+    {
+      "action_weight": "0.06",
+      "condition": "60,30(0.33m)",
+      "logical_array": "proposed_status",
+      "file_name": "working_save_passive-10-30",
+      "dataset": "working_save_passive",
+      "bytes": 722048,
+      "sha256": "a8160133c0864d9bbbff9df8951412c89142ee21faf96b4dc7fb2ade0c27f4a0"
+    },
+    {
+      "action_weight": "0.06",
+      "condition": "60,30(0.33m)",
+      "logical_array": "proposed_cmt",
+      "file_name": "Cmt_save_passive-10-30",
+      "dataset": "Cmt_save_passive",
+      "bytes": 722048,
+      "sha256": "318dc8d46f05bd744e390b43059811d0619def3fd3d0392de5fb85c53ee9ff04"
+    },
+    {
+      "action_weight": "0.06",
+      "condition": "60,30(0.33m)",
+      "logical_array": "active_status",
+      "file_name": "working_save_active_discrete-10-30",
+      "dataset": "working_save_active_discrete",
+      "bytes": 722048,
+      "sha256": "3565fdb1d0b7518ac0a487aebf09fac5d4dfea71fda8e02b74a71f1952dd9fbe"
+    },
+    {
+      "action_weight": "0.06",
+      "condition": "60,30(0.33m)",
+      "logical_array": "active_cmt",
+      "file_name": "Cmt_save_active_discrete(0,1)-10-30",
+      "dataset": "Cmt_save",
+      "bytes": 722048,
+      "sha256": "8a80cb7e1de54145888f4bfe39c8a1c3b1eb8e530d32ec69e5dba91bb5740da0"
+    },
+    {
+      "action_weight": "0.06",
+      "condition": "60,30(0.33m)",
+      "logical_array": "continuous_status",
+      "file_name": "working_save_active_continuous-10-30",
+      "dataset": "working_save_active_continuous",
+      "bytes": 722048,
+      "sha256": "8665216d64f7b0d03588ea8bd99798ecf74a46ee1d9d320940b275c5611fb3da"
+    },
+    {
+      "action_weight": "0.06",
+      "condition": "60,30(0.33m)",
+      "logical_array": "continuous_cmt",
+      "file_name": "Cmt_save_active_continuous-10-30",
+      "dataset": "Cmt_save",
+      "bytes": 722048,
+      "sha256": "62a4dd5a04fc2a8ca4fd77d37f4123498db3c5cd35578b349510e4b32ce3f761"
+    },
+    {
+      "action_weight": "0.06",
+      "condition": "70,20(0.225m)",
+      "logical_array": "negative_status",
+      "file_name": "working_save(-1,0)-10-30",
+      "dataset": "working_save",
+      "bytes": 722048,
+      "sha256": "7353601ab2d394b2c44b161bd10b49632fb9e824420a03d7b292a0be0f6ac03e"
+    },
+    {
+      "action_weight": "0.06",
+      "condition": "70,20(0.225m)",
+      "logical_array": "negative_cmt",
+      "file_name": "Cmt_save(-1,0)-10-30",
+      "dataset": "Cmt_save",
+      "bytes": 722048,
+      "sha256": "96eac7198f16332ca88426a8ed437c7799076af6eec80afb5e15353ad69b6f37"
+    },
+    {
+      "action_weight": "0.06",
+      "condition": "70,20(0.225m)",
+      "logical_array": "positive_status",
+      "file_name": "working_save(0,1)-10-30",
+      "dataset": "working_save",
+      "bytes": 722048,
+      "sha256": "2ac1d15d873300d3859f82ce0db68c56c8abf87d580cabee0838d08fde0d2e2b"
+    },
+    {
+      "action_weight": "0.06",
+      "condition": "70,20(0.225m)",
+      "logical_array": "positive_cmt",
+      "file_name": "Cmt_save(0,1)-10-30",
+      "dataset": "Cmt_save",
+      "bytes": 722048,
+      "sha256": "6cb9b3ff38d0d05e3d8f7fe7152484a3f2de90fa0dd691d7a9dfcdd325675dc1"
+    },
+    {
+      "action_weight": "0.06",
+      "condition": "70,20(0.225m)",
+      "logical_array": "proposed_status",
+      "file_name": "working_save_passive-10-30",
+      "dataset": "working_save_passive",
+      "bytes": 722048,
+      "sha256": "76441a7cc46f76503e9283058c14263593940b4b985f50a962a4d323787a65a7"
+    },
+    {
+      "action_weight": "0.06",
+      "condition": "70,20(0.225m)",
+      "logical_array": "proposed_cmt",
+      "file_name": "Cmt_save_passive-10-30",
+      "dataset": "Cmt_save_passive",
+      "bytes": 722048,
+      "sha256": "008314080f8a777c864098c6256bc650757fc2d84bd8c70227068599273a4904"
+    },
+    {
+      "action_weight": "0.06",
+      "condition": "70,20(0.225m)",
+      "logical_array": "active_status",
+      "file_name": "working_save_active_discrete-10-30",
+      "dataset": "working_save_active_discrete",
+      "bytes": 722048,
+      "sha256": "0da0f3a6173efca85d1f9cddd4eed0d1eb1c0007d47630439f586b53e5c99286"
+    },
+    {
+      "action_weight": "0.06",
+      "condition": "70,20(0.225m)",
+      "logical_array": "active_cmt",
+      "file_name": "Cmt_save_active_discrete(0,1)-10-30",
+      "dataset": "Cmt_save",
+      "bytes": 722048,
+      "sha256": "3d56ddae82b53f8cc8669cbfc09a05f204a68ebf89fb77dbe003a0e443af143f"
+    },
+    {
+      "action_weight": "0.06",
+      "condition": "70,20(0.225m)",
+      "logical_array": "continuous_status",
+      "file_name": "working_save_active_continuous-10-30",
+      "dataset": "working_save_active_continuous",
+      "bytes": 722048,
+      "sha256": "6def893169adfbda8bf326124861bd03f1dee400a7819fafea2ea067cc43f592"
+    },
+    {
+      "action_weight": "0.06",
+      "condition": "70,20(0.225m)",
+      "logical_array": "continuous_cmt",
+      "file_name": "Cmt_save_active_continuous-10-30",
+      "dataset": "Cmt_save",
+      "bytes": 722048,
+      "sha256": "cb7ff282b6166be5c55ab0a6fc194d4c80e0da4ac719d4cd20b8f91e756a602c"
+    },
+    {
+      "action_weight": "0.06",
+      "condition": "60,30(0.33m),0.01m",
+      "logical_array": "negative_status",
+      "file_name": "working_save(-1,0)-10-30",
+      "dataset": "working_save",
+      "bytes": 722048,
+      "sha256": "59350bc607545580a64ae7516f5ce8e47658d5e46e8a8f467c05dafa3e3293a9"
+    },
+    {
+      "action_weight": "0.06",
+      "condition": "60,30(0.33m),0.01m",
+      "logical_array": "negative_cmt",
+      "file_name": "Cmt_save(-1,0)-10-30",
+      "dataset": "Cmt_save",
+      "bytes": 722048,
+      "sha256": "f2e8fba937f398b6497e967b48fd4e4c8e31f5c8cf5bfd677deda785b2240136"
+    },
+    {
+      "action_weight": "0.06",
+      "condition": "60,30(0.33m),0.01m",
+      "logical_array": "positive_status",
+      "file_name": "working_save(0,1)-10-30",
+      "dataset": "working_save",
+      "bytes": 722048,
+      "sha256": "df7a5b208667106bd1cd8c296462f60d4fd5221827d1f9a0fd754c9e3f8283db"
+    },
+    {
+      "action_weight": "0.06",
+      "condition": "60,30(0.33m),0.01m",
+      "logical_array": "positive_cmt",
+      "file_name": "Cmt_save(0,1)-10-30",
+      "dataset": "Cmt_save",
+      "bytes": 722048,
+      "sha256": "d5424226d2d2e57d4afaa02b41de02461e29b662ccd0f3632103862564779af2"
+    },
+    {
+      "action_weight": "0.06",
+      "condition": "60,30(0.33m),0.01m",
+      "logical_array": "proposed_status",
+      "file_name": "working_save_passive-10-30",
+      "dataset": "working_save_passive",
+      "bytes": 722048,
+      "sha256": "d7cb941ae81535f3f674548ed8ef991031e38a0918798622b0824cf1305be6c3"
+    },
+    {
+      "action_weight": "0.06",
+      "condition": "60,30(0.33m),0.01m",
+      "logical_array": "proposed_cmt",
+      "file_name": "Cmt_save_passive-10-30",
+      "dataset": "Cmt_save_passive",
+      "bytes": 722048,
+      "sha256": "b0132723b625c25db13760476f397911987e918fb43a442684daf968c64c0ded"
+    },
+    {
+      "action_weight": "0.06",
+      "condition": "60,30(0.33m),0.01m",
+      "logical_array": "active_status",
+      "file_name": "working_save_active_discrete-10-30",
+      "dataset": "working_save_active_discrete",
+      "bytes": 722048,
+      "sha256": "79587366720014a72c8ee1b29d161c3f705bd65c98e69f6b1599ca84be951f0c"
+    },
+    {
+      "action_weight": "0.06",
+      "condition": "60,30(0.33m),0.01m",
+      "logical_array": "active_cmt",
+      "file_name": "Cmt_save_active_discrete(0,1)-10-30",
+      "dataset": "Cmt_save",
+      "bytes": 722048,
+      "sha256": "4305fcd9abe03e9c00263eaa4fe114083e3f4c4ae7e21b85adbed20dd67be1cb"
+    },
+    {
+      "action_weight": "0.06",
+      "condition": "60,30(0.33m),0.01m",
+      "logical_array": "continuous_status",
+      "file_name": "working_save_active_continuous-10-30",
+      "dataset": "working_save_active_continuous",
+      "bytes": 722048,
+      "sha256": "ab17499e93b985c415e5a6ac0b5660397d22cd641e9b05be6b9476eb3a98b8f4"
+    },
+    {
+      "action_weight": "0.06",
+      "condition": "60,30(0.33m),0.01m",
+      "logical_array": "continuous_cmt",
+      "file_name": "Cmt_save_active_continuous-10-30",
+      "dataset": "Cmt_save",
+      "bytes": 722048,
+      "sha256": "3540818f8dff022984d71a8d394996041346d3fe30bd9f1317e498973dfdf7e5"
+    },
+    {
+      "action_weight": "0.06",
+      "condition": "70,20,(0.225m),0.01m",
+      "logical_array": "negative_status",
+      "file_name": "working_save(-1,0)-10-30",
+      "dataset": "working_save",
+      "bytes": 722048,
+      "sha256": "ab93c556db0b68413be3d1323c0f8e120b60c70c721c3dfbd4bd6c4c44dbbf7f"
+    },
+    {
+      "action_weight": "0.06",
+      "condition": "70,20,(0.225m),0.01m",
+      "logical_array": "negative_cmt",
+      "file_name": "Cmt_save(-1,0)-10-30",
+      "dataset": "Cmt_save",
+      "bytes": 722048,
+      "sha256": "12d25c4823318924665ef4dfa1ab691485552213abff1376f1f6005f1dbbbd5d"
+    },
+    {
+      "action_weight": "0.06",
+      "condition": "70,20,(0.225m),0.01m",
+      "logical_array": "positive_status",
+      "file_name": "working_save(0,1)-10-30",
+      "dataset": "working_save",
+      "bytes": 722048,
+      "sha256": "f26df2d18ed0f4f60b514dd05c4e05ac71cc27bf9236cce5166375d84cc51c32"
+    },
+    {
+      "action_weight": "0.06",
+      "condition": "70,20,(0.225m),0.01m",
+      "logical_array": "positive_cmt",
+      "file_name": "Cmt_save(0,1)-10-30",
+      "dataset": "Cmt_save",
+      "bytes": 722048,
+      "sha256": "88673599f6700f813c8cd2a584dcaea9cc1263a046d5d9f49c2b7930c8ee3705"
+    },
+    {
+      "action_weight": "0.06",
+      "condition": "70,20,(0.225m),0.01m",
+      "logical_array": "proposed_status",
+      "file_name": "working_save_passive-10-30",
+      "dataset": "working_save_passive",
+      "bytes": 722048,
+      "sha256": "1b0b07b1360e8c23edb4cc3f7251a4093d5ae336bf25a0467cfb5912c21bc564"
+    },
+    {
+      "action_weight": "0.06",
+      "condition": "70,20,(0.225m),0.01m",
+      "logical_array": "proposed_cmt",
+      "file_name": "Cmt_save_passive-10-30",
+      "dataset": "Cmt_save_passive",
+      "bytes": 722048,
+      "sha256": "fc09a683301175a42ccd90d24e27461d6da4f2ae497af3db805889947ba8b621"
+    },
+    {
+      "action_weight": "0.06",
+      "condition": "70,20,(0.225m),0.01m",
+      "logical_array": "active_status",
+      "file_name": "working_save_active_discrete-10-30",
+      "dataset": "working_save_active_discrete",
+      "bytes": 722048,
+      "sha256": "7c38cd3fb58f18876a6d30c4cbb32a93ef869555b00f22cc8e9085bde8255525"
+    },
+    {
+      "action_weight": "0.06",
+      "condition": "70,20,(0.225m),0.01m",
+      "logical_array": "active_cmt",
+      "file_name": "Cmt_save_active_discrete(0,1)-10-30",
+      "dataset": "Cmt_save",
+      "bytes": 722048,
+      "sha256": "c22684442ba578c600cc8750bbed3f1546684e7e487d224fa5ce5aad9e55b0fe"
+    },
+    {
+      "action_weight": "0.06",
+      "condition": "70,20,(0.225m),0.01m",
+      "logical_array": "continuous_status",
+      "file_name": "working_save_active_continuous-10-30",
+      "dataset": "working_save_active_continuous",
+      "bytes": 722048,
+      "sha256": "acdf0e2d82167005d0ae20f330863cf37ceceb3f2c85ff67d7873180e958e704"
+    },
+    {
+      "action_weight": "0.06",
+      "condition": "70,20,(0.225m),0.01m",
+      "logical_array": "continuous_cmt",
+      "file_name": "Cmt_save_active_continuous-10-30",
+      "dataset": "Cmt_save",
+      "bytes": 722048,
+      "sha256": "dfa478ffca396d1461a1c920a713fbc0146be8dc3aca90c049288793fae2c4fa"
+    }
+  ]
+}

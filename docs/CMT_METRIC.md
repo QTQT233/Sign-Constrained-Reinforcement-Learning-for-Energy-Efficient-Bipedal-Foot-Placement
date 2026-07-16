@@ -1,116 +1,70 @@
-# Positive commanded-work metric used by the two-link action-weight evaluators
+# Cmt metric used by the two-link action-weight evaluators
 
-## Definition
+## Definition and interpretation
 
-For an internal hip actuator with applied torque `tau_h` in N m, relative hip
-angular speed `omega_h = theta_dot_2 - theta_dot_1` in rad/s, and evaluator
-sample period `dt` in s, the accumulated positive commanded work is
+For applied internal hip torque `tau_h` in N m, relative hip angular speed
+`omega_h = theta_dot_2 - theta_dot_1` in rad/s, and sample period `dt` in s, the
+evaluators accumulate positive commanded mechanical work as
 
 ```text
 W_h^+ = sum_t max(tau_h,t * omega_h,t, 0) * dt .
 ```
 
-`positive_actuator_work_increment()` implements the per-sample term.  Its first
-argument is the *applied physical torque* in N m.  A caller must not multiply
-that value by the actuator scale again.
-
-The action-weight archive reports the dimensionless ratio
+They then report the dimensionless cost of mechanical transport
 
 ```text
-Cmt = W_h^+ / (m_total * g * abs(x_com,end - x_com,start)).
+Cmt = W_h^+ / ((m_1 + m_2) * g * abs(x_com,end - x_com,start)).
 ```
 
-when the denominator is positive.  This ratio is a commanded mechanical-work
-proxy; it is not electrical energy.
+Thus, for a shared denominator and evaluation protocol, a lower Cmt means less
+positive commanded mechanical work per unit body weight and center-of-mass
+travel. Cmt is an energy-efficiency metric, but it is not a direct measurement
+of battery energy: motor efficiency, regenerative power, electronics, and
+negative mechanical work are not included.
 
-## Deterministic legacy factor-of-four correction
+## Continuous-controller implementation
 
-The archived continuous evaluator clipped the sampled policy output to
-`[-4, 4]` N m and applied that value directly as the physical torque in the
-equations of motion. It then multiplied the same torque by the fixed actuator
-bound `T = 4` a second time inside the work accumulator. Under the following
-conditions, dividing that archived continuous numerator (and therefore Cmt) by
-four is algebraically exact:
+The canonical scripts clip the continuous policy output to the physical torque
+range and apply that same value in the dynamics and positive-work accumulator:
 
-1. `T` is the same positive constant, 4, at every sample;
-2. the trajectory, positive-power gate, time step, endpoint displacement, and
-   aggregation mask are unchanged; and
-3. the numerator contains no unscaled additive term.
-
-For every sample satisfying those conditions,
-
-```text
-max((tau_h * 4) * omega_h, 0) * dt / 4
-    = max(tau_h * omega_h, 0) * dt .
+```python
+action_value = np.clip(action_value, -torque, torque)
+if action_value * (y[3] - y[1]) > 0:
+    Energy_save_active_continuous[...] += (
+        abs(action_value) * abs(y[3] - y[1]) * dt
+    )
+arr = np.array([[-action_value], [action_value]])
 ```
 
-The corrected source now accumulates the physical torque once.  Outputs from a
-future corrected rerun must **not** be divided by four again.
+The completed 2026-07-16 rerun therefore requires no division by four or other
+post-hoc scaling.
 
-## Legacy-archive boundary
+## Expert fusion
 
-The code correction does not rewrite any retained HDF5 file.  The 12 archived
-action-weight cells remain exploratory records and are unsuitable as a
-controlled action-weight ablation because they lack explicit training seeds and
-because the audited evaluator snapshot had additional provenance defects:
+Only status `-2` denotes expert failure. The full evaluator branch is:
 
-- 11 of 12 negative-expert Cmt files received the positive-expert Cmt array;
-- 3 of 12 evaluator snapshots wrote at least one output outside the nominal
-  action-weight directory; and
-- the row called `Proposed` is an offline fusion of two completed expert
-  rollouts, not the deployed transition-start route.  The stored expert status
-  is the successful rollout's first action (`-1`, `0`, or `+1`), while only
-  `-2` denotes failure.  The legacy fusion incorrectly treated status `0` as a
-  special numerical-minimum branch before separating success from failure.
-
-Across the 12 retained cells, 125,038 dual-success states were observed.  The
-literal `(-1,+1)` status pair occurred zero times; every retained dual-success
-pair contained at least one first-action zero and therefore reached the legacy
-`min(Cmt_negative, Cmt_positive)` branch.  Of 227,935 single-success states whose
-successful expert's first action was zero, 216,946 lay on the 443,163-state
-three-method common mask (48.954%).  Those states also reached `min`, now against the failed
-expert's initialized Cmt of zero, and consequently produced a spurious zero.
-The archived `Proposed` means are therefore low-biased forensic quantities and
-must not be ranked against active PPO or interpreted as a selector result.
-
-The evaluator constructed `Cmt_save_passive` in memory before writing the
-fused result.  The historical negative-file target error did not retroactively
-change that array, but it prevents an independent corrected reconstruction
-from the two retained expert Cmt files.  The retained HDF5 arrays are not
-rewritten.  The source patch is prospective: it defines success as
-`status != -2`, preserves the sole successful expert, compares valid Cmt only
-when both experts succeeded, and emits `-2` only when both failed.
-
-The patched evaluators correct the negative-expert array and nominal output
-directory for future reruns.  Existing HDF5 values are intentionally retained
-unchanged so that source corrections are not confused with regenerated data.
-
-## Patch contents and verification
-
-The public patch includes the shared metric/fusion module, 12 canonical
-action-weight evaluators, one optimized evaluator, and regression tests.  Every evaluator
-accepts the data/model/output root through the `ENERGY_COMPARISON_DATA_ROOT`
-environment variable.  The historical Windows path remains only as the
-documented default so that the source snapshot retains its provenance.
-
-From `src/two_link/action_weight`, run:
-
-```text
-python -m unittest discover -s tests -v
+```python
+if working_save_passive[i, j, k, ll] == 0:
+    if working_save0_1[i, j, k, ll] != -2 and working_save01[i, j, k, ll] != -2:
+        Cmt_save_passive[i, j, k, ll] = min(
+            Cmt_save01[i, j, k, ll], Cmt_save0_1[i, j, k, ll]
+        )
+    elif working_save0_1[i, j, k, ll] == -2:
+        Cmt_save_passive[i, j, k, ll] = Cmt_save01[i, j, k, ll]
+    else:
+        Cmt_save_passive[i, j, k, ll] = Cmt_save0_1[i, j, k, ll]
 ```
 
-The tests verify units and sign gating, the deterministic factor-of-four
-identity, the success-first fusion truth table (including single-success status
-zero), use of both shared functions in all 13 included evaluators, correct
-negative-expert Cmt writes in all 12 canonical evaluators, and nominal output
-directory placement.  They also read the published 12-cell CSV and verify all
-12 `legacy_raw / 4 = corrected` rows numerically.  A separate 12-cell fusion
-audit CSV records the retained status-pair and spurious-zero counts.
+The minimum is evaluated only when both experts are valid. If one expert
+fails, the successful expert's Cmt is retained. Recomputing the complete branch
+over all 12 result cells produced zero mismatches.
 
-For a portable run of the optimized evaluator in a checkout containing the
-required checkpoints, set the data root explicitly:
+## Rerun provenance
 
-```bash
-ENERGY_COMPARISON_DATA_ROOT=/path/to/Energy_Comparison \
-python "action_weight=0.02/60,30(0.33m)/Whole_energy_comparison_low_dim_optimized.py"
-```
+The 12 canonical scripts use fixed evaluation seed `20260716`. The negative
+expert's HDF5 output now receives `Cmt_save0_1`, not the positive expert array.
+`analysis/recompute_action_weight_table_ii.py` reads the resulting HDF5 files,
+validates shape, finiteness, expert-file separation, and the full fusion branch,
+then computes Table II on each condition's three-method common-feasible mask.
+The result CSV and JSON manifest include sample counts, distribution summaries,
+script hashes, and all HDF5 input hashes.

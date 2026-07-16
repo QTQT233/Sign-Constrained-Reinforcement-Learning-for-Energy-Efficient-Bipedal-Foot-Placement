@@ -1,39 +1,31 @@
-# Local action-weight sync manifest
+# Local action-weight source and result sync
 
-The public patch contains 12 canonical evaluators, one optimized evaluator,
-the shared Cmt/fusion module, regression tests, and two read-only 12-cell audit
-tables.  The historical local tree additionally contains three files named
-`Whole_energy_comparison_low_dim - 副本.py`.  Those copies are not published,
-but they must receive the same prospective code correction.
+The 12 canonical GitHub evaluators are byte-matched copies of the official
+local files at
 
-Run the mechanical sync from an account that can write the local project:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File tools\sync_action_weight_patch_to_local.ps1 `
-  -LocalRoot "D:\L&S\Mas\Project\Paper1\Energy_Comparison" `
-  -PythonExe "D:\L-Environment\Anaconda3\envs\Pytorch\python.exe"
+```text
+Energy_Comparison/action_weight={0.02,0.04,0.06}/<condition>/
+Whole_energy_comparison_low_dim.py
 ```
 
-The script copies `cmt_metrics.py`, all 12 canonical evaluators, and the
-optimized evaluator.  It deliberately does **not** overwrite the three files
-matching `Whole_energy_comparison_low_dim - *.py`: those historical variants
-have substantive source differences.  Patch each copy in place by adding
-`select_successful_expert_by_cmt` to its existing `cmt_metrics` import and by
-replacing only the legacy `working_save_passive`/`Cmt_save_passive`
-construction loops with:
+Files named `Whole_energy_comparison_low_dim_optimized.py` and historical
+`- 副本.py` variants are not canonical Table II sources. The official files
+contain two deliberate reproducibility changes:
 
-```python
-working_save_passive, Cmt_save_passive = select_successful_expert_by_cmt(
-    working_save0_1,
-    Cmt_save0_1,
-    working_save01,
-    Cmt_save01,
-    tie_break="positive",
-)
+1. the negative-expert HDF5 file receives `Cmt_save0_1`; and
+2. Python, NumPy, PyTorch, and CUDA evaluation generators use seed `20260716`.
+
+The existing complete Cmt fusion branch is retained unchanged. It compares
+negative and positive expert Cmt only when both expert statuses are not `-2`,
+and otherwise selects the successful expert.
+
+After a local rerun, regenerate and validate the repository outputs with:
+
+```bash
+python analysis/recompute_action_weight_table_ii.py \
+  --data-root /path/to/Energy_Comparison
 ```
 
-Do not change any other line in an archival copy.  After those three surgical
-edits, the sync script requires one wildcard match per weight, performs byte
-hash checks for the 13 public files, verifies both shared functions in all 16
-local scripts, and executes a scalar fusion truth table.  It does not open or
-rewrite any HDF5 file.
+The JSON manifest written under `results/` binds each of the 12 public scripts
+and 120 local HDF5 inputs to a SHA-256 digest. This is the authoritative
+source-to-result link for Table II.
