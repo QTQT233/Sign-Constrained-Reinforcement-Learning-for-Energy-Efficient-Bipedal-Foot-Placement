@@ -16,7 +16,7 @@ They then report the dimensionless cost of mechanical transport
 Cmt = W_h^+ / ((m_1 + m_2) * g * abs(x_com,end - x_com,start)).
 ```
 
-Table II admits a Cmt value only when the center-of-mass displacement is
+The final Appendix D action-weight audit admits a Cmt value only when the center-of-mass displacement is
 strictly greater than `0.01 m`. The canonical evaluators save the displacement
 arrays as `D_save*` HDF5 files so the denominator screen can be audited without
 reconstructing a trajectory.
@@ -77,6 +77,6 @@ The 12 canonical scripts use fixed evaluation seed `20260716`. The negative
 expert's HDF5 output now receives `Cmt_save0_1`, not the positive expert array.
 `analysis/recompute_action_weight_table_ii.py` reads the resulting HDF5 files,
 validates shape, finiteness, expert-file separation, and the full fusion branch,
-then computes Table II on each condition's three-method common-feasible mask.
+then computes the Appendix D audit on each condition's three-method common-feasible mask.
 The result CSV and JSON manifest include sample counts, distribution summaries,
 script hashes, and all HDF5 input hashes.

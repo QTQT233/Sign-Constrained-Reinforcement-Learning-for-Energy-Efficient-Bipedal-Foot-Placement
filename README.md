@@ -9,7 +9,7 @@ Canonical code repository:
 ## What is in this repository
 
 - `src/`: versioned experiment and training programs, organized by experiment
-  family. The 12 Table II evaluators include the documented negative-expert
+  family. The 12 legacy action-weight evaluators used in Appendix D include the documented negative-expert
   output fix and fixed evaluation seed.
 - `analysis/`: external read-only scripts that regenerate manuscript-facing
   statistics from frozen CSV outputs.
@@ -32,7 +32,7 @@ and DOI workflow; do not force-push the historical repository.
 The manuscript-primary four-link release is the V22_3/V9 fixed-checkpoint output
 from 5 July 2026: active PPO succeeded in 975/2160 matched cases (45.1%) and the
 online selector in 964/2160 (44.6%). The release contains all 19 trial-level and
-summary CSVs required to regenerate Tables VII-XI and the paired inference. The
+summary CSVs required to regenerate Table VI, Appendix B, and the paired inference. The
 exact historical extended-evaluator bytes were not retained. A separately named
 legacy reconstruction restores the documented V22_3 touchdown bounds and is
 never represented as the missing original source. A full 2160-case rerun of
@@ -117,7 +117,7 @@ python tools/audit_paper2_readonly.py \
   --output-root paper2_rerun_logs
 ```
 
-## Two-link action-weight evaluation (Table II)
+## Two-link action-weight audit (Appendix D)
 
 The 12 canonical `Whole_energy_comparison_low_dim.py` files under
 `src/two_link/action_weight/` use random seed `20260716`, write the negative
@@ -130,7 +130,7 @@ experts succeed, the lower finite Cmt is retained; when only one expert
 succeeds, that expert's finite value is retained. Only status `-2` denotes
 expert failure.
 
-Table II is recomputed on the condition-specific common-feasible and
+The Appendix D audit is recomputed on the condition-specific common-feasible and
 common-displacement-eligible mask shared by the Proposed, Active PPO, and
 Continuous PPO evaluations. For the retained pre-threshold HDF5 archive,
 positive-work displacement is recovered exactly as `D = E/(W*Cmt)`; zero-
@@ -148,8 +148,10 @@ cd src/two_link/action_weight
 python -m unittest discover -s tests -v
 ```
 
-The analysis is a fixed-checkpoint action-weight performance ablation. It does
-not by itself estimate variability across independent training seeds. See
+The retained archive verifies the deterministic continuous-torque scale
+correction and documents provenance/eligibility boundaries. It is not a
+matched-retraining sensitivity experiment and does not estimate variability
+across independent training seeds. See
 `docs/TABLE_II_AUDIT.md`, `docs/CMT_METRIC.md`, and
 `docs/ACTION_WEIGHT_LOCAL_SYNC.md` for the exact protocol and provenance.
 
@@ -167,7 +169,8 @@ a causal persistence claim is specified in `docs/ABLATION_PROTOCOL.md`.
 
 ## Data and model artifacts
 
-Large HDF5 arrays, raw per-trial CSVs, training logs, and checkpoints should be
+Large HDF5 arrays, raw per-trial CSVs, training logs, checkpoints, and the two
+hardware videos (`Flat_walking.mp4` and `Ueven_foot_placement.mp4`) should be
 deposited as a versioned research-data archive with a DOI. Replace the DOI
 placeholder in `data/README.md` and in the manuscript Data Availability
 statement only after the archive is public and its checksums have been tested.
@@ -181,4 +184,5 @@ file-level SHA-256 manifest for the Robotics and Autonomous Systems submission.
 
 No source or data license has yet been selected. The authors must add explicit
 code and data licenses before public release; absence of a license does not
-grant reuse permission.
+grant reuse permission. See `docs/LICENSE_SELECTION.md` for the code/data
+scope decision and the exact release steps.

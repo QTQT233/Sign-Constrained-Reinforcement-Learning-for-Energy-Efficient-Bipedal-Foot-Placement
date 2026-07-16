@@ -1,4 +1,7 @@
-# Table II fixed-seed rerun and audit
+# Legacy action-weight fixed-seed rerun and audit (final Appendix D)
+
+The filename is retained for compatibility with intermediate-draft links; the
+final manuscript moves this material out of main Table II and into Appendix D.
 
 ## Protocol
 

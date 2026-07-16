@@ -28,4 +28,4 @@ python analysis/recompute_action_weight_table_ii.py \
 
 The JSON manifest written under `results/` binds each of the 12 public scripts
 and 120 local HDF5 inputs to a SHA-256 digest. This is the authoritative
-source-to-result link for Table II.
+source-to-result link for the final Appendix D action-weight audit.

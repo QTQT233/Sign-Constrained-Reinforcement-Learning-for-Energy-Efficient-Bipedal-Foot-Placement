@@ -8,21 +8,21 @@ and should be cited from the manuscript's Data Availability statement.
 
 1. `README.md` with the manuscript title, authors, contact, license, software
    versions, directory map, and exact Git commit used for the paper.
-2. Table I source maps: the active, negative-expert, and positive-expert HDF5
+2. Table III source maps: the active, negative-expert, and positive-expert HDF5
    files, with SHA-256 hashes and the sampled-grid definition.
-3. Table II source arrays for all 12 condition/weight cells: controller status,
+3. Appendix D source arrays for all 12 condition/weight cells: controller status,
    mechanical energy, COM displacement, and Cmt arrays. Preserve the pre-filter
    results and the final `D > 0.01 m` result/manifest files.
 4. Tables IV-V per-case inputs and outputs: the 12 case definitions, checkpoints,
    captured stdout, timing/error summaries, and source hashes.
-5. Tables VI-XI four-link trial-level CSV files, configuration manifests,
+5. Table VI and Appendix B four-link trial-level CSV files, configuration manifests,
    controller/checkpoint identifiers, training logs, and paired-inference output.
 6. Hardware evidence: a complete trial manifest, commanded footholds, timestamps,
    state/encoder logs, calibration and parameter-identification files, failure
    labels, and the original videos. Do not report a hardware success rate unless
    every attempted trial is represented.
 7. Figure source data and deterministic scripts, including
-   `analysis/plot_figure10_mechanistic_ablation.py` and its PNG/PDF/SVG outputs.
+   `analysis/plot_figure08_four_link_diagnostics.py` and its PNG/PDF/SVG outputs.
 8. One machine-readable `manifest.csv` containing every archived file's relative
    path, byte size, SHA-256 hash, provenance, and manuscript table/figure link.
 
@@ -40,7 +40,7 @@ and should be cited from the manuscript's Data Availability statement.
 
 - The released Git repository contains processed summaries and replay material,
   but not every large HDF5 source array or complete hardware trial log.
-- The Table II `D > 0.01 m` values are reproducible from the archived metric
+- The Appendix D `D > 0.01 m` values are reproducible from the archived metric
   arrays and recorded recovery rule; a clean rerun should additionally archive
   the newly written `D_save*.h5` files.
 - The two-link hardware lookup is event-updated; it must not be described as a

@@ -1,4 +1,8 @@
-"""Reproduce manuscript Figure 10 from the released four-link summaries.
+"""Reproduce the manuscript four-link diagnostic figure from released summaries.
+
+The final table/figure reorganization numbers this panel set as Figure 8.  The
+historical filename is retained so links from the intermediate manuscript do
+not break; ``plot_figure08_four_link_diagnostics.py`` is the final-number alias.
 
 The figure separates the controller timing mechanism (panel a), full-domain
 success/valid-Cmt rates (panel b), controller-level valid-transition Cmt
@@ -71,10 +75,10 @@ def draw_sequence(ax, y: float, values: list[int], color: str, label: str, note:
                 ha="center", va="center", fontsize=8)
 
 
-def main() -> None:
+def main(default_basename: str = "figure10_mechanistic_ablation") -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output-dir", type=Path, default=ROOT / "results" / "figures")
-    parser.add_argument("--basename", default="figure10_mechanistic_ablation")
+    parser.add_argument("--basename", default=default_basename)
     args = parser.parse_args()
     args.output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -82,7 +86,8 @@ def main() -> None:
     paired = {row["passive_controller"]: row for row in read_rows(PAIRED_SUMMARY)}
     references = {row["comparison_controller"]: row for row in read_rows(REFERENCE_SUMMARY)}
 
-    fig, axes = plt.subplots(2, 2, figsize=(10.2, 7.0), constrained_layout=True)
+    fig, axes = plt.subplots(2, 2, figsize=(10.8, 8.2), constrained_layout=True)
+    fig.set_constrained_layout_pads(w_pad=0.06, h_pad=0.08, wspace=0.08, hspace=0.16)
     ax_a, ax_b, ax_c, ax_d = axes.flat
 
     # a: timing mechanism schematic
@@ -159,8 +164,6 @@ def main() -> None:
     ax_d.set_xlim(30, 94)
     ax_d.set_xlabel("Fraction with lower Cmt than Active PPO (%)")
     ax_d.grid(axis="x", alpha=0.25, linewidth=0.6)
-    ax_d.text(50, 3.25, "50%: no dominance", ha="center", va="bottom",
-              fontsize=6.8, color="#666666")
 
     fig.suptitle(
         "Four-link mechanistic ablation of transition-level sign commitment",

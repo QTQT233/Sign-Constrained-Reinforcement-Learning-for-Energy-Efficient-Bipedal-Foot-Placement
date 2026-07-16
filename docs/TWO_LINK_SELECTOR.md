@@ -12,10 +12,14 @@ transition-locked expert routing** implementation.
 
 `working_save-ATC-50` is the `50^4` higher-resolution deployment table that
 implements the same offline mapping concept for the hardware controller. It is
-not an interpolation of the released coarse array, and no generator for the
-historical artifact is available in this release. It is also not an online
-comparison of critic return estimates. Values `-1`, `0`, and `+1` are converted
-to negative, zero, and positive hip-torque commands. The `-2` value is the
+not an interpolation of the released coarse array. The author-confirmed
+generator follows the same two-expert evaluation/fusion logic used for the
+`60,30(0.33m)` / `working_save_passive-10-30` family, with all four state axes
+discretized to 50 points. The release contains the corresponding 50-bin
+generator-family source and hardware consumers, but the large generated table
+belongs in the DOI-backed data archive. The table is not an online comparison
+of critic return estimates. Values `-1`, `0`, and `+1` are converted to
+negative, zero, and positive hip-torque commands. The `-2` value is the
 uncovered/failure sentinel handled by the deployment fallback.
 
 ## Deployment update rule
@@ -39,8 +43,8 @@ Use the following names consistently:
 - `learned transition-onset selector` only for the separately implemented
   four-link experiment.
 
-The Table II `Proposed` row is evaluated from the coarse expert-result arrays
-on the declared common-feasible mask. Figure and hardware descriptions may
-refer to the refined lookup, but the figures do not need to duplicate GitHub
-file links when the Methods and Code Availability sections provide the shared
-repository provenance.
+The legacy action-weight appendix is evaluated from the coarse expert-result
+arrays on the declared common-feasible mask. Figure and hardware descriptions
+may refer to the refined lookup, but the figures do not need to duplicate
+GitHub file links when the Methods and Code Availability sections provide the
+shared repository provenance.
