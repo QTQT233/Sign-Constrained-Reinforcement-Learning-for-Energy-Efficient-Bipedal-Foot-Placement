@@ -25,18 +25,18 @@ CONDITIONS = (
     "70,20,(0.225m),0.01m",
 )
 EXPECTED_COMMON_N = {
-    ("0.02", "60,30(0.33m)"): 52668,
-    ("0.02", "70,20(0.225m)"): 39675,
-    ("0.02", "60,30(0.33m),0.01m"): 50283,
-    ("0.02", "70,20,(0.225m),0.01m"): 36607,
-    ("0.04", "60,30(0.33m)"): 47241,
-    ("0.04", "70,20(0.225m)"): 35426,
-    ("0.04", "60,30(0.33m),0.01m"): 50175,
-    ("0.04", "70,20,(0.225m),0.01m"): 27651,
-    ("0.06", "60,30(0.33m)"): 52308,
-    ("0.06", "70,20(0.225m)"): 30680,
-    ("0.06", "60,30(0.33m),0.01m"): 48284,
-    ("0.06", "70,20,(0.225m),0.01m"): 27006,
+    ("0.02", "60,30(0.33m)"): 47668,
+    ("0.02", "70,20(0.225m)"): 34234,
+    ("0.02", "60,30(0.33m),0.01m"): 44834,
+    ("0.02", "70,20,(0.225m),0.01m"): 31593,
+    ("0.04", "60,30(0.33m)"): 42802,
+    ("0.04", "70,20(0.225m)"): 30811,
+    ("0.04", "60,30(0.33m),0.01m"): 44687,
+    ("0.04", "70,20,(0.225m),0.01m"): 22652,
+    ("0.06", "60,30(0.33m)"): 47431,
+    ("0.06", "70,20(0.225m)"): 25298,
+    ("0.06", "60,30(0.33m),0.01m"): 42631,
+    ("0.06", "70,20,(0.225m),0.01m"): 21994,
 }
 
 from cmt_metrics import positive_actuator_work_increment, select_successful_expert_by_cmt
@@ -125,10 +125,12 @@ class CanonicalSourceTests(unittest.TestCase):
         required = (
             "working_save_passive[i, j, k, ll] == 0",
             "working_save0_1[i, j, k, ll] != -2 and working_save01[i, j, k, ll] != -2",
-            "min(Cmt_save01[i, j, k, ll], Cmt_save0_1[i, j, k, ll])",
+            "min(positive_cmt, negative_cmt)",
             "elif working_save0_1[i, j, k, ll] == -2",
             "Cmt_save_passive[i, j, k, ll] = Cmt_save01[i, j, k, ll]",
             "Cmt_save_passive[i, j, k, ll] = Cmt_save0_1[i, j, k, ll]",
+            "np.isfinite(negative_cmt)",
+            "np.isfinite(positive_cmt)",
         )
         for _weight, _condition, script in canonical_scripts():
             source = script.read_text(encoding="utf-8")
@@ -146,6 +148,25 @@ class CanonicalSourceTests(unittest.TestCase):
             self.assertNotRegex(source, r"action_value\s*\*\s*torque")
             self.assertNotRegex(source, r"Cmt_save_active_continuous.*?/\s*4")
 
+    def test_minimum_com_displacement_is_enforced_and_archived(self):
+        required_arrays = (
+            "D_save01",
+            "D_save0_1",
+            "D_save_active_discrete",
+            "D_save_active_continuous",
+        )
+        for _weight, _condition, script in canonical_scripts():
+            source = script.read_text(encoding="utf-8")
+            self.assertIn("MIN_COM_DISPLACEMENT_M = 0.01", source, msg=str(script))
+            self.assertEqual(
+                source.count("if D > MIN_COM_DISPLACEMENT_M else np.nan"),
+                8,
+                msg=str(script),
+            )
+            for array in required_arrays:
+                self.assertIn(array, source, msg=f"{array} missing from {script}")
+            self.assertEqual(source.count("create_dataset('D_save'"), 4, msg=str(script))
+
 
 class PublishedResultTests(unittest.TestCase):
     def test_audit_csv_contains_all_rerun_cells(self):
@@ -156,8 +177,14 @@ class PublishedResultTests(unittest.TestCase):
         for row in rows:
             key = (row["action_weight"], row["archived_condition"])
             self.assertEqual(int(row["random_seed"]), 20260716)
+            self.assertEqual(float(row["minimum_com_displacement_m"]), 0.01)
             self.assertEqual(int(row["fusion_bad_n"]), 0)
             self.assertEqual(int(row["common_mask_n"]), EXPECTED_COMMON_N[key])
+            self.assertGreater(int(row["status_common_n"]), int(row["common_mask_n"]))
+            self.assertEqual(
+                int(row["status_common_n"]) - int(row["common_mask_n"]),
+                int(row["displacement_excluded_n"]),
+            )
             for field in ("continuous_mean", "active_mean", "proposed_mean"):
                 self.assertTrue(np.isfinite(float(row[field])))
 
@@ -169,6 +196,7 @@ class PublishedResultTests(unittest.TestCase):
         )
         manifest = json.loads(path.read_text(encoding="utf-8"))
         self.assertEqual(manifest["random_seed"], 20260716)
+        self.assertEqual(manifest["minimum_com_displacement_m"], 0.01)
         self.assertEqual(len(manifest["canonical_scripts"]), 12)
         for record in manifest["canonical_scripts"]:
             script = REPOSITORY_ROOT / record["path"]

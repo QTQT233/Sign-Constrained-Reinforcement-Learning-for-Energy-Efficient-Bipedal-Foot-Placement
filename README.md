@@ -120,22 +120,26 @@ python tools/audit_paper2_readonly.py \
 ## Two-link action-weight evaluation (Table II)
 
 The 12 canonical `Whole_energy_comparison_low_dim.py` files under
-`src/two_link/action_weight/` are byte-matched copies of the local evaluators
-used for the completed Table II rerun. Each evaluator uses random seed
-`20260716`, writes the negative expert's Cmt array to the negative-expert file,
-and accumulates continuous-controller positive commanded work from the applied
-physical torque exactly once. The completed fusion branch is preserved: when
-both experts succeed their Cmt values are compared; when only one expert
-succeeds that expert's value is retained. Only status `-2` denotes expert
-failure.
+`src/two_link/action_weight/` use random seed `20260716`, write the negative
+expert's Cmt array to the negative-expert file, and accumulate continuous-
+controller positive commanded work from the applied physical torque exactly
+once. They now require center-of-mass displacement `D > 0.01 m` before a Cmt
+value is admitted and archive `D_save` for every independently executed
+controller. The expert-status fusion branch remains complete: when both
+experts succeed, the lower finite Cmt is retained; when only one expert
+succeeds, that expert's finite value is retained. Only status `-2` denotes
+expert failure.
 
-Table II is recomputed on the condition-specific common-feasible mask shared by
-the Proposed, Active PPO, and Continuous PPO evaluations. The paper-facing
-values and counts are in
+Table II is recomputed on the condition-specific common-feasible and
+common-displacement-eligible mask shared by the Proposed, Active PPO, and
+Continuous PPO evaluations. For the retained pre-threshold HDF5 archive,
+positive-work displacement is recovered exactly as `D = E/(W*Cmt)`; zero-
+energy/zero-Cmt successes are retained because they cannot create a small-
+denominator tail. The paper-facing values and counts are in
 `results/action_weight_table_ii_seed_20260716.csv`; full mean, median, sample
 SD, 99th percentile, maximum, source hashes, and HDF5 hashes are in the
-companion audit CSV and JSON manifest. No post-hoc division or rescaling is
-applied to the continuous results.
+companion audit CSV and JSON manifest. The unfiltered release is preserved in
+the three files containing `pre_0p01m_filter` in their names.
 
 ```bash
 python analysis/recompute_action_weight_table_ii.py \
@@ -169,6 +173,9 @@ placeholder in `data/README.md` and in the manuscript Data Availability
 statement only after the archive is public and its checksums have been tested.
 Git LFS is optional for model files, but the DOI archive is the canonical data
 record.
+
+Use `docs/DATA_ARCHIVE_CHECKLIST.md` to assemble the DOI-backed archive and its
+file-level SHA-256 manifest for the Robotics and Autonomous Systems submission.
 
 ## License
 

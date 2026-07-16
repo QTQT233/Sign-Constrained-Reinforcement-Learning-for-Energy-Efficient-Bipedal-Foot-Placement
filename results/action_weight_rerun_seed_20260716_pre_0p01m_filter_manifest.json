@@ -1,73 +1,70 @@
 {
-  "protocol": "Table II fixed-checkpoint action-weight evaluation with a strict positive-work COM-displacement floor",
+  "protocol": "Table II fixed-checkpoint action-weight evaluation",
   "random_seed": 20260716,
-  "minimum_com_displacement_m": 0.01,
-  "common_mask": "(proposed_status != -2) & (active_status != -2) & (continuous_status != -6) & proposed_displacement_eligible & active_displacement_eligible & continuous_displacement_eligible",
-  "legacy_displacement_recovery": "For positive Cmt, D is recovered exactly from retained Energy and Cmt as D=E/(W*Cmt), W=(1.4122+0.0839)*9.81 N. Zero-energy/zero-Cmt successes are retained because they do not create a small-denominator tail. Future canonical evaluators write D_save arrays directly.",
+  "common_mask": "(proposed_status != -2) & (active_status != -2) & (continuous_status != -6)",
   "fusion_validation": "complete evaluator branch; only -2 denotes expert failure",
-  "pre_filter_manifest": "action_weight_rerun_seed_20260716_pre_0p01m_filter_manifest.json",
   "audit_csv": "action_weight_rerun_seed_20260716.csv",
   "manuscript_csv": "action_weight_table_ii_seed_20260716.csv",
   "canonical_scripts": [
     {
       "path": "src/two_link/action_weight/action_weight=0.02/60,30(0.33m)/Whole_energy_comparison_low_dim.py",
-      "bytes": 32440,
-      "sha256": "a6078e1fb25862ef18db21ba8960e3d03e2242680db4b1b61d685dfbead4eee6"
+      "bytes": 29444,
+      "sha256": "ccd042e7b4fe0657a855784ed8c28e526f5726390e963a499dcfb030e9c0a513"
     },
     {
       "path": "src/two_link/action_weight/action_weight=0.02/70,20(0.225m)/Whole_energy_comparison_low_dim.py",
-      "bytes": 32460,
-      "sha256": "86bc89cf212490439489057aa0d838ac15f24eb0ee62caf939fb8d0a0b5e282f"
+      "bytes": 29461,
+      "sha256": "819f12b38ca365b055fb391827d78b8f0a9292dd08ca64a880a68cdb20c1f74e"
     },
     {
       "path": "src/two_link/action_weight/action_weight=0.02/60,30(0.33m),0.01m/Whole_energy_comparison_low_dim.py",
-      "bytes": 32602,
-      "sha256": "a68f39d49f970da2f7ae0a750a72ac69bb478518f60106bea616030d45f0fff3"
+      "bytes": 29583,
+      "sha256": "f617299f63da00329bb03dd48f61ea099dc14b0f78d96bb17609e4b3ee759ad0"
     },
     {
       "path": "src/two_link/action_weight/action_weight=0.02/70,20,(0.225m),0.01m/Whole_energy_comparison_low_dim.py",
-      "bytes": 32646,
-      "sha256": "5de8c13a651576a5d6da3c77796ae69036788b860a1ad97900b271427a367c99"
+      "bytes": 29619,
+      "sha256": "34a032120b63cb3131c2792232bb2b686b8e01c2ec651d9fbb398f5eb9a12e76"
     },
     {
       "path": "src/two_link/action_weight/action_weight=0.04/60,30(0.33m)/Whole_energy_comparison_low_dim.py",
-      "bytes": 32210,
-      "sha256": "ae914b9660aab906b3991939f18073d97cb55965f1a3e9cdf731e265d390f45f"
+      "bytes": 29217,
+      "sha256": "8bb94c971ba0a1b3ae5d69fdd42015c602fdf1e1ca8d44d9863794e143abf0aa"
     },
     {
       "path": "src/two_link/action_weight/action_weight=0.04/70,20(0.225m)/Whole_energy_comparison_low_dim.py",
-      "bytes": 32460,
-      "sha256": "8f7ef351b205c0a560ecbaa31a8f00ea73ca6f9ed14cc930b81bf03e91cd94ee"
+      "bytes": 29461,
+      "sha256": "db2b1cc59e341c1fff72bb3ef7e248d15d4ba930395dc62a4a95478affa76438"
     },
     {
       "path": "src/two_link/action_weight/action_weight=0.04/60,30(0.33m),0.01m/Whole_energy_comparison_low_dim.py",
-      "bytes": 32599,
-      "sha256": "5370a668ee8e024542a80c94b807b0a8971f1515c4c3fda385475f3aece48659"
+      "bytes": 29580,
+      "sha256": "0c2e475e5018b2c6bcf2fccd831180e6d71a2e78e0cc3fc8dd5c3544a4acc5cd"
     },
     {
       "path": "src/two_link/action_weight/action_weight=0.04/70,20,(0.225m),0.01m/Whole_energy_comparison_low_dim.py",
-      "bytes": 32634,
-      "sha256": "bebf651f0ca7f09d670c9f30d8e06b8359e069e95d13c20c971f11907f633743"
+      "bytes": 29607,
+      "sha256": "029a70c1d587c18e0f312fb1fcf1066135f6bf2490b76ed8dc846b32534e51fd"
     },
     {
       "path": "src/two_link/action_weight/action_weight=0.06/60,30(0.33m)/Whole_energy_comparison_low_dim.py",
-      "bytes": 32438,
-      "sha256": "768262a48bd5a5317f1191546ea948531bb2654c474bf92ee52a83ac7d035672"
+      "bytes": 29443,
+      "sha256": "80b9de8743466fe2dd80474324219695c08eba33e95c6e44fa0ecdb6fdf52007"
     },
     {
       "path": "src/two_link/action_weight/action_weight=0.06/70,20(0.225m)/Whole_energy_comparison_low_dim.py",
-      "bytes": 32460,
-      "sha256": "cfe62116e93007b4781a99130b23789a64d8be9cd60963878ed9f9de5c42a2b9"
+      "bytes": 29461,
+      "sha256": "5c3416789fe4f9ed444d8e1f172c788cca3f76f8be62670dfc736ea369682f95"
     },
     {
       "path": "src/two_link/action_weight/action_weight=0.06/60,30(0.33m),0.01m/Whole_energy_comparison_low_dim.py",
-      "bytes": 32590,
-      "sha256": "d7e9816f1c33c0b404171439f3d3d8987bad440ec89261e7a2d6d50957a5c388"
+      "bytes": 29571,
+      "sha256": "92eaeaa658b79f37fc08e34f88013da2dcb5c2859c0dddb1b734d6f20fef34d6"
     },
     {
       "path": "src/two_link/action_weight/action_weight=0.06/70,20,(0.225m),0.01m/Whole_energy_comparison_low_dim.py",
-      "bytes": 32634,
-      "sha256": "ae9ab124250fd70e6dbfef3b399b6735fe83f59362d0dc253ff817a5f1fb116b"
+      "bytes": 29607,
+      "sha256": "29a07cc7da5e31add1f66a5e8b2c961ddfd9ba7c21bf7d84d9ba5f1bc142a9e8"
     }
   ],
   "input_hdf5": [
@@ -92,15 +89,6 @@
     {
       "action_weight": "0.02",
       "condition": "60,30(0.33m)",
-      "logical_array": "negative_energy",
-      "file_name": "Energy_save(-1,0)-10-30",
-      "dataset": "Energy_save",
-      "bytes": 722048,
-      "sha256": "19a6e9e235e70b744ebf984ac4d9eb04b5db9eb4c36c93888d28c57794677f05"
-    },
-    {
-      "action_weight": "0.02",
-      "condition": "60,30(0.33m)",
       "logical_array": "positive_status",
       "file_name": "working_save(0,1)-10-30",
       "dataset": "working_save",
@@ -115,15 +103,6 @@
       "dataset": "Cmt_save",
       "bytes": 722048,
       "sha256": "788f272d0864bcd0cd2c6b18199ace36fe835e82bfbe51ca8a8e35875d53e800"
-    },
-    {
-      "action_weight": "0.02",
-      "condition": "60,30(0.33m)",
-      "logical_array": "positive_energy",
-      "file_name": "Energy_save(0,1)-10-30",
-      "dataset": "Energy_save",
-      "bytes": 722048,
-      "sha256": "119a3b1a99173a5678e262ebe7ebd038200430fc702e091ce723f30ca684cff0"
     },
     {
       "action_weight": "0.02",
@@ -164,15 +143,6 @@
     {
       "action_weight": "0.02",
       "condition": "60,30(0.33m)",
-      "logical_array": "active_energy",
-      "file_name": "Energy_save_active_discrete-10-30",
-      "dataset": "Energy_save_active_discrete",
-      "bytes": 722048,
-      "sha256": "2ffa00ed23bb9bc837dc31464a0539b01d8012db3e6f2f85507049f7f08e8d65"
-    },
-    {
-      "action_weight": "0.02",
-      "condition": "60,30(0.33m)",
       "logical_array": "continuous_status",
       "file_name": "working_save_active_continuous-10-30",
       "dataset": "working_save_active_continuous",
@@ -187,15 +157,6 @@
       "dataset": "Cmt_save",
       "bytes": 722048,
       "sha256": "62a4dd5a04fc2a8ca4fd77d37f4123498db3c5cd35578b349510e4b32ce3f761"
-    },
-    {
-      "action_weight": "0.02",
-      "condition": "60,30(0.33m)",
-      "logical_array": "continuous_energy",
-      "file_name": "Energy_save_active_continuous-10-30",
-      "dataset": "Energy_save_active_continuous",
-      "bytes": 722048,
-      "sha256": "526896cbeefcc3cbd035c0341cbdfead24f5a08cb75ec58964f3f3107586e875"
     },
     {
       "action_weight": "0.02",
@@ -218,15 +179,6 @@
     {
       "action_weight": "0.02",
       "condition": "70,20(0.225m)",
-      "logical_array": "negative_energy",
-      "file_name": "Energy_save(-1,0)-10-30",
-      "dataset": "Energy_save",
-      "bytes": 722048,
-      "sha256": "a1208ec82e47681fd10705e5bd1bb5314b7a861ed3929e8d189da161fea2aad0"
-    },
-    {
-      "action_weight": "0.02",
-      "condition": "70,20(0.225m)",
       "logical_array": "positive_status",
       "file_name": "working_save(0,1)-10-30",
       "dataset": "working_save",
@@ -241,15 +193,6 @@
       "dataset": "Cmt_save",
       "bytes": 722048,
       "sha256": "7e156e24a961a6eb151c86714bad72b57ba985d6a87ebeec98a3dafdfc9e9412"
-    },
-    {
-      "action_weight": "0.02",
-      "condition": "70,20(0.225m)",
-      "logical_array": "positive_energy",
-      "file_name": "Energy_save(0,1)-10-30",
-      "dataset": "Energy_save",
-      "bytes": 722048,
-      "sha256": "c537c91ea77903398296d572938cd8caa8d40f6ec2353343bd5a93c11334479e"
     },
     {
       "action_weight": "0.02",
@@ -290,15 +233,6 @@
     {
       "action_weight": "0.02",
       "condition": "70,20(0.225m)",
-      "logical_array": "active_energy",
-      "file_name": "Energy_save_active_discrete-10-30",
-      "dataset": "Energy_save_active_discrete",
-      "bytes": 722048,
-      "sha256": "a29fdf1a1b81832f64acabfa758ce45b7e20cff396353f7c0ed16cd0b3680ba4"
-    },
-    {
-      "action_weight": "0.02",
-      "condition": "70,20(0.225m)",
       "logical_array": "continuous_status",
       "file_name": "working_save_active_continuous-10-30",
       "dataset": "working_save_active_continuous",
@@ -313,15 +247,6 @@
       "dataset": "Cmt_save",
       "bytes": 722048,
       "sha256": "fe37a4ad289f160470678a3b5c7f19a11d903568e0bdf5836d4142c5d924e091"
-    },
-    {
-      "action_weight": "0.02",
-      "condition": "70,20(0.225m)",
-      "logical_array": "continuous_energy",
-      "file_name": "Energy_save_active_continuous-10-30",
-      "dataset": "Energy_save_active_continuous",
-      "bytes": 722048,
-      "sha256": "c738854d861fb9b3c9c9904d4fb6a5584ab88e124f32d5f1f875da4c00e82928"
     },
     {
       "action_weight": "0.02",
@@ -344,15 +269,6 @@
     {
       "action_weight": "0.02",
       "condition": "60,30(0.33m),0.01m",
-      "logical_array": "negative_energy",
-      "file_name": "Energy_save(-1,0)-10-30",
-      "dataset": "Energy_save",
-      "bytes": 722048,
-      "sha256": "471b73afcef4e7fc769bfac0e87875f862e428f0026aaff4ad272d8965290219"
-    },
-    {
-      "action_weight": "0.02",
-      "condition": "60,30(0.33m),0.01m",
       "logical_array": "positive_status",
       "file_name": "working_save(0,1)-10-30",
       "dataset": "working_save",
@@ -367,15 +283,6 @@
       "dataset": "Cmt_save",
       "bytes": 722048,
       "sha256": "87991ac4bc1a641620f6b658c4862152f805075083adb8521b0c8810fa281fa1"
-    },
-    {
-      "action_weight": "0.02",
-      "condition": "60,30(0.33m),0.01m",
-      "logical_array": "positive_energy",
-      "file_name": "Energy_save(0,1)-10-30",
-      "dataset": "Energy_save",
-      "bytes": 722048,
-      "sha256": "3bbedf5e6f8903e0928a60f28889af470c3f732d3838fb7574018d25d87c71b1"
     },
     {
       "action_weight": "0.02",
@@ -416,15 +323,6 @@
     {
       "action_weight": "0.02",
       "condition": "60,30(0.33m),0.01m",
-      "logical_array": "active_energy",
-      "file_name": "Energy_save_active_discrete-10-30",
-      "dataset": "Energy_save_active_discrete",
-      "bytes": 722048,
-      "sha256": "d067f13e3f1a533aad10123fe74f9a841b579cbe6c5890fdf6a467045eb8e02f"
-    },
-    {
-      "action_weight": "0.02",
-      "condition": "60,30(0.33m),0.01m",
       "logical_array": "continuous_status",
       "file_name": "working_save_active_continuous-10-30",
       "dataset": "working_save_active_continuous",
@@ -439,15 +337,6 @@
       "dataset": "Cmt_save",
       "bytes": 722048,
       "sha256": "738e598b1d7dc599cc716c3ca39b077436b7dc2272af248b79bcd34daf8f44e1"
-    },
-    {
-      "action_weight": "0.02",
-      "condition": "60,30(0.33m),0.01m",
-      "logical_array": "continuous_energy",
-      "file_name": "Energy_save_active_continuous-10-30",
-      "dataset": "Energy_save_active_continuous",
-      "bytes": 722048,
-      "sha256": "fc2b0fb344f766ac9d7d6d7b77e830cbf6178731198a8c919c20707de2d8f1b9"
     },
     {
       "action_weight": "0.02",
@@ -470,15 +359,6 @@
     {
       "action_weight": "0.02",
       "condition": "70,20,(0.225m),0.01m",
-      "logical_array": "negative_energy",
-      "file_name": "Energy_save(-1,0)-10-30",
-      "dataset": "Energy_save",
-      "bytes": 722048,
-      "sha256": "5f072d749a80f39670ee3e1f910ee205953b97804959d87569f5fd817039b87e"
-    },
-    {
-      "action_weight": "0.02",
-      "condition": "70,20,(0.225m),0.01m",
       "logical_array": "positive_status",
       "file_name": "working_save(0,1)-10-30",
       "dataset": "working_save",
@@ -493,15 +373,6 @@
       "dataset": "Cmt_save",
       "bytes": 722048,
       "sha256": "965ee023169f1e5499e8c9a2cf4e0ccb8b9e839808c6d0927cf39616238f00cb"
-    },
-    {
-      "action_weight": "0.02",
-      "condition": "70,20,(0.225m),0.01m",
-      "logical_array": "positive_energy",
-      "file_name": "Energy_save(0,1)-10-30",
-      "dataset": "Energy_save",
-      "bytes": 722048,
-      "sha256": "b8c813c24a4813869d6bc1bdf0d3cf20673c9381835097efde40ef6fe10862f3"
     },
     {
       "action_weight": "0.02",
@@ -542,15 +413,6 @@
     {
       "action_weight": "0.02",
       "condition": "70,20,(0.225m),0.01m",
-      "logical_array": "active_energy",
-      "file_name": "Energy_save_active_discrete-10-30",
-      "dataset": "Energy_save_active_discrete",
-      "bytes": 722048,
-      "sha256": "52b17c9b138c17c2c26eb4657980b9f213cebb8f0c480182360e4c48f0b55631"
-    },
-    {
-      "action_weight": "0.02",
-      "condition": "70,20,(0.225m),0.01m",
       "logical_array": "continuous_status",
       "file_name": "working_save_active_continuous-10-30",
       "dataset": "working_save_active_continuous",
@@ -565,15 +427,6 @@
       "dataset": "Cmt_save",
       "bytes": 722048,
       "sha256": "8b9d640849f1fb6d0bec38fbb2928480e8a25f02268147c00c356f1d4ba141c4"
-    },
-    {
-      "action_weight": "0.02",
-      "condition": "70,20,(0.225m),0.01m",
-      "logical_array": "continuous_energy",
-      "file_name": "Energy_save_active_continuous-10-30",
-      "dataset": "Energy_save_active_continuous",
-      "bytes": 722048,
-      "sha256": "bd36cadb489e082160ba4999f82b4ac8ea392c201c83ffd045b0802334008851"
     },
     {
       "action_weight": "0.04",
@@ -596,15 +449,6 @@
     {
       "action_weight": "0.04",
       "condition": "60,30(0.33m)",
-      "logical_array": "negative_energy",
-      "file_name": "Energy_save(-1,0)-10-30",
-      "dataset": "Energy_save",
-      "bytes": 722048,
-      "sha256": "47f2618f3482984effc0a8c8510dbd59468b6a07c96cb54fd5276ea331a5d38b"
-    },
-    {
-      "action_weight": "0.04",
-      "condition": "60,30(0.33m)",
       "logical_array": "positive_status",
       "file_name": "working_save(0,1)-10-30",
       "dataset": "working_save",
@@ -619,15 +463,6 @@
       "dataset": "Cmt_save",
       "bytes": 722048,
       "sha256": "b552ce6f5d2ed325c9c1e9f13e5605fdda07ba6c37abbeca2a74d437b12570b6"
-    },
-    {
-      "action_weight": "0.04",
-      "condition": "60,30(0.33m)",
-      "logical_array": "positive_energy",
-      "file_name": "Energy_save(0,1)-10-30",
-      "dataset": "Energy_save",
-      "bytes": 722048,
-      "sha256": "bd9321a7dcb77b44adada16d0883a78fd28e68a1b8c859fa0eff1755602a7a17"
     },
     {
       "action_weight": "0.04",
@@ -668,15 +503,6 @@
     {
       "action_weight": "0.04",
       "condition": "60,30(0.33m)",
-      "logical_array": "active_energy",
-      "file_name": "Energy_save_active_discrete-10-30",
-      "dataset": "Energy_save_active_discrete",
-      "bytes": 722048,
-      "sha256": "24b60066ff8df83073567ecf93660097bd055ed2a633b61959aac94204365621"
-    },
-    {
-      "action_weight": "0.04",
-      "condition": "60,30(0.33m)",
       "logical_array": "continuous_status",
       "file_name": "working_save_active_continuous-10-30",
       "dataset": "working_save_active_continuous",
@@ -691,15 +517,6 @@
       "dataset": "Cmt_save",
       "bytes": 722048,
       "sha256": "34dd9ba36ba9a55692b092ce04716939b142923a4d1638d989cf053802394ffe"
-    },
-    {
-      "action_weight": "0.04",
-      "condition": "60,30(0.33m)",
-      "logical_array": "continuous_energy",
-      "file_name": "Energy_save_active_continuous-10-30",
-      "dataset": "Energy_save_active_continuous",
-      "bytes": 722048,
-      "sha256": "64c467c2871a69db821680e9dd1e683858a1fad143c1297da5f08666de5bf8dc"
     },
     {
       "action_weight": "0.04",
@@ -722,15 +539,6 @@
     {
       "action_weight": "0.04",
       "condition": "70,20(0.225m)",
-      "logical_array": "negative_energy",
-      "file_name": "Energy_save(-1,0)-10-30",
-      "dataset": "Energy_save",
-      "bytes": 722048,
-      "sha256": "5ca5015a836daa60ecf1f90a66bf716259fffc1db71d3f1e0df68836ea43f31f"
-    },
-    {
-      "action_weight": "0.04",
-      "condition": "70,20(0.225m)",
       "logical_array": "positive_status",
       "file_name": "working_save(0,1)-10-30",
       "dataset": "working_save",
@@ -745,15 +553,6 @@
       "dataset": "Cmt_save",
       "bytes": 722048,
       "sha256": "5e81415c92e25bba66c11d92b5adafa7ae61254797efa7e49dee07c7f7a80927"
-    },
-    {
-      "action_weight": "0.04",
-      "condition": "70,20(0.225m)",
-      "logical_array": "positive_energy",
-      "file_name": "Energy_save(0,1)-10-30",
-      "dataset": "Energy_save",
-      "bytes": 722048,
-      "sha256": "317d0941dfb5995517f792f61a0b81b3c7e09e2f8c157a3defad27cbccfbc15a"
     },
     {
       "action_weight": "0.04",
@@ -794,15 +593,6 @@
     {
       "action_weight": "0.04",
       "condition": "70,20(0.225m)",
-      "logical_array": "active_energy",
-      "file_name": "Energy_save_active_discrete-10-30",
-      "dataset": "Energy_save_active_discrete",
-      "bytes": 722048,
-      "sha256": "074c60b412c5418bdf2d2df83b2037e0393d36f49639ff7ac4c443f5f5554fbd"
-    },
-    {
-      "action_weight": "0.04",
-      "condition": "70,20(0.225m)",
       "logical_array": "continuous_status",
       "file_name": "working_save_active_continuous-10-30",
       "dataset": "working_save_active_continuous",
@@ -817,15 +607,6 @@
       "dataset": "Cmt_save",
       "bytes": 722048,
       "sha256": "676c556a76f5ce57d2be0604c35fa6c5d55e51dc4dc7ac6a6bc46e83c4a031df"
-    },
-    {
-      "action_weight": "0.04",
-      "condition": "70,20(0.225m)",
-      "logical_array": "continuous_energy",
-      "file_name": "Energy_save_active_continuous-10-30",
-      "dataset": "Energy_save_active_continuous",
-      "bytes": 722048,
-      "sha256": "75c90cbd9ff208072ced303df83c33d27080d82aa720fab3f004073e76940a77"
     },
     {
       "action_weight": "0.04",
@@ -848,15 +629,6 @@
     {
       "action_weight": "0.04",
       "condition": "60,30(0.33m),0.01m",
-      "logical_array": "negative_energy",
-      "file_name": "Energy_save(-1,0)-10-30",
-      "dataset": "Energy_save",
-      "bytes": 722048,
-      "sha256": "8546e835e55519cdac9e3e30175091955dca3a79ff550a03b5516870e2f9c3b2"
-    },
-    {
-      "action_weight": "0.04",
-      "condition": "60,30(0.33m),0.01m",
       "logical_array": "positive_status",
       "file_name": "working_save(0,1)-10-30",
       "dataset": "working_save",
@@ -871,15 +643,6 @@
       "dataset": "Cmt_save",
       "bytes": 722048,
       "sha256": "5f97ed65b12cae6a7376306a842567e021861f5eaf86320cd8d1a941f562b15b"
-    },
-    {
-      "action_weight": "0.04",
-      "condition": "60,30(0.33m),0.01m",
-      "logical_array": "positive_energy",
-      "file_name": "Energy_save(0,1)-10-30",
-      "dataset": "Energy_save",
-      "bytes": 722048,
-      "sha256": "9a05247bec0f8caf7e67c2d9f8a2e14f1ab9d5453783826f14e2347a23d3b919"
     },
     {
       "action_weight": "0.04",
@@ -920,15 +683,6 @@
     {
       "action_weight": "0.04",
       "condition": "60,30(0.33m),0.01m",
-      "logical_array": "active_energy",
-      "file_name": "Energy_save_active_discrete-10-30",
-      "dataset": "Energy_save_active_discrete",
-      "bytes": 722048,
-      "sha256": "92c8ca6e831cbb6683860663382d465d5b8470f27bf2d13f2a2d49355c920dda"
-    },
-    {
-      "action_weight": "0.04",
-      "condition": "60,30(0.33m),0.01m",
       "logical_array": "continuous_status",
       "file_name": "working_save_active_continuous-10-30",
       "dataset": "working_save_active_continuous",
@@ -943,15 +697,6 @@
       "dataset": "Cmt_save",
       "bytes": 722048,
       "sha256": "724de052b050a6682743e95b9c062845a8f98eff89fce52820d8e179be1d3851"
-    },
-    {
-      "action_weight": "0.04",
-      "condition": "60,30(0.33m),0.01m",
-      "logical_array": "continuous_energy",
-      "file_name": "Energy_save_active_continuous-10-30",
-      "dataset": "Energy_save_active_continuous",
-      "bytes": 722048,
-      "sha256": "60dd06c3c4af20a9364d72b730ff3437c8d5229228d0eb4c7466301459672372"
     },
     {
       "action_weight": "0.04",
@@ -974,15 +719,6 @@
     {
       "action_weight": "0.04",
       "condition": "70,20,(0.225m),0.01m",
-      "logical_array": "negative_energy",
-      "file_name": "Energy_save(-1,0)-10-30",
-      "dataset": "Energy_save",
-      "bytes": 722048,
-      "sha256": "48b15a78215497f3b1262fb442710551ae995585f728240654d66ec2713382ac"
-    },
-    {
-      "action_weight": "0.04",
-      "condition": "70,20,(0.225m),0.01m",
       "logical_array": "positive_status",
       "file_name": "working_save(0,1)-10-30",
       "dataset": "working_save",
@@ -997,15 +733,6 @@
       "dataset": "Cmt_save",
       "bytes": 722048,
       "sha256": "afd3100ef6391c5ae1f9cacc78180d644275afbdaaa40a81b971c2ec6fed226d"
-    },
-    {
-      "action_weight": "0.04",
-      "condition": "70,20,(0.225m),0.01m",
-      "logical_array": "positive_energy",
-      "file_name": "Energy_save(0,1)-10-30",
-      "dataset": "Energy_save",
-      "bytes": 722048,
-      "sha256": "b20175892547369510acdc8dd78c6b384e94137fa42c9e0819018ae1ad8ce7b7"
     },
     {
       "action_weight": "0.04",
@@ -1046,15 +773,6 @@
     {
       "action_weight": "0.04",
       "condition": "70,20,(0.225m),0.01m",
-      "logical_array": "active_energy",
-      "file_name": "Energy_save_active_discrete-10-30",
-      "dataset": "Energy_save_active_discrete",
-      "bytes": 722048,
-      "sha256": "48e69894d5b9b39983d7a6de29970c9c04837514916b710f214b89edc6dfda30"
-    },
-    {
-      "action_weight": "0.04",
-      "condition": "70,20,(0.225m),0.01m",
       "logical_array": "continuous_status",
       "file_name": "working_save_active_continuous-10-30",
       "dataset": "working_save_active_continuous",
@@ -1069,15 +787,6 @@
       "dataset": "Cmt_save",
       "bytes": 722048,
       "sha256": "b8f9600a668966919ff1d0b202ae0c70bb4fc791a1f9cea57846730c239c6911"
-    },
-    {
-      "action_weight": "0.04",
-      "condition": "70,20,(0.225m),0.01m",
-      "logical_array": "continuous_energy",
-      "file_name": "Energy_save_active_continuous-10-30",
-      "dataset": "Energy_save_active_continuous",
-      "bytes": 722048,
-      "sha256": "c724c3cc94ad93292b7d93992b88a43f6bd1e833888127fa98553c4e46204bc8"
     },
     {
       "action_weight": "0.06",
@@ -1100,15 +809,6 @@
     {
       "action_weight": "0.06",
       "condition": "60,30(0.33m)",
-      "logical_array": "negative_energy",
-      "file_name": "Energy_save(-1,0)-10-30",
-      "dataset": "Energy_save",
-      "bytes": 722048,
-      "sha256": "1275cbe02694415b1dbb4923b8d3852df03fdcd90bb4a1a6eaa97d4dac8b398f"
-    },
-    {
-      "action_weight": "0.06",
-      "condition": "60,30(0.33m)",
       "logical_array": "positive_status",
       "file_name": "working_save(0,1)-10-30",
       "dataset": "working_save",
@@ -1123,15 +823,6 @@
       "dataset": "Cmt_save",
       "bytes": 722048,
       "sha256": "1eaa7d1ad089005b190839f67b9d555b44605b30a5e8bcc5771bc2cdf55a311e"
-    },
-    {
-      "action_weight": "0.06",
-      "condition": "60,30(0.33m)",
-      "logical_array": "positive_energy",
-      "file_name": "Energy_save(0,1)-10-30",
-      "dataset": "Energy_save",
-      "bytes": 722048,
-      "sha256": "02c96bbc2e65df43e8c405f9d7f219e498f1c1a4bfa33c21d6b09a220d25db3e"
     },
     {
       "action_weight": "0.06",
@@ -1172,15 +863,6 @@
     {
       "action_weight": "0.06",
       "condition": "60,30(0.33m)",
-      "logical_array": "active_energy",
-      "file_name": "Energy_save_active_discrete-10-30",
-      "dataset": "Energy_save_active_discrete",
-      "bytes": 722048,
-      "sha256": "e6dfead57543ae2360eeee20847bc818f801fb6c1e2a86de277f7c2a2825882f"
-    },
-    {
-      "action_weight": "0.06",
-      "condition": "60,30(0.33m)",
       "logical_array": "continuous_status",
       "file_name": "working_save_active_continuous-10-30",
       "dataset": "working_save_active_continuous",
@@ -1195,15 +877,6 @@
       "dataset": "Cmt_save",
       "bytes": 722048,
       "sha256": "62a4dd5a04fc2a8ca4fd77d37f4123498db3c5cd35578b349510e4b32ce3f761"
-    },
-    {
-      "action_weight": "0.06",
-      "condition": "60,30(0.33m)",
-      "logical_array": "continuous_energy",
-      "file_name": "Energy_save_active_continuous-10-30",
-      "dataset": "Energy_save_active_continuous",
-      "bytes": 722048,
-      "sha256": "526896cbeefcc3cbd035c0341cbdfead24f5a08cb75ec58964f3f3107586e875"
     },
     {
       "action_weight": "0.06",
@@ -1226,15 +899,6 @@
     {
       "action_weight": "0.06",
       "condition": "70,20(0.225m)",
-      "logical_array": "negative_energy",
-      "file_name": "Energy_save(-1,0)-10-30",
-      "dataset": "Energy_save",
-      "bytes": 722048,
-      "sha256": "8c2363c1e0d76f54458ff5b0d0e68434cd754e707dab581472415b243815747b"
-    },
-    {
-      "action_weight": "0.06",
-      "condition": "70,20(0.225m)",
       "logical_array": "positive_status",
       "file_name": "working_save(0,1)-10-30",
       "dataset": "working_save",
@@ -1249,15 +913,6 @@
       "dataset": "Cmt_save",
       "bytes": 722048,
       "sha256": "6cb9b3ff38d0d05e3d8f7fe7152484a3f2de90fa0dd691d7a9dfcdd325675dc1"
-    },
-    {
-      "action_weight": "0.06",
-      "condition": "70,20(0.225m)",
-      "logical_array": "positive_energy",
-      "file_name": "Energy_save(0,1)-10-30",
-      "dataset": "Energy_save",
-      "bytes": 722048,
-      "sha256": "59fefff97c14285b865dc83b6b12b3fffc6432db34573e1cb18a794bf5aff050"
     },
     {
       "action_weight": "0.06",
@@ -1298,15 +953,6 @@
     {
       "action_weight": "0.06",
       "condition": "70,20(0.225m)",
-      "logical_array": "active_energy",
-      "file_name": "Energy_save_active_discrete-10-30",
-      "dataset": "Energy_save_active_discrete",
-      "bytes": 722048,
-      "sha256": "ee3fe237169897b862644e69670717e0c6bc08fb2ea17d3cec80aa322aab347d"
-    },
-    {
-      "action_weight": "0.06",
-      "condition": "70,20(0.225m)",
       "logical_array": "continuous_status",
       "file_name": "working_save_active_continuous-10-30",
       "dataset": "working_save_active_continuous",
@@ -1321,15 +967,6 @@
       "dataset": "Cmt_save",
       "bytes": 722048,
       "sha256": "cb7ff282b6166be5c55ab0a6fc194d4c80e0da4ac719d4cd20b8f91e756a602c"
-    },
-    {
-      "action_weight": "0.06",
-      "condition": "70,20(0.225m)",
-      "logical_array": "continuous_energy",
-      "file_name": "Energy_save_active_continuous-10-30",
-      "dataset": "Energy_save_active_continuous",
-      "bytes": 722048,
-      "sha256": "9234d54bbd13620cc02d40e4c985a0f78cb3c75c348a3a3bc8fddd6772e6616f"
     },
     {
       "action_weight": "0.06",
@@ -1352,15 +989,6 @@
     {
       "action_weight": "0.06",
       "condition": "60,30(0.33m),0.01m",
-      "logical_array": "negative_energy",
-      "file_name": "Energy_save(-1,0)-10-30",
-      "dataset": "Energy_save",
-      "bytes": 722048,
-      "sha256": "3f638ba2e54b19c2ddbf775659327ebc7cd96f1ae5acef85c921475cacd2627b"
-    },
-    {
-      "action_weight": "0.06",
-      "condition": "60,30(0.33m),0.01m",
       "logical_array": "positive_status",
       "file_name": "working_save(0,1)-10-30",
       "dataset": "working_save",
@@ -1375,15 +1003,6 @@
       "dataset": "Cmt_save",
       "bytes": 722048,
       "sha256": "d5424226d2d2e57d4afaa02b41de02461e29b662ccd0f3632103862564779af2"
-    },
-    {
-      "action_weight": "0.06",
-      "condition": "60,30(0.33m),0.01m",
-      "logical_array": "positive_energy",
-      "file_name": "Energy_save(0,1)-10-30",
-      "dataset": "Energy_save",
-      "bytes": 722048,
-      "sha256": "ef877dd0d2b666fdf3d473b01065fb5fa6b7e6900525bf81be68db2c962cba9b"
     },
     {
       "action_weight": "0.06",
@@ -1424,15 +1043,6 @@
     {
       "action_weight": "0.06",
       "condition": "60,30(0.33m),0.01m",
-      "logical_array": "active_energy",
-      "file_name": "Energy_save_active_discrete-10-30",
-      "dataset": "Energy_save_active_discrete",
-      "bytes": 722048,
-      "sha256": "6716a3f30848fdc2bb974f0cf8c2113762993478e8342365d07293c9555f877e"
-    },
-    {
-      "action_weight": "0.06",
-      "condition": "60,30(0.33m),0.01m",
       "logical_array": "continuous_status",
       "file_name": "working_save_active_continuous-10-30",
       "dataset": "working_save_active_continuous",
@@ -1447,15 +1057,6 @@
       "dataset": "Cmt_save",
       "bytes": 722048,
       "sha256": "3540818f8dff022984d71a8d394996041346d3fe30bd9f1317e498973dfdf7e5"
-    },
-    {
-      "action_weight": "0.06",
-      "condition": "60,30(0.33m),0.01m",
-      "logical_array": "continuous_energy",
-      "file_name": "Energy_save_active_continuous-10-30",
-      "dataset": "Energy_save_active_continuous",
-      "bytes": 722048,
-      "sha256": "9023caa59bd9175a2e4f3703fd252b8ef8f34bd0fec4ce5bc789292495b46bcf"
     },
     {
       "action_weight": "0.06",
@@ -1478,15 +1079,6 @@
     {
       "action_weight": "0.06",
       "condition": "70,20,(0.225m),0.01m",
-      "logical_array": "negative_energy",
-      "file_name": "Energy_save(-1,0)-10-30",
-      "dataset": "Energy_save",
-      "bytes": 722048,
-      "sha256": "6832f0ea0075c07e825ef0cc25d757c38bf4cbbe48cf41392a691e306a5dbf7d"
-    },
-    {
-      "action_weight": "0.06",
-      "condition": "70,20,(0.225m),0.01m",
       "logical_array": "positive_status",
       "file_name": "working_save(0,1)-10-30",
       "dataset": "working_save",
@@ -1501,15 +1093,6 @@
       "dataset": "Cmt_save",
       "bytes": 722048,
       "sha256": "88673599f6700f813c8cd2a584dcaea9cc1263a046d5d9f49c2b7930c8ee3705"
-    },
-    {
-      "action_weight": "0.06",
-      "condition": "70,20,(0.225m),0.01m",
-      "logical_array": "positive_energy",
-      "file_name": "Energy_save(0,1)-10-30",
-      "dataset": "Energy_save",
-      "bytes": 722048,
-      "sha256": "c015f8f57646c1536f15239f7a471277a59ef46f1a3df8678664a4b75185cd2d"
     },
     {
       "action_weight": "0.06",
@@ -1550,15 +1133,6 @@
     {
       "action_weight": "0.06",
       "condition": "70,20,(0.225m),0.01m",
-      "logical_array": "active_energy",
-      "file_name": "Energy_save_active_discrete-10-30",
-      "dataset": "Energy_save_active_discrete",
-      "bytes": 722048,
-      "sha256": "ad72eca115f7372ec21170f3121bfa7b43cf92ce78d237a31329ebb50cf569e5"
-    },
-    {
-      "action_weight": "0.06",
-      "condition": "70,20,(0.225m),0.01m",
       "logical_array": "continuous_status",
       "file_name": "working_save_active_continuous-10-30",
       "dataset": "working_save_active_continuous",
@@ -1573,15 +1147,6 @@
       "dataset": "Cmt_save",
       "bytes": 722048,
       "sha256": "dfa478ffca396d1461a1c920a713fbc0146be8dc3aca90c049288793fae2c4fa"
-    },
-    {
-      "action_weight": "0.06",
-      "condition": "70,20,(0.225m),0.01m",
-      "logical_array": "continuous_energy",
-      "file_name": "Energy_save_active_continuous-10-30",
-      "dataset": "Energy_save_active_continuous",
-      "bytes": 722048,
-      "sha256": "92023a68911c18359696997c97608fb2710cc70a1106f58207d9c29b8ab62f38"
     }
   ]
 }

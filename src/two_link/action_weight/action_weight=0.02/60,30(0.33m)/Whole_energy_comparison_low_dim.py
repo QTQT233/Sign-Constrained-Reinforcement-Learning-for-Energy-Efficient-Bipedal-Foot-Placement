@@ -14,6 +14,7 @@ import h5py
 
 
 RANDOM_SEED = 20260716
+MIN_COM_DISPLACEMENT_M = 0.01
 random.seed(RANDOM_SEED)
 np.random.seed(RANDOM_SEED)
 torch.manual_seed(RANDOM_SEED)
@@ -134,6 +135,7 @@ dtht2s = np.linspace(-speed_nondim, speed_nondim, N2)
 working_save01 = np.zeros((N1, N2, N1, N2))
 Energy_save01 = np.zeros((N1, N2, N1, N2))
 Cmt_save01 = np.zeros((N1, N2, N1, N2))
+D_save01 = np.full((N1, N2, N1, N2), np.nan)
 for i_ in tqdm(range(N1)):
     for j in range(N2):
         for k in range(N1):
@@ -160,7 +162,8 @@ for i_ in tqdm(range(N1)):
                         D = abs(final_center_x - initial_center_x)
                         W = (m1 + m2) * g
                         E = Energy_save01[i_, j, k, ll]
-                        Cmt_save01[i_, j, k, ll] = E / (W * D) if (W * D) > 0 else 0
+                        D_save01[i_, j, k, ll] = D
+                        Cmt_save01[i_, j, k, ll] = E / (W * D) if D > MIN_COM_DISPLACEMENT_M else np.nan
                         break
                     inverse_A, B = calc_new_a_b(y, m1, m2, j1, j2, l1_r, l2_r, l1, l2, g)
                     state_in_net__ = np.array([(y[0] - np.pi / 2) / rad_theta1_range,
@@ -192,12 +195,15 @@ for i_ in tqdm(range(N1)):
                         D = abs(final_center_x - initial_center_x)
                         W = (m1 + m2) * g
                         E = Energy_save01[i_, j, k, ll]
-                        Cmt_save01[i_, j, k, ll] = E / (W * D) if (W * D) > 0 else 0
+                        D_save01[i_, j, k, ll] = D
+                        Cmt_save01[i_, j, k, ll] = E / (W * D) if D > MIN_COM_DISPLACEMENT_M else np.nan
                         break
 with h5py.File('D:/L&S/Mas/Project/Paper1/Energy_Comparison/action_weight=0.02/60,30(0.33m)/working_save(0,1)-10-30', 'w') as h5f:
     h5f.create_dataset('working_save', data=working_save01)
 with h5py.File('D:/L&S/Mas/Project/Paper1/Energy_Comparison/action_weight=0.02/60,30(0.33m)/Cmt_save(0,1)-10-30', 'w') as h5f:
     h5f.create_dataset('Cmt_save', data=Cmt_save01)
+with h5py.File('D:/L&S/Mas/Project/Paper1/Energy_Comparison/action_weight=0.02/60,30(0.33m)/D_save(0,1)-10-30', 'w') as h5f:
+    h5f.create_dataset('D_save', data=D_save01)
 with h5py.File('D:/L&S/Mas/Project/Paper1/Energy_Comparison/action_weight=0.02/60,30(0.33m)/Energy_save(0,1)-10-30', 'w') as h5f:
     h5f.create_dataset('Energy_save', data=Energy_save01)
 
@@ -214,6 +220,7 @@ dtht2s = np.linspace(-speed_nondim, speed_nondim, N2)
 working_save0_1 = np.zeros((N1, N2, N1, N2))
 Energy_save0_1 = np.zeros((N1, N2, N1, N2))
 Cmt_save0_1 = np.zeros((N1, N2, N1, N2))
+D_save0_1 = np.full((N1, N2, N1, N2), np.nan)
 for i_ in tqdm(range(N1)):
     for j in range(N2):
         for k in range(N1):
@@ -240,7 +247,8 @@ for i_ in tqdm(range(N1)):
                         D = abs(final_center_x - initial_center_x)
                         W = (m1 + m2) * g
                         E = Energy_save0_1[i_, j, k, ll]
-                        Cmt_save0_1[i_, j, k, ll] = E / (W * D) if (W * D) > 0 else 0
+                        D_save0_1[i_, j, k, ll] = D
+                        Cmt_save0_1[i_, j, k, ll] = E / (W * D) if D > MIN_COM_DISPLACEMENT_M else np.nan
                         break
                     inverse_A, B = calc_new_a_b(y, m1, m2, j1, j2, l1_r, l2_r, l1, l2, g)
                     state_in_net__ = np.array([(y[0] - np.pi / 2) / rad_theta1_range,
@@ -279,17 +287,20 @@ for i_ in tqdm(range(N1)):
                         D = abs(final_center_x - initial_center_x)
                         W = (m1 + m2) * g
                         E = Energy_save0_1[i_, j, k, ll]
-                        Cmt_save0_1[i_, j, k, ll] = E / (W * D) if (W * D) > 0 else 0
+                        D_save0_1[i_, j, k, ll] = D
+                        Cmt_save0_1[i_, j, k, ll] = E / (W * D) if D > MIN_COM_DISPLACEMENT_M else np.nan
                         break
 with h5py.File('D:/L&S/Mas/Project/Paper1/Energy_Comparison/action_weight=0.02/60,30(0.33m)/working_save(-1,0)-10-30', 'w') as h5f:
     h5f.create_dataset('working_save', data=working_save0_1)
 with h5py.File('D:/L&S/Mas/Project/Paper1/Energy_Comparison/action_weight=0.02/60,30(0.33m)/Cmt_save(-1,0)-10-30', 'w') as h5f:
     h5f.create_dataset('Cmt_save', data=Cmt_save0_1)
+with h5py.File('D:/L&S/Mas/Project/Paper1/Energy_Comparison/action_weight=0.02/60,30(0.33m)/D_save(-1,0)-10-30', 'w') as h5f:
+    h5f.create_dataset('D_save', data=D_save0_1)
 with h5py.File('D:/L&S/Mas/Project/Paper1/Energy_Comparison/action_weight=0.02/60,30(0.33m)/Energy_save(-1,0)-10-30', 'w') as h5f:
     h5f.create_dataset('Energy_save', data=Energy_save0_1)
 
 working_save_passive = np.zeros((N1, N2, N1, N2))
-Cmt_save_passive = np.zeros((N1, N2, N1, N2))
+Cmt_save_passive = np.full((N1, N2, N1, N2), np.nan)
 for i in tqdm(range(N1)):
     for j in range(N2):
         for k in range(N1):
@@ -317,7 +328,16 @@ for i in tqdm(range(N1)):
                     Cmt_save_passive[i, j, k, ll] = Cmt_save01[i, j, k, ll]
                 elif working_save_passive[i, j, k, ll] == 0:
                     if working_save0_1[i, j, k, ll] != -2 and working_save01[i, j, k, ll] != -2:
-                        Cmt_save_passive[i, j, k, ll] = min(Cmt_save01[i, j, k, ll], Cmt_save0_1[i, j, k, ll])
+                        negative_cmt = Cmt_save0_1[i, j, k, ll]
+                        positive_cmt = Cmt_save01[i, j, k, ll]
+                        if np.isfinite(negative_cmt) and np.isfinite(positive_cmt):
+                            Cmt_save_passive[i, j, k, ll] = min(positive_cmt, negative_cmt)
+                        elif np.isfinite(negative_cmt):
+                            Cmt_save_passive[i, j, k, ll] = negative_cmt
+                        elif np.isfinite(positive_cmt):
+                            Cmt_save_passive[i, j, k, ll] = positive_cmt
+                        else:
+                            Cmt_save_passive[i, j, k, ll] = np.nan
                     elif working_save0_1[i, j, k, ll] == -2:
                         Cmt_save_passive[i, j, k, ll] = Cmt_save01[i, j, k, ll]
                     else:
@@ -340,6 +360,7 @@ dtht2s = np.linspace(-speed_nondim, speed_nondim, N2)
 working_save_active_discrete = np.zeros((N1, N2, N1, N2))
 Energy_save_active_discrete = np.zeros((N1, N2, N1, N2))
 Cmt_save_active_discrete = np.zeros((N1, N2, N1, N2))
+D_save_active_discrete = np.full((N1, N2, N1, N2), np.nan)
 for i_ in tqdm(range(N1)):
     for j in range(N2):
         for k in range(N1):
@@ -366,7 +387,8 @@ for i_ in tqdm(range(N1)):
                         D = abs(final_center_x - initial_center_x)
                         W = (m1 + m2) * g
                         E = Energy_save_active_discrete[i_, j, k, ll]
-                        Cmt_save_active_discrete[i_, j, k, ll] = E / (W * D) if (W * D) > 0 else 0
+                        D_save_active_discrete[i_, j, k, ll] = D
+                        Cmt_save_active_discrete[i_, j, k, ll] = E / (W * D) if D > MIN_COM_DISPLACEMENT_M else np.nan
                         break
                     inverse_A, B = calc_new_a_b(y, m1, m2, j1, j2, l1_r, l2_r, l1, l2, g)
                     state_in_net_ = np.array([(y[0] - np.pi / 2) / rad_theta1_range,
@@ -399,7 +421,8 @@ for i_ in tqdm(range(N1)):
                         D = abs(final_center_x - initial_center_x)
                         W = (m1 + m2) * g
                         E = Energy_save_active_discrete[i_, j, k, ll]
-                        Cmt_save_active_discrete[i_, j, k, ll] = E / (W * D) if (W * D) > 0 else 0
+                        D_save_active_discrete[i_, j, k, ll] = D
+                        Cmt_save_active_discrete[i_, j, k, ll] = E / (W * D) if D > MIN_COM_DISPLACEMENT_M else np.nan
                         break
 with h5py.File('D:/L&S/Mas/Project/Paper1/Energy_Comparison/action_weight=0.02/60,30(0.33m)/working_save_active_discrete-10-30', 'w') as h5f:
     h5f.create_dataset('working_save_active_discrete', data=working_save_active_discrete)
@@ -407,6 +430,8 @@ with h5py.File('D:/L&S/Mas/Project/Paper1/Energy_Comparison/action_weight=0.02/6
     h5f.create_dataset('Energy_save_active_discrete', data=Energy_save_active_discrete)
 with h5py.File('D:/L&S/Mas/Project/Paper1/Energy_Comparison/action_weight=0.02/60,30(0.33m)/Cmt_save_active_discrete(0,1)-10-30', 'w') as h5f:
     h5f.create_dataset('Cmt_save', data=Cmt_save_active_discrete)
+with h5py.File('D:/L&S/Mas/Project/Paper1/Energy_Comparison/action_weight=0.02/60,30(0.33m)/D_save_active_discrete-10-30', 'w') as h5f:
+    h5f.create_dataset('D_save', data=D_save_active_discrete)
 
 N1 = 10
 N2 = 30
@@ -419,6 +444,7 @@ dtht2s = np.linspace(-speed_nondim, speed_nondim, N2)
 working_save_active_continuous = np.zeros((N1, N2, N1, N2))
 Energy_save_active_continuous = np.zeros((N1, N2, N1, N2))
 Cmt_save_active_continuous = np.zeros((N1, N2, N1, N2))
+D_save_active_continuous = np.full((N1, N2, N1, N2), np.nan)
 for i_ in tqdm(range(N1)):
     for j in range(N2):
         for k in range(N1):
@@ -444,7 +470,8 @@ for i_ in tqdm(range(N1)):
                         D = abs(final_center_x - initial_center_x)
                         W = (m1 + m2) * g
                         E = Energy_save_active_continuous[i_, j, k, ll]
-                        Cmt_save_active_continuous[i_, j, k, ll] = E / (W * D) if (W * D) > 0 else 0
+                        D_save_active_continuous[i_, j, k, ll] = D
+                        Cmt_save_active_continuous[i_, j, k, ll] = E / (W * D) if D > MIN_COM_DISPLACEMENT_M else np.nan
                         break
                     inverse_A, B = calc_new_a_b(y, m1, m2, j1, j2, l1_r, l2_r, l1, l2, g)
                     state_in_net_ = np.array([(y[0] - np.pi / 2) / rad_theta1_range,
@@ -480,7 +507,8 @@ for i_ in tqdm(range(N1)):
                         D = abs(final_center_x - initial_center_x)
                         W = (m1 + m2) * g
                         E = Energy_save_active_continuous[i_, j, k, ll]
-                        Cmt_save_active_continuous[i_, j, k, ll] = E / (W * D) if (W * D) > 0 else 0
+                        D_save_active_continuous[i_, j, k, ll] = D
+                        Cmt_save_active_continuous[i_, j, k, ll] = E / (W * D) if D > MIN_COM_DISPLACEMENT_M else np.nan
                         break
 
 with h5py.File('D:/L&S/Mas/Project/Paper1/Energy_Comparison/action_weight=0.02/60,30(0.33m)/working_save_active_continuous-10-30', 'w') as h5f:
@@ -489,6 +517,8 @@ with h5py.File('D:/L&S/Mas/Project/Paper1/Energy_Comparison/action_weight=0.02/6
     h5f.create_dataset('Energy_save_active_continuous', data=Energy_save_active_continuous)
 with h5py.File('D:/L&S/Mas/Project/Paper1/Energy_Comparison/action_weight=0.02/60,30(0.33m)/Cmt_save_active_continuous-10-30', 'w') as h5f:
     h5f.create_dataset('Cmt_save', data=Cmt_save_active_continuous)
+with h5py.File('D:/L&S/Mas/Project/Paper1/Energy_Comparison/action_weight=0.02/60,30(0.33m)/D_save_active_continuous-10-30', 'w') as h5f:
+    h5f.create_dataset('D_save', data=D_save_active_continuous)
 
 Passive_energy = 0
 Active_energy_discrete = 0
@@ -514,7 +544,10 @@ for i_ in tqdm(range(N1)):
                 if working_save_active_continuous[i_, j, k, ll] != -6:
                     Active_continuous += 1
                 if working_save_passive[i_, j, k, ll] != -2 and working_save_active_discrete[i_, j, k, ll] != -2 and \
-                        working_save_active_continuous[i_, j, k, ll] != -6:
+                        working_save_active_continuous[i_, j, k, ll] != -6 and \
+                        np.isfinite(Cmt_save_passive[i_, j, k, ll]) and \
+                        np.isfinite(Cmt_save_active_discrete[i_, j, k, ll]) and \
+                        np.isfinite(Cmt_save_active_continuous[i_, j, k, ll]):
                     error1 = Cmt_save_active_discrete[i_, j, k, ll] - Cmt_save_passive[i_, j, k, ll]
                     error2 = Cmt_save_active_continuous[i_, j, k, ll] - Cmt_save_passive[i_, j, k, ll]
                     error = error1 + error2

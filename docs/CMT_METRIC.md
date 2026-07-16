@@ -16,6 +16,11 @@ They then report the dimensionless cost of mechanical transport
 Cmt = W_h^+ / ((m_1 + m_2) * g * abs(x_com,end - x_com,start)).
 ```
 
+Table II admits a Cmt value only when the center-of-mass displacement is
+strictly greater than `0.01 m`. The canonical evaluators save the displacement
+arrays as `D_save*` HDF5 files so the denominator screen can be audited without
+reconstructing a trajectory.
+
 Thus, for a shared denominator and evaluation protocol, a lower Cmt means less
 positive commanded mechanical work per unit body weight and center-of-mass
 travel. Cmt is an energy-efficiency metric, but it is not a direct measurement
@@ -46,9 +51,16 @@ Only status `-2` denotes expert failure. The full evaluator branch is:
 ```python
 if working_save_passive[i, j, k, ll] == 0:
     if working_save0_1[i, j, k, ll] != -2 and working_save01[i, j, k, ll] != -2:
-        Cmt_save_passive[i, j, k, ll] = min(
-            Cmt_save01[i, j, k, ll], Cmt_save0_1[i, j, k, ll]
-        )
+        negative_cmt = Cmt_save0_1[i, j, k, ll]
+        positive_cmt = Cmt_save01[i, j, k, ll]
+        if np.isfinite(negative_cmt) and np.isfinite(positive_cmt):
+            Cmt_save_passive[i, j, k, ll] = min(positive_cmt, negative_cmt)
+        elif np.isfinite(negative_cmt):
+            Cmt_save_passive[i, j, k, ll] = negative_cmt
+        elif np.isfinite(positive_cmt):
+            Cmt_save_passive[i, j, k, ll] = positive_cmt
+        else:
+            Cmt_save_passive[i, j, k, ll] = np.nan
     elif working_save0_1[i, j, k, ll] == -2:
         Cmt_save_passive[i, j, k, ll] = Cmt_save01[i, j, k, ll]
     else:
