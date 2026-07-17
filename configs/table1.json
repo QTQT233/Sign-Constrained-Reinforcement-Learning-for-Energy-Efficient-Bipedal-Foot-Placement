@@ -1,0 +1,26 @@
+{
+  "paper_item": ["Table I", "Figure 4"],
+  "grid_shape": [30, 30, 30, 30],
+  "sampled_states": 810000,
+  "files": {
+    "active": {
+      "path": "data/two_link/action_map/working_save(-1,0,1)-30,30_from_2-2",
+      "sha256": "f0d9311df4ad5af41998c2e0df2e79b7c7c3141f396d292c77a7dcf802836d5f"
+    },
+    "negative_only": {
+      "path": "data/two_link/action_map/working_save(-1,0)-30,30",
+      "sha256": "f66e0ca5f0a548c5015c5e08b4df4b6bdc0b84be0e4cc9e11e28b7c57d3abeab"
+    },
+    "positive_only": {
+      "path": "data/two_link/action_map/working_save(0,1)-30,30",
+      "sha256": "b28cf90c594b07f40bc7f495a4fd4f230197a4845c8dfc52e3c2abd519e4bf7f"
+    }
+  },
+  "analysis": "analysis/reproduce_table1_figure4.py",
+  "expected": {
+    "active_feasible": 630328,
+    "sign_constrained_union_feasible": 582861,
+    "common_feasible": 534042
+  },
+  "continuous_row_status": "unsupported_no_matching_30_power_4_map"
+}

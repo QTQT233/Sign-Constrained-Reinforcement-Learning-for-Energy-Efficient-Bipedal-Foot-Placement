@@ -1,0 +1,2 @@
+C:\Users\Admin\AppData\Local\Temp\tvlqr_yr9pk42u\LQR.py:587: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()

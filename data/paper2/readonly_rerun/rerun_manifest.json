@@ -1,0 +1,20 @@
+﻿{
+    "python":  "Pytorch environment (see environment/local-audit-environment.txt)",
+    "python_version":  "3.9.18 (main, Sep 11 2023, 14:09:26) [MSC v.1916 64 bit (AMD64)]",
+    "paper2_root":  "paper2_case_bundle/",
+    "output_root":  "data/paper2/readonly_rerun/",
+    "timeout_seconds":  180,
+    "smoke":  false,
+    "environment_overrides":  {
+                                  "MPLBACKEND":  "Agg",
+                                  "PYTHONDONTWRITEBYTECODE":  "1",
+                                  "PYTHONIOENCODING":  "utf-8",
+                                  "PYTHONUNBUFFERED":  "1",
+                                  "KMP_DUPLICATE_LIB_OK":  "TRUE"
+                              },
+    "row_count":  60,
+    "status_counts":  {
+                          "ok":  59,
+                          "timeout":  1
+                      }
+}

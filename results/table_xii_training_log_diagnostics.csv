@@ -1,0 +1,6 @@
+label,log_file,epochs,final_curriculum,final_epoch_success_rate,last20_success_mean,last20_success_sample_sd,last20_ground_failure_mean,last20_clearance_failure_mean,uncertainty_scope
+Main active / bidirectional baseline,V22_3V9Bi400Grid_training_log.csv,637,0.9046849423237807,0.462,0.4571,0.02149638892563365,0.5145,0.014,sample SD across final 20 epoch-level batches; not across training seeds
+Active-full / U0 zero-penalty continuation diagnostic,V22_3V9ActiveFull400Grid_training_log.csv,772,0.9037042584746269,0.462,0.4711,0.01792939368452644,0.5023,0.014,sample SD across final 20 epoch-level batches; not across training seeds
+Per-step encoding continuation diagnostic,V22_3V9PerStepSign400Grid_training_log.csv,775,0.9072662068863284,0.478,0.4725,0.017566415324943813,0.4968,0.016,sample SD across final 20 epoch-level batches; not across training seeds
+Uni-negative sign,V22_3V9UniNeg400Grid_training_log.csv,742,1.0,0.374,0.3521,0.02020396000787964,0.593,0.0434,sample SD across final 20 epoch-level batches; not across training seeds
+Uni-positive sign,V22_3V9UniPos400Grid_training_log.csv,557,0.9712106440995418,0.322,0.3198,0.021490756887065362,0.6102,0.0566,sample SD across final 20 epoch-level batches; not across training seeds

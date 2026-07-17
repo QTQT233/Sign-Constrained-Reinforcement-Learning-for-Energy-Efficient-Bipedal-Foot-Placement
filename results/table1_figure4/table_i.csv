@@ -1,0 +1,4 @@
+controller_or_set,sampled_states,feasible_states,feasible_ratio,outside_set_states,outside_set_ratio
+Active PPO,810000,630328,0.7781827160493827,179672,0.22181728395061728
+Sign-constrained union,810000,582861,0.7195814814814815,227139,0.2804185185185185
+Common feasible intersection,810000,534042,0.6593111111111111,275958,0.34068888888888893

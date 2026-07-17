@@ -1,0 +1,119 @@
+{
+  "dataset": "data\\four_link\\legacy_manuscript",
+  "bootstrap_seed": 42,
+  "bootstrap_replicates": 10000,
+  "selector_success": {
+    "n": 2160,
+    "both_true": 906,
+    "a_only": 69,
+    "b_only": 58,
+    "neither": 1127,
+    "rate_a": 0.4513888888888889,
+    "rate_b": 0.4462962962962963,
+    "difference_b_minus_a": -0.005092592592592593,
+    "standard_error": 0.00521617684055441,
+    "ci95": [
+      -0.015316111337071165,
+      0.005130926151885979
+    ],
+    "ci90": [
+      -0.013672439987598786,
+      0.0034872548024135995
+    ],
+    "one_sided_95_lower": -0.013672439987598786,
+    "exact_mcnemar_two_sided_p": 0.3749570506813295
+  },
+  "selector_validity": {
+    "n": 2160,
+    "both_true": 419,
+    "a_only": 39,
+    "b_only": 61,
+    "neither": 1641,
+    "rate_a": 0.21203703703703702,
+    "rate_b": 0.2222222222222222,
+    "difference_b_minus_a": 0.010185185185185186,
+    "standard_error": 0.004624439820882402,
+    "ci95": [
+      0.0011214496875828189,
+      0.01924892068278755
+    ],
+    "ci90": [
+      0.0025786585731879504,
+      0.017791711797182422
+    ],
+    "one_sided_95_lower": 0.0025786585731879504,
+    "exact_mcnemar_two_sided_p": 0.03520020021770481
+  },
+  "selector_cmt": {
+    "both_valid_pairs": 419,
+    "both_valid_rate": 0.19398148148148148,
+    "left_mean": 1.4168741658723614,
+    "right_mean": 0.3706641632090417,
+    "left_median": 0.5104168242153854,
+    "right_median": 0.0576743756223506,
+    "mean_left_minus_right": 1.0462100026633199,
+    "mean_left_minus_right_bootstrap95": [
+      0.8220697914943578,
+      1.320454843463366
+    ],
+    "mean_pairwise_reduction": 0.4694348251763008,
+    "mean_pairwise_reduction_bootstrap95": [
+      0.3859934582041004,
+      0.5452473368000668
+    ],
+    "fraction_right_lower": 0.7971360381861575,
+    "fraction_right_lower_wilson95": [
+      0.7560126121936142,
+      0.8328605808335352
+    ]
+  },
+  "oracle_cmt": {
+    "both_valid_pairs": 432,
+    "both_valid_rate": 0.2,
+    "left_mean": 1.4165066459665072,
+    "right_mean": 0.34087319685373874,
+    "left_median": 0.5207275345582875,
+    "right_median": 0.05096081698456315,
+    "mean_left_minus_right": 1.0756334491127686,
+    "mean_left_minus_right_bootstrap95": [
+      0.8582642830064839,
+      1.3433068526181504
+    ],
+    "mean_pairwise_reduction": 0.5605457323250678,
+    "mean_pairwise_reduction_bootstrap95": [
+      0.4904329302371938,
+      0.6243203610028081
+    ],
+    "fraction_right_lower": 0.8495370370370371,
+    "fraction_right_lower_wilson95": [
+      0.8127499257487568,
+      0.8801625861016665
+    ]
+  },
+  "selector_oracle": {
+    "selector_sign_match_count": 1523,
+    "selector_sign_match_rate": 0.7050925925925926,
+    "selector_sign_match_wilson95": [
+      0.6855117728026111,
+      0.7239452123144386
+    ],
+    "selector_success_given_oracle_success_count": 964,
+    "oracle_success_count": 989,
+    "selector_success_given_oracle_success_rate": 0.974721941354904,
+    "selector_valid_given_oracle_valid_count": 480,
+    "oracle_valid_count": 508,
+    "selector_valid_given_oracle_valid_rate": 0.9448818897637795,
+    "both_valid_selector_oracle_pairs": 480,
+    "mean_selector_minus_oracle_cmt": 0.03637261357046757,
+    "mean_selector_minus_oracle_cmt_bootstrap95": [
+      0.02275325259620251,
+      0.05267537140477832
+    ],
+    "median_selector_minus_oracle_cmt": 0.0
+  },
+  "limitations": [
+    "Inference is conditional on one fixed checkpoint per controller.",
+    "The three RNG seeds generate evaluation cases and are not independent training seeds.",
+    "Non-inferiority margins are sensitivity analyses unless prespecified on a locked test set."
+  ]
+}

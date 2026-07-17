@@ -1,0 +1,32 @@
+{
+  "date": "2026-07-11",
+  "protocol": "legacy_v22_3_reconstruction",
+  "source": "src/four_link/evaluation/paper_four_link_reachability_cmt_v22_3_grid_extended_legacy_reconstructed.py",
+  "source_sha256": "f9597d0110e9d317b5c8b428c6850b3be3d2868bd61fe73d12c1c4188cc829c4",
+  "shared_cases_per_controller": 2160,
+  "archived_csv_count": 19,
+  "exact_sha256_matches": 19,
+  "all_exact": true,
+  "files": {
+    "active_reference_comparison_trials.csv": "3b1b6e3880ebcba6cd480c8b0ea973107590bef865052d0b077bb71fd70ac8bf",
+    "active_reference_summary.csv": "6934341f454c248cf715a8ccd79d900eafb277ebcd4ead3762f3624141a8b91d",
+    "controller_summary.csv": "af13dc2b716d79ba1bb169ffb5e9fb55dcea4bc0432c545d0dbf8836b3b5ef10",
+    "paired_summary.csv": "98d3c4367ca88b2ac69e27355864a44861fa080843db78c83eb10cf321745c40",
+    "paired_trials.csv": "ca463228b319468f987d264249e0fc05521da521067895dce7133c8dbb9c6ae8",
+    "passive_candidate_audit.csv": "6d3870fb90e860bedacd5578ac9a006a28d7421cfc852bce31749432b258c8d0",
+    "representative_initial_states.csv": "8c3d009907c67ef13e82680aaca50fd9f736a35995fac9740e9e3403e32a842f",
+    "representative_initial_states_passive_oracle_envelope.csv": "8c3d009907c67ef13e82680aaca50fd9f736a35995fac9740e9e3403e32a842f",
+    "representative_initial_states_passive_sign_selector.csv": "ecb39b2ebabb2dae53e82e9f83a0f886659001524e444e26f831a08cb37951ff",
+    "rollouts_active_vs_passive.csv": "c29d48f070e749d999accee64f49eb56e03ed5d37838ec5dfb8c40596b0a3bc5",
+    "selector_vs_oracle_trials.csv": "5d82fb95a5ea40cdc771c296497b1e65ef74b6bc34fbda8a0c7be1341d58db03",
+    "success_case_breakdown.csv": "e752cac7a15993bbfa752b1134d64030d8fd00be0beab90eaf2da936a3acb94e",
+    "successful_initial_states_active.csv": "cfab1ae98cd8b2e5575d7686746bd416329378d42398513691e7752d76813795",
+    "successful_initial_states_active_full.csv": "aaa742b83d904cf320fb75b2053f16765ce5af57ff64c141309db1590958341c",
+    "successful_initial_states_all_controllers.csv": "0d4703b76024fefb5b7c7c1a30c27060af052f65a6a77936bae9df3a9b03dc31",
+    "successful_initial_states_passive_oracle_envelope.csv": "d6e08c5425ae52e742bff657ed4eef8f7ff6fe40bd5fe538bec01de6d1ec3bf8",
+    "successful_initial_states_passive_sign_selector.csv": "2a66e93c7a4dc25161147f002f3b34b7653ed3973c4c345769797c36e42c2e22",
+    "successful_initial_states_per_step_sign.csv": "70d920ebe7e8775491e270fc9df1328ccc9ffed70b8fc0262b12dc836a50a0cc",
+    "terminal_reason_summary.csv": "f532181fc1cad533739a2ff680d7852ce919d8800232976c51817f0fe698cd79"
+  },
+  "interpretation": "The reconstructed evaluator exactly reproduces the archived outputs. It is not claimed to be byte-identical to the unavailable historical source."
+}

@@ -1,0 +1,13 @@
+case_id,step_height_m,nominal_length_group,replicate_label,status,returncode,elapsed_seconds,seed_override,cmt,source_sha256,stdout,stderr
+flat_1.145_r1,0,1.145,1,ok,0,2.112519,0,0.262250,63ce0417afc30f2446e09d7511bcbefefe8e1e9713cb298a289e72da699082ca,results/tvlqr_seed0/flat_1.145_r1.stdout.txt,results/tvlqr_seed0/flat_1.145_r1.stderr.txt
+flat_1.145_r2,0,1.145,2,ok,0,2.144762,0,0.251662,ecadc7c4b998a9ee148323c3f4ca83c387343f1d1ad792830b32acd621d4ec16,results/tvlqr_seed0/flat_1.145_r2.stdout.txt,results/tvlqr_seed0/flat_1.145_r2.stderr.txt
+flat_1.145_r3,0,1.145,3,ok,0,2.061746,0,0.221758,6eaf0e5fa7d56086be78c39f6275ed2519ac515c5493b4ccc347c3fe11617833,results/tvlqr_seed0/flat_1.145_r3.stdout.txt,results/tvlqr_seed0/flat_1.145_r3.stderr.txt
+raised_1.145_r1,0.01,1.145,1,ok,0,2.082004,0,0.250948,dec94b33b5532cbbb8964469a067be381d7e686adf4c3f6b3163b2c5bd2f334d,results/tvlqr_seed0/raised_1.145_r1.stdout.txt,results/tvlqr_seed0/raised_1.145_r1.stderr.txt
+raised_1.145_r2,0.01,1.145,2,ok,0,2.083582,0,0.239990,eefaceb2b476e0c6be59d81d61bdd0be5da396d4228367046579f7b8066de881,results/tvlqr_seed0/raised_1.145_r2.stdout.txt,results/tvlqr_seed0/raised_1.145_r2.stderr.txt
+raised_1.145_r3,0.01,1.145,3,ok,0,2.124093,0,0.225175,c94a5491c2e3dc7af38124853a442ce4f73903f3d470ad52fb40d81321403992,results/tvlqr_seed0/raised_1.145_r3.stdout.txt,results/tvlqr_seed0/raised_1.145_r3.stderr.txt
+flat_1.28_r1,0,1.28,1,ok,0,2.186987,0,0.235297,63937f1802364bf29a0f8974498bfb17474f670a5b5f47a86913dffdad6ea9d7,results/tvlqr_seed0/flat_1.28_r1.stdout.txt,results/tvlqr_seed0/flat_1.28_r1.stderr.txt
+flat_1.28_r2,0,1.28,2,ok,0,2.158997,0,0.223641,3a7d52b9ae27cea848627899f182f4bff8ca5b9df2cf5af353b02c8a0f5d4cca,results/tvlqr_seed0/flat_1.28_r2.stdout.txt,results/tvlqr_seed0/flat_1.28_r2.stderr.txt
+flat_1.28_r3,0,1.28,3,ok,0,2.090213,0,0.217185,25fe38298477e3fea93ca806846c68073f7f56d3356e32342da6e2e910712c9b,results/tvlqr_seed0/flat_1.28_r3.stdout.txt,results/tvlqr_seed0/flat_1.28_r3.stderr.txt
+raised_1.28_r1,0.01,1.28,1,ok,0,2.148063,0,0.224081,cfbefe2eddb850f73393fb5f708670c4a73068fec5c74dab19d3b2bf73641189,results/tvlqr_seed0/raised_1.28_r1.stdout.txt,results/tvlqr_seed0/raised_1.28_r1.stderr.txt
+raised_1.28_r2,0.01,1.28,2,ok,0,2.069257,0,0.217898,f2221fbf57513ef31f217621ef42144995327e5c621cdd9176930a643d76f59d,results/tvlqr_seed0/raised_1.28_r2.stdout.txt,results/tvlqr_seed0/raised_1.28_r2.stderr.txt
+raised_1.28_r3,0.01,1.28,3,ok,0,2.137998,0,0.218291,c5e9b41fb1030a88cb5a8fff8eaaf7fed9633c8f9cab529f4cb9701d64f0753b,results/tvlqr_seed0/raised_1.28_r3.stdout.txt,results/tvlqr_seed0/raised_1.28_r3.stderr.txt
