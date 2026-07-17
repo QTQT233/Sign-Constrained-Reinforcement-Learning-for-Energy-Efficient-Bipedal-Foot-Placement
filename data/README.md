@@ -24,6 +24,12 @@ Until the DOI is public, the repository must describe the data as "available
 from the authors for reproducibility checking" rather than claiming that the
 data are openly available.
 
+Author-owned processed data in this repository and the author-owned hardware
+videos when distributed in the submission/archive are licensed under
+Apache-2.0. See `../DATA_LICENSE.md` and `../LICENSE`. The future DOI record
+must repeat the same license and scope unless the authors publish a documented
+superseding version.
+
 The GitHub repository is the canonical code record. The DOI archive is the
 canonical immutable data/model record. Each release should cross-reference the
 other by Git commit and archive DOI/version.

@@ -182,7 +182,7 @@ file-level SHA-256 manifest for the Robotics and Autonomous Systems submission.
 
 ## License
 
-No source or data license has yet been selected. The authors must add explicit
-code and data licenses before public release; absence of a license does not
-grant reuse permission. See `docs/LICENSE_SELECTION.md` for the code/data
-scope decision and the exact release steps.
+The source code, analysis code, documentation, and author-owned processed data
+in this release are distributed under the Apache License 2.0. See the
+repository-root `LICENSE` and `NOTICE` files. `DATA_LICENSE.md` defines the data
+and supplementary-video scope and records the third-party-material boundary.
