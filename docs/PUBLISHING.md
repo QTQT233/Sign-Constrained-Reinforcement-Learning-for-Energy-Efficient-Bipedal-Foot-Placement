@@ -39,8 +39,8 @@ gh pr create --draft --base main --head codex/reproducibility-package `
 
 Review the draft PR file list before merging. After merge, create an immutable
 release tag, archive the same commit and large data bundle in a DOI repository,
-and replace `[TAG TO BE CREATED]` and `[DOI TO BE MINTED]` in the manuscript and
-availability statements.
+and replace `[DOI TO BE MINTED]` in the data-availability materials only after
+the public record exists.
 
 ## Release gate
 
@@ -48,6 +48,6 @@ availability statements.
 - `python tools/run_frozen_tvlqr.py --check-only` verifies 12 source files and
   four checkpoints;
 - `MANIFEST.csv` and `CHECKSUMS.sha256` are regenerated after the last edit;
-- repository and data licences are selected by the authors;
+- repository and author-owned data are explicitly licensed under Apache-2.0;
 - no bracketed DOI/tag placeholders remain in the submitted manuscript;
 - the GitHub release and DOI record cross-reference the same Git commit.

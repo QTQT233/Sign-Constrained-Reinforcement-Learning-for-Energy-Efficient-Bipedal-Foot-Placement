@@ -1,46 +1,50 @@
-# Two distinct two-link offline tables
+# Relationship between the two-link offline tables
 
-The audited code contains two different objects that must not be described as
-one generic "selector".
+`working_save_passive-10-30` is the coarse `10 x 30 x 10 x 30` offline result
+map obtained from the sign-restricted expert evaluations. Its entries encode
+the selected sign/action outcome after considering expert feasibility and, when
+both experts are valid, their Cmt values.
 
-## Direct event-triggered action table
+In the two-link simulations, this map is queried once at transition onset. It
+selects the non-positive or non-negative expert, and the chosen expert remains
+active until transition termination. This is the manuscript's **coarse
+transition-locked expert routing** implementation.
 
-`working_save-ATC-50` is a 50^4 nearest-neighbour **state-action** table. Its
-values -1, 0, and +1 are applied directly as -4, 0, and +4 Nm; -2 is a sentinel
-that the consumers silently map to zero. The state index is refreshed whenever
-the support angle changes by approximately 1.8 degrees, so the controller can
-change nonzero torque sign within one transition.
+`working_save-ATC-50` is the `50^4` higher-resolution deployment table that
+implements the same offline mapping concept for the hardware controller. It is
+not an interpolation of the released coarse array. The author-confirmed
+generator follows the same two-expert evaluation/fusion logic used for the
+`60,30(0.33m)` / `working_save_passive-10-30` family, with all four state axes
+discretized to 50 points. The release contains the corresponding 50-bin
+generator-family source and hardware consumers, but the large generated table
+belongs in the DOI-backed data archive. The table is not an online comparison
+of critic return estimates. Values `-1`, `0`, and `+1` are converted to
+negative, zero, and positive hip-torque commands. The `-2` value is the
+uncovered/failure sentinel handled by the deployment fallback.
 
-A read-only replay found a successful trajectory that used +4 Nm, then zero,
-then -4 Nm before reaching the target. Therefore figures produced by
-`Energy_comparison.py`, `PID_tra.py`, or the `Qi_experiment-ATC` drawing scripts
-cannot be cited as sign persistence "by construction". A representative trace
-may happen not to switch sign, but that is an empirical property of that trace.
+## Deployment update rule
 
-## Offline transition-locked policy-routing table
+The hardware controller discretizes the measured two-link state and queries
+`working_save-ATC-50`. It keeps the selected action between lookup events.
+The indices are updated when the stance-link angle changes by about
+`1.8 degrees`, after which the refined table is queried again. This explains
+how the offline map is connected to the state trajectories in the manuscript
+without incorrectly describing the hardware implementation as transition-
+locked or as an online return-based selector.
 
-`working_save_passive-10-30` is used differently. The consumer queries it once
-at the initial state, routes the transition to either a positive-only or
-negative-only PPO policy, and keeps that policy until termination. This path
-does enforce transition-level sign persistence.
+## Manuscript terminology
 
-However, the table is built offline by running both candidate policies and
-using their success/Cmt outcomes. It is an oracle-like initial-state routing
-map, not an online comparison of two critic return estimates. Its coding also
-overloads 0 and -2, and the retained workflow does not establish a held-out
-selector-design/test split.
+Use the following names consistently:
 
-## Required manuscript distinction
+- `coarse transition-locked expert routing` for the simulation use of
+  `working_save_passive-10-30`;
+- `ATC-50 event-updated lookup` for the hardware use of
+  `working_save-ATC-50`; and
+- `learned transition-onset selector` only for the separately implemented
+  four-link experiment.
 
-Use separate names throughout:
-
-- `direct state-action lookup` for `working_save-ATC-50`;
-- `offline transition-locked policy routing` for `working_save_passive-10-30`;
-- `offline oracle envelope` when both full trajectories are run and the lower
-  Cmt result is selected after the fact; and
-- `learned online transition-onset selector` for the four-link experiment.
-
-For a defensible offline selector, store an unambiguous policy ID and status,
-query exactly once per transition, use a held-out evaluation-state manifest,
-define uncovered-state fallback in advance, log the full torque sequence, and
-assert that the nonzero sign-switch count is zero for every locked rollout.
+The legacy action-weight appendix is evaluated from the coarse expert-result
+arrays on the declared common-feasible mask. Figure and hardware descriptions
+may refer to the refined lookup, but the figures do not need to duplicate
+GitHub file links when the Methods and Code Availability sections provide the
+shared repository provenance.

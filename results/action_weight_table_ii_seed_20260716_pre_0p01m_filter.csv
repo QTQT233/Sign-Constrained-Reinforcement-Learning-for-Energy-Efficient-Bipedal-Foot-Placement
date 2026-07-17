@@ -1,0 +1,13 @@
+action_weight,method,statistic,0.00 m step; 0.25 m advance,0.00 m step; 0.17 m advance,0.01 m step; 0.25 m advance,0.01 m step; 0.17 m advance
+0.02,Continuous PPO,mean Cmt,1.104,1.314,1.467,1.233
+0.02,Active PPO,mean Cmt,1.585,3.167,1.554,2.230
+0.02,Proposed,mean Cmt,0.824,0.387,0.697,0.353
+0.02,Common-mask n,count,52668,39675,50283,36607
+0.04,Continuous PPO,mean Cmt,2.475,1.159,4.907,1.859
+0.04,Active PPO,mean Cmt,1.381,2.977,1.611,2.537
+0.04,Proposed,mean Cmt,0.952,0.140,0.905,0.560
+0.04,Common-mask n,count,47241,35426,50175,27651
+0.06,Continuous PPO,mean Cmt,1.106,4.345,2.090,1.577
+0.06,Active PPO,mean Cmt,1.270,1.760,1.201,3.281
+0.06,Proposed,mean Cmt,0.870,0.347,0.632,0.190
+0.06,Common-mask n,count,52308,30680,48284,27006

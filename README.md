@@ -8,8 +8,9 @@ Canonical code repository:
 
 ## What is in this repository
 
-- `src/`: frozen, unmodified experiment and training programs, organized by
-  experiment family.
+- `src/`: versioned experiment and training programs, organized by experiment
+  family. The 12 legacy action-weight evaluators used in Appendix D include the documented negative-expert
+  output fix and fixed evaluation seed.
 - `analysis/`: external read-only scripts that regenerate manuscript-facing
   statistics from frozen CSV outputs.
 - `data/`: small derived tables and instructions for obtaining the DOI-backed
@@ -31,7 +32,7 @@ and DOI workflow; do not force-push the historical repository.
 The manuscript-primary four-link release is the V22_3/V9 fixed-checkpoint output
 from 5 July 2026: active PPO succeeded in 975/2160 matched cases (45.1%) and the
 online selector in 964/2160 (44.6%). The release contains all 19 trial-level and
-summary CSVs required to regenerate Tables VII-XI and the paired inference. The
+summary CSVs required to regenerate Table VI, Appendix B, and the paired inference. The
 exact historical extended-evaluator bytes were not retained. A separately named
 legacy reconstruction restores the documented V22_3 touchdown bounds and is
 never represented as the missing original source. A full 2160-case rerun of
@@ -116,6 +117,44 @@ python tools/audit_paper2_readonly.py \
   --output-root paper2_rerun_logs
 ```
 
+## Two-link action-weight audit (Appendix D)
+
+The 12 canonical `Whole_energy_comparison_low_dim.py` files under
+`src/two_link/action_weight/` use random seed `20260716`, write the negative
+expert's Cmt array to the negative-expert file, and accumulate continuous-
+controller positive commanded work from the applied physical torque exactly
+once. They now require center-of-mass displacement `D > 0.01 m` before a Cmt
+value is admitted and archive `D_save` for every independently executed
+controller. The expert-status fusion branch remains complete: when both
+experts succeed, the lower finite Cmt is retained; when only one expert
+succeeds, that expert's finite value is retained. Only status `-2` denotes
+expert failure.
+
+The Appendix D audit is recomputed on the condition-specific common-feasible and
+common-displacement-eligible mask shared by the Proposed, Active PPO, and
+Continuous PPO evaluations. For the retained pre-threshold HDF5 archive,
+positive-work displacement is recovered exactly as `D = E/(W*Cmt)`; zero-
+energy/zero-Cmt successes are retained because they cannot create a small-
+denominator tail. The paper-facing values and counts are in
+`results/action_weight_table_ii_seed_20260716.csv`; full mean, median, sample
+SD, 99th percentile, maximum, source hashes, and HDF5 hashes are in the
+companion audit CSV and JSON manifest. The unfiltered release is preserved in
+the three files containing `pre_0p01m_filter` in their names.
+
+```bash
+python analysis/recompute_action_weight_table_ii.py \
+  --data-root /path/to/Energy_Comparison
+cd src/two_link/action_weight
+python -m unittest discover -s tests -v
+```
+
+The retained archive verifies the deterministic continuous-torque scale
+correction and documents provenance/eligibility boundaries. It is not a
+matched-retraining sensitivity experiment and does not estimate variability
+across independent training seeds. See
+`docs/TABLE_II_AUDIT.md`, `docs/CMT_METRIC.md`, and
+`docs/ACTION_WEIGHT_LOCAL_SYNC.md` for the exact protocol and provenance.
+
 ## Important interpretation boundary
 
 Active PPO is the penalized unrestricted control (`U1`,
@@ -130,15 +169,20 @@ a causal persistence claim is specified in `docs/ABLATION_PROTOCOL.md`.
 
 ## Data and model artifacts
 
-Large HDF5 arrays, raw per-trial CSVs, training logs, and checkpoints should be
+Large HDF5 arrays, raw per-trial CSVs, training logs, checkpoints, and the two
+hardware videos (`Flat_walking.mp4` and `Ueven_foot_placement.mp4`) should be
 deposited as a versioned research-data archive with a DOI. Replace the DOI
 placeholder in `data/README.md` and in the manuscript Data Availability
 statement only after the archive is public and its checksums have been tested.
 Git LFS is optional for model files, but the DOI archive is the canonical data
 record.
 
+Use `docs/DATA_ARCHIVE_CHECKLIST.md` to assemble the DOI-backed archive and its
+file-level SHA-256 manifest for the Robotics and Autonomous Systems submission.
+
 ## License
 
-No source or data license has yet been selected. The authors must add explicit
-code and data licenses before public release; absence of a license does not
-grant reuse permission.
+The source code, analysis code, documentation, and author-owned processed data
+in this release are distributed under the Apache License 2.0. See the
+repository-root `LICENSE` and `NOTICE` files. `DATA_LICENSE.md` defines the data
+and supplementary-video scope and records the third-party-material boundary.

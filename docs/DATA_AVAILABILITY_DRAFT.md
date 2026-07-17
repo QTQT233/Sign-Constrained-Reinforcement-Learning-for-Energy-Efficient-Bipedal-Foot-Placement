@@ -9,13 +9,16 @@ model checkpoints used for the reported analyses, will be deposited in a
 versioned research-data repository at **[DOI TO BE MINTED]**. Each file is
 listed in a machine-readable manifest with a SHA-256 checksum. Until the DOI is
 public, the data are available from the corresponding author for the purpose
-of reproducibility checking.
+of reproducibility checking. Author-owned processed data and supplementary
+videos are licensed under Apache-2.0 when distributed; the future archive
+metadata must repeat that license and the scope in `DATA_LICENSE.md`.
 
 ## Code availability
 
 Frozen training, evaluation, and external statistical-analysis code is
-available at `https://github.com/QTQT233/Sign-Constrained-Reinforcement-Learning-for-Energy-Efficient-Bipedal-Foot-Placement`
-in release **[TAG TO BE CREATED]**. The release records the mapping from every manuscript table and
+available under Apache-2.0 at `https://github.com/QTQT233/Sign-Constrained-Reinforcement-Learning-for-Energy-Efficient-Bipedal-Foot-Placement`.
+The manuscript identifies the exact public Git commit used for submission.
+The release records the mapping from every manuscript table and
 figure to the corresponding script, configuration, checkpoints, raw outputs,
 and checksums. The two-link experiments use an offline state-to-sign lookup
 table, whereas the four-link stress test uses a learned online selector that

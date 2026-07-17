@@ -1,6 +1,6 @@
 cff-version: 1.2.0
-message: "If you use these materials, please cite the associated manuscript and data archive."
-title: "Reproducibility materials for Sign-Constrained Reinforcement Learning for Energy-Efficient Bipedal Foot Placement"
+message: "If you use these materials, please cite the associated manuscript and this source-pinned software package."
+title: "Reproducibility materials for Transition-Start Routing of One-Sided PPO Experts for Energy-Aware Planar Bipedal Foot Placement"
 type: software
 authors:
   - family-names: Tao
@@ -11,6 +11,7 @@ authors:
     given-names: Amir
   - family-names: Liu
     given-names: Mingyi
-version: 0.1.0
-date-released: 2026-07-11
+version: 0.2.0
+date-released: 2026-07-15
 repository-code: "https://github.com/QTQT233/Sign-Constrained-Reinforcement-Learning-for-Energy-Efficient-Bipedal-Foot-Placement"
+license: Apache-2.0

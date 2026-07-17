@@ -1,27 +1,57 @@
-# Table II reproducibility audit
+# Legacy action-weight fixed-seed rerun and audit (final Appendix D)
 
-The three `action_weight` folders contain four physical conditions, policies,
-and 10x30x10x30 HDF5 result arrays. Replaying the final common-completed mask
-recovers most proposed/active values, but the published table is not a direct
-output of the retained analysis code.
+The filename is retained for compatibility with intermediate-draft links; the
+final manuscript moves this material out of main Table II and into Appendix D.
 
-Key conflicts:
+## Protocol
 
-- the published continuous-PPO values are approximately the archived raw Cmt
-  means divided by four, but no retained script performs or explains that
-  transformation;
-- the continuous arrays contain extreme outliers, including values above ten
-  million in one cell, and no exclusion manifest is retained;
-- the 0.06 active-PPO middle conditions align only if two manuscript columns
-  are swapped;
-- the 0.02 first proposed value is 0.6889 in the archived common set, not 0.48;
-- two 0.02 active training scripts warm-start from 0.04 checkpoints.
+The 12 canonical `Whole_energy_comparison_low_dim.py` evaluators cover three
+action weights (`0.02`, `0.04`, and `0.06`) and four physical conditions. They
+were rerun to completion with evaluation seed `20260716`. Each HDF5 array has
+shape `10 x 30 x 10 x 30`.
 
-Therefore Table II should not be described as a controlled independent
-training ablation in its current form. Before submission, run one frozen
-external evaluator over all archived arrays/checkpoints, define Cmt once in SI
-units, state the common-feasible mask and outlier policy in advance, and write a
-tidy CSV containing condition, controller, weight, checkpoint hash, n, mean,
-median, and uncertainty. If that rerun cannot be completed, remove Table II's
-continuous row and causal reward-mechanism language rather than applying an
-undocumented scale factor.
+For each condition, the reported comparison set is exactly
+
+```text
+(working_save_passive != -2)
+& (working_save_active_discrete != -2)
+& (working_save_active_continuous != -6)
+& proposed_displacement_eligible
+& active_displacement_eligible
+& continuous_displacement_eligible
+```
+
+Displacement eligibility requires `D > 0.01 m`. For positive Cmt values in the
+retained pre-threshold archive, the original displacement is exactly
+recoverable from the retained energy and Cmt arrays as `D = E/(W*Cmt)`, where
+`W = (1.4122 + 0.0839) * 9.81 N`. Zero-energy/zero-Cmt successes are retained
+because they do not create a small-denominator tail. No winsorization or Cmt
+rescaling is applied. The audit CSV retains the pre-filter count, exclusion
+count, mean, median, sample SD, 99th percentile, and maximum.
+
+## Validation results
+
+- all 12 required evaluator files and all 120 HDF5 inputs were readable;
+- every array had the expected shape and finite comparison values;
+- the negative-expert Cmt arrays were distinct from their positive-expert
+  counterparts;
+- the complete expert-fusion branch matched every stored fused Cmt value
+  (`fusion_bad_n = 0` in all 12 conditions); and
+- all manuscript values were regenerated from the declared common masks after
+  the `D > 0.01 m` eligibility filter.
+
+The paper-facing values are in
+`results/action_weight_table_ii_seed_20260716.csv`. The wide audit table is in
+`results/action_weight_rerun_seed_20260716.csv`, and
+`results/action_weight_rerun_seed_20260716_manifest.json` records the protocol,
+script hashes, HDF5 hashes, file sizes, and dataset names.
+The original unfiltered CSVs and manifest are retained under filenames ending
+in `pre_0p01m_filter`.
+
+## Interpretation boundary
+
+Table II is a fixed-checkpoint action-weight performance ablation under a fixed
+evaluation seed. It supports comparison of the retained controller outputs on
+the declared common-feasible states. It is not an estimate of variation across
+independently trained random seeds, so causal claims about training robustness
+should not be inferred from this table alone.
