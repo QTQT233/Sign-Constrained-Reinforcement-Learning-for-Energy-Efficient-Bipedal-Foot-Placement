@@ -2,29 +2,36 @@
 
 ## Why the current comparison is not causal
 
-The current `per_step_sign` action indices map one-to-one to the same 27 actual
+The V1.0.0 `per_step_sign` action indices map one-to-one to the same 27 actual
 torque triples as unrestricted active control: hip torque is -4, 0, or +4 Nm
 and each knee torque is -0.2, 0, or +0.2 Nm. There is no mask, dwell time, or
 locked sign. The two controllers therefore admit the same torque sequences.
 
-The current `active_full` program sets `action_value_weight = 0`, whereas the
+The V1.0.0 `active_full` program sets `action_value_weight = 0`, whereas the
 `bidirectional` program uses 0.026. Because the penalty is subtracted after all
 task-reward branches, the difference propagates through the stored reward,
 one-step TD target, GAE advantage, critic loss, and PPO actor loss. At the reward
 definition level, the two programs therefore implement U0 versus U1.
 
-However, Active-full is warm-started from the U1 c090 checkpoint, while the U1
-run has a different training lineage and budget; training seeds were not fixed.
-The available Active-full checkpoint is consequently a zero-penalty continuation
-diagnostic, not a matched-seed from-scratch U0 estimate.
+The Active-full checkpoint retained in the V1.0.0 evidence archive is
+warm-started from the U1 c090 checkpoint, while the U1 run has a different
+training lineage and budget; training seeds were not fixed. That archived
+checkpoint is consequently a zero-penalty continuation diagnostic, not a
+matched-seed from-scratch U0 estimate.
 
-The current runs may be retained as encoding/checkpoint-sensitivity diagnostics
-but cannot identify a persistence or reward mechanism.
+The current main-branch Active-full training entry points are scratch-only.
+They contain no policy/critic loading path and fail before training if their
+output directory is non-empty, preventing reuse of prior checkpoints or
+appending to an existing log. This code change applies to future runs and does
+not reclassify the V1.0.0 checkpoint or its published diagnostics.
 
-## Mapping the current methods to factorial cells
+The retained V1.0.0 runs may be used as encoding/checkpoint-sensitivity
+diagnostics but cannot identify a persistence or reward mechanism.
+
+## Mapping the retained evidence to factorial cells
 
 Define `U/P` as unrestricted versus transition-persistent sign control and
-`0/1` as torque-penalty coefficient 0 versus 0.026. The current mapping is:
+`0/1` as torque-penalty coefficient 0 versus 0.026. The retained mapping is:
 
 | Current label | Correct role | Factorial status |
 |---|---|---|

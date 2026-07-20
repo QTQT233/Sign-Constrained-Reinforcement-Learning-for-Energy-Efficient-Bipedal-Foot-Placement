@@ -158,11 +158,16 @@ across independent training seeds. See
 ## Important interpretation boundary
 
 Active PPO is the penalized unrestricted control (`U1`,
-`action_value_weight=0.026`). Active-full uses the same 27 physical torque
-triples with zero torque penalty (`U0`, `action_value_weight=0`) and is retained
-as a single warm-started reward-ablation diagnostic. It is not a matched-seed
-from-scratch U0 estimate. `per_step_sign` exposes the same 27 physical torque
-triples as U1 and is an encoding diagnostic, not an action-mask baseline. The
+`action_value_weight=0.026`). In the V1.0.0 evidence archive, Active-full uses
+the same 27 physical torque triples with zero torque penalty (`U0`,
+`action_value_weight=0`) and is retained as a single warm-started reward
+diagnostic, not as a matched-seed from-scratch U0 estimate. The current
+main-branch Active-full training entry points are scratch-only: they contain no
+policy/critic loading path and refuse a non-empty output directory so that old
+checkpoints or appended logs cannot be mixed into a new run. This source change
+does not retroactively alter the V1.0.0 checkpoint lineage. `per_step_sign`
+exposes the same 27 physical torque triples as U1 and is an encoding diagnostic,
+not an action-mask baseline. The
 online selector is deployable; the oracle one-sided-policy envelope is a
 non-deployable hindsight diagnostic. The confirmatory experiment required for
 a causal persistence claim is specified in `docs/ABLATION_PROTOCOL.md`.
