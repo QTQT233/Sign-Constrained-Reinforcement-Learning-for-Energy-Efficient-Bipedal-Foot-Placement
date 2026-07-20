@@ -32,18 +32,34 @@ class ReferenceArtifactTests(unittest.TestCase):
         reconstruction = config["source_status"]["reconstruction"]
         self.assertEqual(sha256(ROOT / reconstruction["path"]), reconstruction["sha256"])
         for path, expected, _weight in config["training_sources"].values():
+            if path.startswith("@V1.0.0:"):
+                self.assertEqual(
+                    config["source_status"]["legacy_training_source_revision"]["commit"],
+                    "77f2f7d69df183344ab06ae55e924bd071646393",
+                )
+                self.assertEqual(
+                    expected,
+                    "6b86eb447b03aa836f5b41e9548cd6d0e7491139d91d7579a094cb4059014fde",
+                )
+                continue
             self.assertEqual(sha256(ROOT / path), expected)
         for path, expected in config["checkpoints"].values():
             self.assertEqual(sha256(ROOT / path), expected)
 
-        active_full = (ROOT / config["training_sources"]["U0_active_full"][0]).read_text(
-            encoding="utf-8"
-        )
+        active_full = (
+            ROOT / "src/four_link/training/v22_3_v9_active_full_400_grid.py"
+        ).read_text(encoding="utf-8")
         self.assertIn("action_value_weight = 0\n", active_full)
+        self.assertIn("def assert_fresh_scratch_output_dir():", active_full)
+        self.assertNotIn("load_previous_model", active_full)
+        self.assertNotIn("torch.load(", active_full)
         root_compatibility_copy = (ROOT / "v22_3_v9_active_full_400_grid.py").read_text(
             encoding="utf-8"
         )
         self.assertIn("action_value_weight = 0\n", root_compatibility_copy)
+        self.assertIn("def assert_fresh_scratch_output_dir():", root_compatibility_copy)
+        self.assertNotIn("load_previous_model", root_compatibility_copy)
+        self.assertNotIn("torch.load(", root_compatibility_copy)
         self.assertFalse((ROOT / "configs/four_link_v23_success.json").exists())
 
     def test_four_link_reconstruction_validation_record(self) -> None:
