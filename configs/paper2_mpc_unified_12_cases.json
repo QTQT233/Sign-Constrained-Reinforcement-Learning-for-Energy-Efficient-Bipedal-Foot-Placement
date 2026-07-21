@@ -1,0 +1,159 @@
+{
+  "schema": "paper2-mpc-unified-12case-v1",
+  "protocol_date": "2026-07-20",
+  "description": "Repository-relative configuration for the accepted unified two-link MPC rerun.",
+  "source_files": {
+    "src/paper2/mpc/two_link_mpc_multistep_compare.py": "f8dc01bac479f549fe6e7aab6667771be8b6b3deab215ba5406d510093a07760",
+    "src/paper2/mpc/mpc_ppo_aligned_common.py": "452791d164605f9a38e8f46beba4c407a9a6f409b9dc4b79d3935a7b62abbbfe",
+    "src/paper2/mpc/mpc_ppo_aligned_search_recovery_coarse_to_fine.py": "d778c44e345896c516ccd686a64f7cc9604cbceab7435fea4ac8f4351c0e5e32"
+  },
+  "accepted_source_sha256_before_path_porting": {
+    "two_link_mpc_multistep_compare.py": "25ff587de24a6eb5adcf523558ee0d6bc646f9aac481f54ddfdd91a6f7a1e5fd",
+    "mpc_ppo_aligned_common.py": "277fd40b1b426b56861a6b7e8c04549462557c724e2841a55af862436c96215a",
+    "mpc_ppo_aligned_search_recovery_coarse_to_fine.py": "0dc18365c9868ea0bbc15bc3483a64f2269efd88d1cd1eedd8e2759f8f27626e"
+  },
+  "mpc_settings": {
+    "action_mode": "continuous",
+    "cost_mode": "cmt",
+    "target_mode": "primary",
+    "total_walking_steps": 3,
+    "control_hold_steps": 3,
+    "num_knots": 55,
+    "max_replans_per_walking_step": 3,
+    "maxiter": 180,
+    "ftol": 0.00001,
+    "terminal_angle_weight": 420.0,
+    "terminal_velocity_weight": 0.0,
+    "running_target_weight": 0.08,
+    "predicted_work_weight": 1.0,
+    "reward_action_weight": 0.04,
+    "torque_abs_weight": 0.004,
+    "torque_smooth_weight": 0.012,
+    "fall_soft_weight": 1000.0,
+    "discrete_cem_samples": 96,
+    "discrete_cem_elite": 16,
+    "discrete_cem_iters": 4,
+    "random_seed": 7,
+    "recovery_min": -1.19,
+    "recovery_max": 0.0,
+    "coarse_step": 0.05,
+    "fine_radius": 0.05,
+    "fine_step": 0.01,
+    "tie_recovery_by_stance": true
+  },
+  "cases": [
+    {
+      "case_id": "flat_L1145_r1",
+      "entrypoint_dir": "flat_1.145_r1",
+      "terrain": "flat",
+      "length_label": "1.145",
+      "replicate": 1,
+      "targets_deg": [60.0, 30.0, 120.0, -30.0],
+      "initial_idx": [19, 11, 15, 7]
+    },
+    {
+      "case_id": "flat_L1145_r2",
+      "entrypoint_dir": "flat_1.145_r2",
+      "terrain": "flat",
+      "length_label": "1.145",
+      "replicate": 2,
+      "targets_deg": [60.0, 30.0, 120.0, -30.0],
+      "initial_idx": [19, 14, 15, 5]
+    },
+    {
+      "case_id": "flat_L1145_r3",
+      "entrypoint_dir": "flat_1.145_r3",
+      "terrain": "flat",
+      "length_label": "1.145",
+      "replicate": 3,
+      "targets_deg": [60.0, 30.0, 120.0, -30.0],
+      "initial_idx": [19, 19, 15, 4]
+    },
+    {
+      "case_id": "flat_L1280_r1",
+      "entrypoint_dir": "flat_1.28_r1",
+      "terrain": "flat",
+      "length_label": "1.280",
+      "replicate": 1,
+      "targets_deg": [60.0, 30.0, 120.0, -30.0],
+      "initial_idx": [27, 0, 15, 13]
+    },
+    {
+      "case_id": "flat_L1280_r2",
+      "entrypoint_dir": "flat_1.28_r2",
+      "terrain": "flat",
+      "length_label": "1.280",
+      "replicate": 2,
+      "targets_deg": [60.0, 30.0, 120.0, -30.0],
+      "initial_idx": [27, 1, 15, 10]
+    },
+    {
+      "case_id": "flat_L1280_r3",
+      "entrypoint_dir": "flat_1.28_r3",
+      "terrain": "flat",
+      "length_label": "1.280",
+      "replicate": 3,
+      "targets_deg": [60.0, 30.0, 120.0, -30.0],
+      "initial_idx": [27, 3, 15, 9]
+    },
+    {
+      "case_id": "raised_L1145_r1",
+      "entrypoint_dir": "raised_1.145_r1",
+      "terrain": "raised_0.01m",
+      "length_label": "1.145",
+      "replicate": 1,
+      "targets_deg": [61.8, 31.7, 118.2, -31.7],
+      "initial_idx": [19, 11, 15, 1]
+    },
+    {
+      "case_id": "raised_L1145_r2",
+      "entrypoint_dir": "raised_1.145_r2",
+      "terrain": "raised_0.01m",
+      "length_label": "1.145",
+      "replicate": 2,
+      "targets_deg": [61.8, 31.7, 118.2, -31.7],
+      "initial_idx": [19, 14, 15, 8]
+    },
+    {
+      "case_id": "raised_L1145_r3",
+      "entrypoint_dir": "raised_1.145_r3",
+      "terrain": "raised_0.01m",
+      "length_label": "1.145",
+      "replicate": 3,
+      "targets_deg": [61.8, 31.7, 118.2, -31.7],
+      "initial_idx": [19, 19, 15, 4]
+    },
+    {
+      "case_id": "raised_L1280_r1",
+      "entrypoint_dir": "raised_1.28_r1",
+      "terrain": "raised_0.01m",
+      "length_label": "1.280",
+      "replicate": 1,
+      "targets_deg": [61.8, 31.7, 118.2, -31.7],
+      "initial_idx": [27, 0, 15, 21]
+    },
+    {
+      "case_id": "raised_L1280_r2",
+      "entrypoint_dir": "raised_1.28_r2",
+      "terrain": "raised_0.01m",
+      "length_label": "1.280",
+      "replicate": 2,
+      "targets_deg": [61.8, 31.7, 118.2, -31.7],
+      "initial_idx": [27, 1, 15, 25]
+    },
+    {
+      "case_id": "raised_L1280_r3",
+      "entrypoint_dir": "raised_1.28_r3",
+      "terrain": "raised_0.01m",
+      "length_label": "1.280",
+      "replicate": 3,
+      "targets_deg": [61.8, 31.7, 118.2, -31.7],
+      "initial_idx": [27, 3, 15, 9]
+    }
+  ],
+  "accepted_release": {
+    "summary": "results/paper2_mpc_unified_12case/accepted_summary.json",
+    "case_table": "results/paper2_mpc_unified_12case/accepted_cases.csv",
+    "formal_validation": "results/paper2_mpc_unified_12case/formal_validation.json"
+  }
+}

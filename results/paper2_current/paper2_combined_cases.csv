@@ -2,72 +2,72 @@ case_id,terrain,nominal_length_m,method,status,cmt,time_s,landing_error_m,source
 flat_L1145_r1,flat,1.145,LIPM COM,ok,0.287705,,,data/paper2/readonly_rerun/flat_L1145_r1__lipm.stdout.txt
 flat_L1145_r2,flat,1.145,LIPM COM,ok,0.265392,,,data/paper2/readonly_rerun/flat_L1145_r2__lipm.stdout.txt
 flat_L1145_r3,flat,1.145,LIPM COM,ok,0.222893,,,data/paper2/readonly_rerun/flat_L1145_r3__lipm.stdout.txt
-flat_L128_r1,flat,1.28,LIPM COM,ok,0.227665,,,data/paper2/readonly_rerun/flat_L128_r1__lipm.stdout.txt
-flat_L128_r2,flat,1.28,LIPM COM,ok,0.220897,,,data/paper2/readonly_rerun/flat_L128_r2__lipm.stdout.txt
-flat_L128_r3,flat,1.28,LIPM COM,ok,0.209072,,,data/paper2/readonly_rerun/flat_L128_r3__lipm.stdout.txt
+flat_L1280_r1,flat,1.28,LIPM COM,ok,0.227665,,,data/paper2/readonly_rerun/flat_L128_r1__lipm.stdout.txt
+flat_L1280_r2,flat,1.28,LIPM COM,ok,0.220897,,,data/paper2/readonly_rerun/flat_L128_r2__lipm.stdout.txt
+flat_L1280_r3,flat,1.28,LIPM COM,ok,0.209072,,,data/paper2/readonly_rerun/flat_L128_r3__lipm.stdout.txt
 raised_L1145_r1,raised_0.01m,1.145,LIPM COM,ok,0.281276,,,data/paper2/readonly_rerun/raised_L1145_r1__lipm.stdout.txt
 raised_L1145_r2,raised_0.01m,1.145,LIPM COM,ok,0.246012,,,data/paper2/readonly_rerun/raised_L1145_r2__lipm.stdout.txt
 raised_L1145_r3,raised_0.01m,1.145,LIPM COM,ok,0.209884,,,data/paper2/readonly_rerun/raised_L1145_r3__lipm.stdout.txt
-raised_L128_r1,raised_0.01m,1.28,LIPM COM,ok,0.218385,,,data/paper2/readonly_rerun/raised_L128_r1__lipm.stdout.txt
-raised_L128_r2,raised_0.01m,1.28,LIPM COM,ok,0.204051,,,data/paper2/readonly_rerun/raised_L128_r2__lipm.stdout.txt
-raised_L128_r3,raised_0.01m,1.28,LIPM COM,ok,0.200457,,,data/paper2/readonly_rerun/raised_L128_r3__lipm.stdout.txt
-flat_1.145_r1,flat,1.145,TVLQR tracking,ok,0.26225,,,results/tvlqr_seed0/flat_1.145_r1.stdout.txt
-flat_1.145_r2,flat,1.145,TVLQR tracking,ok,0.251662,,,results/tvlqr_seed0/flat_1.145_r2.stdout.txt
-flat_1.145_r3,flat,1.145,TVLQR tracking,ok,0.221758,,,results/tvlqr_seed0/flat_1.145_r3.stdout.txt
-flat_1.28_r1,flat,1.28,TVLQR tracking,ok,0.235297,,,results/tvlqr_seed0/flat_1.28_r1.stdout.txt
-flat_1.28_r2,flat,1.28,TVLQR tracking,ok,0.223641,,,results/tvlqr_seed0/flat_1.28_r2.stdout.txt
-flat_1.28_r3,flat,1.28,TVLQR tracking,ok,0.217185,,,results/tvlqr_seed0/flat_1.28_r3.stdout.txt
-raised_1.145_r1,raised_0.01m,1.145,TVLQR tracking,ok,0.250948,,,results/tvlqr_seed0/raised_1.145_r1.stdout.txt
-raised_1.145_r2,raised_0.01m,1.145,TVLQR tracking,ok,0.23999,,,results/tvlqr_seed0/raised_1.145_r2.stdout.txt
-raised_1.145_r3,raised_0.01m,1.145,TVLQR tracking,ok,0.225175,,,results/tvlqr_seed0/raised_1.145_r3.stdout.txt
-raised_1.28_r1,raised_0.01m,1.28,TVLQR tracking,ok,0.224081,,,results/tvlqr_seed0/raised_1.28_r1.stdout.txt
-raised_1.28_r2,raised_0.01m,1.28,TVLQR tracking,ok,0.217898,,,results/tvlqr_seed0/raised_1.28_r2.stdout.txt
-raised_1.28_r3,raised_0.01m,1.28,TVLQR tracking,ok,0.218291,,,results/tvlqr_seed0/raised_1.28_r3.stdout.txt
+raised_L1280_r1,raised_0.01m,1.28,LIPM COM,ok,0.218385,,,data/paper2/readonly_rerun/raised_L128_r1__lipm.stdout.txt
+raised_L1280_r2,raised_0.01m,1.28,LIPM COM,ok,0.204051,,,data/paper2/readonly_rerun/raised_L128_r2__lipm.stdout.txt
+raised_L1280_r3,raised_0.01m,1.28,LIPM COM,ok,0.200457,,,data/paper2/readonly_rerun/raised_L128_r3__lipm.stdout.txt
+flat_L1145_r1,flat,1.145,TVLQR tracking,ok,0.26225,,,results/tvlqr_seed0/flat_1.145_r1.stdout.txt
+flat_L1145_r2,flat,1.145,TVLQR tracking,ok,0.251662,,,results/tvlqr_seed0/flat_1.145_r2.stdout.txt
+flat_L1145_r3,flat,1.145,TVLQR tracking,ok,0.221758,,,results/tvlqr_seed0/flat_1.145_r3.stdout.txt
+flat_L1280_r1,flat,1.28,TVLQR tracking,ok,0.235297,,,results/tvlqr_seed0/flat_1.28_r1.stdout.txt
+flat_L1280_r2,flat,1.28,TVLQR tracking,ok,0.223641,,,results/tvlqr_seed0/flat_1.28_r2.stdout.txt
+flat_L1280_r3,flat,1.28,TVLQR tracking,ok,0.217185,,,results/tvlqr_seed0/flat_1.28_r3.stdout.txt
+raised_L1145_r1,raised_0.01m,1.145,TVLQR tracking,ok,0.250948,,,results/tvlqr_seed0/raised_1.145_r1.stdout.txt
+raised_L1145_r2,raised_0.01m,1.145,TVLQR tracking,ok,0.23999,,,results/tvlqr_seed0/raised_1.145_r2.stdout.txt
+raised_L1145_r3,raised_0.01m,1.145,TVLQR tracking,ok,0.225175,,,results/tvlqr_seed0/raised_1.145_r3.stdout.txt
+raised_L1280_r1,raised_0.01m,1.28,TVLQR tracking,ok,0.224081,,,results/tvlqr_seed0/raised_1.28_r1.stdout.txt
+raised_L1280_r2,raised_0.01m,1.28,TVLQR tracking,ok,0.217898,,,results/tvlqr_seed0/raised_1.28_r2.stdout.txt
+raised_L1280_r3,raised_0.01m,1.28,TVLQR tracking,ok,0.218291,,,results/tvlqr_seed0/raised_1.28_r3.stdout.txt
 flat_L1145_r1,flat,1.145,Discrete active PPO,ok,0.24260058154419423,1.99,0.12684528102720005,data/paper2/readonly_rerun/flat_L1145_r1__discrete.stdout.txt
 flat_L1145_r2,flat,1.145,Discrete active PPO,ok,0.23219516008024402,2.5500000000000003,0.15231721676541943,data/paper2/readonly_rerun/flat_L1145_r2__discrete.stdout.txt
 flat_L1145_r3,flat,1.145,Discrete active PPO,ok,0.22488253448370082,2.1,0.1520505514401167,data/paper2/readonly_rerun/flat_L1145_r3__discrete.stdout.txt
-flat_L128_r1,flat,1.28,Discrete active PPO,ok,0.2171195951298242,2.35,0.12454114581054054,data/paper2/readonly_rerun/flat_L128_r1__discrete.stdout.txt
-flat_L128_r2,flat,1.28,Discrete active PPO,ok,0.2150008954864457,3.39,0.12078724422435028,data/paper2/readonly_rerun/flat_L128_r2__discrete.stdout.txt
-flat_L128_r3,flat,1.28,Discrete active PPO,ok,0.1990425644470404,3.1,0.1562694616315905,data/paper2/readonly_rerun/flat_L128_r3__discrete.stdout.txt
-raised_L1145_r1,raised_0.01m,1.145,Discrete active PPO,ok,0.2565281052018476,2.17,0.14380416812910135,data/paper2/readonly_rerun/raised_L1145_r1__discrete.stdout.txt
+flat_L1280_r1,flat,1.28,Discrete active PPO,ok,0.2171195951298242,2.35,0.12454114581054054,data/paper2/readonly_rerun/flat_L128_r1__discrete.stdout.txt
+flat_L1280_r2,flat,1.28,Discrete active PPO,ok,0.2150008954864457,3.39,0.12078724422435028,data/paper2/readonly_rerun/flat_L128_r2__discrete.stdout.txt
+flat_L1280_r3,flat,1.28,Discrete active PPO,ok,0.1990425644470404,3.1,0.1562694616315905,data/paper2/readonly_rerun/flat_L128_r3__discrete.stdout.txt
+raised_L1145_r1,raised_0.01m,1.145,Discrete active PPO,ok,0.267040040566968,1.87,0.16735289815461774,results/paper2_source_aligned_r1_rerun_20260721/raised_L1145_r1_discrete.stdout.txt
 raised_L1145_r2,raised_0.01m,1.145,Discrete active PPO,ok,0.24133085679392913,2.72,0.1549283434931863,data/paper2/readonly_rerun/raised_L1145_r2__discrete.stdout.txt
 raised_L1145_r3,raised_0.01m,1.145,Discrete active PPO,ok,0.24010378326288317,2.7800000000000002,0.1494888461423165,data/paper2/readonly_rerun/raised_L1145_r3__discrete.stdout.txt
-raised_L128_r1,raised_0.01m,1.28,Discrete active PPO,ok,0.224470194060896,3.11,0.15049186478676968,data/paper2/readonly_rerun/raised_L128_r1__discrete.stdout.txt
-raised_L128_r2,raised_0.01m,1.28,Discrete active PPO,ok,0.22253973480066633,2.96,0.13151615520087856,data/paper2/readonly_rerun/raised_L128_r2__discrete.stdout.txt
-raised_L128_r3,raised_0.01m,1.28,Discrete active PPO,ok,0.21875777955676068,3.24,0.1549925346777763,data/paper2/readonly_rerun/raised_L128_r3__discrete.stdout.txt
-flat_L1145_r1,flat,1.145,Continuous active PPO,ok,0.2664538721943747,3.44,0.10506091435166187,data/paper2/readonly_rerun/flat_L1145_r1__continuous.stdout.txt
-flat_L1145_r2,flat,1.145,Continuous active PPO,ok,0.2589772684441919,2.86,0.1203925199397351,data/paper2/readonly_rerun/flat_L1145_r2__continuous.stdout.txt
-flat_L1145_r3,flat,1.145,Continuous active PPO,ok,0.22886600920012357,3.5500000000000003,0.15750950555365795,data/paper2/readonly_rerun/flat_L1145_r3__continuous.stdout.txt
-flat_L128_r1,flat,1.28,Continuous active PPO,ok,0.24227017317402122,3.66,0.09929209993657095,data/paper2/readonly_rerun/flat_L128_r1__continuous.stdout.txt
-flat_L128_r2,flat,1.28,Continuous active PPO,ok,0.2305467973059341,3.96,0.11174469927293296,data/paper2/readonly_rerun/flat_L128_r2__continuous.stdout.txt
-flat_L128_r3,flat,1.28,Continuous active PPO,ok,0.22401828561719214,3.65,0.13497179869648068,data/paper2/readonly_rerun/flat_L128_r3__continuous.stdout.txt
-raised_L1145_r1,raised_0.01m,1.145,Continuous active PPO,ok,0.25903140715431305,2.83,0.14196624443767547,data/paper2/readonly_rerun/raised_L1145_r1__continuous.stdout.txt
-raised_L1145_r2,raised_0.01m,1.145,Continuous active PPO,ok,0.24736340282300093,3.3200000000000003,0.1281237757893665,data/paper2/readonly_rerun/raised_L1145_r2__continuous.stdout.txt
-raised_L1145_r3,raised_0.01m,1.145,Continuous active PPO,ok,0.23266493726824447,3.47,0.13993425905422807,data/paper2/readonly_rerun/raised_L1145_r3__continuous.stdout.txt
-raised_L128_r1,raised_0.01m,1.28,Continuous active PPO,ok,0.23140221463914637,3.3000000000000003,0.13588136209868296,data/paper2/readonly_rerun/raised_L128_r1__continuous.stdout.txt
-raised_L128_r2,raised_0.01m,1.28,Continuous active PPO,ok,0.22497154385730195,3.92,0.11678660675107588,data/paper2/readonly_rerun/raised_L128_r2__continuous.stdout.txt
-raised_L128_r3,raised_0.01m,1.28,Continuous active PPO,ok,0.2253669869175364,3.74,0.12677963457978692,data/paper2/readonly_rerun/raised_L128_r3__continuous.stdout.txt
-flat_1.145_r1,flat,1.145,Continuous active MPC,ok,0.195114,2.25,0.082797,results/paper2_mpc_current_12_cases.csv
-flat_1.145_r2,flat,1.145,Continuous active MPC,ok,0.190378,2.95,0.095961,results/paper2_mpc_current_12_cases.csv
-flat_1.145_r3,flat,1.145,Continuous active MPC,ok,0.192593,2.98,0.104159,results/paper2_mpc_current_12_cases.csv
-flat_1.28_r1,flat,1.28,Continuous active MPC,ok,0.187149,2.54,0.096916,results/paper2_mpc_current_12_cases.csv
-flat_1.28_r2,flat,1.28,Continuous active MPC,ok,0.201917,2.82,0.081779,results/paper2_mpc_current_12_cases.csv
-flat_1.28_r3,flat,1.28,Continuous active MPC,ok,0.177049,2.99,0.131406,results/paper2_mpc_current_12_cases.csv
-raised_1.145_r1,raised_0.01m,1.145,Continuous active MPC,ok,0.193443,2.71,0.029872,results/paper2_mpc_current_12_cases.csv
-raised_1.145_r2,raised_0.01m,1.145,Continuous active MPC,ok,0.182765,2.42,0.082316,results/paper2_mpc_current_12_cases.csv
-raised_1.145_r3,raised_0.01m,1.145,Continuous active MPC,ok,0.192593,2.98,0.104159,results/paper2_mpc_current_12_cases.csv
-raised_1.28_r1,raised_0.01m,1.28,Continuous active MPC,ok,0.158622,3.15,0.087111,results/paper2_mpc_current_12_cases.csv
-raised_1.28_r2,raised_0.01m,1.28,Continuous active MPC,ok,0.183546,2.84,0.036446,results/paper2_mpc_current_12_cases.csv
-raised_1.28_r3,raised_0.01m,1.28,Continuous active MPC,ok,0.184571,2.53,0.072472,results/paper2_mpc_current_12_cases.csv
+raised_L1280_r1,raised_0.01m,1.28,Discrete active PPO,ok,0.224470194060896,3.11,0.15049186478676968,data/paper2/readonly_rerun/raised_L128_r1__discrete.stdout.txt
+raised_L1280_r2,raised_0.01m,1.28,Discrete active PPO,ok,0.22253973480066633,2.96,0.13151615520087856,data/paper2/readonly_rerun/raised_L128_r2__discrete.stdout.txt
+raised_L1280_r3,raised_0.01m,1.28,Discrete active PPO,ok,0.21875777955676068,3.24,0.1549925346777763,data/paper2/readonly_rerun/raised_L128_r3__discrete.stdout.txt
+flat_L1145_r1,flat,1.145,Continuous-torque PPO,ok,0.2664538721943747,3.44,0.10506091435166187,data/paper2/readonly_rerun/flat_L1145_r1__continuous.stdout.txt
+flat_L1145_r2,flat,1.145,Continuous-torque PPO,ok,0.2589772684441919,2.86,0.1203925199397351,data/paper2/readonly_rerun/flat_L1145_r2__continuous.stdout.txt
+flat_L1145_r3,flat,1.145,Continuous-torque PPO,ok,0.22886600920012357,3.5500000000000003,0.15750950555365795,data/paper2/readonly_rerun/flat_L1145_r3__continuous.stdout.txt
+flat_L1280_r1,flat,1.28,Continuous-torque PPO,ok,0.24227017317402122,3.66,0.09929209993657095,data/paper2/readonly_rerun/flat_L128_r1__continuous.stdout.txt
+flat_L1280_r2,flat,1.28,Continuous-torque PPO,ok,0.2305467973059341,3.96,0.11174469927293296,data/paper2/readonly_rerun/flat_L128_r2__continuous.stdout.txt
+flat_L1280_r3,flat,1.28,Continuous-torque PPO,ok,0.22401828561719214,3.65,0.13497179869648068,data/paper2/readonly_rerun/flat_L128_r3__continuous.stdout.txt
+raised_L1145_r1,raised_0.01m,1.145,Continuous-torque PPO,ok,0.2780932427752225,1.99,0.13336367838846308,results/paper2_source_aligned_r1_rerun_20260721/raised_L1145_r1_continuous_source_aligned_recovery_1p00.stdout.txt
+raised_L1145_r2,raised_0.01m,1.145,Continuous-torque PPO,ok,0.24736340282300093,3.3200000000000003,0.1281237757893665,data/paper2/readonly_rerun/raised_L1145_r2__continuous.stdout.txt
+raised_L1145_r3,raised_0.01m,1.145,Continuous-torque PPO,ok,0.23266493726824447,3.47,0.13993425905422807,data/paper2/readonly_rerun/raised_L1145_r3__continuous.stdout.txt
+raised_L1280_r1,raised_0.01m,1.28,Continuous-torque PPO,ok,0.23140221463914637,3.3000000000000003,0.13588136209868296,data/paper2/readonly_rerun/raised_L128_r1__continuous.stdout.txt
+raised_L1280_r2,raised_0.01m,1.28,Continuous-torque PPO,ok,0.22497154385730195,3.92,0.11678660675107588,data/paper2/readonly_rerun/raised_L128_r2__continuous.stdout.txt
+raised_L1280_r3,raised_0.01m,1.28,Continuous-torque PPO,ok,0.2253669869175364,3.74,0.12677963457978692,data/paper2/readonly_rerun/raised_L128_r3__continuous.stdout.txt
+flat_L1145_r1,flat,1.145,Continuous-torque MPC,ok,0.19511386157200397,2.25,0.08279658608741558,results/paper2_mpc_current_12_cases.csv
+flat_L1145_r2,flat,1.145,Continuous-torque MPC,ok,0.20264315899801366,3.42,0.09246794192345953,results/paper2_mpc_current_12_cases.csv
+flat_L1145_r3,flat,1.145,Continuous-torque MPC,ok,0.22685540044755492,2.64,0.01375862584949572,results/paper2_mpc_current_12_cases.csv
+flat_L1280_r1,flat,1.28,Continuous-torque MPC,ok,0.18714936044447653,2.54,0.09691597940375485,results/paper2_mpc_current_12_cases.csv
+flat_L1280_r2,flat,1.28,Continuous-torque MPC,ok,0.20191743337940996,2.82,0.08177916395749363,results/paper2_mpc_current_12_cases.csv
+flat_L1280_r3,flat,1.28,Continuous-torque MPC,ok,0.1770488302673606,2.99,0.1314056310567644,results/paper2_mpc_current_12_cases.csv
+raised_L1145_r1,raised_0.01m,1.145,Continuous-torque MPC,ok,0.22893207093882226,2.29,0.05753561801696194,results/paper2_mpc_current_12_cases.csv
+raised_L1145_r2,raised_0.01m,1.145,Continuous-torque MPC,ok,0.19914510750875808,2.69,0.031816402005401034,results/paper2_mpc_current_12_cases.csv
+raised_L1145_r3,raised_0.01m,1.145,Continuous-torque MPC,ok,0.2336846609099357,2.79,-0.012919673547641786,results/paper2_mpc_current_12_cases.csv
+raised_L1280_r1,raised_0.01m,1.28,Continuous-torque MPC,ok,0.16465844581543587,2.48,0.026109130567324668,results/paper2_mpc_current_12_cases.csv
+raised_L1280_r2,raised_0.01m,1.28,Continuous-torque MPC,ok,0.17493955405531159,2.7,0.027077642520611622,results/paper2_mpc_current_12_cases.csv
+raised_L1280_r3,raised_0.01m,1.28,Continuous-torque MPC,ok,0.19525330088538523,2.08,0.11131951188400802,results/paper2_mpc_current_12_cases.csv
 flat_L1145_r1,flat,1.145,Proposed one-sided selector,ok,0.12052307848821536,2.52,,data/paper2/readonly_rerun/flat_L1145_r1__passive.stdout.txt
 flat_L1145_r2,flat,1.145,Proposed one-sided selector,ok,0.1185792601677367,2.61,0.021824064814923272,data/paper2/readonly_rerun/flat_L1145_r2__passive.stdout.txt
 flat_L1145_r3,flat,1.145,Proposed one-sided selector,ok,0.12143080143077968,2.84,0.0972730978841081,data/paper2/readonly_rerun/flat_L1145_r3__passive.stdout.txt
-flat_L128_r1,flat,1.28,Proposed one-sided selector,ok,0.11319157587430137,2.67,0.03371478741545153,data/paper2/readonly_rerun/flat_L128_r1__passive.stdout.txt
-flat_L128_r2,flat,1.28,Proposed one-sided selector,ok,0.11225498534642357,2.7800000000000002,0.035464581676681206,data/paper2/readonly_rerun/flat_L128_r2__passive.stdout.txt
-flat_L128_r3,flat,1.28,Proposed one-sided selector,ok,0.11551109964541492,2.81,0.03441548621294288,data/paper2/readonly_rerun/flat_L128_r3__passive.stdout.txt
+flat_L1280_r1,flat,1.28,Proposed one-sided selector,ok,0.11319157587430137,2.67,0.03371478741545153,data/paper2/readonly_rerun/flat_L128_r1__passive.stdout.txt
+flat_L1280_r2,flat,1.28,Proposed one-sided selector,ok,0.11225498534642357,2.7800000000000002,0.035464581676681206,data/paper2/readonly_rerun/flat_L128_r2__passive.stdout.txt
+flat_L1280_r3,flat,1.28,Proposed one-sided selector,ok,0.11551109964541492,2.81,0.03441548621294288,data/paper2/readonly_rerun/flat_L128_r3__passive.stdout.txt
 raised_L1145_r1,raised_0.01m,1.145,Proposed one-sided selector,ok,0.14785439168930947,2.3000000000000003,0.10767834951502708,data/paper2/readonly_rerun/raised_L1145_r1__passive.stdout.txt
 raised_L1145_r2,raised_0.01m,1.145,Proposed one-sided selector,ok,0.13731368143671915,2.2800000000000002,0.13762138421706926,data/paper2/readonly_rerun/raised_L1145_r2__passive.stdout.txt
 raised_L1145_r3,raised_0.01m,1.145,Proposed one-sided selector,ok,0.13212368445931796,3.19,0.09649707897328286,data/paper2/readonly_rerun/raised_L1145_r3__passive.stdout.txt
-raised_L128_r1,raised_0.01m,1.28,Proposed one-sided selector,ok,0.12320914014917492,3.21,0.1071597656818255,data/paper2/readonly_rerun/raised_L128_r1__passive.stdout.txt
-raised_L128_r2,raised_0.01m,1.28,Proposed one-sided selector,ok,0.11919749326798594,3.18,0.11375699923219962,data/paper2/readonly_rerun/raised_L128_r2__passive.stdout.txt
-raised_L128_r3,raised_0.01m,1.28,Proposed one-sided selector,ok,0.12048524477893445,3.17,0.12484323160028632,data/paper2/readonly_rerun/raised_L128_r3__passive.stdout.txt
+raised_L1280_r1,raised_0.01m,1.28,Proposed one-sided selector,ok,0.12320914014917492,3.21,0.1071597656818255,data/paper2/readonly_rerun/raised_L128_r1__passive.stdout.txt
+raised_L1280_r2,raised_0.01m,1.28,Proposed one-sided selector,ok,0.11919749326798594,3.18,0.11375699923219962,data/paper2/readonly_rerun/raised_L128_r2__passive.stdout.txt
+raised_L1280_r3,raised_0.01m,1.28,Proposed one-sided selector,ok,0.12048524477893445,3.17,0.12484323160028632,data/paper2/readonly_rerun/raised_L128_r3__passive.stdout.txt

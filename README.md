@@ -82,7 +82,8 @@ entry point was found. The release now includes all four TVLQR checkpoints and
 a portable runner that applies seed 0 only in a temporary copy. This fixed-seed
 protocol completed all 12 TVLQR cases and reproduced the manuscript-level
 reference trend (mean Cmt 0.232348, sample SD 0.015446). Revised Tables IV-V
-therefore report five complete replay families plus retained MPC artifacts:
+therefore report five complete replay families plus the accepted source-aligned
+unified MPC rerun:
 
 ```bash
 python analysis/reproduce_paper2_tables.py
@@ -93,6 +94,21 @@ This writes a 72-row combined case table and manuscript-facing summaries under
 landing residual, timeout, and read-only tree checks are retained under
 `data/paper2/readonly_rerun/`. A full rerun additionally requires the DOI case
 bundle because the frozen entry points load relative checkpoints and arrays.
+
+The repository-relative MPC release is under `src/paper2/mpc/`, with its
+12-case configuration in `configs/paper2_mpc_unified_12_cases.json` and
+accepted results in `results/paper2_mpc_unified_12case/`. All 12 cases succeeded;
+the accepted mean Cmt is 0.198945099 (sample SD 0.021963452), and two independent
+replays matched every accepted scientific result exactly. The superseded MPC
+CSV is retained under `results/legacy/`. Validate the release without running
+the expensive search using:
+
+```bash
+python src/paper2/mpc/validate_release.py
+```
+
+See `docs/PAPER2_MPC_UNIFIED_12CASE.md` for the search, initial-state, reset,
+edge-closure, and evidence boundaries.
 
 TVLQR can be verified and rerun independently from the larger bundle:
 
@@ -158,11 +174,16 @@ across independent training seeds. See
 ## Important interpretation boundary
 
 Active PPO is the penalized unrestricted control (`U1`,
-`action_value_weight=0.026`). Active-full uses the same 27 physical torque
-triples with zero torque penalty (`U0`, `action_value_weight=0`) and is retained
-as a single warm-started reward-ablation diagnostic. It is not a matched-seed
-from-scratch U0 estimate. `per_step_sign` exposes the same 27 physical torque
-triples as U1 and is an encoding diagnostic, not an action-mask baseline. The
+`action_value_weight=0.026`). In the V1.0.0 evidence archive, Active-full uses
+the same 27 physical torque triples with zero torque penalty (`U0`,
+`action_value_weight=0`) and is retained as a single warm-started reward
+diagnostic, not as a matched-seed from-scratch U0 estimate. The current
+main-branch Active-full training entry points are scratch-only: they contain no
+policy/critic loading path and refuse a non-empty output directory so that old
+checkpoints or appended logs cannot be mixed into a new run. This source change
+does not retroactively alter the V1.0.0 checkpoint lineage. `per_step_sign`
+exposes the same 27 physical torque triples as U1 and is an encoding diagnostic,
+not an action-mask baseline. The
 online selector is deployable; the oracle one-sided-policy envelope is a
 non-deployable hindsight diagnostic. The confirmatory experiment required for
 a causal persistence claim is specified in `docs/ABLATION_PROTOCOL.md`.
@@ -179,6 +200,13 @@ record.
 
 Use `docs/DATA_ARCHIVE_CHECKLIST.md` to assemble the DOI-backed archive and its
 file-level SHA-256 manifest for the Robotics and Autonomous Systems submission.
+
+The exact source-aligned rerun records for the raised, nominal-length-1.145,
+repetition-1 Discrete and Continuous PPO cases are documented in
+`docs/PAPER2_SOURCE_ALIGNED_R1_RERUN.md`. The Continuous record is an explicitly
+separate 1.00/0.89-recovery snapshot and does not overwrite or purport to be
+reproduced by the retained 0.87/0.89 repository entrypoint. Both exact rerun
+source files are retained byte-for-byte under that result directory.
 
 ## License
 

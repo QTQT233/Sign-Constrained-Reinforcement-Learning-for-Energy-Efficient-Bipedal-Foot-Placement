@@ -1,8 +1,12 @@
 import os
 import h5py
 import torch
+import imageio
 import numpy as np
+from numba import njit
 import matplotlib.pyplot as plt
+from scipy.integrate import solve_ivp
+from matplotlib.patches import Rectangle
 
 os.environ['KMP_DUPLICATE_LIB_OK'] = 'TRUE'
 
@@ -95,37 +99,26 @@ def kinetic_energy(theta1, theta2, dtheta1, dtheta2, params_fun):
     return T
 
 
-def load_policy_and_env(stance_leg_fun, q_val, params1, params2):
+def load_policy_and_env(stance_leg_fun, params1, params2):
     """根据站立腿和Q值返回环境、策略和动作列表"""
     if stance_leg_fun == 1:
         params_fun = params1
-        if q_val == -1:
-            torque_dir = -1
-            policy_path = 'D:/L&S/Mas/Project/Paper2/l1_stand(0,-1)_696.pth'
-            actions_fun = [0, -1]
-        else:
-            torque_dir = 1
-            policy_path = 'D:/L&S/Mas/Project/Paper2/l1_stand(0,1)_676.pth'
-            actions_fun = [0, 1]
+        policy_path = 'D:/L&S/Mas/Project/Paper2/60,30(0.33m),0.01m/l1_stand(-1,0,1)_1452.pth'
+        actions_fun = [-1, 0, 1]
+
     else:
         params_fun = params2
-        if q_val == -1:
-            torque_dir = -1
-            policy_path = 'D:/L&S/Mas/Project/Paper2/l2_stand(0,-1)_829.pth'
-            actions_fun = [0, -1]
-        else:
-            torque_dir = 1
-            policy_path = 'D:/L&S/Mas/Project/Paper2/l2_stand(0,1)_815.pth'
-            actions_fun = [0, 1]
+        policy_path = 'D:/L&S/Mas/Project/Paper2/60,30(0.33m),0.01m/l2_stand(-1,0,1)_1558.pth'
+        actions_fun = [-1, 0, 1]
 
-    env_fun = PendulumEnv(params_fun, torque_dir)
+    env_fun = PendulumEnv(params_fun)
 
     device_fun = torch.device("cpu")
     nnn_fun = 256
     policy_fun = torch.nn.Sequential(
         torch.nn.Linear(4, nnn_fun * 2), torch.nn.Tanh(),
         torch.nn.Linear(nnn_fun * 2, nnn_fun), torch.nn.Tanh(),
-        torch.nn.Linear(nnn_fun, 2), torch.nn.Softmax(dim=1)
+        torch.nn.Linear(nnn_fun, 3), torch.nn.Softmax(dim=1)
     )
     policy_fun.load_state_dict(torch.load(policy_path, map_location=device_fun))
     policy_fun.to(device_fun)
@@ -134,7 +127,7 @@ def load_policy_and_env(stance_leg_fun, q_val, params1, params2):
     return env_fun, policy_fun, actions_fun
 
 
-def handle_collision(state_fun, stance_leg_fun, params_fun, energy_passive_fun):
+def handle_collision(state_fun, stance_leg_fun, params_fun, energy_ac_discrete_fun):
     """处理碰撞后的状态更新、能量计算和打印"""
     print("碰撞触发！计算碰撞后状态...")
     print(f"碰撞前：θ1={np.rad2deg(state_fun[0]):.2f}°, θ2={np.rad2deg(state_fun[2]):.2f}°, "
@@ -148,14 +141,14 @@ def handle_collision(state_fun, stance_leg_fun, params_fun, energy_passive_fun):
 
     energy_pre_fun = kinetic_energy(theta1_new_fun, theta2_new_fun, dtheta1_new_fun, dtheta2_new_fun, params_fun)
     if stance_leg_fun == 1:
-        dtheta1_new_fun -= 0.50
+        dtheta1_new_fun -= 0.8
     else:
-        dtheta1_new_fun -= 0.55
+        dtheta1_new_fun -= 1.08
     energy_new_fun = kinetic_energy(theta1_new_fun, theta2_new_fun, dtheta1_new_fun, dtheta2_new_fun, params_fun)
-    energy_passive_fun += energy_new_fun - energy_pre_fun
+    energy_ac_discrete_fun += energy_new_fun - energy_pre_fun
 
     print(f"蹬地后：ω1={dtheta1_new_fun:.4f}, ω2={dtheta2_new_fun:.4f}")
-    return theta1_new_fun, theta2_new_fun, dtheta1_new_fun, dtheta2_new_fun, energy_passive_fun
+    return theta1_new_fun, theta2_new_fun, dtheta1_new_fun, dtheta2_new_fun, energy_ac_discrete_fun
 
 
 step = 3
@@ -163,7 +156,7 @@ stop_flag = 0
 
 BASE_PARAMS = {
     'g': 9.8, 'dt': 0.01, 'max_torque': 4,
-    'target1': 60, 'target2': 30, 'target3': 120, 'target4': -30,
+    'target1': 61.8, 'target2': 31.7, 'target3': 118.2, 'target4': -31.7,
     'theta1_range': 90, 'theta2_range': 90,
     'speed_range': 2, 'settle': 5, 'reward_scale': 5, 'action_value_weight': 0.03
 }
@@ -186,7 +179,7 @@ steps = int(simu_time / PARAMS1['dt'])
 
 
 class PendulumEnv:
-    def __init__(self, param, torque_direction):
+    def __init__(self, param):
         self.param = param
         self.max_torque = param['max_torque']
         self.dt = param['dt']
@@ -217,7 +210,7 @@ class PendulumEnv:
         self.reward = None
         self.over = None
         self.y = np.zeros(4)
-        self.action = np.array([0, torque_direction * self.max_torque])
+        self.action = np.array([-self.max_torque, 0, self.max_torque])
 
     def step(self, act_index):
         self.y[0], self.y[1], self.y[2], self.y[3] = self.state
@@ -275,56 +268,46 @@ class PendulumEnv:
         return self.state
 
 
-with h5py.File('D:/L&S/Mas/Project/Paper2/working_l1_stand_save_passive_1(-1,0,1)-30,60', 'r') as h5f:
-    Q1 = np.array(h5f['working_save_passive'][:])
-with h5py.File('D:/L&S/Mas/Project/Paper2/working_l2_stand_save_passive_1(-1,0,1)-30,60', 'r') as h5f:
-    Q2 = np.array(h5f['working_save_passive'][:])
-with h5py.File('D:/L&S/Mas/Project/Paper2/reward_check_l1_stand_passive_1(-1,0,1)-30,60', 'r') as h5f:
-    C1 = np.array(h5f['reward_check'][:])
-with h5py.File('D:/L&S/Mas/Project/Paper2/reward_check_l2_stand_passive_1(-1,0,1)-30,60', 'r') as h5f:
-    C2 = np.array(h5f['reward_check'][:])
 N1, N2 = 30, 60
-tht1s = np.linspace(60, 120, N1) * np.pi / 180
+tht1s = np.linspace(BASE_PARAMS['target1'], BASE_PARAMS['target3'], N1) * np.pi / 180
 dtht1s = np.linspace(-2, 2, N2)
 tht2s = np.linspace(-60, 60, N1) * np.pi / 180
 dtht2s = np.linspace(-2, 2, N2)
 count = 0
 thetas1, thetas2, dthetas1, dthetas2, actions_save = [], [], [], [], []
 stance_leg = 1
-Energy_Passive = 0
+Energy_ac_discrete = 0
 Energy_pre = 0
 Energy_new = 0
 theta1_new, theta2_new, dtheta1_new, dtheta2_new = 0, 0, 0, 0
-init_idx = (19, 11, 15, 7)   # (i, j, k, ll)
+init_idx = (19, 11, 15, 1)  # (i, j, k, ll)
 y = np.array([tht1s[init_idx[0]], dtht1s[init_idx[1]], tht2s[init_idx[2]], dtht2s[init_idx[3]]])
 initial_theta1, initial_theta2 = y[0], y[2]
 final_theta1 = 0
 final_theta2 = 0
-
 D = 0
+actions = [-1, 0, 1]
 count_step = 0
+Foot_D = 0
 while step != 0:
     if count > 0:
         y = np.array([theta1_new, dtheta1_new, theta2_new, dtheta2_new])
-    i = np.argmin(abs(y[0] - tht1s))
-    j = np.argmin(abs(y[1] - dtht1s))
-    k = np.argmin(abs(y[2] - tht2s))
-    ll = np.argmin(abs(y[3] - dtht2s))
-    env, policy, actions = load_policy_and_env(stance_leg, Q1[i, j, k, ll] if stance_leg == 1 else Q2[i, j, k, ll],
-                                               PARAMS1, PARAMS2)
+    env, policy, actions = load_policy_and_env(stance_leg, PARAMS1, PARAMS2)
     over = False
     state = env.reset()
     state[:] = y
     env.state = state.copy()
     next_state = state
+    count_time = 0
     while not over:
+        count_step += 1
         state_in_net_ = np.array([(state[0] - np.pi / 2) / env.rad_theta1_range, state[1] / env.speed_range,
                                   state[2] / env.rad_theta2_range, state[3] / env.speed_range])
         prob = policy(torch.FloatTensor(state_in_net_).reshape(1, 4))[0].cpu().detach().numpy()
         action_index = np.argmax(prob)
         a = actions[action_index]
         if a * (state[3] - state[1]) > 0:
-            Energy_Passive += abs(a * env.max_torque) * abs(state[3] - state[1]) * env.dt
+            Energy_ac_discrete += abs(a * env.max_torque) * abs(state[3] - state[1]) * env.dt
         next_state, reward, over = env.step(action_index)
         thetas1.append(state[0] * 180 / np.pi)
         thetas2.append(state[2] * 180 / np.pi)
@@ -332,7 +315,6 @@ while step != 0:
         dthetas2.append(state[3] * 180 / np.pi)
         actions_save.append(actions[action_index] * env.max_torque)
         state = np.copy(next_state)
-        count_step += 1
 
     reward1 = abs(state[0] - env.target1_rad) < env.settle and abs(state[2] - env.target2_rad) < env.settle
     reward2 = abs(state[0] - env.target3_rad) < env.settle2 and abs(state[2] - env.target4_rad) < env.settle2
@@ -345,6 +327,7 @@ while step != 0:
                       (env.l1 * np.cos(final_theta1) + env.l2_s * np.sin(final_theta2))) / (env.m1 + env.m2)
     D += abs(final_center_x - initial_center_x)
     if reward1:
+        Foot_D += 0.521 * (np.cos(final_theta1) + np.sin(final_theta2))
         print("碰撞触发！计算碰撞后状态...")
         params = {
             'm1': env.m1,
@@ -356,12 +339,13 @@ while step != 0:
             'J1': env.J1,
             'J2': env.J2
         }
-        theta1_new, theta2_new, dtheta1_new, dtheta2_new, Energy_Passive = handle_collision(
-            state, stance_leg, params, Energy_Passive)
+        theta1_new, theta2_new, dtheta1_new, dtheta2_new, Energy_ac_discrete = handle_collision(
+            state, stance_leg, params, Energy_ac_discrete)
         initial_theta1, initial_theta2 = theta1_new, theta2_new
         stance_leg = 2 if stance_leg == 1 else 1
         step -= 1
         count += 1
-Cmt_passive = Energy_Passive / (W * D)
-print("离散被动力矩Cmt：", Cmt_passive)
-print("Time", count_step * 0.01)
+Cmt_ac_discrete = Energy_ac_discrete / (W * D)
+print("离散主动力矩Cmt：", Cmt_ac_discrete)
+print("Time:", count_step * 0.01)
+print("Foot_error:", (3 * 0.521) - Foot_D)
