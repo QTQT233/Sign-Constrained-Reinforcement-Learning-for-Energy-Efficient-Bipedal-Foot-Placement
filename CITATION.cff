@@ -1,6 +1,6 @@
 cff-version: 1.2.0
-message: "If you use these materials, please cite the associated manuscript and this source-pinned software package."
-title: "Reproducibility materials for Transition-Start Routing of One-Sided PPO Experts for Energy-Aware Planar Bipedal Foot Placement"
+message: "If you use this software, please cite the associated manuscript and identify the exact Git commit used. Cite the hardware-data record separately using its Zenodo DOI."
+title: "Reproducibility materials for Mechanical-Work-Aware Routing of One-Sided PPO Experts for Planar Bipedal Foot Placement"
 type: software
 authors:
   - family-names: Tao
@@ -11,7 +11,5 @@ authors:
     given-names: Amir
   - family-names: Liu
     given-names: Mingyi
-version: 0.2.0
-date-released: 2026-07-15
 repository-code: "https://github.com/QTQT233/Sign-Constrained-Reinforcement-Learning-for-Energy-Efficient-Bipedal-Foot-Placement"
 license: Apache-2.0

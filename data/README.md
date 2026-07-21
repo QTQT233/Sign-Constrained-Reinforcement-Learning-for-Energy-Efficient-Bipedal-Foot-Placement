@@ -1,35 +1,32 @@
-# Research-data artifact bundle
+# Repository data and external hardware archive
 
-Canonical archive: **DOI TO BE MINTED**
+The GitHub repository is the canonical executable record for the corrected
+source code, repository-hosted models, simulation inputs and summaries,
+accepted MPC results, manifests, and validation scripts. The exact immutable
+Git commit used by the manuscript should be reported in the Code Availability
+statement.
 
-The DOI-backed bundle should contain the files listed in `MANIFEST.csv` and
-`CHECKSUMS.sha256`, including raw action maps, raw Cmt arrays, the 12 multi-step
-case artifacts, four-link per-trial CSVs, selector data, training logs, and the
-exact checkpoints loaded by the frozen evaluator.
+The unchanged hardware evidence is a separate data record:
 
-The prepared submission archive additionally contains
-`action_weight_12_cell_arrays.h5` (58,282,799 bytes; SHA-256
-`91576b1a6f7f432d9b4c754fae68c637a09bd0e05e7b766aaa27d27f554a545d`),
-its Excel/CSV/JSON manifests, and the hardware videos
-`Flat_walking.mp4` and `Ueven_foot_placement.mp4`. The HDF5 artifact contains
-all 12 action-weight cells with status, positive-work energy, Cmt, recovered
-COM displacement, and per-entry displacement-provenance flags.
+- Zenodo DOI: <https://doi.org/10.5281/zenodo.21407986>
+- Scope: author-owned hardware evidence and its archive metadata
+- License: Apache-2.0 for author-owned material
 
-Small Paper2 audit outputs, all captured stdout/stderr files, and frozen
-entry-point copies are included directly in this repository. The DOI bundle is
-still required for the entry points' relative model, array, and helper-module
-dependencies.
+This DOI must not be described as containing the corrected GitHub software,
+the unified 12-case MPC rerun, simulation checkpoints, or exhaustive MPC
+candidate searches unless those files are actually added in a future Zenodo
+version. A code-only correction merged into GitHub does not require a new
+Zenodo version or a new GitHub Release when the manuscript pins an immutable
+Git commit.
 
-Until the DOI is public, the repository must describe the data as "available
-from the authors for reproducibility checking" rather than claiming that the
-data are openly available.
+The accepted MPC case table and path-free validation digest are under
+`../results/paper2_mpc_unified_12case/`. Complete candidate tables, traces,
+solve logs, and fresh-process replays are retained in Supplementary Archive S1
+for the journal submission. Some legacy Paper2 entry points require their
+original case-directory dependencies; these are distinct from the hardware
+DOI and should be supplied as supplementary material or from the authors when
+needed.
 
-Author-owned processed data in this repository and the author-owned hardware
-videos when distributed in the submission/archive are licensed under
-Apache-2.0. See `../DATA_LICENSE.md` and `../LICENSE`. The future DOI record
-must repeat the same license and scope unless the authors publish a documented
-superseding version.
-
-The GitHub repository is the canonical code record. The DOI archive is the
-canonical immutable data/model record. Each release should cross-reference the
-other by Git commit and archive DOI/version.
+Repository-wide file sizes and SHA-256 values are recorded in
+`../MANIFEST.csv` and `../CHECKSUMS.sha256`. The data and video license boundary
+is defined in `../DATA_LICENSE.md` and `../LICENSE`.

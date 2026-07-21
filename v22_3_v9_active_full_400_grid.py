@@ -373,7 +373,7 @@ raw_state_dim = 8
 state_dim = 12
 action_dim = len(ACTIONS)
 output_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                          "v22_3_v9_active_full_400_grid")
+                          "v22_3_v9_active_full_400_grid_scratch")
 checkpoint_prefix = "V22_3V9ActiveFull400Grid"
 curriculum_save_bucket_width = 0.01
 
@@ -381,10 +381,8 @@ training_log_enabled = True
 training_log_csv_path = os.path.join(output_dir, f"{checkpoint_prefix}_training_log.csv")
 training_log_jsonl_path = os.path.join(output_dir, f"{checkpoint_prefix}_training_log.jsonl")
 
-# V22_3 can warm-start from a matching checkpoint copied into this output directory as *_old.pth.
-load_previous_model = True
-load_policy_path = os.path.join(output_dir, f"{checkpoint_prefix}_Policy_old.pth")
-load_critic_path = os.path.join(output_dir, f"{checkpoint_prefix}_Critic_old.pth")
+# Active-full training is intentionally scratch-only.  No policy or critic
+# state is loaded from disk, and train() refuses a non-empty output directory.
 success = []
 terminal_reasons = []
 directional_terminal_reasons = []
@@ -455,81 +453,17 @@ def curriculum_best_checkpoint_paths(bucket):
     return policy_path, critic_path
 
 
-def load_existing_curriculum_bests():
-    best_success_by_curriculum = {}
-    if not os.path.isdir(output_dir):
-        return best_success_by_curriculum
-
-    pattern = re.compile(rf"{re.escape(checkpoint_prefix)}_c(\d{{3}})_Policy_(\d+)\.pth$")
-    for file_name in os.listdir(output_dir):
-        match = pattern.match(file_name)
-        if not match:
-            continue
-        bucket = int(match.group(1))
-        success_count = int(match.group(2))
-        best_success_by_curriculum[bucket] = max(
-            best_success_by_curriculum.get(bucket, -1),
-            success_count,
+def assert_fresh_scratch_output_dir():
+    existing_entries = sorted(os.listdir(output_dir))
+    if existing_entries:
+        preview = ", ".join(existing_entries[:5])
+        if len(existing_entries) > 5:
+            preview += ", ..."
+        raise FileExistsError(
+            "Scratch-only active-full training requires an empty output_dir. "
+            f"Found {len(existing_entries)} existing entries in {output_dir}: {preview}. "
+            "Use a new run directory instead of mixing checkpoints or logs."
         )
-    return best_success_by_curriculum
-
-
-def load_state_with_optional_input_expansion(net, checkpoint_path):
-    previous_state = torch.load(checkpoint_path, map_location=device)
-    current_state = net.state_dict()
-    skipped_keys = []
-
-    for key, value in previous_state.items():
-        if key not in current_state:
-            skipped_keys.append(key)
-            continue
-
-        current_value = current_state[key]
-        if current_value.shape == value.shape:
-            current_state[key] = value
-            continue
-
-        can_expand_input = (
-            current_value.ndim == 2
-            and value.ndim == 2
-            and current_value.shape[0] == value.shape[0]
-            and current_value.shape[1] == value.shape[1] + 1
-        )
-        if can_expand_input:
-            expanded = current_value.clone()
-            expanded[:, : value.shape[1]] = value
-            expanded[:, value.shape[1]:] = 0.0
-            current_state[key] = expanded
-            continue
-
-        skipped_keys.append(key)
-
-    net.load_state_dict(current_state)
-    return skipped_keys
-
-
-def load_previous_model_if_requested():
-    if not load_previous_model:
-        return
-
-    if not os.path.exists(load_policy_path) or not os.path.exists(load_critic_path):
-        print(
-            "load_previous_model=True, but previous checkpoint was not found; "
-            "training will start from the current initialization. "
-            f"Expected: {os.path.basename(load_policy_path)}, {os.path.basename(load_critic_path)}"
-        )
-        return
-
-    skipped_policy_keys = load_state_with_optional_input_expansion(policy, load_policy_path)
-    skipped_critic_keys = load_state_with_optional_input_expansion(model, load_critic_path)
-    print(
-        "Loaded previous V22_2 checkpoint with commanded-step/height input expansion: "
-        f"{os.path.basename(load_policy_path)}, {os.path.basename(load_critic_path)}"
-    )
-    if skipped_policy_keys:
-        print(f"Skipped incompatible policy keys: {skipped_policy_keys}")
-    if skipped_critic_keys:
-        print(f"Skipped incompatible critic keys: {skipped_critic_keys}")
 
 
 def curriculum_training_score(success_count, reason_counts):
@@ -2441,8 +2375,8 @@ def train():
     global experience_buffer_for_policy, experience_buffer_for_value
 
     os.makedirs(output_dir, exist_ok=True)
-    load_previous_model_if_requested()
-    best_success_by_curriculum = load_existing_curriculum_bests()
+    assert_fresh_scratch_output_dir()
+    best_success_by_curriculum = {}
 
     for epoch in range(episode):
         curriculum_progress = update_curriculum(

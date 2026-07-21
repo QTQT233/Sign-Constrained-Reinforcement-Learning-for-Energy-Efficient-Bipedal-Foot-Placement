@@ -258,7 +258,7 @@ Energy_PPO = 0
 Energy_pre = 0
 Energy_new = 0
 theta1_new, theta2_new, dtheta1_new, dtheta2_new = 0, 0, 0, 0
-init_idx = (19, 11, 15, 7)  # (i, j, k, ll)
+init_idx = (19, 11, 15, 1)  # (i, j, k, ll)
 y = np.array([tht1s[init_idx[0]], dtht1s[init_idx[1]], tht2s[init_idx[2]], dtht2s[init_idx[3]]])
 initial_theta1, initial_theta2 = y[0], y[2]
 final_theta1 = 0
@@ -335,7 +335,7 @@ while step != 0:
         initial_theta2 = theta2_new
         Energy_pre = kinetic_energy(theta1_new, theta2_new, dtheta1_new, dtheta2_new, params)
         if stance_leg == 1:
-            dtheta1_new -= 0.87
+            dtheta1_new -= 0.95
             stop_flag += 1
             Energy_new = kinetic_energy(theta1_new, theta2_new, dtheta1_new, dtheta2_new, params)
             Energy_PPO += Energy_new - Energy_pre

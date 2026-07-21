@@ -15,9 +15,10 @@ implements the same offline mapping concept for the hardware controller. It is
 not an interpolation of the released coarse array. The author-confirmed
 generator follows the same two-expert evaluation/fusion logic used for the
 `60,30(0.33m)` / `working_save_passive-10-30` family, with all four state axes
-discretized to 50 points. The release contains the corresponding 50-bin
-generator-family source and hardware consumers, but the large generated table
-belongs in the DOI-backed data archive. The table is not an online comparison
+discretized to 50 points. The repository contains the corresponding 50-bin
+generator-family source and hardware consumers, while the large generated
+table belongs in the journal supplementary archive. The hardware-only Zenodo
+record is not the source of this simulation table. The table is not an online comparison
 of critic return estimates. Values `-1`, `0`, and `+1` are converted to
 negative, zero, and positive hip-torque commands. The `-2` value is the
 uncovered/failure sentinel handled by the deployment fallback.

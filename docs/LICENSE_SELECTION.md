@@ -14,8 +14,8 @@ Release maintenance requirements:
 
 - keep the complete standard license text in repository-root `LICENSE`;
 - keep `DATA_LICENSE.md`, `CITATION.cff`, and README metadata synchronized;
-- repeat Apache-2.0 and the data scope in the DOI repository metadata and
-  archive README;
+- repeat the applicable hardware-data licence and its limited scope in the
+  Zenodo metadata and hardware-archive README;
 - list any third-party checkpoints, photographs, fonts, or source data that
   are excluded from the licence; and
 - confirm consent and authorship for both hardware videos and all photographs.

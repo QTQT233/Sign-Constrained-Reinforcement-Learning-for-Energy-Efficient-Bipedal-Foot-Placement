@@ -1,0 +1,22 @@
+{
+  "schema": "paper2-mpc-unified-12case-validation-release-v1",
+  "source_validation_sha256": "9696833268725ca0e15ea837e251eb3a8bb5ce8a133eab034771b45ded560477",
+  "integrity_pass": true,
+  "error_count": 0,
+  "warning_count": 3,
+  "warnings": [
+    "flat_L1145_r3 coarse optimum was on the original search boundary.",
+    "flat_L1145_r3 fine optimum was on an artificial window boundary; the accepted result uses the documented adjacent-window extension.",
+    "raised_L1280_r3 coarse optimum was on a boundary; its complete physically clipped fine grid produced an interior accepted optimum."
+  ],
+  "accepted_warning_resolution": [
+    "flat_L1145_r3: a 100-candidate adjacent r2 window closed the artificial edge; accepted r2=-0.98 is interior and r1=-1.19 is the physical bound.",
+    "raised_L1280_r3: the complete physically clipped 10x11 fine grid gave accepted r1=-1.11 and r2=-0.94, both interior."
+  ],
+  "verification_replays": {
+    "per_case": 2,
+    "scientific_fields_exact": true,
+    "verified_cases": 12
+  },
+  "full_report_boundary": "The exhaustive candidate-, trace-, and freshness-level validation report and raw outputs are retained in Supplementary Archive S1; this GitHub record contains the corrected executable sources, accepted results, and path-free validation digest. The separate Zenodo DOI is limited to unchanged hardware evidence."
+}

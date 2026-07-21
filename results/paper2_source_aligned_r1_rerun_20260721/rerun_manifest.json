@@ -1,0 +1,56 @@
+{
+  "release_id": "paper2-source-aligned-raised-L1145-r1-20260721",
+  "case_id": "raised_L1145_r1",
+  "initial_index": [19, 11, 15, 1],
+  "environment": {
+    "platform": "Windows",
+    "python": "3.9.18",
+    "numpy": "1.26.4",
+    "scipy": "1.13.1",
+    "torch": "2.7.0+cu118"
+  },
+  "records": [
+    {
+      "method": "Discrete active PPO",
+      "cmt": 0.267040040566968,
+      "time_s": 1.87,
+      "landing_error_m": 0.16735289815461774,
+      "recovery_setting": "0.80/1.08",
+      "source_snapshot": "results/paper2_source_aligned_r1_rerun_20260721/source_snapshot/Qi_multi_ac_discrete_sim.py",
+      "source_sha256": "DE48EEC87ACBC56C655C05A99C5B7BC805EAE5D4AD533A94A20FE5415790A8D0",
+      "repository_entrypoint_sha256": "FDC90A63D8C9B719F22C1B7793D5D7B69496538D4A1D96F96F29865B4BEC5B1F",
+      "repository_entrypoint_reproduces_record": true,
+      "repository_difference": "terminal newline only",
+      "logical_command": "conda run -n Pytorch python <ORIGINAL_CASE_ROOT>/Qi_multi_ac_discrete_sim.py",
+      "stdout": "results/paper2_source_aligned_r1_rerun_20260721/raised_L1145_r1_discrete.stdout.txt"
+    },
+    {
+      "method": "Continuous-torque PPO",
+      "cmt": 0.2780932427752225,
+      "time_s": 1.99,
+      "landing_error_m": 0.13336367838846308,
+      "recovery_setting": "1.00/0.89",
+      "source_snapshot": "results/paper2_source_aligned_r1_rerun_20260721/source_snapshot/Multi_continuous.py",
+      "source_sha256": "1F1DB06227A0D1B4DB268B9C479088DF4BD0FDBDB483ACE5DEB3F83DFA6F9520",
+      "repository_entrypoint_sha256": "BFB03787E422C050661C329AD8E8A8725055CCE15A319B2A9F6BF28480B9C52A",
+      "repository_entrypoint_reproduces_record": true,
+      "repository_difference": "accepted local source and repository entrypoint differ only by line-ending normalization",
+      "logical_command": "conda run -n Pytorch python <ORIGINAL_CASE_ROOT>/Multi_continuous.py",
+      "stdout": "results/paper2_source_aligned_r1_rerun_20260721/raised_L1145_r1_continuous_source_aligned_recovery_1p00.stdout.txt"
+    },
+    {
+      "method": "LIPM COM",
+      "cmt": 0.301544,
+      "time_s": null,
+      "landing_error_m": null,
+      "recovery_setting": "0.95/0.89",
+      "repository_entrypoint": "src/paper2/entrypoints/raised_1.145_r1/LIPM.py",
+      "source_sha256": "41CEB5E7F102780EF7CD6FF43D5B1CCA52A8505C08ABA26CB0BB84A31DB6B874",
+      "accepted_local_source_sha256": "CEAA15B5B0CA4C373E68C4C8A57082088BE31EF969986B27E445813147F75BE7",
+      "repository_entrypoint_reproduces_record": true,
+      "repository_difference": "accepted local source and repository entrypoint differ only by line-ending normalization",
+      "logical_command": "conda run -n Pytorch python <ORIGINAL_CASE_ROOT>/LIPM.py",
+      "stdout": "results/paper2_source_aligned_r1_rerun_20260721/raised_L1145_r1_lipm_source_aligned_recovery_0p95.stdout.txt"
+    }
+  ]
+}
