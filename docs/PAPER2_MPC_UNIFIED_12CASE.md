@@ -50,14 +50,17 @@ configuration. Their repository copies differ only in default/import/output
 path declarations: workstation-specific absolute paths were replaced with
 paths derived from `__file__`. The plant, controller, objective, event/reset,
 search, and metric logic are unchanged. The runner pins the portable repository
-bytes, while the accepted pre-port hashes preserve the link to the local
-accepted-source package prepared for a subsequent Zenodo version.
+bytes, while the accepted pre-port hashes preserve the link to the immutable
+local accepted-source package supplied as Supplementary Archive S1.
 
 The exhaustive candidate tables, traces, solve logs, process replays, and the
-full validator report are in a prepared local supplementary/Zenodo-version
-candidate archive. The currently published DOI does not carry this full rerun
-bundle until a new Zenodo version is uploaded and published. Public repository
-release files contain repository-relative paths only.
+full validator report are in the prepared Supplementary Archive S1. The public
+GitHub record contains the corrected executable sources, accepted results, and
+path-free validation digest. The separate Zenodo DOI is limited to unchanged
+hardware evidence and is not the source of this MPC result. No new Zenodo or
+GitHub Release is required for a code-only correction when the manuscript pins
+the audited Git commit. Public repository files contain repository-relative
+paths only.
 
 ## Initial-state correction and reset boundary
 
@@ -79,11 +82,12 @@ The unified MPC runner parses the two entry-point families only to audit
 `BASE_PARAMS`, `PARAMS1`, `PARAMS2`, and `init_idx`. It does not import or run
 `Multi_continuous.py`; the actual MPC call chain imports only the three pinned
 MPC files and injects the case configuration into the shared evaluator.
-Consequently, controller-specific recovery/reset values in
-`Multi_continuous.py` belong to the Continuous-torque PPO baseline and are not
-MPC inputs. In particular, the raised-1.145-r1 baseline retains its archived
-`0.87/0.89` recovery pair; it was not replaced by the accepted-source file's
-`1.00/0.89` pair.
+Consequently, controller-specific recovery/reset values in the baseline
+entrypoints are not MPC inputs. For raised-1.145-r1, the canonical Continuous-
+torque PPO, LIPM, and TVLQR sources are synchronized to their independently
+selected `1.00/0.89`, `0.95/0.89`, and `1.00/0.89` recovery pairs. These
+controller-specific values are included in each method's reported Cmt and do
+not alter the unified MPC recovery search.
 
 ## Case-ID mapping
 

@@ -8,7 +8,7 @@ For this release, “research data” includes the author-generated files under
 `data/` and `results/`, processed manuscript tables, statistical-analysis
 outputs, manifests, checksums, and the author-owned supplementary hardware
 videos `Flat_walking.mp4` and `Ueven_foot_placement.mp4` when those videos are
-distributed with the submission or an archival release.
+distributed with the submission or the separate hardware-data archive.
 
 The license does not override rights in third-party software, publications,
 fonts, or other materials that carry their own notices. Users remain

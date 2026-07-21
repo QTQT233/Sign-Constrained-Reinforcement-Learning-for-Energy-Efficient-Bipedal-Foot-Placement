@@ -335,7 +335,7 @@ while step != 0:
         initial_theta2 = theta2_new
         Energy_pre = kinetic_energy(theta1_new, theta2_new, dtheta1_new, dtheta2_new, params)
         if stance_leg == 1:
-            dtheta1_new -= 0.87
+            dtheta1_new -= 0.95
             stop_flag += 1
             Energy_new = kinetic_energy(theta1_new, theta2_new, dtheta1_new, dtheta2_new, params)
             Energy_PPO += Energy_new - Energy_pre

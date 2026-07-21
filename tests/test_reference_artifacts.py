@@ -153,7 +153,10 @@ class ReferenceArtifactTests(unittest.TestCase):
         )
         self.assertAlmostEqual(float(table_v["Proposed one-sided selector"]["mean_cmt"]), 0.123472869728)
         self.assertEqual(int(table_v["TVLQR tracking"]["n_cmt"]), 12)
-        self.assertAlmostEqual(float(table_v["TVLQR tracking"]["mean_cmt"]), 0.232348)
+        self.assertAlmostEqual(
+            float(table_v["TVLQR tracking"]["mean_cmt"]),
+            0.234644083333,
+        )
 
         with (ROOT / "results/paper2_current/paper2_combined_cases.csv").open(
             newline="", encoding="utf-8"
@@ -181,8 +184,12 @@ class ReferenceArtifactTests(unittest.TestCase):
         self.assertEqual(len(rows), 12)
         self.assertTrue(all(row["status"] == "ok" for row in rows))
         self.assertTrue(all(row["seed_override"] == "0" for row in rows))
+        for row in rows:
+            stderr = (ROOT / row["stderr"]).read_text(encoding="utf-8")
+            self.assertNotIn("C:\\Users\\", stderr)
+            self.assertIn("<TEMP>/LQR.py", stderr)
         self.assertAlmostEqual(
-            sum(float(row["cmt"]) for row in rows) / len(rows), 0.232348
+            sum(float(row["cmt"]) for row in rows) / len(rows), 0.234644083333
         )
         with (ROOT / "data/paper2/readonly_rerun/paper2_rerun_results.csv").open(
             newline="", encoding="utf-8-sig"
@@ -204,6 +211,10 @@ class ReferenceArtifactTests(unittest.TestCase):
             source = ROOT / "src/paper2/entrypoints" / row["case_id"] / "LQR.py"
             if row["case_id"] == "raised_1.145_r1":
                 self.assertNotEqual(sha256(source), audit[audit_id])
+                self.assertEqual(
+                    sha256(source),
+                    config["source_hash_overrides"][audit_id],
+                )
             else:
                 self.assertEqual(sha256(source), audit[audit_id])
 

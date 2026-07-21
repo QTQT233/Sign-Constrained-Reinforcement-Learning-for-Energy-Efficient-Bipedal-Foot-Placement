@@ -1,10 +1,13 @@
 # TVLQR release status
 
-All 12 frozen `LQR.py` entry points and all four checkpoints they load are
-included in this repository. The original files are unmodified. The portable
-runner verifies their SHA-256 values, rewrites only the four author-workstation
-model paths in a temporary copy, and captures stdout/stderr outside the source
-tree.
+All 12 `LQR.py` entry points and all four checkpoints they load are included in
+this repository. Eleven entry points retain the hashes from the initial
+read-only audit. The raised-1.145-r1 source was synchronized to the accepted
+local source: `init_idx=(19, 11, 15, 1)`, the `1.00/0.89` recovery pair, and the
+terminal stance action included in positive work. Its corrected SHA-256 is
+pinned explicitly in `configs/tvlqr_release.json`. The portable runner verifies
+all source and model hashes, rewrites only the four author-workstation model
+paths in a temporary copy, and captures stdout/stderr outside the source tree.
 
 ```bash
 python -m pip install -r environment/requirements-tvlqr.txt
@@ -14,15 +17,14 @@ python tools/run_frozen_tvlqr.py --all --seed 0 --timeout 60 \
   --output results/tvlqr_seed0
 ```
 
-The author reports that the TVLQR programs complete in the local interactive
-environment. The automated audit retained 11 completed cases and one 180-s
-timeout; that timeout is an audit outcome, not a missing source file. The
-released runner therefore uses a configurable per-case timeout and applies an
-explicit seed only to a temporary copy. Under the release protocol (`seed=0`,
-60-s per-case timeout), all 12 cases completed in 25.7 s. The reproduced overall
-Cmt was 0.232348 (sample SD 0.015446; 95% t interval
-[0.222534, 0.242162]); per-case logs, the case table, grouped summary, and run
-manifest are retained under `results/tvlqr_seed0/`.
+The initial automated audit retained 11 completed cases and one 180-s timeout;
+that timeout is an audit outcome, not a missing source file. The runner uses a
+configurable per-case timeout and applies an explicit seed only to a temporary
+copy. Under the corrected release protocol (`seed=0`, 600-s per-case timeout),
+all 12 cases completed. The reproduced overall Cmt is 0.234644 (sample SD
+0.019875; descriptive 95% t interval [0.222016, 0.247272]). The corrected
+raised-1.145-r1 value is 0.278501. Per-case logs, the case table, grouped
+summary, and run manifest are retained under `results/tvlqr_seed0/`.
 
 The manuscript may retain TVLQR as a local model-based reference and may state
 that its reproduced Cmt values are higher than the proposed method in the 12

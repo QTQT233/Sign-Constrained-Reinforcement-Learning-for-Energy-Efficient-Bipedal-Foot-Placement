@@ -298,7 +298,7 @@ def main() -> int:
         "--paper2-root",
         type=Path,
         required=True,
-        help="root of the DOI case bundle containing the 12 original folders",
+        help="root of the original case bundle containing the 12 folders",
     )
     parser.add_argument(
         "--output-root",

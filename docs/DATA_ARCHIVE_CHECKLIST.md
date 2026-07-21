@@ -1,47 +1,58 @@
 # Data archive checklist for the RAS submission
 
-The GitHub repository is the executable code release. The larger immutable data
-archive should receive its own DOI (for example, from Zenodo or Mendeley Data)
-and should be cited from the manuscript's Data Availability statement.
+The public records have separate roles:
 
-## Required archive contents
+- GitHub: corrected executable software, repository-hosted models and
+  simulation data, accepted results, provenance, and validators;
+- Zenodo DOI <https://doi.org/10.5281/zenodo.21407986>: unchanged hardware
+  evidence only;
+- Supplementary Archive S1: exhaustive MPC candidate tables, traces, logs, and
+  replay evidence that are impractical or unnecessary to duplicate in Git.
 
-1. `README.md` with the manuscript title, authors, contact, license, software
-   versions, directory map, and exact Git commit used for the paper.
-2. Table III source maps: the active, negative-expert, and positive-expert HDF5
-   files, with SHA-256 hashes and the sampled-grid definition.
-3. Appendix D source arrays for all 12 condition/weight cells: controller status,
-   mechanical energy, COM displacement, and Cmt arrays. Preserve the pre-filter
-   results and the final `D > 0.01 m` result/manifest files.
-4. Tables IV-V per-case inputs and outputs: the 12 case definitions, checkpoints,
-   captured stdout, timing/error summaries, and source hashes.
-5. Table VI and Appendix B four-link trial-level CSV files, configuration manifests,
-   controller/checkpoint identifiers, training logs, and paired-inference output.
-6. Hardware evidence: a complete trial manifest, commanded footholds, timestamps,
-   state/encoder logs, calibration and parameter-identification files, failure
-   labels, and the original videos. Do not report a hardware success rate unless
-   every attempted trial is represented.
-7. Figure source data and deterministic scripts, including
-   `analysis/plot_figure08_four_link_diagnostics.py` and its PNG/PDF/SVG outputs.
-8. One machine-readable `manifest.csv` containing every archived file's relative
-   path, byte size, SHA-256 hash, provenance, and manuscript table/figure link.
+## GitHub merge gate
 
-## Deposit procedure
+1. Merge the audited pull request into `main` without rewriting history.
+2. Record the immutable public commit in the manuscript and supplementary
+   README.
+3. Run the unit tests, MPC release validator, table-regeneration script, and
+   repository manifest/checksum audit.
+4. Confirm that no workstation-absolute paths, credentials, or generated cache
+   files are present.
+5. Keep `LICENSE`, `DATA_LICENSE.md`, `CITATION.cff`, and `NOTICE` synchronized.
 
-1. Freeze the final Git commit and write the hash into the archive README.
-2. Copy the items above into a versioned, read-only directory without changing
-   filenames or numeric contents.
-3. Generate and verify the SHA-256 manifest.
-4. Upload the directory to a DOI-granting repository and publish version 1.
-5. Add the DOI to the manuscript, cite the dataset in the references, and keep
-   later corrections as new archive versions rather than overwriting version 1.
+A new GitHub Release or tag is optional. It is not required when a code-only
+correction is merged to `main` and the manuscript cites an exact commit.
 
-## Current limitations to disclose
+## Hardware DOI audit
 
-- The released Git repository contains processed summaries and replay material,
-  but not every large HDF5 source array or complete hardware trial log.
-- The Appendix D `D > 0.01 m` values are reproducible from the archived metric
-  arrays and recorded recovery rule; a clean rerun should additionally archive
-  the newly written `D_save*.h5` files.
-- The two-link hardware lookup is event-updated; it must not be described as a
+1. Confirm the Zenodo record title and description state that it is a hardware-
+   data archive, not the source-code or MPC-results archive.
+2. Verify every deposited hardware file against a file-level SHA-256 manifest.
+3. Retain the original videos (`Flat_walking.mp4` and
+   `Ueven_foot_placement.mp4`), trial metadata, and any available calibration,
+   command, state, encoder, timing, and failure-label records.
+4. State Apache-2.0 for author-owned material and identify any third-party
+   exceptions.
+5. Cite the DOI only for claims actually supported by that hardware record.
+
+Because the hardware files are unchanged, merging corrected software into
+GitHub does not require a new Zenodo version. A new Zenodo version is necessary
+only if the deposited hardware files or their metadata/checksums are changed.
+
+## Supplementary Archive S1 audit
+
+1. Include the unified 12-case MPC package README, environment specification,
+   accepted case table, complete candidate searches, traces, solve logs,
+   validation report, and two fresh-process replays per accepted case.
+2. Include a machine-readable manifest and an external ZIP SHA-256 sidecar.
+3. State that S1 supports the corrected MPC result and is distinct from the
+   hardware-only Zenodo DOI.
+
+## Limitations to disclose
+
+- Some legacy Paper2 entry points require original case-directory dependencies
+  that are not part of the hardware DOI.
+- The two-link hardware lookup is event-updated and must not be described as a
   transition-locked expert route.
+- A hardware success rate should not be inferred unless every attempted trial
+  and its outcome are represented in the archived evidence.

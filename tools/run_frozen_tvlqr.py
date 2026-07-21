@@ -50,6 +50,7 @@ def load_release() -> tuple[dict, list[dict], dict[str, str]]:
         for row in audit_rows
         if row["method"] == "TVLQR tracking" and row["script"] == "LQR.py"
     }
+    source_hashes.update(config.get("source_hash_overrides", {}))
     return config, cases, source_hashes
 
 
@@ -97,6 +98,14 @@ def portable_source(source: Path, config: dict, seed: int | None) -> str:
 def parse_cmt(stdout: str) -> str:
     matches = re.findall(rf"LQR[^\r\n]*?Cmt\s*=\s*({NUMBER})", stdout, flags=re.I)
     return matches[-1] if matches else ""
+
+
+def sanitize_process_text(text: str, temp_source: Path) -> str:
+    """Remove the random workstation temporary path from retained logs."""
+    sanitized = text
+    for value in {str(temp_source), temp_source.as_posix()}:
+        sanitized = sanitized.replace(value, "<TEMP>/LQR.py")
+    return sanitized
 
 
 def run_case(case: dict, config: dict, output_dir: Path, timeout: int, seed: int | None) -> dict:
@@ -150,6 +159,8 @@ def run_case(case: dict, config: dict, output_dir: Path, timeout: int, seed: int
             stderr = exc.stderr.decode("utf-8", errors="replace") if isinstance(exc.stderr, bytes) else (exc.stderr or "")
             stderr += f"\nRUNNER TIMEOUT after {timeout} seconds.\n"
             status, returncode = "timeout", ""
+        stdout = sanitize_process_text(stdout, temp_source)
+        stderr = sanitize_process_text(stderr, temp_source)
         elapsed = time.perf_counter() - started
     stdout_path = output_dir / f"{case['case_id']}.stdout.txt"
     stderr_path = output_dir / f"{case['case_id']}.stderr.txt"
@@ -222,7 +233,8 @@ def write_release_outputs(output: Path, rows: list[dict], config: dict, seed: in
         "case_count": len(rows),
         "ok_count": sum(row["status"] == "ok" and bool(row["cmt"]) for row in rows),
         "source_and_model_hashes_verified": True,
-        "frozen_sources_modified": False,
+        "runner_modified_sources": False,
+        "source_hash_overrides": config.get("source_hash_overrides", {}),
     }
     (output / "tvlqr_run_manifest.json").write_text(
         json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8"

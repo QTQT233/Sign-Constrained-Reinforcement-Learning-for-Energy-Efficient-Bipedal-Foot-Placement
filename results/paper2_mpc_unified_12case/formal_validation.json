@@ -18,5 +18,5 @@
     "scientific_fields_exact": true,
     "verified_cases": 12
   },
-  "full_report_boundary": "The exhaustive candidate-, trace-, and freshness-level validation report and raw outputs are retained in the DOI-backed artifact package; this repository record is its path-free release digest."
+  "full_report_boundary": "The exhaustive candidate-, trace-, and freshness-level validation report and raw outputs are retained in Supplementary Archive S1; this GitHub record contains the corrected executable sources, accepted results, and path-free validation digest. The separate Zenodo DOI is limited to unchanged hardware evidence."
 }

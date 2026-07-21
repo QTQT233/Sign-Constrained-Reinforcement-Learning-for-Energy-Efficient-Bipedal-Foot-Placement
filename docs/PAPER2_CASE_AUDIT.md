@@ -18,10 +18,14 @@ modification time. All 60 source trees were unchanged.
 
 Three archived flat/1.145-m TVLQR scripts call `dist.sample()` without an
 internal RNG seed; one exceeded the initial 180-s audit timeout. The released
-wrapper applies seed 0 only to a temporary copy, redirects the four archived
-checkpoint paths, and retains the original source hashes. Under this declared
-protocol all 12 cases completed. The earlier timeout is preserved as audit
-history, while the seeded 12-case release is the manuscript source.
+wrapper applies seed 0 only to a temporary copy and redirects the four archived
+checkpoint paths. Eleven entry points retain their original audit hashes. The
+corrected `raised_1.145_r1/LQR.py` is pinned separately in
+`configs/tvlqr_release.json`; it uses the shared `(19, 11, 15, 1)` initial
+index, the source-aligned `1.00/0.89` recovery pair, and includes the terminal
+stance action in positive work. Under this declared protocol all 12 cases
+completed. The earlier timeout and superseded result remain audit history,
+while the corrected seeded 12-case rerun is the manuscript source.
 
 ## Frozen route and metric boundaries
 
@@ -64,8 +68,8 @@ release give:
 
 | Method | n | Mean Cmt | Sample SD | 95% Student-t CI | Mean time (s) | Mean absolute terminal landing error (m) |
 |---|---:|---:|---:|---:|---:|---:|
-| LIPM COM | 12 | 0.232807 | 0.030205 | [0.213616, 0.251999] | N.A. | N.A. |
-| TVLQR tracking | 12 | 0.232348 | 0.015446 | [0.222534, 0.242162] | Reference only | N.A. |
+| LIPM COM | 12 | 0.234496 | 0.033544 | [0.213184, 0.255809] | N.A. | N.A. |
+| TVLQR tracking | 12 | 0.234644 | 0.019875 | [0.222016, 0.247272] | Reference only | N.A. |
 | Discrete active PPO | 12 | 0.228757 | 0.017414 | [0.217693, 0.239821] | 2.680 | 0.145132 |
 | Continuous-torque PPO | 12 | 0.240916 | 0.018083 | [0.229427, 0.252405] | 3.405 | 0.125820 |
 | Continuous-torque MPC | 12 | 0.198945 | 0.021963 | [0.184990, 0.212900] | 2.641 | 0.063825 |
@@ -95,23 +99,27 @@ released case CSV and uses round-to-nearest.
   process output;
 - `src/paper2/entrypoints/`: historical entry-point copies. The read-only audit
   retains the original hashes; five `init_idx` assignments were subsequently
-  corrected to the accepted source-aligned MPC case configuration and are
-  explicitly tested and documented in `docs/PAPER2_MPC_UNIFIED_12CASE.md`;
+  corrected to the accepted source-aligned case configuration. The corrected
+  raised-1.145-r1 TVLQR source additionally synchronizes its recovery pair and
+  terminal-action work accounting with the local accepted source; these changes
+  are pinned, tested, and documented in `docs/TVLQR_RELEASE.md`;
 - `models/paper2/tvlqr/`: all four checkpoints required by the TVLQR sources;
 - `tools/run_frozen_tvlqr.py` and `results/tvlqr_seed0/`: portable fixed-seed
   runner, 12 structured records, and complete captured logs;
 - `analysis/reproduce_paper2_tables.py`: deterministic current-table builder;
 - `results/paper2_source_aligned_r1_rerun_20260721/`: exact Discrete and
-  Continuous PPO records for `raised_L1145_r1`, including raw stdout, hashes,
-  environment metadata, and the explicit boundary between the Continuous
-  1.00/0.89 snapshot and the retained 0.87/0.89 entrypoint;
-- `tools/audit_paper2_readonly.py`: parameterized read-only runner for the DOI
-  case bundle.
+  Continuous PPO plus corrected LIPM records for `raised_L1145_r1`, including
+  raw stdout, hashes, environment metadata, and synchronized method-specific
+  recovery settings;
+- `tools/audit_paper2_readonly.py`: parameterized read-only runner for the
+  original 12-case directory bundle.
 - `src/paper2/mpc/`, `configs/paper2_mpc_unified_12_cases.json`, and
   `results/paper2_mpc_unified_12case/`: repository-relative unified MPC code,
   accepted 12-case values, and path-free validation digest. The superseded MPC
   CSV is retained under `results/legacy/`.
 
-The TVLQR family is self-contained in GitHub. The other Paper2 methods still
-require the complete relative dependencies, checkpoints, and arrays to be
-deposited as a versioned DOI artifact.
+The TVLQR and unified MPC families are self-contained in GitHub. Some legacy
+Paper2 entry points still require their complete relative dependencies,
+checkpoints, and arrays; these should be provided as a journal supplementary
+artifact when needed and must not be attributed to the hardware-only Zenodo
+record.

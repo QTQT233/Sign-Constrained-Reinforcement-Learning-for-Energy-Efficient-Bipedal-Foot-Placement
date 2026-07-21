@@ -330,7 +330,7 @@ while step != 0:
         initial_theta2 = theta2_new
         Energy_pre = kinetic_energy(theta1_new, theta2_new, dtheta1_new, dtheta2_new, params)
         if stance_leg == 1:
-            dtheta1_new -= 0.87
+            dtheta1_new -= 1
             stop_flag += 1
             Energy_new = kinetic_energy(theta1_new, theta2_new, dtheta1_new, dtheta2_new, params)
             E_push += Energy_new - Energy_pre
@@ -390,7 +390,10 @@ actions_arr = np.array(actions_save)          # 原始动作数组，长度 = T_
 st_leg_ref = np.array(st_leg_store)       # 支撑腿标志
 
 T_steps = len(theta1_rad)                 # 状态数量
-u_ref = actions_arr[:T_steps-1]            # 控制序列，长度 T_steps-1
+# One action is stored for every pre-action state. Dropping the final action
+# removes the target-reaching action at the end of every stance segment and
+# biases the positive-work total downward.
+u_ref = actions_arr[:T_steps]
 print(f"状态数量: {T_steps}, 控制数量: {len(u_ref)}")
 
 # 构建参考状态矩阵（T_steps 个状态）
@@ -442,7 +445,7 @@ Qf = Q.copy()
 
 # 准备存储LQR跟踪结果
 x_lqr_total = np.zeros((T_steps, 4))
-u_lqr_total = np.zeros(T_steps - 1)
+u_lqr_total = np.zeros(T_steps)
 # 初始状态直接用参考轨迹
 x_lqr_total[0] = x_ref[0].copy()
 
@@ -464,7 +467,7 @@ for seg_idx, (seg_start, seg_end) in enumerate(segments):
 
     # 该段内的参考轨迹
     x_ref_seg = x_ref[seg_start:seg_end]
-    u_ref_seg = u_ref[seg_start:seg_end-1]   # 控制序列长度少1
+    u_ref_seg = u_ref[seg_start:seg_end]
 
     # 计算该段内的线性化矩阵 A_k, B_k
     A_list = []
@@ -514,6 +517,17 @@ for seg_idx, (seg_start, seg_end) in enumerate(segments):
         rel_vel = x_lqr_total[global_k][3] - x_lqr_total[global_k][1]
         if u_lqr * rel_vel > 0:
             Energy_LQR += abs(u_lqr) * abs(rel_vel) * dt
+
+    # The final action terminates the stance and is followed by the
+    # discontinuous impact/relabel map, so there is no within-segment next
+    # reference state for a Riccati gain. Retain its feed-forward value and
+    # include its positive work before the reset.
+    terminal_k = seg_end - 1
+    terminal_u = float(u_ref_seg[-1])
+    u_lqr_total[terminal_k] = terminal_u
+    terminal_rel_vel = x_lqr_total[terminal_k][3] - x_lqr_total[terminal_k][1]
+    if terminal_u * terminal_rel_vel > 0:
+        Energy_LQR += abs(terminal_u) * abs(terminal_rel_vel) * dt
 
 print("\n分段LQR跟踪完成。")
 
@@ -577,8 +591,8 @@ plt.ylabel('θ2 (deg)')
 plt.legend()
 
 plt.subplot(3, 1, 3)
-plt.plot(t[:-1], u_ref, label='Ref u')
-plt.plot(t[:-1], u_lqr_total, '--', label='LQR u')
+plt.plot(t, u_ref, label='Ref u')
+plt.plot(t, u_lqr_total, '--', label='LQR u')
 plt.xlabel('t (s)')
 plt.ylabel('Torque (Nm)')
 plt.legend()

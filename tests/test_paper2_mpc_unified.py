@@ -51,7 +51,7 @@ class UnifiedMPCReleaseTests(unittest.TestCase):
                 path = ROOT / "src/paper2/entrypoints" / item["entrypoint_dir"] / filename
                 self.assertEqual(tuple(assigned_literal(path, "init_idx")), tuple(item["initial_idx"]))
 
-    def test_r1_index_corrections_do_not_change_continuous_reset(self) -> None:
+    def test_r1_source_aligned_indices_and_resets(self) -> None:
         flat_qi = ROOT / "src/paper2/entrypoints/flat_1.145_r1/Qi_multi_passive_sim.py"
         raised_dir = ROOT / "src/paper2/entrypoints/raised_1.145_r1"
         raised_qi = raised_dir / "Qi_multi_passive_sim.py"
@@ -66,8 +66,13 @@ class UnifiedMPCReleaseTests(unittest.TestCase):
         ):
             self.assertEqual(assigned_literal(raised_dir / filename, "init_idx"), (19, 11, 15, 1))
         source = raised_continuous.read_text(encoding="utf-8-sig")
-        self.assertIn("dtheta1_new -= 0.87", source)
+        self.assertIn("dtheta1_new -= 1", source)
         self.assertIn("dtheta1_new -= 0.89", source)
+        lipm_source = (raised_dir / "LIPM.py").read_text(encoding="utf-8-sig")
+        self.assertIn("dtheta1_new -= 0.95", lipm_source)
+        lqr_source = (raised_dir / "LQR.py").read_text(encoding="utf-8-sig")
+        self.assertIn("dtheta1_new -= 1", lqr_source)
+        self.assertIn("u_ref = actions_arr[:T_steps]", lqr_source)
 
     def test_accepted_results_and_legacy_boundary(self) -> None:
         with (RESULT_DIR / "accepted_cases.csv").open(encoding="utf-8", newline="") as handle:
@@ -123,20 +128,24 @@ class UnifiedMPCReleaseTests(unittest.TestCase):
             rows = {(row["case_id"], row["method"]): row for row in csv.DictReader(handle)}
         discrete = rows[("raised_L1145_r1", "Discrete active PPO")]
         continuous = rows[("raised_L1145_r1", "Continuous-torque PPO")]
+        lipm = rows[("raised_L1145_r1", "LIPM COM")]
         self.assertEqual(float(discrete["cmt"]), 0.267040040566968)
         self.assertEqual(float(continuous["cmt"]), 0.2780932427752225)
+        self.assertEqual(float(lipm["cmt"]), 0.301544)
         self.assertEqual(discrete["repository_entrypoint_reproduces_record"], "true")
-        self.assertEqual(continuous["repository_entrypoint_reproduces_record"], "false")
+        self.assertEqual(continuous["repository_entrypoint_reproduces_record"], "true")
+        self.assertEqual(lipm["repository_entrypoint_reproduces_record"], "true")
         self.assertEqual(continuous["recovery_setting"], "1.00/0.89")
+        self.assertEqual(lipm["recovery_setting"], "0.95/0.89")
 
         manifest = json.loads((SOURCE_ALIGNED_DIR / "rerun_manifest.json").read_text())
         self.assertEqual(manifest["initial_index"], [19, 11, 15, 1])
         self.assertNotIn("C:\\Users\\", json.dumps(manifest))
         self.assertNotIn("D:\\L&S\\", json.dumps(manifest))
         for record in manifest["records"]:
-            snapshot = ROOT / record["source_snapshot"]
-            self.assertTrue(snapshot.is_file())
-            self.assertEqual(sha256(snapshot).upper(), record["source_sha256"])
+            source = ROOT / record.get("source_snapshot", record.get("repository_entrypoint"))
+            self.assertTrue(source.is_file())
+            self.assertEqual(sha256(source).upper(), record["source_sha256"])
         continuous_snapshot = (
             SOURCE_ALIGNED_DIR / "source_snapshot" / "Multi_continuous.py"
         ).read_text(encoding="utf-8-sig")

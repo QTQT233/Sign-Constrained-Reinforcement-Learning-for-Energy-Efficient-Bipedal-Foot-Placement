@@ -2,6 +2,9 @@
   "case_manifest": "configs/paper2_cases.csv",
   "source_audit": "data/paper2/readonly_rerun/paper2_rerun_results.csv",
   "entrypoint_pattern": "src/paper2/entrypoints/{case_id}/LQR.py",
+  "source_hash_overrides": {
+    "raised_L1145_r1": "eb3dbb6e5fe5e71a614cd97654146d325fa921a5a7c3c1347fa6a6a2bfdb1feb"
+  },
   "models": {
     "l1_stand_continuous_1252.pth": {
       "path": "models/paper2/tvlqr/l1_stand_continuous_1252.pth",

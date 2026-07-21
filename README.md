@@ -13,9 +13,8 @@ Canonical code repository:
   output fix and fixed evaluation seed.
 - `analysis/`: external read-only scripts that regenerate manuscript-facing
   statistics from frozen CSV outputs.
-- `data/`: small derived tables and instructions for obtaining the DOI-backed
-  artifact bundle containing raw arrays, evaluation trials, logs, and model
-  checkpoints.
+- `data/`: author-generated arrays, retained trials, and derived tables that are
+  distributed with the executable repository record.
 - `docs/`: the table/figure provenance map, version audit, data dictionary,
   non-inferiority analysis, and corrected ablation protocol.
 - `environment/`: analysis dependencies and the remaining environment-lock
@@ -24,8 +23,9 @@ Canonical code repository:
 The older files in the repository root are retained for history. New users
 should follow the structured paths above.
 
-Maintainers should follow `docs/PUBLISHING.md` for the branch, draft-PR, release,
-and DOI workflow; do not force-push the historical repository.
+Maintainers should follow `docs/PUBLISHING.md` for the branch, pull-request,
+commit-pinning, and hardware-data DOI workflow; do not force-push the
+historical repository.
 
 ## Reproducibility status
 
@@ -80,8 +80,10 @@ The initial read-only Paper2 audit completed 59 of 60 non-MPC runs; one
 unseeded TVLQR process exceeded the 180-s audit timeout, and no traceable PID
 entry point was found. The release now includes all four TVLQR checkpoints and
 a portable runner that applies seed 0 only in a temporary copy. This fixed-seed
-protocol completed all 12 TVLQR cases and reproduced the manuscript-level
-reference trend (mean Cmt 0.232348, sample SD 0.015446). Revised Tables IV-V
+protocol completed all 12 TVLQR cases. After synchronizing the corrected
+raised-1.145-r1 source (shared initial state, source-aligned recovery, and the
+terminal stance action in the positive-work sum), the full seed-0 rerun gave
+mean Cmt 0.234644 and sample SD 0.019875. Revised Tables IV-V
 therefore report five complete replay families plus the accepted source-aligned
 unified MPC rerun:
 
@@ -92,8 +94,9 @@ python analysis/reproduce_paper2_tables.py
 This writes a 72-row combined case table and manuscript-facing summaries under
 `results/paper2_current/`. The captured stdout/stderr, source hashes, missing
 landing residual, timeout, and read-only tree checks are retained under
-`data/paper2/readonly_rerun/`. A full rerun additionally requires the DOI case
-bundle because the frozen entry points load relative checkpoints and arrays.
+`data/paper2/readonly_rerun/`. Some legacy frozen entry points additionally
+require their original case-directory dependencies; those dependencies are
+not part of the hardware-only Zenodo record and must not be described as such.
 
 The repository-relative MPC release is under `src/paper2/mpc/`, with its
 12-case configuration in `configs/paper2_mpc_unified_12_cases.json` and
@@ -119,11 +122,11 @@ python tools/run_frozen_tvlqr.py --all --seed 0 --timeout 60 \
   --output results/tvlqr_seed0
 ```
 
-The 12 frozen source files are not edited. The launcher verifies their hashes,
-substitutes the archived workstation model paths in a temporary copy, and
-captures per-case results. TVLQR is interpreted as a local reference-tracking
-energy comparator, not as an independent global foot-placement controller.
-See `docs/TVLQR_RELEASE.md`.
+The launcher does not edit the repository source files at runtime. It verifies
+the recorded hashes of the canonical corrected sources, substitutes archived
+workstation model paths in a temporary copy, and captures per-case results.
+TVLQR is interpreted as a local reference-tracking energy comparator, not as
+an independent global foot-placement controller. See `docs/TVLQR_RELEASE.md`.
 
 Run the full read-only audit with an activated locked environment as follows:
 
@@ -188,25 +191,31 @@ online selector is deployable; the oracle one-sided-policy envelope is a
 non-deployable hindsight diagnostic. The confirmatory experiment required for
 a causal persistence claim is specified in `docs/ABLATION_PROTOCOL.md`.
 
-## Data and model artifacts
+## Data, code, and hardware archive boundary
 
-Large HDF5 arrays, raw per-trial CSVs, training logs, checkpoints, and the two
-hardware videos (`Flat_walking.mp4` and `Ueven_foot_placement.mp4`) should be
-deposited as a versioned research-data archive with a DOI. Replace the DOI
-placeholder in `data/README.md` and in the manuscript Data Availability
-statement only after the archive is public and its checksums have been tested.
-Git LFS is optional for model files, but the DOI archive is the canonical data
-record.
+This GitHub repository is the canonical record for the corrected source code,
+repository-hosted models and simulation data, accepted MPC results, provenance
+files, and executable validation scripts. The manuscript should identify the
+exact Git commit used for submission. A GitHub Release is optional: merging an
+audited pull request into `main` and citing an immutable commit is sufficient
+to pin this software version.
 
-Use `docs/DATA_ARCHIVE_CHECKLIST.md` to assemble the DOI-backed archive and its
-file-level SHA-256 manifest for the Robotics and Autonomous Systems submission.
+The unchanged hardware evidence is archived separately at
+<https://doi.org/10.5281/zenodo.21407986>. That Zenodo record is the hardware-
+data record only; it must not be cited as the source of the corrected software
+or the unified MPC rerun. Exhaustive MPC candidate tables and process traces
+may instead be supplied with the journal submission as Supplementary Archive
+S1, while the accepted case table and validators remain in this repository.
+
+Use `docs/DATA_ARCHIVE_CHECKLIST.md` to audit the hardware DOI scope, checksums,
+license, and the separation between Zenodo, GitHub, and submission supplements.
 
 The exact source-aligned rerun records for the raised, nominal-length-1.145,
-repetition-1 Discrete and Continuous PPO cases are documented in
-`docs/PAPER2_SOURCE_ALIGNED_R1_RERUN.md`. The Continuous record is an explicitly
-separate 1.00/0.89-recovery snapshot and does not overwrite or purport to be
-reproduced by the retained 0.87/0.89 repository entrypoint. Both exact rerun
-source files are retained byte-for-byte under that result directory.
+repetition-1 Discrete PPO, Continuous-torque PPO, and LIPM cases are documented
+in `docs/PAPER2_SOURCE_ALIGNED_R1_RERUN.md`. The canonical Continuous and LIPM
+entrypoints are synchronized to their accepted 1.00/0.89 and 0.95/0.89 recovery
+settings, respectively. Source hashes and raw outputs are retained with the
+records.
 
 ## License
 

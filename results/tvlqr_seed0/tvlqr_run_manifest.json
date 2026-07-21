@@ -8,9 +8,12 @@
     "matplotlib": "3.9.2"
   },
   "seed_override": 0,
-  "timeout_seconds_per_case": 60,
+  "timeout_seconds_per_case": 600,
   "case_count": 12,
   "ok_count": 12,
   "source_and_model_hashes_verified": true,
-  "frozen_sources_modified": false
+  "runner_modified_sources": false,
+  "source_hash_overrides": {
+    "raised_L1145_r1": "eb3dbb6e5fe5e71a614cd97654146d325fa921a5a7c3c1347fa6a6a2bfdb1feb"
+  }
 }

@@ -5,7 +5,7 @@ flat_L1145_r3,flat,1.145,LIPM COM,ok,0.222893,,,data/paper2/readonly_rerun/flat_
 flat_L1280_r1,flat,1.28,LIPM COM,ok,0.227665,,,data/paper2/readonly_rerun/flat_L128_r1__lipm.stdout.txt
 flat_L1280_r2,flat,1.28,LIPM COM,ok,0.220897,,,data/paper2/readonly_rerun/flat_L128_r2__lipm.stdout.txt
 flat_L1280_r3,flat,1.28,LIPM COM,ok,0.209072,,,data/paper2/readonly_rerun/flat_L128_r3__lipm.stdout.txt
-raised_L1145_r1,raised_0.01m,1.145,LIPM COM,ok,0.281276,,,data/paper2/readonly_rerun/raised_L1145_r1__lipm.stdout.txt
+raised_L1145_r1,raised_0.01m,1.145,LIPM COM,ok,0.301544,,,results/paper2_source_aligned_r1_rerun_20260721/raised_L1145_r1_lipm_source_aligned_recovery_0p95.stdout.txt
 raised_L1145_r2,raised_0.01m,1.145,LIPM COM,ok,0.246012,,,data/paper2/readonly_rerun/raised_L1145_r2__lipm.stdout.txt
 raised_L1145_r3,raised_0.01m,1.145,LIPM COM,ok,0.209884,,,data/paper2/readonly_rerun/raised_L1145_r3__lipm.stdout.txt
 raised_L1280_r1,raised_0.01m,1.28,LIPM COM,ok,0.218385,,,data/paper2/readonly_rerun/raised_L128_r1__lipm.stdout.txt
@@ -17,7 +17,7 @@ flat_L1145_r3,flat,1.145,TVLQR tracking,ok,0.221758,,,results/tvlqr_seed0/flat_1
 flat_L1280_r1,flat,1.28,TVLQR tracking,ok,0.235297,,,results/tvlqr_seed0/flat_1.28_r1.stdout.txt
 flat_L1280_r2,flat,1.28,TVLQR tracking,ok,0.223641,,,results/tvlqr_seed0/flat_1.28_r2.stdout.txt
 flat_L1280_r3,flat,1.28,TVLQR tracking,ok,0.217185,,,results/tvlqr_seed0/flat_1.28_r3.stdout.txt
-raised_L1145_r1,raised_0.01m,1.145,TVLQR tracking,ok,0.250948,,,results/tvlqr_seed0/raised_1.145_r1.stdout.txt
+raised_L1145_r1,raised_0.01m,1.145,TVLQR tracking,ok,0.278501,,,results/tvlqr_seed0/raised_1.145_r1.stdout.txt
 raised_L1145_r2,raised_0.01m,1.145,TVLQR tracking,ok,0.23999,,,results/tvlqr_seed0/raised_1.145_r2.stdout.txt
 raised_L1145_r3,raised_0.01m,1.145,TVLQR tracking,ok,0.225175,,,results/tvlqr_seed0/raised_1.145_r3.stdout.txt
 raised_L1280_r1,raised_0.01m,1.28,TVLQR tracking,ok,0.224081,,,results/tvlqr_seed0/raised_1.28_r1.stdout.txt
