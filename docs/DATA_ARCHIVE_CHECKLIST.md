@@ -8,6 +8,10 @@ The public records have separate roles:
   evidence only;
 - Supplementary Archive S1: exhaustive MPC candidate tables, traces, logs, and
   replay evidence that are impractical or unnecessary to duplicate in Git.
+- Supplementary Data S2: the 12-cell action-weight HDF5 package, schema,
+  manifest, and checksums.
+- Supplementary Data S3: the frozen ATC-50 lookup table, schema, portable
+  event-query implementation, and checksums.
 
 ## GitHub merge gate
 
@@ -16,9 +20,13 @@ The public records have separate roles:
    README.
 3. Run the unit tests, MPC release validator, table-regeneration script, and
    repository manifest/checksum audit.
-4. Confirm that no workstation-absolute paths, credentials, or generated cache
-   files are present.
+4. Confirm that portable executables, manifests, and public metadata contain no
+   workstation-absolute paths, credentials, or generated cache files. Original
+   source snapshots with path literals must be explicitly labeled as
+   provenance-only and must not be described as portable entry points.
 5. Keep `LICENSE`, `DATA_LICENSE.md`, `CITATION.cff`, and `NOTICE` synchronized.
+6. Confirm that no alternate plotting scripts, generated figure assets,
+   manuscript drafts, or superseded result tables are tracked.
 
 A new GitHub Release or tag is optional. It is not required when a code-only
 correction is merged to `main` and the manuscript cites an exact commit.
@@ -48,10 +56,29 @@ only if the deposited hardware files or their metadata/checksums are changed.
 3. State that S1 supports the corrected MPC result and is distinct from the
    hardware-only Zenodo DOI.
 
+## Supplementary Data S2 audit
+
+1. Include all 12 action-weight HDF5 cells and a machine-readable schema.
+2. Include file-level SHA-256 checksums and an external ZIP checksum sidecar.
+3. Record RNG seed 20260716, the common-success eligibility rule, and the
+   center-of-mass displacement threshold.
+4. State that S2 supports Table II and is distinct from the hardware-only
+   Zenodo DOI.
+
+## Supplementary Data S3 audit
+
+1. Include `working_save-ATC-50`, its HDF5 dataset name, shape, axis ranges,
+   action-code semantics, and 1.8-degree directed event-update rule.
+2. Include the portable lookup module and state that the supplement does not
+   claim byte-for-byte regeneration of the historical table artifact.
+3. Include a file-level manifest and an external ZIP SHA-256 sidecar.
+4. State that S3 supports hardware lookup reproducibility and is distinct from
+   both the hardware-only Zenodo record and the action-weight S2 archive.
+
 ## Limitations to disclose
 
-- Some legacy Paper2 entry points require original case-directory dependencies
-  that are not part of the hardware DOI.
+- Some Paper2 case entry points require their complete relative dependencies;
+  these are simulation materials and are not part of the hardware DOI.
 - The two-link hardware lookup is event-updated and must not be described as a
   transition-locked expert route.
 - A hardware success rate should not be inferred unless every attempted trial

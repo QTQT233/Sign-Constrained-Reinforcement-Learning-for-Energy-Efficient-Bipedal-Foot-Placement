@@ -52,7 +52,10 @@ def main() -> int:
     parser.add_argument(
         "--rollouts",
         type=Path,
-        default=Path("data/four_link/legacy_manuscript/rollouts_active_vs_passive.csv"),
+        default=Path(
+            "data/four_link/true_action_mask_scratch_c090_epoch1275/"
+            "rollouts_active_vs_passive.csv"
+        ),
     )
     parser.add_argument("--reference", default="active")
     parser.add_argument("--comparison", default="passive_sign_selector")
@@ -60,7 +63,10 @@ def main() -> int:
     parser.add_argument(
         "--output",
         type=Path,
-        default=Path("results/four_link_statistics/legacy_manuscript/pairing_validation.json"),
+        default=Path(
+            "results/four_link_statistics/true_action_mask_scratch_c090_epoch1275/"
+            "pairing_validation.json"
+        ),
     )
     args = parser.parse_args()
 

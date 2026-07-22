@@ -1,9 +1,9 @@
-"""Recompute the manuscript Table II action-weight comparison.
+"""Recompute Table II from the 12-cell action-weight HDF5 archive.
 
-The script is intentionally read-only with respect to the evaluator tree.  It
-loads the 12 fixed-seed HDF5 result cells produced by the canonical
-``Whole_energy_comparison_low_dim.py`` programs, validates the expert-fusion
-logic, and writes both an audit table and the manuscript-facing table.
+Eligibility is evaluated from each controller's archived center-of-mass
+displacement array. This analysis does not infer missing displacement from
+energy/Cmt, and zero-work entries receive no exception to the strict
+D > 0.01 m rule.
 """
 
 from __future__ import annotations
@@ -20,73 +20,23 @@ import numpy as np
 
 SEED = 20260716
 MIN_COM_DISPLACEMENT_M = 0.01
-ROBOT_WEIGHT_N = (1.4122 + 0.0839) * 9.81
-WEIGHTS = ("0.02", "0.04", "0.06")
+WEIGHTS = (
+    ("0.02", "action_weight_0p02"),
+    ("0.04", "action_weight_0p04"),
+    ("0.06", "action_weight_0p06"),
+)
 CONDITIONS = (
-    {
-        "directory": "60,30(0.33m)",
-        "step_height_m": 0.00,
-        "max_horizontal_advance_m": 0.25,
-        "paper_column": "0.00 m step; 0.25 m advance",
-        "paper_order": 0,
-    },
-    {
-        "directory": "70,20(0.225m)",
-        "step_height_m": 0.00,
-        "max_horizontal_advance_m": 0.17,
-        "paper_column": "0.00 m step; 0.17 m advance",
-        "paper_order": 1,
-    },
-    {
-        "directory": "60,30(0.33m),0.01m",
-        "step_height_m": 0.01,
-        "max_horizontal_advance_m": 0.25,
-        "paper_column": "0.01 m step; 0.25 m advance",
-        "paper_order": 2,
-    },
-    {
-        "directory": "70,20,(0.225m),0.01m",
-        "step_height_m": 0.01,
-        "max_horizontal_advance_m": 0.17,
-        "paper_column": "0.01 m step; 0.17 m advance",
-        "paper_order": 3,
-    },
+    ("flat_0p25m", 0.00, 0.25, "0.00 m step; 0.25 m advance", 0),
+    ("flat_0p17m", 0.00, 0.17, "0.00 m step; 0.17 m advance", 1),
+    ("raised_0p01m_0p25m", 0.01, 0.25, "0.01 m step; 0.25 m advance", 2),
+    ("raised_0p01m_0p17m", 0.01, 0.17, "0.01 m step; 0.17 m advance", 3),
 )
-
-ARRAY_FILES = {
-    "negative_status": ("working_save(-1,0)-10-30", "working_save"),
-    "negative_cmt": ("Cmt_save(-1,0)-10-30", "Cmt_save"),
-    "negative_energy": ("Energy_save(-1,0)-10-30", "Energy_save"),
-    "positive_status": ("working_save(0,1)-10-30", "working_save"),
-    "positive_cmt": ("Cmt_save(0,1)-10-30", "Cmt_save"),
-    "positive_energy": ("Energy_save(0,1)-10-30", "Energy_save"),
-    "proposed_status": ("working_save_passive-10-30", "working_save_passive"),
-    "proposed_cmt": ("Cmt_save_passive-10-30", "Cmt_save_passive"),
-    "active_status": (
-        "working_save_active_discrete-10-30",
-        "working_save_active_discrete",
-    ),
-    "active_cmt": ("Cmt_save_active_discrete(0,1)-10-30", "Cmt_save"),
-    "active_energy": (
-        "Energy_save_active_discrete-10-30",
-        "Energy_save_active_discrete",
-    ),
-    "continuous_status": (
-        "working_save_active_continuous-10-30",
-        "working_save_active_continuous",
-    ),
-    "continuous_cmt": ("Cmt_save_active_continuous-10-30", "Cmt_save"),
-    "continuous_energy": (
-        "Energy_save_active_continuous-10-30",
-        "Energy_save_active_continuous",
-    ),
-}
-
 METHODS = (
-    ("continuous", "Continuous PPO"),
-    ("active", "Active PPO"),
-    ("proposed", "Proposed"),
+    ("continuous_active_ppo", "continuous", "Active Continuous PPO"),
+    ("discrete_active_ppo", "active", "Active discrete PPO"),
+    ("offline_route", "proposed", "Proposed"),
 )
+EXPECTED_SHAPE = (10, 30, 10, 30)
 
 
 def sha256(path: Path) -> str:
@@ -95,118 +45,6 @@ def sha256(path: Path) -> str:
         for block in iter(lambda: stream.read(1024 * 1024), b""):
             digest.update(block)
     return digest.hexdigest()
-
-
-def load_array(directory: Path, file_name: str, dataset: str) -> np.ndarray:
-    path = directory / file_name
-    if not path.is_file():
-        raise FileNotFoundError(path)
-    with h5py.File(path, "r") as handle:
-        if dataset not in handle:
-            raise KeyError(f"{dataset!r} is missing from {path}")
-        array = handle[dataset][...]
-    if array.shape != (10, 30, 10, 30):
-        raise ValueError(f"unexpected shape {array.shape} in {path}")
-    return array
-
-
-def expected_fused_cmt(arrays: dict[str, np.ndarray]) -> np.ndarray:
-    """Implement the complete evaluator branch used for Cmt_save_passive."""
-
-    fused_status = arrays["proposed_status"]
-    negative_status = arrays["negative_status"]
-    positive_status = arrays["positive_status"]
-    negative_cmt = arrays["negative_cmt"]
-    positive_cmt = arrays["positive_cmt"]
-
-    expected = np.full(fused_status.shape, -2.0, dtype=float)
-    negative_route = fused_status == -1
-    positive_route = fused_status == 1
-    zero_route = fused_status == 0
-    both_valid = zero_route & (negative_status != -2) & (positive_status != -2)
-    negative_failed = zero_route & (negative_status == -2)
-    remaining_zero = zero_route & ~both_valid & ~negative_failed
-
-    expected[negative_route] = negative_cmt[negative_route]
-    expected[positive_route] = positive_cmt[positive_route]
-    negative_finite = np.isfinite(negative_cmt)
-    positive_finite = np.isfinite(positive_cmt)
-    both_finite = both_valid & negative_finite & positive_finite
-    negative_only = both_valid & negative_finite & ~positive_finite
-    positive_only = both_valid & ~negative_finite & positive_finite
-    neither_finite = both_valid & ~negative_finite & ~positive_finite
-    expected[both_finite] = np.minimum(
-        negative_cmt[both_finite], positive_cmt[both_finite]
-    )
-    expected[negative_only] = negative_cmt[negative_only]
-    expected[positive_only] = positive_cmt[positive_only]
-    expected[neither_finite] = np.nan
-    expected[negative_failed] = positive_cmt[negative_failed]
-    expected[remaining_zero] = negative_cmt[remaining_zero]
-    return expected
-
-
-def expected_fused_energy(arrays: dict[str, np.ndarray]) -> np.ndarray:
-    """Select the expert energy paired with the fused Cmt value."""
-
-    fused_status = arrays["proposed_status"]
-    negative_status = arrays["negative_status"]
-    positive_status = arrays["positive_status"]
-    negative_cmt = arrays["negative_cmt"]
-    positive_cmt = arrays["positive_cmt"]
-    negative_energy = arrays["negative_energy"]
-    positive_energy = arrays["positive_energy"]
-
-    expected = np.full(fused_status.shape, np.nan, dtype=float)
-    negative_route = fused_status == -1
-    positive_route = fused_status == 1
-    zero_route = fused_status == 0
-    both_valid = zero_route & (negative_status != -2) & (positive_status != -2)
-    negative_failed = zero_route & (negative_status == -2)
-    remaining_zero = zero_route & ~both_valid & ~negative_failed
-
-    expected[negative_route] = negative_energy[negative_route]
-    expected[positive_route] = positive_energy[positive_route]
-    negative_finite = np.isfinite(negative_cmt)
-    positive_finite = np.isfinite(positive_cmt)
-    choose_negative = both_valid & negative_finite & (
-        ~positive_finite | (negative_cmt <= positive_cmt)
-    )
-    choose_positive = both_valid & positive_finite & (
-        ~negative_finite | (positive_cmt < negative_cmt)
-    )
-    expected[choose_negative] = negative_energy[choose_negative]
-    expected[choose_positive] = positive_energy[choose_positive]
-    expected[negative_failed] = positive_energy[negative_failed]
-    expected[remaining_zero] = negative_energy[remaining_zero]
-    return expected
-
-
-def displacement_eligible(
-    cmt: np.ndarray, energy: np.ndarray
-) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
-    """Recover legacy positive-work displacement and apply the 0.01 m floor.
-
-    The retained evaluator archive stores both energy and Cmt, so for Cmt > 0
-    the original displacement is exactly recoverable as E/(W*Cmt).  Entries
-    with zero energy and zero Cmt cannot be inverted, but they do not create a
-    small-denominator tail and are retained as zero-actuation successes.
-    Future evaluator runs write D_save arrays directly.
-    """
-
-    displacement = np.full(cmt.shape, np.nan, dtype=float)
-    positive_cmt = np.isfinite(cmt) & (cmt > 0) & np.isfinite(energy) & (energy >= 0)
-    displacement[positive_cmt] = energy[positive_cmt] / (
-        ROBOT_WEIGHT_N * cmt[positive_cmt]
-    )
-    zero_energy = (
-        np.isfinite(cmt)
-        & np.isfinite(energy)
-        & np.isclose(cmt, 0.0, rtol=0.0, atol=1e-15)
-        & np.isclose(energy, 0.0, rtol=0.0, atol=1e-15)
-    )
-    eligible = (displacement > MIN_COM_DISPLACEMENT_M) | zero_energy
-    return eligible, displacement, zero_energy
 
 
 def summarize(values: np.ndarray) -> dict[str, float]:
@@ -219,12 +57,53 @@ def summarize(values: np.ndarray) -> dict[str, float]:
     }
 
 
-def write_csv(path: Path, rows: list[dict[str, object]], fieldnames: list[str]) -> None:
+def write_csv(path: Path, rows: list[dict[str, object]], fields: list[str]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8", newline="") as stream:
-        writer = csv.DictWriter(stream, fieldnames=fieldnames)
+        writer = csv.DictWriter(stream, fieldnames=fields)
         writer.writeheader()
         writer.writerows(rows)
+
+
+def dataset(group: h5py.Group, relative: str) -> np.ndarray:
+    values = group[relative][...]
+    if values.shape != EXPECTED_SHAPE:
+        raise ValueError(f"Unexpected shape {values.shape} for {group.name}/{relative}")
+    return values
+
+
+def expected_fused_cmt(group: h5py.Group) -> np.ndarray:
+    route = dataset(group, "offline_route/outcome_status")
+    negative_status = dataset(group, "negative_expert/outcome_status")
+    positive_status = dataset(group, "positive_expert/outcome_status")
+    negative_cmt = dataset(group, "negative_expert/cmt")
+    positive_cmt = dataset(group, "positive_expert/cmt")
+
+    expected = np.full(EXPECTED_SHAPE, -2.0, dtype=float)
+    expected[route == -1] = negative_cmt[route == -1]
+    expected[route == 1] = positive_cmt[route == 1]
+    zero_route = route == 0
+    both = zero_route & (negative_status != -2) & (positive_status != -2)
+    negative_failed = zero_route & (negative_status == -2)
+    remaining = zero_route & ~both & ~negative_failed
+    expected[both] = np.minimum(negative_cmt[both], positive_cmt[both])
+    expected[negative_failed] = positive_cmt[negative_failed]
+    expected[remaining] = negative_cmt[remaining]
+    return expected
+
+
+def resolve_archive(value: Path) -> Path:
+    value = value.resolve()
+    if value.is_file():
+        return value
+    candidates = (
+        value / "action_weight_12_cell_arrays.h5",
+        value / "data/action_weight_arrays/action_weight_12_cell_arrays.h5",
+    )
+    for candidate in candidates:
+        if candidate.is_file():
+            return candidate
+    raise FileNotFoundError(f"action_weight_12_cell_arrays.h5 not found under {value}")
 
 
 def main() -> None:
@@ -233,7 +112,7 @@ def main() -> None:
         "--data-root",
         type=Path,
         required=True,
-        help="Local Energy_Comparison directory containing action_weight=* folders.",
+        help="S2 directory or the action_weight_12_cell_arrays.h5 file itself",
     )
     parser.add_argument(
         "--output-dir",
@@ -241,161 +120,110 @@ def main() -> None:
         default=Path(__file__).resolve().parents[1] / "results",
     )
     args = parser.parse_args()
-
-    data_root = args.data_root.resolve()
+    archive = resolve_archive(args.data_root)
     output_dir = args.output_dir.resolve()
-    audit_rows: list[dict[str, object]] = []
-    file_records: list[dict[str, object]] = []
+    rows: list[dict[str, object]] = []
 
-    for weight in WEIGHTS:
-        for condition in CONDITIONS:
-            directory = data_root / f"action_weight={weight}" / condition["directory"]
-            arrays: dict[str, np.ndarray] = {}
-            for key, (file_name, dataset) in ARRAY_FILES.items():
-                path = directory / file_name
-                arrays[key] = load_array(directory, file_name, dataset)
-                file_records.append(
-                    {
-                        "action_weight": weight,
-                        "condition": condition["directory"],
-                        "logical_array": key,
-                        "file_name": file_name,
-                        "dataset": dataset,
-                        "bytes": path.stat().st_size,
-                        "sha256": sha256(path),
-                    }
+    with h5py.File(archive, "r") as handle:
+        for weight, weight_group in WEIGHTS:
+            for condition, height, advance, paper_column, order in CONDITIONS:
+                group = handle[f"{weight_group}/{condition}"]
+                statuses = {
+                    name: dataset(group, f"{name}/outcome_status")
+                    for name, _prefix, _label in METHODS
+                }
+                status_common = (
+                    (statuses["continuous_active_ppo"] != -6)
+                    & (statuses["discrete_active_ppo"] != -2)
+                    & (statuses["offline_route"] != -2)
                 )
+                archived_status = dataset(group, "status_common_mask").astype(bool)
+                if not np.array_equal(status_common, archived_status):
+                    raise ValueError(f"status common-mask mismatch in {group.name}")
 
-            expected = expected_fused_cmt(arrays)
-            actual = arrays["proposed_cmt"]
-            comparison = np.isclose(
-                expected, actual, rtol=0.0, atol=1e-12, equal_nan=True
-            )
-            fusion_bad_n = int(np.size(comparison) - np.count_nonzero(comparison))
-            if fusion_bad_n:
-                max_error = float(np.max(np.abs(expected[~comparison] - actual[~comparison])))
-                raise ValueError(
-                    f"fusion validation failed in {directory}: "
-                    f"{fusion_bad_n} cells, max error {max_error}"
-                )
-
-            if np.array_equal(arrays["negative_cmt"], arrays["positive_cmt"]):
-                raise ValueError(f"negative and positive Cmt arrays are identical in {directory}")
-
-            status_common = (
-                (arrays["proposed_status"] != -2)
-                & (arrays["active_status"] != -2)
-                & (arrays["continuous_status"] != -6)
-            )
-            proposed_energy = expected_fused_energy(arrays)
-            proposed_eligible, _proposed_d, proposed_zero_energy = displacement_eligible(
-                arrays["proposed_cmt"], proposed_energy
-            )
-            active_eligible, _active_d, active_zero_energy = displacement_eligible(
-                arrays["active_cmt"], arrays["active_energy"]
-            )
-            continuous_eligible, _continuous_d, continuous_zero_energy = (
-                displacement_eligible(
-                    arrays["continuous_cmt"], arrays["continuous_energy"]
-                )
-            )
-            common = (
-                status_common
-                & proposed_eligible
-                & active_eligible
-                & continuous_eligible
-            )
-            common_n = int(np.count_nonzero(common))
-            if common_n == 0:
-                raise ValueError(f"empty common-feasible mask in {directory}")
-
-            row: dict[str, object] = {
-                "action_weight": weight,
-                "random_seed": SEED,
-                "archived_condition": condition["directory"],
-                "step_height_m": condition["step_height_m"],
-                "max_horizontal_advance_m": condition["max_horizontal_advance_m"],
-                "paper_column": condition["paper_column"],
-                "paper_order": condition["paper_order"],
-                "minimum_com_displacement_m": MIN_COM_DISPLACEMENT_M,
-                "status_common_n": int(np.count_nonzero(status_common)),
-                "common_mask_n": common_n,
-                "displacement_excluded_n": int(
-                    np.count_nonzero(status_common & ~common)
-                ),
-                "continuous_displacement_excluded_n": int(
-                    np.count_nonzero(status_common & ~continuous_eligible)
-                ),
-                "active_displacement_excluded_n": int(
-                    np.count_nonzero(status_common & ~active_eligible)
-                ),
-                "proposed_displacement_excluded_n": int(
-                    np.count_nonzero(status_common & ~proposed_eligible)
-                ),
-                "legacy_zero_energy_retained_n": int(
-                    np.count_nonzero(
-                        status_common
-                        & (proposed_zero_energy | active_zero_energy | continuous_zero_energy)
+                archived_displacements = {
+                    name: dataset(group, f"{name}/com_displacement_m")
+                    for name, _prefix, _label in METHODS
+                }
+                strict_common = status_common.copy()
+                for displacement in archived_displacements.values():
+                    strict_common &= np.isfinite(displacement) & (
+                        displacement > MIN_COM_DISPLACEMENT_M
                     )
-                ),
-                "fusion_bad_n": fusion_bad_n,
-            }
-            for prefix, _label in METHODS:
-                values = np.asarray(arrays[f"{prefix}_cmt"][common], dtype=float)
-                if not np.all(np.isfinite(values)):
-                    raise ValueError(f"non-finite {prefix} Cmt in {directory}")
-                for statistic, value in summarize(values).items():
-                    row[f"{prefix}_{statistic}"] = value
-            audit_rows.append(row)
+                common_n = int(np.count_nonzero(strict_common))
+                if common_n == 0:
+                    raise ValueError(f"empty strict common mask in {group.name}")
 
-    audit_rows.sort(key=lambda item: (float(item["action_weight"]), int(item["paper_order"])))
-    audit_fields = [
-        "action_weight",
-        "random_seed",
-        "archived_condition",
-        "step_height_m",
-        "max_horizontal_advance_m",
-        "paper_column",
-        "paper_order",
-        "minimum_com_displacement_m",
-        "status_common_n",
-        "common_mask_n",
-        "displacement_excluded_n",
-        "continuous_displacement_excluded_n",
-        "active_displacement_excluded_n",
-        "proposed_displacement_excluded_n",
-        "legacy_zero_energy_retained_n",
-        "fusion_bad_n",
+                primary_mask = dataset(
+                    group, "primary_common_mask_D_gt_0p01m"
+                ).astype(bool)
+                if not np.array_equal(primary_mask, strict_common):
+                    raise ValueError(f"primary strict-mask mismatch in {group.name}")
+                expected = expected_fused_cmt(group)
+                actual = dataset(group, "offline_route/cmt")
+                comparison = np.isclose(expected, actual, rtol=0.0, atol=1e-12)
+                fusion_bad_n = int(np.size(comparison) - np.count_nonzero(comparison))
+                if fusion_bad_n:
+                    raise ValueError(f"expert-fusion validation failed in {group.name}")
+
+                row: dict[str, object] = {
+                    "action_weight": weight,
+                    "random_seed": SEED,
+                    "archive_group": group.name.lstrip("/"),
+                    "step_height_m": height,
+                    "max_horizontal_advance_m": advance,
+                    "paper_column": paper_column,
+                    "paper_order": order,
+                    "minimum_com_displacement_m": MIN_COM_DISPLACEMENT_M,
+                    "status_common_n": int(np.count_nonzero(status_common)),
+                    "strict_displacement_common_n": common_n,
+                    "excluded_by_strict_displacement_n": int(
+                        np.count_nonzero(status_common & ~strict_common)
+                    ),
+                    "archive_primary_mask_n": int(np.count_nonzero(primary_mask)),
+                    "fusion_bad_n": fusion_bad_n,
+                }
+                for name, prefix, _label in METHODS:
+                    values = dataset(group, f"{name}/cmt")[strict_common]
+                    if not np.all(np.isfinite(values)):
+                        raise ValueError(f"non-finite {name} Cmt in {group.name}")
+                    for statistic, value in summarize(values).items():
+                        row[f"{prefix}_{statistic}"] = value
+                rows.append(row)
+
+    rows.sort(key=lambda row: (float(row["action_weight"]), int(row["paper_order"])))
+    fields = [
+        "action_weight", "random_seed", "archive_group", "step_height_m",
+        "max_horizontal_advance_m", "paper_column", "paper_order",
+        "minimum_com_displacement_m", "status_common_n",
+        "strict_displacement_common_n", "excluded_by_strict_displacement_n",
+        "archive_primary_mask_n", "fusion_bad_n",
     ]
-    for prefix, _label in METHODS:
-        audit_fields.extend(
+    for _name, prefix, _label in METHODS:
+        fields.extend(
             f"{prefix}_{statistic}"
             for statistic in ("mean", "median", "sample_sd", "p99", "max")
         )
     audit_path = output_dir / "action_weight_rerun_seed_20260716.csv"
-    write_csv(audit_path, audit_rows, audit_fields)
+    write_csv(audit_path, rows, fields)
 
-    paper_columns = [str(condition["paper_column"]) for condition in CONDITIONS]
+    paper_columns = [condition[3] for condition in CONDITIONS]
     manuscript_rows: list[dict[str, object]] = []
-    for weight in WEIGHTS:
-        weight_rows = [row for row in audit_rows if row["action_weight"] == weight]
-        for prefix, label in METHODS:
-            manuscript_row: dict[str, object] = {
-                "action_weight": weight,
-                "method": label,
-                "statistic": "mean Cmt",
+    for weight, _group in WEIGHTS:
+        weight_rows = [row for row in rows if row["action_weight"] == weight]
+        for _name, prefix, label in METHODS:
+            item: dict[str, object] = {
+                "action_weight": weight, "method": label, "statistic": "mean Cmt"
             }
             for row in weight_rows:
-                manuscript_row[str(row["paper_column"])] = f"{float(row[f'{prefix}_mean']):.3f}"
-            manuscript_rows.append(manuscript_row)
-        count_row: dict[str, object] = {
-            "action_weight": weight,
-            "method": "Common-mask n",
-            "statistic": "count",
+                item[str(row["paper_column"])] = f"{float(row[f'{prefix}_mean']):.3f}"
+            manuscript_rows.append(item)
+        count: dict[str, object] = {
+            "action_weight": weight, "method": "Common-mask n", "statistic": "count"
         }
         for row in weight_rows:
-            count_row[str(row["paper_column"])] = int(row["common_mask_n"])
-        manuscript_rows.append(count_row)
+            count[str(row["paper_column"])] = int(row["strict_displacement_common_n"])
+        manuscript_rows.append(count)
     table_path = output_dir / "action_weight_table_ii_seed_20260716.csv"
     write_csv(
         table_path,
@@ -403,61 +231,50 @@ def main() -> None:
         ["action_weight", "method", "statistic", *paper_columns],
     )
 
-    repository_root = Path(__file__).resolve().parents[1]
+    root = Path(__file__).resolve().parents[1]
     scripts = []
-    for weight in WEIGHTS:
-        for condition in CONDITIONS:
-            script = (
-                repository_root
-                / "src"
-                / "two_link"
-                / "action_weight"
-                / f"action_weight={weight}"
-                / str(condition["directory"])
-                / "Whole_energy_comparison_low_dim.py"
-            )
-            scripts.append(
-                {
-                    "path": script.relative_to(repository_root).as_posix(),
-                    "bytes": script.stat().st_size,
-                    "sha256": sha256(script),
-                }
-            )
+    condition_dirs = (
+        "60,30(0.33m)", "70,20(0.225m)",
+        "60,30(0.33m),0.01m", "70,20,(0.225m),0.01m",
+    )
+    for weight, _group in WEIGHTS:
+        for directory in condition_dirs:
+            script = root / "src/two_link/action_weight" / f"action_weight={weight}" / directory / "Whole_energy_comparison_low_dim.py"
+            scripts.append({
+                "path": script.relative_to(root).as_posix(),
+                "bytes": script.stat().st_size,
+                "sha256": sha256(script),
+            })
     manifest = {
-        "protocol": (
-            "Table II fixed-checkpoint action-weight evaluation with a strict "
-            "positive-work COM-displacement floor"
-        ),
+        "protocol": "Table II fixed-checkpoint action-weight evaluation",
         "random_seed": SEED,
         "minimum_com_displacement_m": MIN_COM_DISPLACEMENT_M,
-        "common_mask": (
-            "(proposed_status != -2) & (active_status != -2) & "
-            "(continuous_status != -6) & proposed_displacement_eligible & "
-            "active_displacement_eligible & continuous_displacement_eligible"
+        "eligibility": (
+            "status common mask and finite archived com_displacement_m > 0.01 m "
+            "for continuous active PPO, discrete active PPO, and the offline route"
         ),
-        "legacy_displacement_recovery": (
-            "For positive Cmt, D is recovered exactly from retained Energy and Cmt as "
-            "D=E/(W*Cmt), W=(1.4122+0.0839)*9.81 N. Zero-energy/zero-Cmt "
-            "successes are retained because they do not create a small-denominator tail. "
-            "Future canonical evaluators write D_save arrays directly."
+        "displacement_source": (
+            "Archived com_displacement_m arrays in Supplementary Data S2; this "
+            "analysis does not infer missing displacement from energy/Cmt and applies "
+            "no zero-work exception. The S2 schema records array provenance."
+        ),
+        "archive_masks": (
+            "primary_common_mask_D_gt_0p01m must equal the strict recomputation; "
+            "the earlier zero-work-inclusive mask is not distributed in the current S2 release."
         ),
         "fusion_validation": "complete evaluator branch; only -2 denotes expert failure",
-        "pre_filter_manifest": (
-            "action_weight_rerun_seed_20260716_pre_0p01m_filter_manifest.json"
-        ),
+        "source_archive": {
+            "file_name": archive.name,
+            "bytes": archive.stat().st_size,
+            "sha256": sha256(archive),
+        },
         "audit_csv": audit_path.name,
         "manuscript_csv": table_path.name,
         "canonical_scripts": scripts,
-        "input_hdf5": file_records,
     }
     manifest_path = output_dir / "action_weight_rerun_seed_20260716_manifest.json"
-    manifest_path.write_text(
-        json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
-    )
-
-    print(f"validated {len(audit_rows)} action-weight cells")
-    print(f"fusion mismatches: {sum(int(row['fusion_bad_n']) for row in audit_rows)}")
+    manifest_path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+    print(f"validated {len(rows)} action-weight cells with archived displacement")
     print(f"wrote {audit_path}")
     print(f"wrote {table_path}")
     print(f"wrote {manifest_path}")

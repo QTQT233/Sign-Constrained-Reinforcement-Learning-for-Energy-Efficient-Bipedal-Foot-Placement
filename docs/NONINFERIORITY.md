@@ -2,8 +2,8 @@
 
 ## Manuscript-primary values: 44.6% versus 45.1%
 
-The old 5 July output contains 975 active-PPO successes and 964 selector
-successes among the same 2160 cases. Its paired table is:
+The current fixed-checkpoint archive contains 975 active-PPO successes and 964
+selector successes among the same 2160 cases. Its paired table is:
 
 | Active PPO | Selector success | Selector failure | Total |
 |---|---:|---:|---:|

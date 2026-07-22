@@ -1,265 +1,181 @@
 # Sign-Constrained Reinforcement Learning for Bipedal Foot Placement
 
-Reproducibility materials for the manuscript by Qi Tao, Yiyou Liu, Amir
-Degani, and Mingyi Liu.
+Reproducibility materials for *Mechanical-Work-Aware Routing of One-Sided PPO
+Experts for Planar Bipedal Foot Placement* by Qi Tao, Yiyou Liu, Amir Degani,
+and Mingyi Liu.
 
-Canonical code repository:
-`QTQT233/Sign-Constrained-Reinforcement-Learning-for-Energy-Efficient-Bipedal-Foot-Placement`.
+This `main` branch contains the current manuscript-facing simulation code,
+repository-hosted model checkpoints, numerical outputs, provenance records, validators,
+and checksums. Superseded public artifacts were removed from the submission
+branch and preserved in the authors' offline `Paper_store/Past` archive.
 
-## What is in this repository
+## Evidence map
 
-- `src/`: versioned experiment and training programs, organized by experiment
-  family. The 12 legacy action-weight evaluators used in Appendix D include the documented negative-expert
-  output fix and fixed evaluation seed.
-- `analysis/`: external read-only scripts that regenerate manuscript-facing
-  statistics from frozen CSV outputs.
-- `data/`: author-generated arrays, retained trials, and derived tables that are
-  distributed with the executable repository record.
-- `docs/`: the table/figure provenance map, version audit, data dictionary,
-  non-inferiority analysis, and corrected ablation protocol.
-- `environment/`: analysis dependencies and the remaining environment-lock
-  requirement for training/evaluation.
+- `src/two_link/`: two-link routing, action-weight evaluation, mechanical-cost,
+  and portable transition-locked and ATC-50 lookup implementations. Table I is
+  regenerated from the released 30^4 HDF5 maps by `analysis/reproduce_table1.py`;
+  the older 10x30 map-generator snapshots are not part of this release.
+- `src/four_link/`: V22_3/V9 four-link training and the shared 2,160-case
+  evaluator, including the scratch-trained true per-step hard-action-mask PPO.
+- `src/paper2/mpc/`: repository-relative continuous-torque MPC implementation,
+  accepted 12-case results, and validator.
+- `data/four_link/true_action_mask_scratch_c090_epoch1275/`: the current
+  controller-level and trial-level four-link archive used for Tables VI–VII and
+  Appendix B.
+- `results/paper2_current/`: the current 72-row two-link comparison and the
+  manuscript-facing Table IV–V summaries.
+- `results/paper2_mpc_unified_12case/`: accepted MPC cases, validation records,
+  and deterministic replay checks.
+- `results/four_link_statistics/true_action_mask_scratch_c090_epoch1275/`:
+  paired fixed-checkpoint inference for the true-mask comparison.
+- `analysis/`: read-only numerical analysis and table-regeneration programs.
+- `docs/`: protocol, metric, provenance, availability, and submission records.
 
-The older files in the repository root are retained for history. New users
-should follow the structured paths above.
+The repository does not publish manuscript figure-rendering scripts or image
+assets. They are not required by the Robotics and Autonomous Systems submission
+format, and earlier public plot variants did not match the final manuscript
+layout. All numerical values plotted in the manuscript remain traceable to the
+current CSV and JSON records above; the complete final plotting source is held
+in the authors' offline `Paper_store/New` submission backup.
 
-Maintainers should follow `docs/PUBLISHING.md` for the branch, pull-request,
-commit-pinning, and hardware-data DOI workflow; do not force-push the
-historical repository.
+## Environment
 
-## Reproducibility status
-
-The manuscript-primary four-link release is the V22_3/V9 fixed-checkpoint output
-from 5 July 2026: active PPO succeeded in 975/2160 matched cases (45.1%) and the
-online selector in 964/2160 (44.6%). The release contains all 19 trial-level and
-summary CSVs required to regenerate Table VI, Appendix B, and the paired inference. The
-exact historical extended-evaluator bytes were not retained. A separately named
-legacy reconstruction restores the documented V22_3 touchdown bounds and is
-never represented as the missing original source. A full 2160-case rerun of
-that reconstruction reproduced all 19 archived CSVs byte-for-byte (19/19
-matching SHA-256 hashes); see `docs/VERSION_AUDIT.md` and the released
-reconstruction-validation record.
-
-### Scratch true per-step action-mask comparison
-
-The current release adds a genuine scratch-trained per-step hard-mask PPO
-comparator. At each simulation step, its sign head selects one hip-torque sign,
-the policy retains the nine zero-hip actions plus the nine actions with that
-sign (18 of 27), and the masked action head selects the physical action. The
-formal comparison uses the same V22_3/V9 2,160-case manifest and hard evaluator
-gate as the retained manuscript run. V23 is a later debugging branch and is not
-used. Before the new controller was interpreted, all 10,800 legacy rollout rows
-and their summaries were reproduced with zero numeric difference.
-
-The true mask succeeded in 946/2,160 cases and produced valid Cmt in 430/2,160.
-The online transition-persistent selector succeeded in 964/2,160 and produced
-valid Cmt in 480/2,160. The paired selector-minus-mask success-rate difference
-was +0.83 percentage points (95% CI -0.26 to +1.93; exact McNemar p = 0.159).
-On 395 both-valid cases, mean Cmt was 1.30296 for the mask and 0.27827 for the
-selector; the selector was lower in 354/395 cases.
-
-This is a method-level comparator under a shared evaluator, not a strict
-single-factor causal ablation. Scalar reward coefficients and PPO scalar
-hyperparameters match the fixed-sign experts, but reward soft thresholds,
-actor structure, initialization lineage, curriculum branch, and PPO probability
-factorization do not all match. See `docs/TRUE_ACTION_MASK_BASELINE.md`.
-
-## Quick statistical reproduction
+For numerical analysis:
 
 ```bash
 python -m pip install -r environment/requirements-analysis.txt
-python analysis/four_link_paired_inference.py \
-  --paired data/four_link/legacy_manuscript/paired_trials.csv \
-  --terminal data/four_link/legacy_manuscript/terminal_reason_summary.csv \
-  --output results/four_link_statistics/legacy_manuscript
-python analysis/validate_four_link_pairing.py
-python analysis/recompute_four_link_tables.py \
-  data/four_link/legacy_manuscript results/four_link_tables_legacy_manuscript
 ```
 
-The script verifies the input SHA-256, row count, and pair identifiers before
-computing the paired success table, paired risk-difference intervals, exact
-McNemar test, post-hoc non-inferiority sensitivity analysis, and terminal-reason
-transitions.
+TVLQR uses the additional requirements recorded in
+`environment/requirements-tvlqr.txt`.
 
-Regenerate the true-mask paired analysis and revised four-link figures:
+Four-link checkpoint loading and evaluation use
+`environment/requirements-four-link.txt`; the captured rerun environment and
+its provenance boundary are documented under `environment/`.
+
+## Four-link command-grid comparison
+
+The current archive evaluates six fixed controller records on the shared
+V22_3/V9 command grid. The manuscript's five principal rows are active PPO,
+active-full, the scratch-trained true per-step hard mask, the online
+transition-persistent selector, and the offline oracle envelope. Each controller
+has 2,160 matched trials.
+
+Key values are:
+
+- active PPO: 975/2,160 successes (45.1%) and 458 valid-`Cmt` trials;
+- true hard mask: 946/2,160 successes (43.8%) and 430 valid-`Cmt` trials;
+- online selector: 964/2,160 successes (44.6%) and 480 valid-`Cmt` trials;
+- active versus selector: 419 both-valid pairs, mean `Cmt` 1.417 versus 0.371;
+- hard mask versus selector: 395 both-valid pairs, mean `Cmt` 1.303 versus
+  0.278, with the selector lower in 354/395 pairs.
+
+The true-mask and selector policies share the formal evaluator and principal
+reward coefficients. Their architecture, initialization, soft thresholds, and
+training structure are not identical. The comparison is therefore reported as
+a method-level ablation: under the evaluated configuration, transition-level
+sign persistence is the component associated with the lower conditional `Cmt`.
+
+Regenerate the paired statistics:
 
 ```bash
 python analysis/four_link_true_action_mask_paired_inference.py
-python analysis/plot_figure9_true_action_mask_case.py
-python analysis/plot_figure10_true_action_mask.py
 ```
 
-Figure 9 is explicitly a post hoc illustrative case. Its case-selection audit,
-source data, and pixel/physical-font QA record are under
-`results/figures/true_action_mask/`. Figure 10 is generated from the formal
-controller and paired outputs and is supplied as 600-dpi PNG plus editable-text
-PDF and SVG.
-
-To verify the reconstructed legacy evaluator, checkpoints, and portable path
-launcher before a full 2160-case rerun:
+Verify the current archive and source/checkpoint hashes:
 
 ```bash
-python tools/run_frozen_four_link_evaluator.py \
-  --output results/rerun_legacy_v22_3 --check-only
+python -m unittest tests.test_true_action_mask_release -v
 ```
 
-Remove `--check-only` to execute the full evaluator. The launcher changes only
-the model/output paths in a temporary copy and verifies the reconstruction hash.
-Statistical reproduction from the retained trial-level outputs is exact; the
-reconstruction is an output-validated recovery route rather than a claim that
-the missing historical source bytes were recovered. The release validation run
-completed all 2160 cases and reproduced every one of the 19 archived CSVs
-byte-for-byte.
+## Two-link 12-case comparison
 
-## Reproduce revised Tables IV-V
+The 12 matched multi-step cases use the current source-aligned records. Mean
+`Cmt` is 0.123472870 for the proposed controller, 0.228756977 for discrete
+active PPO, 0.240916228 for continuous-torque PPO, and 0.198945099 for
+continuous-torque MPC. The corresponding ratio-of-means reductions are 46.0%,
+48.7%, and 37.9%.
 
-The initial read-only Paper2 audit completed 59 of 60 non-MPC runs; one
-unseeded TVLQR process exceeded the 180-s audit timeout, and no traceable PID
-entry point was found. The release now includes all four TVLQR checkpoints and
-a portable runner that applies seed 0 only in a temporary copy. This fixed-seed
-protocol completed all 12 TVLQR cases. After synchronizing the corrected
-raised-1.145-r1 source (shared initial state, source-aligned recovery, and the
-terminal stance action in the positive-work sum), the full seed-0 rerun gave
-mean Cmt 0.234644 and sample SD 0.019875. Revised Tables IV-V
-therefore report five complete replay families plus the accepted source-aligned
-unified MPC rerun:
+The `raised_L1145_r1` discrete and continuous values are the source-aligned
+rerun values 0.267040041 and 0.278093243. The current summary file
+`results/two_link_primary_12_cases.csv` points to those records and no longer
+contains the superseded row.
+
+Regenerate Tables IV–V:
 
 ```bash
 python analysis/reproduce_paper2_tables.py
 ```
 
-This writes a 72-row combined case table and manuscript-facing summaries under
-`results/paper2_current/`. The captured stdout/stderr, source hashes, missing
-landing residual, timeout, and read-only tree checks are retained under
-`data/paper2/readonly_rerun/`. Some legacy frozen entry points additionally
-require their original case-directory dependencies; those dependencies are
-not part of the hardware-only Zenodo record and must not be described as such.
-
-The repository-relative MPC release is under `src/paper2/mpc/`, with its
-12-case configuration in `configs/paper2_mpc_unified_12_cases.json` and
-accepted results in `results/paper2_mpc_unified_12case/`. All 12 cases succeeded;
-the accepted mean Cmt is 0.198945099 (sample SD 0.021963452), and two independent
-replays matched every accepted scientific result exactly. The superseded MPC
-CSV is retained under `results/legacy/`. Validate the release without running
-the expensive search using:
+Validate the accepted MPC release:
 
 ```bash
 python src/paper2/mpc/validate_release.py
+python -m unittest tests.test_paper2_mpc_unified -v
 ```
 
-See `docs/PAPER2_MPC_UNIFIED_12CASE.md` for the search, initial-state, reset,
-edge-closure, and evidence boundaries.
+The full candidate-level MPC search, solver traces, and two fresh-process
+replays are prepared separately as Supplementary Archive S1.
 
-TVLQR can be verified and rerun independently from the larger bundle:
+## Action-weight evaluation
+
+The 12 current `Whole_energy_comparison_low_dim.py` source snapshots use RNG
+seed `20260716`, write the negative expert's `Cmt` to the negative-expert array,
+and accumulate continuous-controller positive commanded work from applied
+physical torque once per step. A value is eligible only when center-of-mass
+displacement is greater than 0.01 m. The fusion rule remains complete: if both
+experts succeed, the lower finite `Cmt` is used; if only one succeeds, that
+expert is used. These scripts preserve the workstation paths used for the
+completed runs and are explicitly provenance-only; see
+`src/two_link/action_weight/README.md`.
+
+The 12-cell HDF5 package and its schema/checksums are supplied separately as
+Supplementary Data S2. Recompute the manuscript table from that package with:
 
 ```bash
-python -m pip install -r environment/requirements-tvlqr.txt
-python tools/run_frozen_tvlqr.py --check-only
-python tools/run_frozen_tvlqr.py --all --seed 0 --timeout 60 \
-  --output results/tvlqr_seed0
+python analysis/recompute_action_weight_table_ii.py --data-root /path/to/S2
 ```
 
-The launcher does not edit the repository source files at runtime. It verifies
-the recorded hashes of the canonical corrected sources, substitutes archived
-workstation model paths in a temporary copy, and captures per-case results.
-TVLQR is interpreted as a local reference-tracking energy comparator, not as
-an independent global foot-placement controller. See `docs/TVLQR_RELEASE.md`.
+## Routing and hardware lookup
 
-Run the full read-only audit with an activated locked environment as follows:
+The two-link simulations query a coarse state-to-expert route once at transition
+onset and hold the selected expert to termination. The two-link hardware system
+uses a different deployment representation: the 50^4-cell ATC-50 action lookup
+is queried again whenever the stance-link angle changes by approximately 1.8°,
+and the returned action is held between events. The four-link simulation uses a
+learned transition-start selector. These three mechanisms are not
+interchangeable.
 
-```bash
-python tools/audit_paper2_readonly.py \
-  --paper2-root /path/to/paper2_case_bundle \
-  --output-root paper2_rerun_logs
-```
+## Data and archive boundary
 
-## Two-link action-weight audit (Appendix D)
+- GitHub: current simulation code, model checkpoints, numerical outputs,
+  manifests, checksums, and validators. Cite the exact `main` commit used for
+  submission.
+- Zenodo DOI [10.5281/zenodo.21407986](https://doi.org/10.5281/zenodo.21407986):
+  unchanged author-owned hardware evidence and supplementary videos only.
+- Supplementary Archive S1: complete MPC candidate-level evidence.
+- Supplementary Data S2: 12-cell action-weight HDF5 package and schema.
+- Supplementary Data S3: frozen ATC-50 lookup table, schema, portable event-
+  query implementation, and checksums. No byte-for-byte regeneration claim is
+  made for the historical table artifact.
 
-The 12 canonical `Whole_energy_comparison_low_dim.py` files under
-`src/two_link/action_weight/` use random seed `20260716`, write the negative
-expert's Cmt array to the negative-expert file, and accumulate continuous-
-controller positive commanded work from the applied physical torque exactly
-once. They now require center-of-mass displacement `D > 0.01 m` before a Cmt
-value is admitted and archive `D_save` for every independently executed
-controller. The expert-status fusion branch remains complete: when both
-experts succeed, the lower finite Cmt is retained; when only one expert
-succeeds, that expert's finite value is retained. Only status `-2` denotes
-expert failure.
+A separate GitHub Release is optional when the manuscript cites the immutable
+merged `main` commit. The hardware payload has not changed, so this code update
+does not require a new Zenodo version.
 
-The Appendix D audit is recomputed on the condition-specific common-feasible and
-common-displacement-eligible mask shared by the Proposed, Active PPO, and
-Continuous PPO evaluations. For the retained pre-threshold HDF5 archive,
-positive-work displacement is recovered exactly as `D = E/(W*Cmt)`; zero-
-energy/zero-Cmt successes are retained because they cannot create a small-
-denominator tail. The paper-facing values and counts are in
-`results/action_weight_table_ii_seed_20260716.csv`; full mean, median, sample
-SD, 99th percentile, maximum, source hashes, and HDF5 hashes are in the
-companion audit CSV and JSON manifest. The unfiltered release is preserved in
-the three files containing `pre_0p01m_filter` in their names.
+## Release verification
 
 ```bash
-python analysis/recompute_action_weight_table_ii.py \
-  --data-root /path/to/Energy_Comparison
-cd src/two_link/action_weight
 python -m unittest discover -s tests -v
+python src/paper2/mpc/validate_release.py
+python analysis/reproduce_paper2_tables.py
+python tools/build_manifest.py
+python tools/verify_manifest.py
+git diff --check
 ```
-
-The retained archive verifies the deterministic continuous-torque scale
-correction and documents provenance/eligibility boundaries. It is not a
-matched-retraining sensitivity experiment and does not estimate variability
-across independent training seeds. See
-`docs/TABLE_II_AUDIT.md`, `docs/CMT_METRIC.md`, and
-`docs/ACTION_WEIGHT_LOCAL_SYNC.md` for the exact protocol and provenance.
-
-## Important interpretation boundary
-
-Active PPO is the penalized unrestricted control (`U1`,
-`action_value_weight=0.026`). In the V1.0.0 evidence archive, Active-full uses
-the same 27 physical torque triples with zero torque penalty (`U0`,
-`action_value_weight=0`) and is retained as a single warm-started reward
-diagnostic, not as a matched-seed from-scratch U0 estimate. The current
-main-branch Active-full training entry points are scratch-only: they contain no
-policy/critic loading path and refuse a non-empty output directory so that old
-checkpoints or appended logs cannot be mixed into a new run. This source change
-does not retroactively alter the V1.0.0 checkpoint lineage. `per_step_sign`
-exposes the same 27 physical torque triples as U1 and is an encoding diagnostic,
-not an action-mask baseline. The new `true_action_mask_scratch` controller is
-the actual per-step hard-mask comparator, but its disclosed training-protocol
-differences prevent a one-factor causal interpretation. The
-online selector is deployable; the oracle one-sided-policy envelope is a
-non-deployable hindsight diagnostic. The confirmatory experiment required for
-a causal persistence claim is specified in `docs/ABLATION_PROTOCOL.md`.
-
-## Data, code, and hardware archive boundary
-
-This GitHub repository is the canonical record for the corrected source code,
-repository-hosted models and simulation data, accepted MPC results, provenance
-files, and executable validation scripts. The manuscript should identify the
-exact Git commit used for submission. A GitHub Release is optional: merging an
-audited pull request into `main` and citing an immutable commit is sufficient
-to pin this software version.
-
-The unchanged hardware evidence is archived separately at
-<https://doi.org/10.5281/zenodo.21407986>. That Zenodo record is the hardware-
-data record only; it must not be cited as the source of the corrected software
-or the unified MPC rerun. Exhaustive MPC candidate tables and process traces
-may instead be supplied with the journal submission as Supplementary Archive
-S1, while the accepted case table and validators remain in this repository.
-
-Use `docs/DATA_ARCHIVE_CHECKLIST.md` to audit the hardware DOI scope, checksums,
-license, and the separation between Zenodo, GitHub, and submission supplements.
-
-The exact source-aligned rerun records for the raised, nominal-length-1.145,
-repetition-1 Discrete PPO, Continuous-torque PPO, and LIPM cases are documented
-in `docs/PAPER2_SOURCE_ALIGNED_R1_RERUN.md`. The canonical Continuous and LIPM
-entrypoints are synchronized to their accepted 1.00/0.89 and 0.95/0.89 recovery
-settings, respectively. Source hashes and raw outputs are retained with the
-records.
 
 ## License
 
-The source code, analysis code, documentation, and author-owned processed data
-in this release are distributed under the Apache License 2.0. See the
-repository-root `LICENSE` and `NOTICE` files. `DATA_LICENSE.md` defines the data
-and supplementary-video scope and records the third-party-material boundary.
+Author-generated code and data are distributed under Apache-2.0. See
+`LICENSE`, `DATA_LICENSE.md`, and `NOTICE`. Third-party components remain
+subject to their original terms.

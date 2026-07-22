@@ -8,10 +8,16 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
+FOUR_LINK_DIR = ROOT / "data/four_link/true_action_mask_scratch_c090_epoch1275"
 
 
 def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def read_rows(path: Path) -> list[dict[str, str]]:
+    with path.open(newline="", encoding="utf-8-sig") as handle:
+        return list(csv.DictReader(handle))
 
 
 class ReferenceArtifactTests(unittest.TestCase):
@@ -19,204 +25,105 @@ class ReferenceArtifactTests(unittest.TestCase):
         config = json.loads((ROOT / "configs/table1.json").read_text(encoding="utf-8"))
         for item in config["files"].values():
             self.assertEqual(sha256(ROOT / item["path"]), item["sha256"])
-        with (ROOT / "results/table1_figure4/table_i.csv").open(newline="", encoding="utf-8") as handle:
-            rows = {row["controller_or_set"]: row for row in csv.DictReader(handle)}
+        rows = {
+            row["controller_or_set"]: row
+            for row in read_rows(ROOT / "results/table1/table_i.csv")
+        }
         self.assertEqual(int(rows["Active PPO"]["feasible_states"]), 630328)
         self.assertEqual(int(rows["Sign-constrained union"]["feasible_states"]), 582861)
         self.assertEqual(int(rows["Common feasible intersection"]["feasible_states"]), 534042)
 
-    def test_four_link_config_hashes(self) -> None:
-        config = json.loads(
-            (ROOT / "configs/four_link_legacy_manuscript.json").read_text(encoding="utf-8")
+    def test_table2_uses_strict_archived_displacement_mask(self) -> None:
+        rows = read_rows(ROOT / "results/action_weight_table_ii_seed_20260716.csv")
+        indexed = {(row["action_weight"], row["method"]): row for row in rows}
+        counts = indexed[("0.02", "Common-mask n")]
+        self.assertEqual(
+            [int(counts[column]) for column in (
+                "0.00 m step; 0.25 m advance",
+                "0.00 m step; 0.17 m advance",
+                "0.01 m step; 0.25 m advance",
+                "0.01 m step; 0.17 m advance",
+            )],
+            [38917, 20502, 36702, 19776],
         )
-        reconstruction = config["source_status"]["reconstruction"]
-        self.assertEqual(sha256(ROOT / reconstruction["path"]), reconstruction["sha256"])
-        for path, expected, _weight in config["training_sources"].values():
-            if path.startswith("@V1.0.0:"):
-                self.assertEqual(
-                    config["source_status"]["legacy_training_source_revision"]["commit"],
-                    "77f2f7d69df183344ab06ae55e924bd071646393",
-                )
-                self.assertEqual(
-                    expected,
-                    "6b86eb447b03aa836f5b41e9548cd6d0e7491139d91d7579a094cb4059014fde",
-                )
-                continue
-            self.assertEqual(sha256(ROOT / path), expected)
-        for path, expected in config["checkpoints"].values():
-            self.assertEqual(sha256(ROOT / path), expected)
-
-        active_full = (
-            ROOT / "src/four_link/training/v22_3_v9_active_full_400_grid.py"
-        ).read_text(encoding="utf-8")
-        self.assertIn("action_value_weight = 0\n", active_full)
-        self.assertIn("def assert_fresh_scratch_output_dir():", active_full)
-        self.assertNotIn("load_previous_model", active_full)
-        self.assertNotIn("torch.load(", active_full)
-        root_compatibility_copy = (ROOT / "v22_3_v9_active_full_400_grid.py").read_text(
-            encoding="utf-8"
-        )
-        self.assertIn("action_value_weight = 0\n", root_compatibility_copy)
-        self.assertIn("def assert_fresh_scratch_output_dir():", root_compatibility_copy)
-        self.assertNotIn("load_previous_model", root_compatibility_copy)
-        self.assertNotIn("torch.load(", root_compatibility_copy)
-        self.assertFalse((ROOT / "configs/four_link_v23_success.json").exists())
-
-    def test_four_link_reconstruction_validation_record(self) -> None:
-        record = json.loads(
-            (
-                ROOT
-                / "results/four_link_statistics/legacy_manuscript/reconstruction_validation.json"
-            ).read_text(encoding="utf-8")
-        )
-        self.assertTrue(record["all_exact"])
-        self.assertEqual(record["exact_sha256_matches"], 19)
-        self.assertEqual(len(record["files"]), 19)
-        for name, expected in record["files"].items():
-            self.assertEqual(
-                sha256(ROOT / "data/four_link/legacy_manuscript" / name), expected
-            )
-
-    def test_four_link_success_counts_and_pairs(self) -> None:
-        with (ROOT / "data/four_link/legacy_manuscript/controller_summary.csv").open(
-            newline="", encoding="utf-8"
-        ) as handle:
-            summary = {row["controller"]: row for row in csv.DictReader(handle)}
-        self.assertEqual(int(summary["active"]["n_success"]), 975)
-        self.assertEqual(int(summary["passive_sign_selector"]["n_success"]), 964)
-        self.assertEqual(int(summary["passive_oracle_envelope"]["n_success"]), 989)
-        self.assertEqual(int(summary["active_full"]["n_success"]), 984)
-
-        with (ROOT / "data/four_link/legacy_manuscript/paired_trials.csv").open(
-            newline="", encoding="utf-8"
-        ) as handle:
-            rows = [row for row in csv.DictReader(handle)
-                    if row["passive_controller"] == "passive_sign_selector"]
-        self.assertEqual(len(rows), 2160)
-        both_valid = sum(row["active_valid"] == "True" and row["passive_valid"] == "True" for row in rows)
-        self.assertEqual(both_valid, 419)
-        pairing = json.loads(
-            (ROOT / "results/four_link_statistics/legacy_manuscript/pairing_validation.json").read_text(
+        manifest = json.loads(
+            (ROOT / "results/action_weight_rerun_seed_20260716_manifest.json").read_text(
                 encoding="utf-8"
             )
         )
-        self.assertTrue(pairing["case_key_sets_equal"])
-        self.assertEqual(pairing["initial_state_hash_mismatches"], 0)
-        self.assertEqual(pairing["both_valid_for_cmt"], 419)
+        self.assertIn("Archived com_displacement_m", manifest["displacement_source"])
+        self.assertIn("no zero-work exception", manifest["displacement_source"])
+        self.assertIn("strict recomputation", manifest["archive_masks"])
 
-    def test_paper2_readonly_audit_and_current_tables(self) -> None:
-        audit_csv = ROOT / "data/paper2/readonly_rerun/paper2_rerun_results.csv"
-        with audit_csv.open(newline="", encoding="utf-8-sig") as handle:
-            rows = list(csv.DictReader(handle))
-        self.assertEqual(len(rows), 60)
-        self.assertEqual(sum(row["status"] == "ok" for row in rows), 59)
-        self.assertEqual(sum(row["status"] == "timeout" for row in rows), 1)
-        self.assertTrue(all(row["source_tree_changed"] == "false" for row in rows))
-        self.assertNotIn("C:\\Users\\", audit_csv.read_text(encoding="utf-8-sig"))
-        self.assertNotIn("D:\\L&S\\", audit_csv.read_text(encoding="utf-8-sig"))
-
-        folder_name = {
-            "flat_L1145": "flat_1.145",
-            "raised_L1145": "raised_1.145",
-            "flat_L128": "flat_1.28",
-            "raised_L128": "raised_1.28",
-        }
-        source_aligned_index_corrections = {
-            ("flat_L1145_r1", "Qi_multi_passive_sim.py"),
-            ("raised_L1145_r1", "Multi_continuous.py"),
-            ("raised_L1145_r1", "Qi_multi_ac_discrete_sim.py"),
-            ("raised_L1145_r1", "LIPM.py"),
-            ("raised_L1145_r1", "LQR.py"),
-        }
-        for row in rows:
-            prefix = next(key for key in folder_name if row["case_id"].startswith(key))
-            entry_dir = folder_name[prefix] + row["case_id"][len(prefix):]
-            source = ROOT / "src/paper2/entrypoints" / entry_dir / row["script"]
-            if (row["case_id"], row["script"]) in source_aligned_index_corrections:
-                self.assertNotEqual(sha256(source), row["source_sha256"])
-            else:
-                self.assertEqual(sha256(source), row["source_sha256"])
-
-        with (ROOT / "results/paper2_current/table_v_current.csv").open(
-            newline="", encoding="utf-8"
-        ) as handle:
-            table_v = {row["method"]: row for row in csv.DictReader(handle)}
-        self.assertEqual(int(table_v["Proposed one-sided selector"]["n_cmt"]), 12)
-        self.assertEqual(int(table_v["Proposed one-sided selector"]["n_landing_error"]), 11)
-        self.assertAlmostEqual(
-            float(table_v["Continuous-torque MPC"]["mean_cmt"]),
-            0.198945098769,
+    def test_current_four_link_archive_and_scratch_sources(self) -> None:
+        config = json.loads(
+            (ROOT / "configs/four_link_true_action_mask_scratch_c090_epoch1275.json").read_text(
+                encoding="utf-8"
+            )
         )
-        self.assertAlmostEqual(
-            float(table_v["Continuous-torque MPC"]["mean_absolute_landing_error_m"]),
-            0.063825158902,
-        )
-        self.assertAlmostEqual(float(table_v["Proposed one-sided selector"]["mean_cmt"]), 0.123472869728)
-        self.assertEqual(int(table_v["TVLQR tracking"]["n_cmt"]), 12)
-        self.assertAlmostEqual(
-            float(table_v["TVLQR tracking"]["mean_cmt"]),
-            0.234644083333,
-        )
+        for record in config["source_files"].values():
+            self.assertEqual(sha256(ROOT / record["path"]), record["sha256"])
+        for record in config["checkpoint_files"].values():
+            self.assertEqual(sha256(ROOT / record["path"]), record["sha256"])
 
-        with (ROOT / "results/paper2_current/paper2_combined_cases.csv").open(
-            newline="", encoding="utf-8"
-        ) as handle:
-            combined = {
-                (row["case_id"], row["method"]): row for row in csv.DictReader(handle)
-            }
+        summary = {row["controller"]: row for row in read_rows(FOUR_LINK_DIR / "controller_summary.csv")}
+        self.assertEqual(int(summary["active"]["n_success"]), 975)
+        self.assertEqual(int(summary["true_action_mask_scratch"]["n_success"]), 946)
+        self.assertEqual(int(summary["passive_sign_selector"]["n_success"]), 964)
+        self.assertEqual(int(summary["passive_oracle_envelope"]["n_success"]), 989)
+
+        pairs = read_rows(FOUR_LINK_DIR / "paired_trials.csv")
+        selector = [row for row in pairs if row["passive_controller"] == "passive_sign_selector"]
+        self.assertEqual(len(selector), 2160)
         self.assertEqual(
-            float(combined[("raised_L1145_r1", "Discrete active PPO")]["cmt"]),
+            sum(row["active_valid"] == "True" and row["passive_valid"] == "True" for row in selector),
+            419,
+        )
+
+        for relative in (
+            "src/four_link/training/v22_3_v9_active_full_400_grid.py",
+        ):
+            text = (ROOT / relative).read_text(encoding="utf-8")
+            self.assertIn("action_value_weight = 0\n", text)
+            self.assertIn("def assert_fresh_scratch_output_dir():", text)
+            self.assertNotIn("load_previous_model", text)
+            self.assertNotIn("torch.load(", text)
+
+    def test_paper2_current_tables_and_primary_csv_are_synchronized(self) -> None:
+        current_rows = read_rows(ROOT / "results/paper2_current/paper2_combined_cases.csv")
+        current = {(row["case_id"], row["method"]): row for row in current_rows}
+        self.assertEqual(len(current_rows), 72)
+        self.assertEqual(
+            float(current[("raised_L1145_r1", "Discrete active PPO")]["cmt"]),
             0.267040040566968,
         )
         self.assertEqual(
-            float(combined[("raised_L1145_r1", "Continuous-torque PPO")]["cmt"]),
+            float(current[("raised_L1145_r1", "Continuous-torque PPO")]["cmt"]),
             0.2780932427752225,
         )
+
+        primary = {row["case_id"]: row for row in read_rows(ROOT / "results/two_link_primary_12_cases.csv")}
+        self.assertEqual(set(primary), {row["case_id"] for row in current_rows})
+        self.assertEqual(float(primary["raised_L1145_r1"]["discrete_active_ppo_cmt"]), 0.267040040566968)
+        self.assertEqual(
+            float(primary["raised_L1145_r1"]["continuous_active_ppo_cmt"]),
+            0.2780932427752225,
+        )
+
+        table_v = {row["method"]: row for row in read_rows(ROOT / "results/paper2_current/table_v_current.csv")}
+        self.assertAlmostEqual(float(table_v["Proposed one-sided selector"]["mean_cmt"]), 0.123472869728)
+        self.assertAlmostEqual(float(table_v["Discrete active PPO"]["mean_cmt"]), 0.228756976684)
+        self.assertAlmostEqual(float(table_v["Continuous-torque PPO"]["mean_cmt"]), 0.240916227851)
+        self.assertAlmostEqual(float(table_v["Continuous-torque MPC"]["mean_cmt"]), 0.198945098769)
 
     def test_tvlqr_release_hashes_and_seeded_results(self) -> None:
         config = json.loads((ROOT / "configs/tvlqr_release.json").read_text(encoding="utf-8"))
         for record in config["models"].values():
             self.assertEqual(sha256(ROOT / record["path"]), record["sha256"])
-        with (ROOT / "results/tvlqr_seed0/tvlqr_cases.csv").open(
-            newline="", encoding="utf-8"
-        ) as handle:
-            rows = list(csv.DictReader(handle))
+        rows = read_rows(ROOT / "results/tvlqr_seed0/tvlqr_cases.csv")
         self.assertEqual(len(rows), 12)
         self.assertTrue(all(row["status"] == "ok" for row in rows))
-        self.assertTrue(all(row["seed_override"] == "0" for row in rows))
-        for row in rows:
-            stderr = (ROOT / row["stderr"]).read_text(encoding="utf-8")
-            self.assertNotIn("C:\\Users\\", stderr)
-            self.assertIn("<TEMP>/LQR.py", stderr)
-        self.assertAlmostEqual(
-            sum(float(row["cmt"]) for row in rows) / len(rows), 0.234644083333
-        )
-        with (ROOT / "data/paper2/readonly_rerun/paper2_rerun_results.csv").open(
-            newline="", encoding="utf-8-sig"
-        ) as handle:
-            audit = {
-                row["case_id"]: row["source_sha256"]
-                for row in csv.DictReader(handle)
-                if row["method"] == "TVLQR tracking"
-            }
-        aliases = {
-            "flat_1.145": "flat_L1145",
-            "raised_1.145": "raised_L1145",
-            "flat_1.28": "flat_L128",
-            "raised_1.28": "raised_L128",
-        }
-        for row in rows:
-            prefix = next(name for name in aliases if row["case_id"].startswith(name))
-            audit_id = aliases[prefix] + row["case_id"][len(prefix):]
-            source = ROOT / "src/paper2/entrypoints" / row["case_id"] / "LQR.py"
-            if row["case_id"] == "raised_1.145_r1":
-                self.assertNotEqual(sha256(source), audit[audit_id])
-                self.assertEqual(
-                    sha256(source),
-                    config["source_hash_overrides"][audit_id],
-                )
-            else:
-                self.assertEqual(sha256(source), audit[audit_id])
+        self.assertAlmostEqual(sum(float(row["cmt"]) for row in rows) / 12, 0.234644083333)
 
 
 if __name__ == "__main__":

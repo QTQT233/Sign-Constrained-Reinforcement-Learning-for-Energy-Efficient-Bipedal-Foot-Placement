@@ -1,5 +1,5 @@
 {
-  "paper_item": ["Table I", "Figure 4"],
+  "paper_item": ["Table I"],
   "grid_shape": [30, 30, 30, 30],
   "sampled_states": 810000,
   "files": {
@@ -16,7 +16,7 @@
       "sha256": "b28cf90c594b07f40bc7f495a4fd4f230197a4845c8dfc52e3c2abd519e4bf7f"
     }
   },
-  "analysis": "analysis/reproduce_table1_figure4.py",
+  "analysis": "analysis/reproduce_table1.py",
   "expected": {
     "active_feasible": 630328,
     "sign_constrained_union_feasible": 582861,

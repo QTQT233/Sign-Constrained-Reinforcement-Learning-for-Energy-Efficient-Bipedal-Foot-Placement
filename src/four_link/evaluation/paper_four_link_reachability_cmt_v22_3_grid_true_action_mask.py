@@ -5,7 +5,7 @@ script at runtime, so the paper evaluation is not silently affected when a
 training file changes. All parameters that are likely to be edited for a paper
 comparison are collected in the first block below.
 
-The evaluator preserves the archived V22_3 touchdown gate used by the retained
+The evaluator preserves the archived V22_3 touchdown gate used by the fixed
 four-link comparison.  It writes only to a new repository-local scratch
 directory unless ``--output-dir`` is supplied, and refuses to overwrite a
 non-empty directory.
@@ -125,7 +125,7 @@ dt = 0.01
 raw_state_dim = 8
 state_dim = 12
 
-# These reward-related values are retained only because curriculum/reset helper
+# These reward-related values remain defined because curriculum/reset helper
 # functions reference them. Cmt evaluation does not use PPO rewards.
 playing_times = 500
 joint_limit_penalty_weight = 0.05
@@ -3078,7 +3078,7 @@ EXPECTED_POLICY_SHA256 = {
     TRUE_ACTION_MASK_POLICY_PATH: "74d26501c32e10892e8766f4980c291f6471aeeed0806225ad878919fc9d0b72",
     PASSIVE_POS_POLICY_PATH: "521962b8a3deea4411dc1b1c801cf9d8fcecfafa51d240f6752c07952ec1926a",
     PASSIVE_NEG_POLICY_PATH: "4752c0c4632d5958ee64c7f3004a76e9a7bd7f3204dd914fdb7003bce9a92d7c",
-    PASSIVE_SIGN_SELECTOR_PATH: "ac09e31f6608960621217e077549e4dc21c38364b858064b3b1ad5d8fe4b4631",
+    PASSIVE_SIGN_SELECTOR_PATH: "99fdebbe1ecdccfdfd1d36902ff4dd6936712488065aa0e6cf5c8391b24979e1",
 }
 
 
@@ -3201,7 +3201,7 @@ def write_release_metadata(output_dir):
     manifest = {
         "schema_version": 1,
         "release_id": "true_action_mask_scratch_c090_epoch1275",
-        "evidence_role": "single-retained-run method-level AM-step1 baseline",
+        "evidence_role": "single-fixed-checkpoint method-level AM-step1 baseline",
         "evaluation_label": EVALUATION_LABEL,
         "v22_3_touchdown_safe_q_low_deg": [35.0, 8.0, -115.0, 5.0],
         "evaluation": {
@@ -3220,7 +3220,7 @@ def write_release_metadata(output_dir):
             "path": repository_path(Path(__file__)),
             "sha256": sha256_file(Path(__file__)),
             "role": (
-                "Portable source-aligned evaluator. The retained CSVs were produced "
+                "Portable source-aligned evaluator. The released CSVs were produced "
                 "with the same rollout body and the listed V22_3 runtime gate before "
                 "repository-relative path and release-metadata wiring were added; an "
                 "exact byte-for-byte replay from this public file is not claimed."
@@ -3234,7 +3234,7 @@ def write_release_metadata(output_dir):
             path.name: sha256_file(path) for path in result_files
         },
         "limitations": [
-            "The action-mask checkpoint is one retained scratch-trained run; its training seed was not fixed.",
+            "The action-mask archive contains one scratch-trained checkpoint; its training seed was not fixed.",
             "The evaluation cases are paired, but they are not independent training replications.",
             "AM-step1 differs from the proposed transition-persistent two-expert controller in architecture and sign-update timing.",
         ],

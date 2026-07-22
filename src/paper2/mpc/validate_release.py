@@ -21,7 +21,6 @@ SUMMARY = RESULT_DIR / "accepted_summary.json"
 FORMAL = RESULT_DIR / "formal_validation.json"
 CHECKSUMS = RESULT_DIR / "CHECKSUMS.sha256"
 CURRENT = REPO_ROOT / "results" / "paper2_mpc_current_12_cases.csv"
-LEGACY = REPO_ROOT / "results" / "legacy" / "paper2_mpc_pre_unified_20260720.csv"
 
 
 def sha256(path: Path) -> str:
@@ -130,9 +129,6 @@ def main() -> int:
             close(float(row["foot_error_m"]), float(accepted_by_id[case_id]["foot_error_m"])),
             f"foot error mismatch: {case_id}",
         )
-
-    require(LEGACY.is_file(), "legacy MPC result file is missing")
-    require(sha256(LEGACY) != sha256(CURRENT), "legacy and accepted MPC result files are identical")
 
     public_files = [CONFIG, CASES, SUMMARY, FORMAL, CURRENT]
     forbidden = ("C:\\Users\\", "D:\\L&S\\", "D:\\L-Environment\\")

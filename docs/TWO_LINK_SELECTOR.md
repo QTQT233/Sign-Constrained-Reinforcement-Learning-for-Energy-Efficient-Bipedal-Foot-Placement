@@ -12,16 +12,19 @@ transition-locked expert routing** implementation.
 
 `working_save-ATC-50` is the `50^4` higher-resolution deployment table that
 implements the same offline mapping concept for the hardware controller. It is
-not an interpolation of the released coarse array. The author-confirmed
-generator follows the same two-expert evaluation/fusion logic used for the
-`60,30(0.33m)` / `working_save_passive-10-30` family, with all four state axes
-discretized to 50 points. The repository contains the corresponding 50-bin
-generator-family source and hardware consumers, while the large generated
-table belongs in the journal supplementary archive. The hardware-only Zenodo
-record is not the source of this simulation table. The table is not an online comparison
-of critic return estimates. Values `-1`, `0`, and `+1` are converted to
-negative, zero, and positive hip-torque commands. The `-2` value is the
-uncovered/failure sentinel handled by the deployment fallback.
+not an interpolation of the released coarse array. The table follows the same
+two-expert evaluation/fusion concept used for the `60,30(0.33m)` /
+`working_save_passive-10-30` family, with all four state axes discretized to 50
+points. The repository contains the portable event-lookup implementation; the
+frozen table, schema, and checksums are provided as Supplementary Data S3. S3
+does not claim an independently reproducible table-generation script. The
+hardware-only Zenodo record is not the source of this simulation table. The
+table is not an online comparison of critic return estimates. In the coarse
+transition router, `-1` selects the negative expert and the covered codes `0`
+and `+1` select the positive expert; `0` is a tie/zero-route code, not a third
+expert. In the ATC-50 action table, `-1`, `0`, and `+1` are applied as negative,
+zero, and positive hip-torque commands, while `-2` invokes the declared
+deployment fallback.
 
 ## Deployment update rule
 
@@ -44,7 +47,7 @@ Use the following names consistently:
 - `learned transition-onset selector` only for the separately implemented
   four-link experiment.
 
-The legacy action-weight appendix is evaluated from the coarse expert-result
+The Table II action-weight evaluation uses the coarse expert-result
 arrays on the declared common-feasible mask. Figure and hardware descriptions
 may refer to the refined lookup, but the figures do not need to duplicate
 GitHub file links when the Methods and Code Availability sections provide the

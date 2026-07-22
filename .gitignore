@@ -4,6 +4,8 @@ __pycache__/
 .venv/
 venv/
 results/_scratch/
+analysis/_scratch/
+results/figures/
 data/_downloads/
 *.tmp
 *.log

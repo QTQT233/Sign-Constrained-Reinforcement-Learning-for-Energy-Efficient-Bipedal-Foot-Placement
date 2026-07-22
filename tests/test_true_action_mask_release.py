@@ -61,6 +61,23 @@ class TrueActionMaskReleaseTests(unittest.TestCase):
         self.assertEqual(rows[1274]["curriculum_bucket"], "90")
         self.assertEqual(rows[1274]["success_count"], "250")
 
+        common = ROOT / self.config["source_files"]["training_common"]["path"]
+        entrypoint = ROOT / self.config["source_files"]["training_scratch_entrypoint"]["path"]
+        source = common.read_text(encoding="utf-8") + entrypoint.read_text(encoding="utf-8")
+        self.assertNotIn("load_old", source)
+        self.assertNotIn("old_policy_checkpoint", source)
+        self.assertNotIn("old_critic_checkpoint", source)
+        self.assertNotIn("torch.load(", source)
+        self.assertIn("base.load_previous_model = False", source)
+        self.assertIn(
+            "base.load_previous_model_if_requested = _forbid_inherited_checkpoint_loading",
+            source,
+        )
+        inherited = ROOT / self.config["source_files"]["inherited_training_base"]["path"]
+        inherited_source = inherited.read_text(encoding="utf-8")
+        self.assertIn("def load_previous_model_if_requested", inherited_source)
+        self.assertNotIn("base.train(", source)
+
     def test_evaluator_is_portable_and_preserves_v22_3_gate(self) -> None:
         evaluator = ROOT / self.config["source_files"]["formal_evaluator"]["path"]
         text = evaluator.read_text(encoding="utf-8")
@@ -74,6 +91,12 @@ class TrueActionMaskReleaseTests(unittest.TestCase):
         self.assertIn('"true_action_mask_scratch_c090_epoch1275_rerun"', text)
         self.assertIn("--check-only", text)
         self.assertIn("--metadata-only", text)
+
+        selector = ROOT / "models/four_link/paper_four_link_passive_sign_selector_v22_3_grid.pth"
+        payload = selector.read_bytes()
+        self.assertNotIn(b"D:\\\\L&S", payload)
+        self.assertNotIn(b"C:\\\\Users", payload)
+        self.assertNotIn(b"paper_four_link_reachability_cmt_v22_3_grid.py", payload)
 
     def test_formal_output_is_complete_non_smoke_and_paired(self) -> None:
         controllers = {row["controller"]: row for row in read_rows(DATA_DIR / "controller_summary.csv")}

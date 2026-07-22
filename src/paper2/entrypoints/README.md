@@ -1,7 +1,7 @@
 # Paper2 source-aligned entry points
 
-This directory contains the canonical entry scripts for the five non-MPC
-method families across the 12 case directories. The corrected raised-1.145-r1
+This directory contains provenance-preserving source snapshots for the five
+non-MPC method families across the 12 case directories. The current raised-1.145-r1
 Continuous-torque PPO, LIPM, and TVLQR sources are synchronized to the accepted
 source-aligned runs; their current SHA-256 values and provenance are recorded
 in the repository manifests and the corresponding result documentation.
@@ -16,5 +16,6 @@ must be supplied from the original case bundle under the names in
 They are distinct from the hardware-only Zenodo record; when required for
 submission, distribute them through Supplementary Archive S1.
 
-The audit launcher is read-only with respect to these repository sources. It
-does not modify them at runtime.
+The remaining snapshots preserve original path literals and are not advertised
+as standalone portable entry points. The audit launcher is read-only with
+respect to these repository sources and does not modify them at runtime.
