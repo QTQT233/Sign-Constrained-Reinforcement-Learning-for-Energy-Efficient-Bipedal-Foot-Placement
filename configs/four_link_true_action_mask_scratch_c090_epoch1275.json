@@ -1,0 +1,135 @@
+{
+  "schema_version": 1,
+  "release_id": "true_action_mask_scratch_c090_epoch1275",
+  "repository_base_commit": "2b413efed3df148afec6217a69733620ed71d051",
+  "mechanism": {
+    "name": "AM-step1",
+    "description": "A learned binary hip-sign selector is refreshed at every simulation step; zero-hip actions and the selected nonzero hip sign remain valid.",
+    "physical_action_count": 27,
+    "valid_actions_after_each_sign_selection": 18,
+    "ppo_probability": "joint selector and masked-action log probability",
+    "deterministic_evaluation": "argmax sign followed by argmax over the corresponding masked action logits"
+  },
+  "checkpoint_selection": {
+    "rule": "Freeze the c090 training-best checkpoint before inspecting the formal 2160-case evaluation.",
+    "initialization": "scratch",
+    "training_seed_fixed": false,
+    "epoch": 1275,
+    "curriculum_progress": 0.8999431976858636,
+    "curriculum_bucket": 90,
+    "training_success_count": 250,
+    "training_rollouts": 500,
+    "training_success_rate": 0.5,
+    "success_rate_ema": 0.4623676693283329,
+    "log_snapshot_last_epoch": 1307,
+    "launch_record": "The retained log records script=pydevconsole.py; no direct-script launch or fixed training seed is claimed."
+  },
+  "training_alignment": {
+    "matched_to_fixed_sign_experts": {
+      "action_value_weight": 0.026,
+      "policy_entropy_coefficient": 0.001,
+      "hip_torque_limit_nm": 4.0,
+      "knee_torque_limit_nm": 0.2,
+      "reward_coefficient_statement": "The scalar task, safety, clearance, and torque-penalty coefficients inherited by the retained run match the fixed-sign experts.",
+      "hard_success_and_termination_statement": "The V22_3 hard success and termination gates used for formal evaluation are shared."
+    },
+    "known_training_protocol_differences": {
+      "q3_low_soft_margin_deg": {
+        "action_mask": 14.0,
+        "fixed_sign_experts": 18.0
+      },
+      "clearance_soft_margin_m": {
+        "action_mask": 0.1,
+        "fixed_sign_experts": 0.09
+      },
+      "clearance_approach_width_m": {
+        "action_mask": 0.13,
+        "fixed_sign_experts": 0.115
+      },
+      "architecture_and_initialization": "The action-mask policy is one shared hierarchical actor trained from random initialization; the proposed controller uses two fixed-sign experts plus a transition-onset selector."
+    },
+    "interpretation": "This is a method-level baseline, not a single-factor causal estimate of sign persistence."
+  },
+  "source_files": {
+    "training_common": {
+      "path": "src/four_link/training/v22_3_v9_true_action_mask_400_grid_common.py",
+      "sha256": "8a5ada87bd732b37bb16790c6d5f6043094054b772ca699ad979c8873889bccd"
+    },
+    "training_scratch_entrypoint": {
+      "path": "src/four_link/training/v22_3_v9_true_action_mask_scratch_400_grid.py",
+      "sha256": "2a57dadf761cdc40adf08504e9ac1db4cdd4b91a6c0f1a400b22921b9f7812d2"
+    },
+    "inherited_training_base": {
+      "path": "src/four_link/training/v22_3_v9_per_step_sign_400_grid.py",
+      "sha256": "70a1b48899903e5bb76d9747be56c2c3cf0187ba65dd10dbd149c4eb887cd0a9"
+    },
+    "formal_evaluator": {
+      "path": "src/four_link/evaluation/paper_four_link_reachability_cmt_v22_3_grid_true_action_mask.py",
+      "sha256": "9ff37c2bde8d5480a4cfffd2387211b4985dea0051d76c09613dabd41ef27a67"
+    },
+    "paired_inference": {
+      "path": "analysis/four_link_true_action_mask_paired_inference.py",
+      "sha256": "1ac602b4e992d0b30d3b17d7c76cb64c840d4155be5e1be35092f9fc40e4e291"
+    }
+  },
+  "checkpoint_files": {
+    "policy": {
+      "path": "models/four_link/v22_3_v9_true_action_mask_scratch_400_grid/V22_3V9TrueActionMaskScratch400Grid_c090_epoch1275_success250_Policy.pth",
+      "sha256": "74d26501c32e10892e8766f4980c291f6471aeeed0806225ad878919fc9d0b72"
+    },
+    "critic": {
+      "path": "models/four_link/v22_3_v9_true_action_mask_scratch_400_grid/V22_3V9TrueActionMaskScratch400Grid_c090_epoch1275_success250_Critic.pth",
+      "sha256": "7f5972f37b1a8374ff69ca679bd1f00cbd46caaa7d665b1c7278df1f15acfe75"
+    }
+  },
+  "training_logs": {
+    "csv": {
+      "path": "data/four_link/training_logs/V22_3V9TrueActionMaskScratch400Grid_training_log_through_epoch1307.csv",
+      "sha256": "5fe20ee75cb69cdb774ffe7f61305d96c27f109d029cb09e7649448f6835a1ec"
+    },
+    "jsonl": {
+      "path": "data/four_link/training_logs/V22_3V9TrueActionMaskScratch400Grid_training_log_through_epoch1307.jsonl",
+      "sha256": "02a1bed3f636d9ed637d9a6664f5efdeaf2faa901971a2ad5dbf8692ac2f5a92"
+    }
+  },
+  "formal_evaluation": {
+    "output_dir": "data/four_link/true_action_mask_scratch_c090_epoch1275",
+    "evaluation_label": "4DoF_V22_3_3x3_grid_4Nm_legacy_success_true_action_mask_scratch_c090",
+    "source_role": "Portable source-aligned evaluator. The retained CSVs used the same rollout body and listed V22_3 runtime gate before repository-relative path and release-metadata wiring were added; exact byte-for-byte replay from the final public source is not claimed.",
+    "touchdown_safe_q_low_deg": [35.0, 8.0, -115.0, 5.0],
+    "rng_seeds": [20260702, 20260719, 20260803],
+    "walk_directions": [1.0, -1.0],
+    "step_lengths_m": [0.3, 0.35, 0.4],
+    "step_heights_m": [0.0, 0.01, 0.02],
+    "episodes_per_grid_cell_direction": 40,
+    "case_count_per_controller": 2160,
+    "deterministic_policy": true,
+    "evaluation_manifest": "data/four_link/true_action_mask_scratch_c090_epoch1275/evaluation_manifest.json",
+    "checksums": "data/four_link/true_action_mask_scratch_c090_epoch1275/CHECKSUMS.sha256"
+  },
+  "released_results": {
+    "true_action_mask_scratch": {
+      "success": 946,
+      "valid_cmt": 430,
+      "success_rate": 0.43796296296296294,
+      "valid_cmt_rate": 0.19907407407407407,
+      "mean_cmt_over_controller_valid_cases": 1.3981069655923026
+    },
+    "passive_sign_selector": {
+      "success": 964,
+      "valid_cmt": 480,
+      "success_rate": 0.4462962962962963,
+      "valid_cmt_rate": 0.2222222222222222,
+      "mean_cmt_over_controller_valid_cases": 0.42701151738639037
+    },
+    "direct_both_valid_pairing": {
+      "n": 395,
+      "true_action_mask_mean_cmt": 1.3029621667246876,
+      "selector_mean_cmt": 0.27827288399435546,
+      "selector_lower_cmt_count": 354,
+      "selector_lower_cmt_fraction": 0.8962025316455696
+    }
+  },
+  "statistical_output_dir": "results/four_link_statistics/true_action_mask_scratch_c090_epoch1275",
+  "inference_boundary": "The paired statistics quantify this frozen-checkpoint evaluation only. One retained scratch run does not estimate between-training-seed variability or establish a causal persistence effect."
+}

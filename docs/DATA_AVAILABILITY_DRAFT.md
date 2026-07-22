@@ -8,7 +8,11 @@ data record and is not the source of the corrected software or the unified
 12-case MPC results. Author-generated simulation inputs, retained evaluation
 outputs, accepted MPC case results, and machine-readable provenance files that
 are distributed publicly are available in the GitHub repository at the exact
-commit identified in the Code Availability statement. Exhaustive MPC candidate
+commit identified in the Code Availability statement. This includes the frozen
+scratch true-action-mask checkpoint and training log, all 2,160-case V22_3/V9
+trial outputs, paired analyses, figure source data, plotting scripts, manifests,
+and checksums. V23 diagnostic code is not used for the manuscript comparison.
+Exhaustive MPC candidate
 tables, solve traces, and fresh-process replay records are supplied with the
 submission as Supplementary Archive S1. Author-owned data and videos are
 licensed under Apache-2.0; third-party materials retain their original terms.

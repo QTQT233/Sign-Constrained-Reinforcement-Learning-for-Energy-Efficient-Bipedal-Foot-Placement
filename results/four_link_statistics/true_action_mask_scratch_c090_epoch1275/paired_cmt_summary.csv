@@ -1,0 +1,2 @@
+n_both_valid,reference_mean_cmt,comparison_mean_cmt,mean_comparison_minus_reference_cmt,median_comparison_minus_reference_cmt,bootstrap_mean_difference_ci95,n_positive_reference_cmt_for_ratio,mean_comparison_over_reference_cmt,comparison_lower_count,reference_lower_count,tie_count,fraction_comparison_lower_cmt,exact_sign_test_p_two_sided
+395,1.3029621667246876,0.27827288399435546,-1.0246892827303322,-0.5727749455497219,"[-1.2093439589426438, -0.8599756546262654]",394,0.30123164218379667,354,27,14,0.8962025316455696,7.60537920555355e-74

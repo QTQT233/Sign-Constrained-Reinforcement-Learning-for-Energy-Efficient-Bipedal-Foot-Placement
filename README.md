@@ -40,6 +40,30 @@ that reconstruction reproduced all 19 archived CSVs byte-for-byte (19/19
 matching SHA-256 hashes); see `docs/VERSION_AUDIT.md` and the released
 reconstruction-validation record.
 
+### Scratch true per-step action-mask comparison
+
+The current release adds a genuine scratch-trained per-step hard-mask PPO
+comparator. At each simulation step, its sign head selects one hip-torque sign,
+the policy retains the nine zero-hip actions plus the nine actions with that
+sign (18 of 27), and the masked action head selects the physical action. The
+formal comparison uses the same V22_3/V9 2,160-case manifest and hard evaluator
+gate as the retained manuscript run. V23 is a later debugging branch and is not
+used. Before the new controller was interpreted, all 10,800 legacy rollout rows
+and their summaries were reproduced with zero numeric difference.
+
+The true mask succeeded in 946/2,160 cases and produced valid Cmt in 430/2,160.
+The online transition-persistent selector succeeded in 964/2,160 and produced
+valid Cmt in 480/2,160. The paired selector-minus-mask success-rate difference
+was +0.83 percentage points (95% CI -0.26 to +1.93; exact McNemar p = 0.159).
+On 395 both-valid cases, mean Cmt was 1.30296 for the mask and 0.27827 for the
+selector; the selector was lower in 354/395 cases.
+
+This is a method-level comparator under a shared evaluator, not a strict
+single-factor causal ablation. Scalar reward coefficients and PPO scalar
+hyperparameters match the fixed-sign experts, but reward soft thresholds,
+actor structure, initialization lineage, curriculum branch, and PPO probability
+factorization do not all match. See `docs/TRUE_ACTION_MASK_BASELINE.md`.
+
 ## Quick statistical reproduction
 
 ```bash
@@ -57,6 +81,20 @@ The script verifies the input SHA-256, row count, and pair identifiers before
 computing the paired success table, paired risk-difference intervals, exact
 McNemar test, post-hoc non-inferiority sensitivity analysis, and terminal-reason
 transitions.
+
+Regenerate the true-mask paired analysis and revised four-link figures:
+
+```bash
+python analysis/four_link_true_action_mask_paired_inference.py
+python analysis/plot_figure9_true_action_mask_case.py
+python analysis/plot_figure10_true_action_mask.py
+```
+
+Figure 9 is explicitly a post hoc illustrative case. Its case-selection audit,
+source data, and pixel/physical-font QA record are under
+`results/figures/true_action_mask/`. Figure 10 is generated from the formal
+controller and paired outputs and is supplied as 600-dpi PNG plus editable-text
+PDF and SVG.
 
 To verify the reconstructed legacy evaluator, checkpoints, and portable path
 launcher before a full 2160-case rerun:
@@ -186,7 +224,9 @@ policy/critic loading path and refuse a non-empty output directory so that old
 checkpoints or appended logs cannot be mixed into a new run. This source change
 does not retroactively alter the V1.0.0 checkpoint lineage. `per_step_sign`
 exposes the same 27 physical torque triples as U1 and is an encoding diagnostic,
-not an action-mask baseline. The
+not an action-mask baseline. The new `true_action_mask_scratch` controller is
+the actual per-step hard-mask comparator, but its disclosed training-protocol
+differences prevent a one-factor causal interpretation. The
 online selector is deployable; the oracle one-sided-policy envelope is a
 non-deployable hindsight diagnostic. The confirmatory experiment required for
 a causal persistence claim is specified in `docs/ABLATION_PROTOCOL.md`.

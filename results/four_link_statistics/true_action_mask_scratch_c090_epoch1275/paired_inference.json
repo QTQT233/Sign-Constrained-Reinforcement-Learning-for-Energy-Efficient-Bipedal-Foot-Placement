@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "reference_controller": "true_action_mask_scratch",
+  "comparison_controller": "passive_sign_selector",
+  "success": {
+    "n_pairs": 2160,
+    "neither": 1132,
+    "reference_only": 64,
+    "comparison_only": 82,
+    "both": 882,
+    "reference_rate": 0.43796296296296294,
+    "comparison_rate": 0.4462962962962963,
+    "comparison_minus_reference_risk_difference": 0.008333333333333333,
+    "paired_standard_error": 0.005591128395525698,
+    "paired_ci95": [
+      -0.002625076954836254,
+      0.01929174362150292
+    ],
+    "exact_mcnemar_p_two_sided": 0.15921582224632147
+  },
+  "valid_cmt": {
+    "n_pairs": 2160,
+    "neither": 1645,
+    "reference_only": 35,
+    "comparison_only": 85,
+    "both": 395,
+    "reference_rate": 0.19907407407407407,
+    "comparison_rate": 0.2222222222222222,
+    "comparison_minus_reference_risk_difference": 0.023148148148148147,
+    "paired_standard_error": 0.005046988412284567,
+    "paired_ci95": [
+      0.013256232629679406,
+      0.03304006366661689
+    ],
+    "exact_mcnemar_p_two_sided": 5.732969902850976e-06
+  },
+  "both_valid_cmt": {
+    "n_both_valid": 395,
+    "reference_mean_cmt": 1.3029621667246876,
+    "comparison_mean_cmt": 0.27827288399435546,
+    "mean_comparison_minus_reference_cmt": -1.0246892827303322,
+    "median_comparison_minus_reference_cmt": -0.5727749455497219,
+    "bootstrap_mean_difference_ci95": [
+      -1.2093439589426438,
+      -0.8599756546262654
+    ],
+    "n_positive_reference_cmt_for_ratio": 394,
+    "mean_comparison_over_reference_cmt": 0.30123164218379667,
+    "comparison_lower_count": 354,
+    "reference_lower_count": 27,
+    "tie_count": 14,
+    "fraction_comparison_lower_cmt": 0.8962025316455696,
+    "exact_sign_test_p_two_sided": 7.60537920555355e-74
+  },
+  "input_sha256": {
+    "selector_vs_true_action_mask_trials.csv": "2918358b770a01a25e6961c1e71c2f534e59082ee2c2c68a98e92f0c3d5421bc",
+    "selector_vs_true_action_mask_summary.csv": "15c920aeb0db2dec081f4ae409601b46c6d2b0e9b693e8fc2db265b28b4f50b0",
+    "controller_summary.csv": "50c9b853c7875bb350d3415ac63eb6b2fa730026aff99172fd2e9b3826eaf813"
+  },
+  "inference_boundary": "Evaluation cases are paired. This single retained scratch-trained checkpoint does not estimate variability across independent training seeds."
+}
