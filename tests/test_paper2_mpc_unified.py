@@ -74,7 +74,7 @@ class UnifiedMPCReleaseTests(unittest.TestCase):
         self.assertIn("dtheta1_new -= 1", lqr_source)
         self.assertIn("u_ref = actions_arr[:T_steps]", lqr_source)
 
-    def test_accepted_results_and_legacy_boundary(self) -> None:
+    def test_accepted_results_and_current_only_boundary(self) -> None:
         with (RESULT_DIR / "accepted_cases.csv").open(encoding="utf-8", newline="") as handle:
             rows = list(csv.DictReader(handle))
         self.assertEqual(len(rows), 12)
@@ -103,10 +103,9 @@ class UnifiedMPCReleaseTests(unittest.TestCase):
         formal = json.loads((RESULT_DIR / "formal_validation.json").read_text(encoding="utf-8"))
         self.assertTrue(formal["integrity_pass"])
         self.assertEqual(formal["error_count"], 0)
-        legacy = ROOT / "results/legacy/paper2_mpc_pre_unified_20260720.csv"
         current = ROOT / "results/paper2_mpc_current_12_cases.csv"
-        self.assertTrue(legacy.is_file())
-        self.assertNotEqual(sha256(legacy), sha256(current))
+        self.assertTrue(current.is_file())
+        self.assertFalse((ROOT / "results/legacy").exists())
 
     def test_public_release_has_no_machine_local_paths(self) -> None:
         files = [

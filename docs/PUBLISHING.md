@@ -40,6 +40,14 @@ The complete MPC candidate-level record is supplied separately as
 Supplementary Archive S1. Its README and checksum sidecar should identify the
 exact Git commit used for the submission.
 
+The 12-cell action-weight HDF5 record is supplied separately as Supplementary
+Data S2 with its schema, manifest, and checksum sidecar.
+
+The frozen ATC-50 table and portable event-query implementation are supplied
+separately as Supplementary Data S3 with an axis/action schema, manifest, and
+checksum sidecar. S3 does not claim byte-for-byte regeneration of the
+historical table artifact.
+
 ## Merge gate
 
 - all unit and reference-artifact tests pass;
@@ -48,7 +56,14 @@ exact Git commit used for the submission.
 - manuscript-facing tables regenerate without an uncommitted diff;
 - `MANIFEST.csv` and `CHECKSUMS.sha256` are current;
 - repository code and author-owned data are licensed under Apache-2.0;
-- no private paths, credentials, cache files, or bracketed DOI placeholders are
-  present;
+- portable executables and public metadata contain no private paths,
+  credentials, cache files, or bracketed DOI placeholders; original frozen
+  source snapshots are explicitly identified as provenance-only rather than
+  portable entry points;
+- no superseded result tables, manuscript drafts, alternate figure-rendering
+  scripts, or generated figure assets are present on the submission branch;
+- `tools/verify_manifest.py` confirms complete file-set, size, and SHA-256
+  agreement;
 - the manuscript distinguishes the GitHub software commit, hardware Zenodo
-  DOI, and Supplementary Archive S1.
+  DOI, Supplementary Archive S1, Supplementary Data S2, and Supplementary Data
+  S3.

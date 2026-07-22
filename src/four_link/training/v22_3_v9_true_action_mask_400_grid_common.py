@@ -26,6 +26,19 @@ from tqdm import tqdm
 import v22_3_v9_per_step_sign_400_grid as base
 
 
+def _forbid_inherited_checkpoint_loading(*_args, **_kwargs):
+    raise RuntimeError(
+        "The true-action-mask scratch entrypoint forbids inherited checkpoint loading."
+    )
+
+
+# The imported module supplies the V22_3 environment, reward, curriculum, and
+# logging helpers. Its standalone trainer has an optional continuation branch,
+# but this scratch trainer neither calls that trainer nor permits its loader.
+base.load_previous_model = False
+base.load_previous_model_if_requested = _forbid_inherited_checkpoint_loading
+
+
 NEGATIVE_SIGN_INDEX = 0
 POSITIVE_SIGN_INDEX = 1
 SIGN_VALUES = (-1.0, 1.0)
@@ -55,9 +68,8 @@ class TruePerStepActionMaskPolicy(torch.nn.Module):
                 torch.nn.init.orthogonal_(module.weight)
                 torch.nn.init.zeros_(module.bias)
 
-        # Both experiments start with the same unbiased 0.5/0.5 selector.
-        # The action trunk/head still use the original orthogonal initialization
-        # or the legacy checkpoint in the warm-start experiment.
+        # Scratch training starts with an unbiased 0.5/0.5 selector. The trunk
+        # and action head use the orthogonal initialization above.
         torch.nn.init.zeros_(self.sign_head.weight)
         torch.nn.init.zeros_(self.sign_head.bias)
 
@@ -136,169 +148,25 @@ def build_critic():
     return critic
 
 
-def _extract_state_dict(checkpoint):
-    if not isinstance(checkpoint, dict):
-        raise TypeError("Checkpoint must contain a state_dict-like mapping.")
-    for key in ("state_dict", "policy_state_dict", "model_state_dict"):
-        value = checkpoint.get(key)
-        if isinstance(value, dict):
-            checkpoint = value
-            break
-    return {
-        (key[7:] if key.startswith("module.") else key): value
-        for key, value in checkpoint.items()
-        if torch.is_tensor(value)
-    }
-
-
-def _compatible_tensor(target, source):
-    source = source.to(device=target.device, dtype=target.dtype)
-    if target.shape == source.shape:
-        return source, False
-    can_expand_input = (
-        target.ndim == 2
-        and source.ndim == 2
-        and target.shape[0] == source.shape[0]
-        and target.shape[1] == source.shape[1] + 1
-    )
-    if can_expand_input:
-        expanded = target.clone()
-        expanded[:, : source.shape[1]] = source
-        expanded[:, source.shape[1] :] = 0.0
-        return expanded, True
-    return None, False
-
-
-def load_policy_checkpoint(policy, checkpoint_path):
-    """Load either this hierarchical policy or the legacy Sequential policy."""
-    source = _extract_state_dict(torch.load(checkpoint_path, map_location=base.device))
-    target = policy.state_dict()
-    expanded_keys = []
-    skipped_keys = []
-
-    is_hierarchical = any(key.startswith("trunk.") for key in source)
-    if is_hierarchical:
-        key_mapping = {key: key for key in source if key in target}
-    else:
-        # Legacy policy:
-        # 0 = first Linear, 2 = second Linear, 4 = 27-action Linear.
-        key_mapping = {
-            "0.weight": "trunk.0.weight",
-            "0.bias": "trunk.0.bias",
-            "2.weight": "trunk.2.weight",
-            "2.bias": "trunk.2.bias",
-            "4.weight": "action_head.weight",
-            "4.bias": "action_head.bias",
-        }
-
-    loaded_targets = set()
-    for source_key, target_key in key_mapping.items():
-        if source_key not in source or target_key not in target:
-            continue
-        compatible, expanded = _compatible_tensor(target[target_key], source[source_key])
-        if compatible is None:
-            skipped_keys.append(f"{source_key}->{target_key}")
-            continue
-        target[target_key] = compatible
-        loaded_targets.add(target_key)
-        if expanded:
-            expanded_keys.append(target_key)
-
-    required = {"trunk.0.weight", "trunk.2.weight", "action_head.weight"}
-    missing_required = sorted(required - loaded_targets)
-    if missing_required:
-        raise RuntimeError(
-            f"Policy checkpoint is incompatible; missing required mapped keys: {missing_required}"
-        )
-    policy.load_state_dict(target)
-    return expanded_keys, skipped_keys, is_hierarchical
-
-
-def load_critic_checkpoint(critic, checkpoint_path):
-    source = _extract_state_dict(torch.load(checkpoint_path, map_location=base.device))
-    target = critic.state_dict()
-    expanded_keys = []
-    skipped_keys = []
-    loaded_targets = set()
-    for key, source_tensor in source.items():
-        if key not in target:
-            skipped_keys.append(key)
-            continue
-        compatible, expanded = _compatible_tensor(target[key], source_tensor)
-        if compatible is None:
-            skipped_keys.append(key)
-            continue
-        target[key] = compatible
-        loaded_targets.add(key)
-        if expanded:
-            expanded_keys.append(key)
-    required = {"0.weight", "2.weight", "4.weight"}
-    missing_required = sorted(required - loaded_targets)
-    if missing_required:
-        raise RuntimeError(
-            f"Critic checkpoint is incompatible; missing required keys: {missing_required}"
-        )
-    critic.load_state_dict(target)
-    return expanded_keys, skipped_keys
-
-
-def configure_experiment(init_mode, old_policy_path=None, old_critic_path=None):
-    if init_mode not in ("load_old", "scratch"):
-        raise ValueError("init_mode must be 'load_old' or 'scratch'.")
-
+def configure_experiment():
+    """Create a scratch-only experiment and reject mixed output directories."""
+    if base.load_previous_model is not False:
+        raise RuntimeError("Inherited checkpoint loading must remain disabled")
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    if init_mode == "load_old":
-        output_name = "v22_3_v9_true_action_mask_load_old_400_grid"
-        prefix = "V22_3V9TrueActionMaskLoadOld400Grid"
-    else:
-        output_name = "v22_3_v9_true_action_mask_scratch_400_grid"
-        prefix = "V22_3V9TrueActionMaskScratch400Grid"
-
+    output_name = "v22_3_v9_true_action_mask_scratch_400_grid"
+    prefix = "V22_3V9TrueActionMaskScratch400Grid"
     output_dir = os.path.join(script_dir, output_name)
+    if os.path.isdir(output_dir) and os.listdir(output_dir):
+        raise RuntimeError(
+            "Scratch training requires an empty output directory. Move the existing "
+            f"contents before running: {output_dir}"
+        )
     os.makedirs(output_dir, exist_ok=True)
 
     policy = TruePerStepActionMaskPolicy(
         base.state_dim, base.hidden_size, base.ACTIONS
     ).to(base.device)
     critic = build_critic().to(base.device)
-
-    source_kind = "random_initialization"
-    if init_mode == "load_old":
-        if old_policy_path is None:
-            old_policy_path = os.path.join(
-                script_dir,
-                "v22_3_v9_per_step_sign_400_grid",
-                "V22_3V9PerStepSign400Grid_Policy_old.pth",
-            )
-        if old_critic_path is None:
-            old_critic_path = os.path.join(
-                script_dir,
-                "v22_3_v9_per_step_sign_400_grid",
-                "V22_3V9PerStepSign400Grid_Critic_old.pth",
-            )
-        missing = [path for path in (old_policy_path, old_critic_path) if not os.path.isfile(path)]
-        if missing:
-            raise FileNotFoundError(
-                "The load-old experiment must not silently fall back to scratch. "
-                f"Missing checkpoint(s): {missing}"
-            )
-        policy_expanded, policy_skipped, hierarchical = load_policy_checkpoint(
-            policy, old_policy_path
-        )
-        critic_expanded, critic_skipped = load_critic_checkpoint(critic, old_critic_path)
-        source_kind = "hierarchical_checkpoint" if hierarchical else "legacy_sequential_checkpoint"
-        print(f"Loaded policy checkpoint: {old_policy_path}")
-        print(f"Loaded critic checkpoint: {old_critic_path}")
-        if policy_expanded or critic_expanded:
-            print(
-                "Expanded old input layer with one zero-initialized column: "
-                f"policy={policy_expanded}, critic={critic_expanded}"
-            )
-        if policy_skipped or critic_skipped:
-            print(
-                "Skipped non-critical incompatible checkpoint keys: "
-                f"policy={policy_skipped}, critic={critic_skipped}"
-            )
 
     # Reuse the original save/curriculum/logging helpers without changing the
     # source baseline file or overwriting any active/passive checkpoints.
@@ -320,10 +188,7 @@ def configure_experiment(init_mode, old_policy_path=None, old_critic_path=None):
         "critic_optimizer": critic_optimizer,
         "output_dir": output_dir,
         "prefix": prefix,
-        "init_mode": init_mode,
-        "source_kind": source_kind,
-        "old_policy_path": old_policy_path,
-        "old_critic_path": old_critic_path,
+        "source_kind": "random_initialization",
     }
 
 
@@ -518,8 +383,8 @@ def _reason_counts():
     return reason_counts, dict(directional_reason_counts), dict(directional_phase_reason_counts)
 
 
-def train(init_mode, old_policy_path=None, old_critic_path=None):
-    config = configure_experiment(init_mode, old_policy_path, old_critic_path)
+def train():
+    config = configure_experiment()
     policy = config["policy"]
     critic = config["critic"]
     policy_optimizer = config["policy_optimizer"]
@@ -536,7 +401,7 @@ def train(init_mode, old_policy_path=None, old_critic_path=None):
     if valid_counts != [VALID_ACTIONS_PER_SIGN, VALID_ACTIONS_PER_SIGN]:
         raise RuntimeError(f"Unexpected action-mask sizes: {valid_counts}")
 
-    print(f"Training true action-mask experiment: {init_mode}")
+    print("Training true action-mask experiment from random initialization")
     print(f"Output directory: {output_dir}")
     print(
         "Mask protocol: refresh sign every simulation step; "
@@ -547,9 +412,7 @@ def train(init_mode, old_policy_path=None, old_critic_path=None):
         f"action_value_weight={base.action_value_weight}, "
         f"entropy_coefficient={base.policy_entropy_coefficient}."
     )
-    best_success_by_curriculum = (
-        base.load_existing_curriculum_bests() if init_mode == "load_old" else {}
-    )
+    best_success_by_curriculum = {}
 
     for epoch in range(base.episode):
         curriculum_progress = base.update_curriculum(
@@ -609,10 +472,8 @@ def train(init_mode, old_policy_path=None, old_critic_path=None):
                 "script": os.path.basename(sys.argv[0]),
                 "checkpoint_prefix": prefix,
                 "experiment": "true_per_step_action_mask",
-                "initialization": init_mode,
+                "initialization": "scratch",
                 "checkpoint_source_kind": config["source_kind"],
-                "old_policy_checkpoint": config["old_policy_path"],
-                "old_critic_checkpoint": config["old_critic_path"],
                 "selector_refresh": "every_simulation_step",
                 "mask_rule": "hip_sign == 0 or hip_sign == selected_sign",
                 "action_dim_before_mask": int(base.action_dim),

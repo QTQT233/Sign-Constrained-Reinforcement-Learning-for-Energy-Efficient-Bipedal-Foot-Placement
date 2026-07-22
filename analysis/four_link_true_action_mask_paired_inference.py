@@ -1,4 +1,4 @@
-"""Paired evaluation-case inference for the retained true action-mask run.
+"""Paired evaluation-case inference for the fixed true action-mask checkpoint.
 
 This analysis treats the 2,160 shared evaluation cases as paired observations.
 It does not turn one scratch-trained checkpoint into independent training-seed
@@ -219,7 +219,7 @@ def main() -> None:
             controller_path.name: sha256(controller_path),
         },
         "inference_boundary": (
-            "Evaluation cases are paired. This single retained scratch-trained checkpoint "
+            "Evaluation cases are paired. This single scratch-trained checkpoint "
             "does not estimate variability across independent training seeds."
         ),
     }

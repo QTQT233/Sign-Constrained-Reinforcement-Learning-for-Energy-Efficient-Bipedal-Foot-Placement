@@ -1,8 +1,9 @@
 {
   "schema_version": 1,
   "release_id": "true_action_mask_scratch_c090_epoch1275",
-  "evidence_role": "single-retained-run method-level AM-step1 baseline",
-  "evaluation_label": "4DoF_V22_3_3x3_grid_4Nm_legacy_success_true_action_mask_scratch_c090",
+  "evidence_role": "single-fixed-checkpoint method-level AM-step1 baseline",
+  "raw_evaluation_label": "4DoF_V22_3_3x3_grid_4Nm_legacy_success_true_action_mask_scratch_c090",
+  "raw_evaluation_label_note": "legacy_success is the immutable historical label embedded in the released CSVs; this directory is the sole current four-link evidence archive.",
   "v22_3_touchdown_safe_q_low_deg": [
     35.0,
     8.0,
@@ -38,17 +39,21 @@
   },
   "source": {
     "path": "src/four_link/evaluation/paper_four_link_reachability_cmt_v22_3_grid_true_action_mask.py",
-    "sha256": "9ff37c2bde8d5480a4cfffd2387211b4985dea0051d76c09613dabd41ef27a67",
-    "role": "Portable source-aligned evaluator. The retained CSVs were produced with the same rollout body and the listed V22_3 runtime gate before repository-relative path and release-metadata wiring were added; an exact byte-for-byte replay from this public file is not claimed."
+    "sha256": "c13c0c45b092fc43aa75fc091e870a14e4d8b6730cda5b2b8659c21a2d2bb186",
+    "role": "Portable source-aligned evaluator for the current V22_3/V9 archive. The CSVs use the same rollout body and runtime gate; repository-relative path and release-metadata wiring were added afterward."
   },
   "frozen_policy_files": {
-    "models/four_link/paper_four_link_passive_sign_selector_v22_3_grid.pth": "ac09e31f6608960621217e077549e4dc21c38364b858064b3b1ad5d8fe4b4631",
+    "models/four_link/paper_four_link_passive_sign_selector_v22_3_grid.pth": "99fdebbe1ecdccfdfd1d36902ff4dd6936712488065aa0e6cf5c8391b24979e1",
     "models/four_link/v22_3_v9_active_full_400_grid/V22_3V9ActiveFull400Grid_c090_Policy_best.pth": "43016fd53b43705694466739c70f1817c03e55e6596edb0e22380be1e8370d3f",
     "models/four_link/v22_3_v9_bi_400_grid/V22_3V9Bi400Grid_c090_Policy_best.pth": "0ca5581f39f5598ceb9c3283704e532a5efe441beb499a6c361402bf92e4720f",
     "models/four_link/v22_3_v9_per_step_sign_400_grid/V22_3V9PerStepSign400Grid_c091_Policy_258.pth": "655e77cebdffa54b42152fa1a08c8e99653ac162b3cfc45210404067a2782a29",
     "models/four_link/v22_3_v9_true_action_mask_scratch_400_grid/V22_3V9TrueActionMaskScratch400Grid_c090_epoch1275_success250_Policy.pth": "74d26501c32e10892e8766f4980c291f6471aeeed0806225ad878919fc9d0b72",
     "models/four_link/v22_3_v9_uni_neg_400_grid/V22_3V9UniNeg400Grid_c100_Policy_best.pth": "4752c0c4632d5958ee64c7f3004a76e9a7bd7f3204dd914fdb7003bce9a92d7c",
     "models/four_link/v22_3_v9_uni_pos_400_grid/V22_3V9UniPos400Grid_c097_Policy_best.pth": "521962b8a3deea4411dc1b1c801cf9d8fcecfafa51d240f6752c07952ec1926a"
+  },
+  "selector_checkpoint_metadata_normalization": {
+    "model_state_dict_sha256": "c4ae197c050a75011691932f241310ec42b857ab12bdb55bfae5f72c7d4ca200",
+    "statement": "Only three path metadata fields were converted to repository-relative paths; model_state_dict tensor bytes are unchanged."
   },
   "result_csv_sha256": {
     "active_reference_comparison_trials.csv": "50ab2001fc0a1e8caf6b85dceff9ff280c325dae42d14eda50329e0ed2a38b3e",
@@ -75,7 +80,7 @@
     "terminal_reason_summary.csv": "582b2a03557cdd0c95d994f9138312f0204e098664e9ae9473784c77808dfd5d"
   },
   "limitations": [
-    "The action-mask checkpoint is one retained scratch-trained run; its training seed was not fixed.",
+    "The action-mask archive contains one scratch-trained checkpoint; its training seed was not fixed.",
     "The evaluation cases are paired, but they are not independent training replications.",
     "AM-step1 differs from the proposed transition-persistent two-expert controller in architecture and sign-update timing."
   ]

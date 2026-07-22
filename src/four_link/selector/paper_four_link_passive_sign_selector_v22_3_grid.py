@@ -1,7 +1,7 @@
 """Train an online passive hip-sign selector for the V22_3 3x3-grid Cmt evaluator.
 
 The selector is a supervised classifier. It samples initial states from the
-same explicit evaluation domain as paper_four_link_reachability_cmt_v22_3_grid.py, rolls
+same explicit evaluation domain as the released V22_3/V9 evaluator, rolls
 out the positive-only and negative-only passive policies, labels the state with
 the lower-Cmt successful sign, and trains a small network that can be used
 online without trying both signs at evaluation time.
@@ -23,16 +23,36 @@ import torch
 # reset sampler, rollout and Cmt calculation. All experiment settings that affect
 # selector dataset generation are explicitly defined below and then applied to
 # the imported CMT module.
-CMT_SCRIPT_PATH = Path(r"D:\L&S\Mas\Project\Paper1\Knee\Four_link\paper_four_link_reachability_cmt_v22_3_grid.py")
-OUTPUT_SELECTOR_PATH = Path(r"D:\L&S\Mas\Project\Paper1\Knee\Four_link\paper_four_link_passive_sign_selector_v22_3_grid.pth")
-OUTPUT_DATASET_CSV = Path(r"D:\L&S\Mas\Project\Paper1\Knee\Four_link\paper_four_link_passive_sign_selector_v22_3_grid_dataset.csv")
+REPOSITORY_ROOT = Path(__file__).resolve().parents[3]
+CMT_SCRIPT_PATH = (
+    REPOSITORY_ROOT
+    / "src/four_link/evaluation/"
+    "paper_four_link_reachability_cmt_v22_3_grid_true_action_mask.py"
+)
+OUTPUT_SELECTOR_PATH = (
+    REPOSITORY_ROOT
+    / "results/_scratch/selector_training/paper_four_link_passive_sign_selector_v22_3_grid.pth"
+)
+OUTPUT_DATASET_CSV = (
+    REPOSITORY_ROOT
+    / "results/_scratch/selector_training/"
+    "paper_four_link_passive_sign_selector_v22_3_grid_dataset.csv"
+)
 
 # Passive policy files used to generate labels. These override the paths inside
 # CMT_SCRIPT_PATH after it is imported.
 PASSIVE_POS_POLICY_NAME = "v22_3_passive_positive_4Nm_grid"
-PASSIVE_POS_POLICY_PATH = Path(r"D:\L&S\Mas\Project\Paper1\Knee\Four_link\v22_3_v9_uni_pos_400_grid\V22_3V9UniPos400Grid_c097_Policy_best.pth")
+PASSIVE_POS_POLICY_PATH = (
+    REPOSITORY_ROOT
+    / "models/four_link/v22_3_v9_uni_pos_400_grid/"
+    "V22_3V9UniPos400Grid_c097_Policy_best.pth"
+)
 PASSIVE_NEG_POLICY_NAME = "v22_3_passive_negative_4Nm_grid"
-PASSIVE_NEG_POLICY_PATH = Path(r"D:\L&S\Mas\Project\Paper1\Knee\Four_link\v22_3_v9_uni_neg_400_grid\V22_3V9UniNeg400Grid_c100_Policy_best.pth")
+PASSIVE_NEG_POLICY_PATH = (
+    REPOSITORY_ROOT
+    / "models/four_link/v22_3_v9_uni_neg_400_grid/"
+    "V22_3V9UniNeg400Grid_c100_Policy_best.pth"
+)
 
 # Actuator/action-table settings. These must match the passive policies above.
 HIP_TORQUE_NM = 4.0
@@ -73,6 +93,9 @@ WEIGHT_DECAY = 1e-4
 
 
 def load_cmt_module():
+    for required in (CMT_SCRIPT_PATH, PASSIVE_POS_POLICY_PATH, PASSIVE_NEG_POLICY_PATH):
+        if not required.is_file():
+            raise FileNotFoundError(f"Required released artifact not found: {required}")
     spec = importlib.util.spec_from_file_location("paper_cmt", CMT_SCRIPT_PATH)
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
@@ -140,6 +163,7 @@ def label_from_results(pos_result, neg_result):
 
 
 def write_csv(path, rows):
+    path.parent.mkdir(parents=True, exist_ok=True)
     if not rows:
         path.write_text("", encoding="utf-8")
         return
@@ -343,9 +367,9 @@ def train_selector(cmt, features, labels, split_names):
         "validation_positive_labels": int(np.sum(labels[val_idx] == 0)),
         "validation_negative_labels": int(np.sum(labels[val_idx] == 1)),
         "validation_accuracy": float(best_val_acc),
-        "cmt_script_path": str(CMT_SCRIPT_PATH),
-        "passive_pos_policy_path": str(PASSIVE_POS_POLICY_PATH),
-        "passive_neg_policy_path": str(PASSIVE_NEG_POLICY_PATH),
+        "cmt_script_path": CMT_SCRIPT_PATH.relative_to(REPOSITORY_ROOT).as_posix(),
+        "passive_pos_policy_path": PASSIVE_POS_POLICY_PATH.relative_to(REPOSITORY_ROOT).as_posix(),
+        "passive_neg_policy_path": PASSIVE_NEG_POLICY_PATH.relative_to(REPOSITORY_ROOT).as_posix(),
         "hip_torque_nm": float(HIP_TORQUE_NM),
         "knee_torque_nm": float(KNEE_TORQUE_NM),
         "max_steps": int(MAX_STEPS),
