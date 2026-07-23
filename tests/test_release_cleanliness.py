@@ -60,7 +60,13 @@ class ReleaseCleanlinessTests(unittest.TestCase):
 
     def test_public_text_has_no_retired_release_pins(self) -> None:
         targets = [ROOT / "README.md", *sorted((ROOT / "docs").glob("*.md"))]
-        forbidden = ("21406793", "21406792", "77f2f7d69df183344ab06ae55e924bd071646393")
+        forbidden = (
+            "21406793",
+            "21406792",
+            "77f2f7d69df183344ab06ae55e924bd071646393",
+            "straight-knee-permissive",
+            "unchanged author-owned",
+        )
         for path in targets:
             text = path.read_text(encoding="utf-8")
             for token in forbidden:

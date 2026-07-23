@@ -32,11 +32,11 @@ branch and preserved in the authors' offline `Paper_store/Past` archive.
 - `docs/`: protocol, metric, provenance, availability, and submission records.
 
 The repository does not publish manuscript figure-rendering scripts or image
-assets. They are not required by the Robotics and Autonomous Systems submission
-format, and earlier public plot variants did not match the final manuscript
-layout. All numerical values plotted in the manuscript remain traceable to the
-current CSV and JSON records above; the complete final plotting source is held
-in the authors' offline `Paper_store/New` submission backup.
+assets because they are not part of the numerical reproducibility record. All
+numerical values plotted in the manuscript remain traceable to the current CSV
+and JSON records above. The plotting sources and submitted image assets are
+preserved in the authors' offline `Paper_store/New` submission backup, while
+earlier figure candidates are preserved under `Paper_store/Past`.
 
 ## Environment
 
@@ -152,7 +152,7 @@ interchangeable.
   manifests, checksums, and validators. Cite the exact `main` commit used for
   submission.
 - Zenodo DOI [10.5281/zenodo.21407986](https://doi.org/10.5281/zenodo.21407986):
-  unchanged author-owned hardware evidence and supplementary videos only.
+  hardware evidence and supplementary videos.
 - Supplementary Archive S1: complete MPC candidate-level evidence.
 - Supplementary Data S2: 12-cell action-weight HDF5 package and schema.
 - Supplementary Data S3: frozen ATC-50 lookup table, schema, portable event-
