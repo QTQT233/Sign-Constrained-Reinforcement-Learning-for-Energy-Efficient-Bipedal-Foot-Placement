@@ -20,9 +20,9 @@ controller means used in the primary comparison are:
 | Continuous-torque PPO | 0.240916227851 |
 | Continuous-torque MPC | 0.198945098769 |
 
-The source-aligned `raised_L1145_r1` values are 0.267040040566968 for discrete
-active PPO and 0.2780932427752225 for continuous-torque PPO. The current primary
-CSV and Table V builder both use these values.
+The rerun `raised_L1145_r1` values are 0.267040040566968 for discrete active PPO
+and 0.2780932427752225 for continuous-torque PPO. The current primary CSV and
+Table V builder both use these values.
 
 ## Initial-state and reset map
 
