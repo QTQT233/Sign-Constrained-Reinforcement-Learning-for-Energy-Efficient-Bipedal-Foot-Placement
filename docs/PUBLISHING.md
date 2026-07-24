@@ -29,12 +29,14 @@ public commit on `main` is the authoritative software version pin.
 
 ## Zenodo boundary
 
-The unchanged hardware evidence is archived separately at
-<https://doi.org/10.5281/zenodo.21407986>. The DOI must not be represented as
-containing the corrected software or unified MPC result. Because the hardware
-payload is unchanged, this code merge does not require a new Zenodo version.
-Create a new Zenodo version only when deposited hardware files or their
-metadata/checksums change.
+Zenodo version 1.0.0 at <https://doi.org/10.5281/zenodo.21407986> is a
+dataset/model archive containing action-weight arrays, routing lookups,
+two-link records, legacy four-link records, released checkpoints, manifests,
+checksums, and hardware-feasibility videos. It does not contain the corrected
+unified MPC candidate-level record or the current true-hard-mask evaluation.
+This code merge does not require a new Zenodo version because it does not alter
+the deposited payload. Create a new Zenodo version only when deposited files or
+their metadata/checksums change.
 
 The complete MPC candidate-level record is supplied separately as
 Supplementary Archive S1. Its README and checksum sidecar should identify the
@@ -55,7 +57,8 @@ historical table artifact.
   agreement;
 - manuscript-facing tables regenerate without an uncommitted diff;
 - `MANIFEST.csv` and `CHECKSUMS.sha256` are current;
-- repository code and author-owned data are licensed under Apache-2.0;
+- repository code and author-owned data are licensed under the Apache License
+  2.0;
 - portable executables and public metadata contain no private paths,
   credentials, cache files, or bracketed DOI placeholders; original frozen
   source snapshots are explicitly identified as provenance-only rather than
@@ -64,6 +67,6 @@ historical table artifact.
   scripts, or generated figure assets are present on the submission branch;
 - `tools/verify_manifest.py` confirms complete file-set, size, and SHA-256
   agreement;
-- the manuscript distinguishes the GitHub software commit, hardware Zenodo
-  DOI, Supplementary Archive S1, Supplementary Data S2, and Supplementary Data
-  S3.
+- the manuscript distinguishes the GitHub software commit, Zenodo dataset DOI
+  and version, Supplementary Archive S1, Supplementary Data S2, and
+  Supplementary Data S3.

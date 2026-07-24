@@ -8,7 +8,7 @@ For this release, “research data” means the author-generated files under
 `data/` and `results/`, processed manuscript tables, statistical-analysis
 outputs, manifests, and checksums. The author-owned supplementary hardware
 videos `Flat_walking.mp4` and `Ueven_foot_placement.mp4` are distributed in the
-separate hardware-data record and are covered by the same license.
+Zenodo version 1.0.0 dataset/model record and are covered by the same license.
 
 This license does not override rights in third-party software, publications,
 fonts, or other materials carrying their own notices. Users remain responsible

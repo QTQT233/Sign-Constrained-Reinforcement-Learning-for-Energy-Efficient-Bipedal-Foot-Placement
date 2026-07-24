@@ -2,19 +2,20 @@
 
 ## Data and code availability
 
-The hardware evidence and supplementary videos are available from Zenodo at
-<https://doi.org/10.5281/zenodo.21407986>. The source code, released model
-checkpoints, two-link case-level outputs, fixed V22_3/V9 four-link trial-level
-records, paired analyses, manifests, and checksums supporting the reported
-simulation results are available from the GitHub repository at the exact commit
-cited in the manuscript. Exhaustive MPC candidate tables, solver traces,
+Zenodo version 1.0.0 at <https://doi.org/10.5281/zenodo.21407986> contains the
+12-cell action-weight HDF5 archive, the ATC-50 and coarse routing lookups,
+two-link case-level records, legacy four-link trial-level records, model
+checkpoints, manifests, checksums, and two supplementary hardware-feasibility
+videos. The current executable code, corrected analyses, and fixed V22_3/V9
+true-hard-mask comparison are available from the GitHub repository at the exact
+commit cited in the manuscript. Exhaustive MPC candidate tables, solver traces,
 validation records, and two deterministic replay records are provided as
-Supplementary Archive S1. The 12-cell action-weight HDF5 archive and its schema,
-manifest, and checksums are provided as Supplementary Data S2. The ATC-50
-lookup table, schema, portable event-query implementation, and checksums are
-provided as Supplementary Data S3; no byte-for-byte table-regeneration claim is
-made. Author-generated software and data are licensed under Apache-2.0;
-third-party components remain subject to their original terms.
+Supplementary Archive S1. The action-weight archive is designated
+Supplementary Data S2, and the ATC-50 table, schema, portable event-query
+implementation, and checksums are designated Supplementary Data S3; no
+byte-for-byte table-regeneration claim is made. Author-generated software and
+released data are licensed under the Apache License 2.0; third-party components
+remain subject to their original terms.
 
 ## Repository scope
 

@@ -71,6 +71,42 @@ def paired_binary(active: list[bool], selector: list[bool]) -> dict:
     }
 
 
+def displacement_sensitivity(rows: list[dict[str, str]], thresholds: list[float]) -> list[dict]:
+    """Summarize matched valid-Cmt pairs after a common displacement threshold."""
+    summaries = []
+    for threshold in thresholds:
+        eligible = [
+            row
+            for row in rows
+            if as_bool(row["active_valid"])
+            and as_bool(row["passive_valid"])
+            and float(row["active_displacement_m"]) > threshold
+            and float(row["passive_displacement_m"]) > threshold
+            and math.isfinite(float(row["active_cmt"]))
+            and math.isfinite(float(row["passive_cmt"]))
+        ]
+        active_cmt = [float(row["active_cmt"]) for row in eligible]
+        selector_cmt = [float(row["passive_cmt"]) for row in eligible]
+        selector_lower = sum(s < a for a, s in zip(active_cmt, selector_cmt))
+        active_lower = sum(a < s for a, s in zip(active_cmt, selector_cmt))
+        ties = len(eligible) - selector_lower - active_lower
+        summaries.append({
+            "minimum_signed_displacement_m": threshold,
+            "n_both_valid": len(eligible),
+            "active_mean_cmt": sum(active_cmt) / len(active_cmt) if active_cmt else math.nan,
+            "selector_mean_cmt": sum(selector_cmt) / len(selector_cmt) if selector_cmt else math.nan,
+            "mean_active_minus_selector_cmt": (
+                sum(a - s for a, s in zip(active_cmt, selector_cmt)) / len(eligible)
+                if eligible else math.nan
+            ),
+            "selector_lower_count": selector_lower,
+            "active_lower_count": active_lower,
+            "tie_count": ties,
+            "selector_lower_fraction": selector_lower / len(eligible) if eligible else math.nan,
+        })
+    return summaries
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--paired", required=True, type=Path)
@@ -79,6 +115,11 @@ def main() -> None:
     parser.add_argument("--controller", default="passive_sign_selector")
     parser.add_argument("--margins", default="0.02,0.03,0.05",
                         help="Absolute candidate margins; sensitivity analysis only unless prespecified")
+    parser.add_argument(
+        "--displacement-thresholds",
+        default="0.001,0.005,0.010,0.020",
+        help="Common signed COM-displacement thresholds for the matched-Cmt sensitivity table",
+    )
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=True)
 
@@ -103,6 +144,10 @@ def main() -> None:
     )
 
     margins = [float(item) for item in args.margins.split(",") if item.strip()]
+    displacement_thresholds = [
+        float(item) for item in args.displacement_thresholds.split(",") if item.strip()
+    ]
+    displacement_results = displacement_sensitivity(rows, displacement_thresholds)
     ni = []
     for margin in margins:
         ni.append({
@@ -126,7 +171,7 @@ def main() -> None:
         with args.terminal.open(newline="", encoding="utf-8-sig") as handle:
             terminal_rows = list(csv.DictReader(handle))
         terminal_meta = {
-            "path": str(args.terminal),
+            "path": args.terminal.as_posix(),
             "sha256": sha256(args.terminal),
             "rows": len(terminal_rows),
         }
@@ -135,7 +180,7 @@ def main() -> None:
         "scope": "one fixed checkpoint per controller on a shared evaluation-case distribution",
         "not_supported": "algorithm-level equivalence or robustness across independent training seeds",
         "paired_input": {
-            "path": str(args.paired),
+            "path": args.paired.as_posix(),
             "sha256": sha256(args.paired),
             "all_rows": len(all_rows),
             "selected_rows": len(rows),
@@ -144,6 +189,7 @@ def main() -> None:
         "terminal_summary_input": terminal_meta,
         "success": success,
         "validity": validity,
+        "displacement_threshold_sensitivity": displacement_results,
         "noninferiority_sensitivity": ni,
         "interpretation": [
             "A non-significant McNemar test does not prove equivalence.",
@@ -160,6 +206,13 @@ def main() -> None:
                          success["both_success"] + success["active_only"]])
         writer.writerow(["failure", success["selector_only"], success["both_failure"],
                          success["selector_only"] + success["both_failure"]])
+
+    with (args.output / "displacement_threshold_sensitivity.csv").open(
+        "w", newline="", encoding="utf-8"
+    ) as handle:
+        writer = csv.DictWriter(handle, fieldnames=list(displacement_results[0]))
+        writer.writeheader()
+        writer.writerows(displacement_results)
 
     print(json.dumps(result, indent=2))
 

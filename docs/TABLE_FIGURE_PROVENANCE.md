@@ -9,6 +9,7 @@
 | Table V | `results/two_link_primary_12_cases.csv`; `results/paper2_current/`; `analysis/reproduce_paper2_tables.py` | 12 matched case/checkpoint outputs and four condition means |
 | Table VI | `data/four_link/true_action_mask_scratch_c090_epoch1275/controller_summary.csv` | five principal fixed-checkpoint controller rows |
 | Table VII | current paired CSVs and `analysis/four_link_true_action_mask_paired_inference.py` | conditional both-valid comparisons under the shared V22_3/V9 evaluator |
+| Table VIII | `data/four_link/true_action_mask_scratch_c090_epoch1275/paired_trials.csv`; `analysis/four_link_paired_inference.py`; `results/four_link_statistics/active_vs_selector/displacement_threshold_sensitivity.csv` | active-versus-selector matched-Cmt sensitivity at common signed-displacement thresholds |
 | Appendix A | `results/paper2_current/paper2_combined_cases.csv`; accepted MPC records | case-level and descriptive two-link values |
 | Appendix B | `data/four_link/true_action_mask_scratch_c090_epoch1275/`; current statistical outputs | controller, command-grid, terminal-reason, and training-log diagnostics |
 
@@ -21,10 +22,9 @@ or image assets. Figure-level numerical values remain traceable as follows:
 - Figures 5–6: the two-link controller implementations and illustrated rollout
   definitions in the manuscript;
 - Figures 7–8: the separate hardware evidence record;
-- Figure 9: the formal shared-evaluator record with seed `20260719`, episode
-  `1155`, direction `-1`, touchdown reset, 0.30 m command length, and 0.01 m
-  command height, selected from the archived 2,160-case comparison for
-  qualitative visualization;
+- Figure 9: qualitative rollout visualization; its plotting source and selected
+  case inputs are retained in the offline submission backup and are not
+  represented as a public population-level result;
 - Figure 10: the current controller summary and paired four-link analysis.
 
 The submitted drawing code and source images are stored in the authors'

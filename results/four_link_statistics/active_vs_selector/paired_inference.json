@@ -1,0 +1,129 @@
+{
+  "scope": "one fixed checkpoint per controller on a shared evaluation-case distribution",
+  "not_supported": "algorithm-level equivalence or robustness across independent training seeds",
+  "paired_input": {
+    "path": "data/four_link/true_action_mask_scratch_c090_epoch1275/paired_trials.csv",
+    "sha256": "cab0475943a31109c386910f815e1a361fc68594c3ff1b61c872a51356db1f4d",
+    "all_rows": 4320,
+    "selected_rows": 2160,
+    "unique_pair_keys": 2160
+  },
+  "terminal_summary_input": {
+    "path": "data/four_link/true_action_mask_scratch_c090_epoch1275/terminal_reason_summary.csv",
+    "sha256": "582b2a03557cdd0c95d994f9138312f0204e098664e9ae9473784c77808dfd5d",
+    "rows": 112
+  },
+  "success": {
+    "n": 2160,
+    "both_success": 906,
+    "active_only": 69,
+    "selector_only": 58,
+    "both_failure": 1127,
+    "active_rate": 0.4513888888888889,
+    "selector_rate": 0.4462962962962963,
+    "difference_selector_minus_active": -0.005092592592592593,
+    "paired_standard_error": 0.00521617684055441,
+    "paired_ci95": [
+      -0.015316111337071165,
+      0.005130926151885979
+    ],
+    "paired_ci90": [
+      -0.013672439987598786,
+      0.0034872548024135995
+    ],
+    "one_sided_95_lower": -0.013672439987598786,
+    "exact_mcnemar_two_sided_p": 0.3749570506813295
+  },
+  "validity": {
+    "n": 2160,
+    "both_success": 419,
+    "active_only": 39,
+    "selector_only": 61,
+    "both_failure": 1641,
+    "active_rate": 0.21203703703703702,
+    "selector_rate": 0.2222222222222222,
+    "difference_selector_minus_active": 0.010185185185185186,
+    "paired_standard_error": 0.004624439820882402,
+    "paired_ci95": [
+      0.0011214496875828189,
+      0.01924892068278755
+    ],
+    "paired_ci90": [
+      0.0025786585731879504,
+      0.017791711797182422
+    ],
+    "one_sided_95_lower": 0.0025786585731879504,
+    "exact_mcnemar_two_sided_p": 0.03520020021770481
+  },
+  "displacement_threshold_sensitivity": [
+    {
+      "minimum_signed_displacement_m": 0.001,
+      "n_both_valid": 419,
+      "active_mean_cmt": 1.4168741658723614,
+      "selector_mean_cmt": 0.3706641632090417,
+      "mean_active_minus_selector_cmt": 1.0462100026633196,
+      "selector_lower_count": 334,
+      "active_lower_count": 58,
+      "tie_count": 27,
+      "selector_lower_fraction": 0.7971360381861575
+    },
+    {
+      "minimum_signed_displacement_m": 0.005,
+      "n_both_valid": 313,
+      "active_mean_cmt": 0.925395121236495,
+      "selector_mean_cmt": 0.2972669279293779,
+      "mean_active_minus_selector_cmt": 0.6281281933071171,
+      "selector_lower_count": 255,
+      "active_lower_count": 42,
+      "tie_count": 16,
+      "selector_lower_fraction": 0.8146964856230032
+    },
+    {
+      "minimum_signed_displacement_m": 0.01,
+      "n_both_valid": 192,
+      "active_mean_cmt": 0.9242324868139181,
+      "selector_mean_cmt": 0.3473463573992542,
+      "mean_active_minus_selector_cmt": 0.5768861294146639,
+      "selector_lower_count": 160,
+      "active_lower_count": 23,
+      "tie_count": 9,
+      "selector_lower_fraction": 0.8333333333333334
+    },
+    {
+      "minimum_signed_displacement_m": 0.02,
+      "n_both_valid": 70,
+      "active_mean_cmt": 1.0500682472698373,
+      "selector_mean_cmt": 0.3923736635825633,
+      "mean_active_minus_selector_cmt": 0.657694583687274,
+      "selector_lower_count": 64,
+      "active_lower_count": 5,
+      "tie_count": 1,
+      "selector_lower_fraction": 0.9142857142857143
+    }
+  ],
+  "noninferiority_sensitivity": [
+    {
+      "candidate_absolute_margin": 0.02,
+      "one_sided_95_lower": -0.013672439987598786,
+      "passes_if_margin_had_been_prespecified": true,
+      "status": "post_hoc_sensitivity_not_confirmatory"
+    },
+    {
+      "candidate_absolute_margin": 0.03,
+      "one_sided_95_lower": -0.013672439987598786,
+      "passes_if_margin_had_been_prespecified": true,
+      "status": "post_hoc_sensitivity_not_confirmatory"
+    },
+    {
+      "candidate_absolute_margin": 0.05,
+      "one_sided_95_lower": -0.013672439987598786,
+      "passes_if_margin_had_been_prespecified": true,
+      "status": "post_hoc_sensitivity_not_confirmatory"
+    }
+  ],
+  "interpretation": [
+    "A non-significant McNemar test does not prove equivalence.",
+    "A non-inferiority claim requires an engineering margin fixed before examining the confirmatory data.",
+    "Marginal terminal-reason counts cannot replace the paired binary success analysis."
+  ]
+}

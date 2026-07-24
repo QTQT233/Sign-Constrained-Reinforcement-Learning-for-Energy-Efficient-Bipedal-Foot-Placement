@@ -18,5 +18,5 @@
     "scientific_fields_exact": true,
     "verified_cases": 12
   },
-  "full_report_boundary": "The exhaustive candidate-, trace-, and freshness-level validation report and raw outputs are retained in Supplementary Archive S1; this GitHub record contains the corrected executable sources, accepted results, and path-free validation digest. The separate Zenodo DOI is limited to unchanged hardware evidence."
+  "full_report_boundary": "The exhaustive candidate-, trace-, and freshness-level validation report and raw outputs are provided in Supplementary Archive S1; this GitHub record contains the corrected executable sources, accepted results, and path-free validation digest. Zenodo dataset version 1.0.0 contains data, models, lookup tables, and hardware videos but not this exhaustive MPC candidate-level record."
 }
