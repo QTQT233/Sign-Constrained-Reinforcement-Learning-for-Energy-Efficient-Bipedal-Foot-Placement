@@ -1,0 +1,297 @@
+{
+  "candidate_records": 518400,
+  "description": "Complete candidate-level records and fixed-parameter replay outputs for 12 two-link cases and three learned controllers.",
+  "files": [
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/flat_L1145_r1/continuous_torque_ppo.csv",
+      "candidate_sha256": "30db06eba352bd528088f9607ce5c60dffd4bdd2d39dbd09e61d9dcb08dcd48e",
+      "case_id": "flat_L1145_r1",
+      "controller": "Continuous-torque PPO",
+      "entrypoint": "src/paper2/entrypoints/flat_1.145_r1/Multi_continuous.py",
+      "entrypoint_sha256": "d692f43b0a0c484cbab757da47461e7419f9fd32c516c29480fe63743ffea0bb"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/flat_L1145_r1/discrete_active_ppo.csv",
+      "candidate_sha256": "c2528cb907c22a4ec14e04152cca40c4ce366fcba1642a003762e44e819e37e8",
+      "case_id": "flat_L1145_r1",
+      "controller": "Discrete active PPO",
+      "entrypoint": "src/paper2/entrypoints/flat_1.145_r1/Qi_multi_ac_discrete_sim.py",
+      "entrypoint_sha256": "e8cc0d03e2881b26512a847e788bba4e70344cd9498077164035b33e6942169a"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/flat_L1145_r1/proposed_selector.csv",
+      "candidate_sha256": "69fa9ff1c3dcef18a7e1e601bec25088346ae1a0dc88f146b22f9b2c5d0bcaf9",
+      "case_id": "flat_L1145_r1",
+      "controller": "Proposed one-sided selector",
+      "entrypoint": "src/paper2/entrypoints/flat_1.145_r1/Qi_multi_passive_sim.py",
+      "entrypoint_sha256": "85a0baf36c8ce80719cc1c19650e733130fa1a5d75dc011aa49dce9ec6238c99"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/flat_L1145_r2/continuous_torque_ppo.csv",
+      "candidate_sha256": "af78fef42f32557f89ac340cf6b6f2ddf8ccbbea9a0729fe65bae158604de8ee",
+      "case_id": "flat_L1145_r2",
+      "controller": "Continuous-torque PPO",
+      "entrypoint": "src/paper2/entrypoints/flat_1.145_r2/Multi_continuous.py",
+      "entrypoint_sha256": "4e8c42b087599b14e30464a92bf011269b6b58c2a56107b7311157a0746fd1b3"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/flat_L1145_r2/discrete_active_ppo.csv",
+      "candidate_sha256": "ad63eaa955d53a80cba34215017010456dd9110e6268674430ff059a8d014e4c",
+      "case_id": "flat_L1145_r2",
+      "controller": "Discrete active PPO",
+      "entrypoint": "src/paper2/entrypoints/flat_1.145_r2/Qi_multi_ac_discrete_sim.py",
+      "entrypoint_sha256": "a6c571e6df0b6a0b68cda689afe0af92dfeef206c8cf48305adc3c4748be2d8c"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/flat_L1145_r2/proposed_selector.csv",
+      "candidate_sha256": "c9a84be45a68918348bcebab2ef200e98bcc8c7cb6904e8134f780e955a7dbef",
+      "case_id": "flat_L1145_r2",
+      "controller": "Proposed one-sided selector",
+      "entrypoint": "src/paper2/entrypoints/flat_1.145_r2/Qi_multi_passive_sim.py",
+      "entrypoint_sha256": "37feb8b23efc2b6f0cafb08ef99ad243fd0423342a33baed4cc1c56f85aba244"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/flat_L1145_r3/continuous_torque_ppo.csv",
+      "candidate_sha256": "b439a454c45911f709bf690ca67eb1cb86594eac8fe23685f9618a01044fa4fa",
+      "case_id": "flat_L1145_r3",
+      "controller": "Continuous-torque PPO",
+      "entrypoint": "src/paper2/entrypoints/flat_1.145_r3/Multi_continuous.py",
+      "entrypoint_sha256": "48f6f7142bcd3b79105bac7d10b6ff97275e460ea0657c837966bf99072eeb2b"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/flat_L1145_r3/discrete_active_ppo.csv",
+      "candidate_sha256": "b4f66da40d4352b267135c0508bc581b13abfb55ee8809014e2fcfacb0420714",
+      "case_id": "flat_L1145_r3",
+      "controller": "Discrete active PPO",
+      "entrypoint": "src/paper2/entrypoints/flat_1.145_r3/Qi_multi_ac_discrete_sim.py",
+      "entrypoint_sha256": "db281ced7b10635f206075928ae147e2b6d2d6a5b136d31ff75a85fe94cd861c"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/flat_L1145_r3/proposed_selector.csv",
+      "candidate_sha256": "9dd2efca63ff4a11fb9453aeaf5c09aa894e04fd4823a3954d108f6be5999c6c",
+      "case_id": "flat_L1145_r3",
+      "controller": "Proposed one-sided selector",
+      "entrypoint": "src/paper2/entrypoints/flat_1.145_r3/Qi_multi_passive_sim.py",
+      "entrypoint_sha256": "368a3f5686d15500a457d771954a50a56e084b90dcadd9b671e8736ab37198e4"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/flat_L1280_r1/continuous_torque_ppo.csv",
+      "candidate_sha256": "b1fa1c34f312ef300f1afb2deded91d4237002a2f737f07f2b80cb838e06378c",
+      "case_id": "flat_L1280_r1",
+      "controller": "Continuous-torque PPO",
+      "entrypoint": "src/paper2/entrypoints/flat_1.28_r1/Multi_continuous.py",
+      "entrypoint_sha256": "84433eabdeca13947e3d86ba5f680a01ce9bdf29e53a737a4789390ee436c8f5"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/flat_L1280_r1/discrete_active_ppo.csv",
+      "candidate_sha256": "5bd47983d9fdc0c490d968ded4ed7e0f966e428bc9431fb306066bee9841461b",
+      "case_id": "flat_L1280_r1",
+      "controller": "Discrete active PPO",
+      "entrypoint": "src/paper2/entrypoints/flat_1.28_r1/Qi_multi_ac_discrete_sim.py",
+      "entrypoint_sha256": "2329016e659f9012977827c5f63384010147451c2d2b35da4778783bebaec1da"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/flat_L1280_r1/proposed_selector.csv",
+      "candidate_sha256": "e9df5b52bf0bf6d7d0d47ef99519254dcf658a6b273c7ed7915fef03d32d2f7b",
+      "case_id": "flat_L1280_r1",
+      "controller": "Proposed one-sided selector",
+      "entrypoint": "src/paper2/entrypoints/flat_1.28_r1/Qi_multi_passive_sim.py",
+      "entrypoint_sha256": "4d8d4c938db926963bd52607533cb93142dcc6321ac510c7cb3ef9aea82ea169"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/flat_L1280_r2/continuous_torque_ppo.csv",
+      "candidate_sha256": "a9d8cada4f1aa2213ddaa5b2bdaeeceb6c389acd395836e49aee9e66caa93718",
+      "case_id": "flat_L1280_r2",
+      "controller": "Continuous-torque PPO",
+      "entrypoint": "src/paper2/entrypoints/flat_1.28_r2/Multi_continuous.py",
+      "entrypoint_sha256": "44021ec34cde764f8bc8f7e7724111100bac8fb301d98a03d3947d36749bc62a"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/flat_L1280_r2/discrete_active_ppo.csv",
+      "candidate_sha256": "6fd170d368d529620259c0a6ffc7f3d60a3cca23c41f273d0bccfd8578933ad9",
+      "case_id": "flat_L1280_r2",
+      "controller": "Discrete active PPO",
+      "entrypoint": "src/paper2/entrypoints/flat_1.28_r2/Qi_multi_ac_discrete_sim.py",
+      "entrypoint_sha256": "d8cf73014b7fb4f60426bc6d71890c67f3fb268c1f650072d6b9e4173dd85005"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/flat_L1280_r2/proposed_selector.csv",
+      "candidate_sha256": "87bc822307434d2e1c86f55f692a220c77e949e5847904db2b3aedf3178ab672",
+      "case_id": "flat_L1280_r2",
+      "controller": "Proposed one-sided selector",
+      "entrypoint": "src/paper2/entrypoints/flat_1.28_r2/Qi_multi_passive_sim.py",
+      "entrypoint_sha256": "13e7b05eea26a7f32959cc12daa1d7b59cf5d7d2a1efd1ac708ec3e0ba46c867"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/flat_L1280_r3/continuous_torque_ppo.csv",
+      "candidate_sha256": "30032306dd678209f41883968ab56a0cd5da979288aaa75b811d8e84ba0d1af6",
+      "case_id": "flat_L1280_r3",
+      "controller": "Continuous-torque PPO",
+      "entrypoint": "src/paper2/entrypoints/flat_1.28_r3/Multi_continuous.py",
+      "entrypoint_sha256": "e9ec2aee2ef50488dea7d2b9bf75f257b82d8bd9e333da3a68772e0d96552879"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/flat_L1280_r3/discrete_active_ppo.csv",
+      "candidate_sha256": "7e41d9f800c635b3e488a3973f14b447375c924987c641285973f63c87bf1d98",
+      "case_id": "flat_L1280_r3",
+      "controller": "Discrete active PPO",
+      "entrypoint": "src/paper2/entrypoints/flat_1.28_r3/Qi_multi_ac_discrete_sim.py",
+      "entrypoint_sha256": "6cc1f44da5c00d107b97439835a1e9d7c052c6f1b097c714cdf1aad54a5b8b94"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/flat_L1280_r3/proposed_selector.csv",
+      "candidate_sha256": "a54bcd7a701d267da57dcf086182cde2bb53e4dfcc0c14fa36d41c596d21b673",
+      "case_id": "flat_L1280_r3",
+      "controller": "Proposed one-sided selector",
+      "entrypoint": "src/paper2/entrypoints/flat_1.28_r3/Qi_multi_passive_sim.py",
+      "entrypoint_sha256": "a653c5a2836520b6cc8b88f254c9abba908d782306f511edc8fef4d72c5881d7"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/raised_L1145_r1/continuous_torque_ppo.csv",
+      "candidate_sha256": "aa090af04eff1027d4b09bf499ce20fc02b86fa61b0061aa207265db7dcf8f97",
+      "case_id": "raised_L1145_r1",
+      "controller": "Continuous-torque PPO",
+      "entrypoint": "src/paper2/entrypoints/raised_1.145_r1/Multi_continuous.py",
+      "entrypoint_sha256": "e3b34d4dfa4af0573781ce5962ce198550923033d6ecf970cc87e1db0aae60d2"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/raised_L1145_r1/discrete_active_ppo.csv",
+      "candidate_sha256": "79a687ce208136d8706af7b15c765d9e29fd6a4e9ee0d43fe722833b320404fc",
+      "case_id": "raised_L1145_r1",
+      "controller": "Discrete active PPO",
+      "entrypoint": "src/paper2/entrypoints/raised_1.145_r1/Qi_multi_ac_discrete_sim.py",
+      "entrypoint_sha256": "5964501b2686de8451a5f0c010940829b96034e4b0661cdb06c071c0348f850c"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/raised_L1145_r1/proposed_selector.csv",
+      "candidate_sha256": "fcf9b9d67e2f5d6ae412de0d0b3f4a34c24c2ee00c54b2b8520b6e2b63a9884f",
+      "case_id": "raised_L1145_r1",
+      "controller": "Proposed one-sided selector",
+      "entrypoint": "src/paper2/entrypoints/raised_1.145_r1/Qi_multi_passive_sim.py",
+      "entrypoint_sha256": "0d829ef72ee4a2cc624f9eb83cd071d3a64a8ee93c7c0bbf2ed4291d38144a24"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/raised_L1145_r2/continuous_torque_ppo.csv",
+      "candidate_sha256": "12c8002d1551bc7635d018fd470d48ae5559b7bf03271c5df6c122c2eedf0db9",
+      "case_id": "raised_L1145_r2",
+      "controller": "Continuous-torque PPO",
+      "entrypoint": "src/paper2/entrypoints/raised_1.145_r2/Multi_continuous.py",
+      "entrypoint_sha256": "6a6e72fd044813311658834257cf4cfa9ea93bb9187eae7a8de79ecc936e4574"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/raised_L1145_r2/discrete_active_ppo.csv",
+      "candidate_sha256": "83eb6bf67b470b7ef6ec7428c825f8cce335c745b90190ffdd0db0361a30d16d",
+      "case_id": "raised_L1145_r2",
+      "controller": "Discrete active PPO",
+      "entrypoint": "src/paper2/entrypoints/raised_1.145_r2/Qi_multi_ac_discrete_sim.py",
+      "entrypoint_sha256": "198685c8270ca3436f15ce346928748a4397e213a814172c959eaa41a4875d5b"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/raised_L1145_r2/proposed_selector.csv",
+      "candidate_sha256": "ea30c62082f6e0a6a2eb9c81147037bf3291275d38e44240711fcb6a5e9eab11",
+      "case_id": "raised_L1145_r2",
+      "controller": "Proposed one-sided selector",
+      "entrypoint": "src/paper2/entrypoints/raised_1.145_r2/Qi_multi_passive_sim.py",
+      "entrypoint_sha256": "14be7780fbad52cb292e1624552c043a0b435106a98d7b8230bd1ab2fecfa2f7"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/raised_L1145_r3/continuous_torque_ppo.csv",
+      "candidate_sha256": "0281f1e75844911ed6d52bb7d3d0eb663347430e03ba359a8109e6422f0895d4",
+      "case_id": "raised_L1145_r3",
+      "controller": "Continuous-torque PPO",
+      "entrypoint": "src/paper2/entrypoints/raised_1.145_r3/Multi_continuous.py",
+      "entrypoint_sha256": "56f510e4c43886509258cd13adb1f24a9ac2d53d537133820a12ae016c935e71"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/raised_L1145_r3/discrete_active_ppo.csv",
+      "candidate_sha256": "90490e2f511862912b5c83715c12e71001202714c56f4a3b55b4d4cbe87436c9",
+      "case_id": "raised_L1145_r3",
+      "controller": "Discrete active PPO",
+      "entrypoint": "src/paper2/entrypoints/raised_1.145_r3/Qi_multi_ac_discrete_sim.py",
+      "entrypoint_sha256": "447c4fc61e00d4332c3c9c9c91740151a5d2dbd5510731d61d5c84ea308880ca"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/raised_L1145_r3/proposed_selector.csv",
+      "candidate_sha256": "a3b310267b7b6b3e74d6df8e84b2809ac181a6408e2c97ec425781b6e8f099ba",
+      "case_id": "raised_L1145_r3",
+      "controller": "Proposed one-sided selector",
+      "entrypoint": "src/paper2/entrypoints/raised_1.145_r3/Qi_multi_passive_sim.py",
+      "entrypoint_sha256": "14ed3c7a22372c13b5c4235e774334fe7fb360c21cb59f71ebe964ea2de5c111"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/raised_L1280_r1/continuous_torque_ppo.csv",
+      "candidate_sha256": "309af45045883d3587a9efa8177f40e3bb41ec7e6a3cc347a461004a91f31b5c",
+      "case_id": "raised_L1280_r1",
+      "controller": "Continuous-torque PPO",
+      "entrypoint": "src/paper2/entrypoints/raised_1.28_r1/Multi_continuous.py",
+      "entrypoint_sha256": "cd7b9176de471b79be66d5ebf52dc2ea3d9181939073b306e918fbf08f501fa0"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/raised_L1280_r1/discrete_active_ppo.csv",
+      "candidate_sha256": "01ea11a4e0f7f1005ac90c8776741ed46ec0f82e073ca8567e534a97f2f0628f",
+      "case_id": "raised_L1280_r1",
+      "controller": "Discrete active PPO",
+      "entrypoint": "src/paper2/entrypoints/raised_1.28_r1/Qi_multi_ac_discrete_sim.py",
+      "entrypoint_sha256": "08b781dc48e80fe9a18607bf03e4181b528976afda29f9749d5fa02fea3c89d5"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/raised_L1280_r1/proposed_selector.csv",
+      "candidate_sha256": "35e87c06566f78d7e625e71ea0a387ad1c84bf2cb4aa62ca310458e64e424396",
+      "case_id": "raised_L1280_r1",
+      "controller": "Proposed one-sided selector",
+      "entrypoint": "src/paper2/entrypoints/raised_1.28_r1/Qi_multi_passive_sim.py",
+      "entrypoint_sha256": "a9cb407057aee57e35427978c0fb01b5f9004d04c62fb9dc5bf31b3441d121f6"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/raised_L1280_r2/continuous_torque_ppo.csv",
+      "candidate_sha256": "e00fa3cdba13176d49b404230dda127f6020c3a472388b9cdeb791a373efdb2c",
+      "case_id": "raised_L1280_r2",
+      "controller": "Continuous-torque PPO",
+      "entrypoint": "src/paper2/entrypoints/raised_1.28_r2/Multi_continuous.py",
+      "entrypoint_sha256": "8ac7a07c8bd147d519a60f392b5f9026bbf56f81d193946386d402bde17e3487"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/raised_L1280_r2/discrete_active_ppo.csv",
+      "candidate_sha256": "1928a2fe4c8f1d85f2f78da13dc83927c2128cedfd803877e109e376c850bec8",
+      "case_id": "raised_L1280_r2",
+      "controller": "Discrete active PPO",
+      "entrypoint": "src/paper2/entrypoints/raised_1.28_r2/Qi_multi_ac_discrete_sim.py",
+      "entrypoint_sha256": "13c06012563772f835c6a6fb439cbb654afea05f924410c73bcf7f694220f26b"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/raised_L1280_r2/proposed_selector.csv",
+      "candidate_sha256": "12399c08602b3b50591c308ac616ed34e5d9b609fb03c7d289ca9bd38817918c",
+      "case_id": "raised_L1280_r2",
+      "controller": "Proposed one-sided selector",
+      "entrypoint": "src/paper2/entrypoints/raised_1.28_r2/Qi_multi_passive_sim.py",
+      "entrypoint_sha256": "3313e61f82d7cf8b8ff0d058dcd8b2ac80c76c7c083567bb4c6d59e00375b2a4"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/raised_L1280_r3/continuous_torque_ppo.csv",
+      "candidate_sha256": "cf1a95a97bbcd07b43ba2ebc1c32cf97563999c2d6b42b2bff8ff73eb060a63e",
+      "case_id": "raised_L1280_r3",
+      "controller": "Continuous-torque PPO",
+      "entrypoint": "src/paper2/entrypoints/raised_1.28_r3/Multi_continuous.py",
+      "entrypoint_sha256": "946f82287104725d5c7003974abecb0e8bd19a5f374c8f5cf23961eaccc5f8e3"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/raised_L1280_r3/discrete_active_ppo.csv",
+      "candidate_sha256": "2334f6760053fe2857d14405958e680458fbbefe02296f7f3ac774b9f562978b",
+      "case_id": "raised_L1280_r3",
+      "controller": "Discrete active PPO",
+      "entrypoint": "src/paper2/entrypoints/raised_1.28_r3/Qi_multi_ac_discrete_sim.py",
+      "entrypoint_sha256": "a87fc49f5af3ee259fa11018c9692937ba766ecb160da69d2236b7567053fe34"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/raised_L1280_r3/proposed_selector.csv",
+      "candidate_sha256": "e17b0930bced8dc76964e7b429593c20d2da6c1902add27aa896088f8e7dc559",
+      "case_id": "raised_L1280_r3",
+      "controller": "Proposed one-sided selector",
+      "entrypoint": "src/paper2/entrypoints/raised_1.28_r3/Qi_multi_passive_sim.py",
+      "entrypoint_sha256": "c9e7ee4d67bd12420e752ec45fe461603ae0b61e3d98e1a7e37c3a1cb64331b2"
+    }
+  ],
+  "fixed_parameter_replays": 36,
+  "schema": "paper2-push-off-grid-provenance/v1",
+  "source_code_boundary": "The case entry points contain the selected recovery decrements. The original workstation search generators are excluded because they contain machine-specific paths; this release validates the complete candidate records without claiming a standalone training rerun."
+}

@@ -148,9 +148,9 @@ def handle_collision(state_fun, stance_leg_fun, params_fun, energy_passive_fun):
 
     energy_pre_fun = kinetic_energy(theta1_new_fun, theta2_new_fun, dtheta1_new_fun, dtheta2_new_fun, params_fun)
     if stance_leg_fun == 1:
-        dtheta1_new_fun -= 0.50
+        dtheta1_new_fun -= 0.48
     else:
-        dtheta1_new_fun -= 0.55
+        dtheta1_new_fun -= 0.53
     energy_new_fun = kinetic_energy(theta1_new_fun, theta2_new_fun, dtheta1_new_fun, dtheta2_new_fun, params_fun)
     energy_passive_fun += energy_new_fun - energy_pre_fun
 
@@ -302,6 +302,7 @@ final_theta1 = 0
 final_theta2 = 0
 
 D = 0
+Foot_D = 0
 count_step = 0
 while step != 0:
     if count > 0:
@@ -345,6 +346,7 @@ while step != 0:
                       (env.l1 * np.cos(final_theta1) + env.l2_s * np.sin(final_theta2))) / (env.m1 + env.m2)
     D += abs(final_center_x - initial_center_x)
     if reward1:
+        Foot_D += 0.521 * (np.cos(final_theta1) + np.sin(final_theta2))
         print("碰撞触发！计算碰撞后状态...")
         params = {
             'm1': env.m1,
@@ -365,3 +367,4 @@ while step != 0:
 Cmt_passive = Energy_Passive / (W * D)
 print("离散被动力矩Cmt：", Cmt_passive)
 print("Time", count_step * 0.01)
+print("Foot_error:", (3 * 0.521) - Foot_D)

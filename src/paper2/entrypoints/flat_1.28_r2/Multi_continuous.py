@@ -128,9 +128,9 @@ def handle_collision(state_fun, stance_leg_fun, params_fun, energy_ac_fun):
     energy_pre_fun = kinetic_energy(theta1_new_fun, theta2_new_fun, dtheta1_new_fun, dtheta2_new_fun,
                                     params_fun)
     if stance_leg_fun == 1:
-        dtheta1_new_fun -= 0.96
+        dtheta1_new_fun -= 0.97
     else:
-        dtheta1_new_fun -= 0.69
+        dtheta1_new_fun -= 0.65
     energy_new_fun = kinetic_energy(theta1_new_fun, theta2_new_fun, dtheta1_new_fun, dtheta2_new_fun,
                                     params_fun)
     energy_ac_fun += energy_new_fun - energy_pre_fun

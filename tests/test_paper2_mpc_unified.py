@@ -66,8 +66,8 @@ class UnifiedMPCReleaseTests(unittest.TestCase):
         ):
             self.assertEqual(assigned_literal(raised_dir / filename, "init_idx"), (19, 11, 15, 1))
         source = raised_continuous.read_text(encoding="utf-8-sig")
-        self.assertIn("dtheta1_new -= 1", source)
-        self.assertIn("dtheta1_new -= 0.89", source)
+        self.assertIn("dtheta1_new -= 0.92", source)
+        self.assertIn("dtheta1_new -= 0.80", source)
         lipm_source = (raised_dir / "LIPM.py").read_text(encoding="utf-8-sig")
         self.assertIn("dtheta1_new -= 0.95", lipm_source)
         lqr_source = (raised_dir / "LQR.py").read_text(encoding="utf-8-sig")
@@ -168,8 +168,8 @@ class UnifiedMPCReleaseTests(unittest.TestCase):
         self.assertEqual({row["case_id"] for row in combined_rows}, expected_cases)
         for case_id in expected_cases:
             self.assertEqual(sum(row["case_id"] == case_id for row in combined_rows), 6)
-        self.assertEqual(float(current[("raised_L1145_r1", "Discrete active PPO")]["cmt"]), 0.267040040566968)
-        self.assertEqual(float(current[("raised_L1145_r1", "Continuous-torque PPO")]["cmt"]), 0.2780932427752225)
+        self.assertEqual(float(current[("raised_L1145_r1", "Discrete active PPO")]["cmt"]), 0.25098054963443095)
+        self.assertEqual(float(current[("raised_L1145_r1", "Continuous-torque PPO")]["cmt"]), 0.25817243332390905)
 
         with (ROOT / "results/paper2_current/table_v_current.csv").open(
             encoding="utf-8", newline=""

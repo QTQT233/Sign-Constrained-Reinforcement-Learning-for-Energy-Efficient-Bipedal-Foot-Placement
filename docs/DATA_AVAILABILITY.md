@@ -4,10 +4,12 @@
 
 The hardware evidence and supplementary videos are available from Zenodo at
 <https://doi.org/10.5281/zenodo.21407986>. The source code, released model
-checkpoints, two-link case-level outputs, fixed V22_3/V9 four-link trial-level
-records, paired analyses, manifests, and checksums supporting the reported
-simulation results are available from the GitHub repository at the exact commit
-cited in the manuscript. Exhaustive MPC candidate tables, solver traces,
+checkpoints, complete 518,400-row learned-controller recovery-grid records,
+36 selected fixed-parameter replays, two-link case-level outputs, fixed
+V22_3/V9 four-link trial-level records, paired analyses, manifests, and
+checksums supporting the reported simulation results are available from the
+GitHub repository at the exact commit cited in the manuscript. Exhaustive MPC
+candidate tables, solver traces,
 validation records, and two deterministic replay records are provided as
 Supplementary Archive S1. The 12-cell action-weight HDF5 archive and its schema,
 manifest, and checksums are provided as Supplementary Data S2. The ATC-50
