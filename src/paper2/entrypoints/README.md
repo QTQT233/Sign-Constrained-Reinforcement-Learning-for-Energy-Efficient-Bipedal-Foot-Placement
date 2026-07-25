@@ -16,6 +16,9 @@ must be supplied from the original case bundle under the names in
 They are distinct from the hardware-only Zenodo record; when required for
 submission, distribute them through Supplementary Archive S1.
 
-The remaining snapshots preserve original path literals and are not advertised
-as standalone portable entry points. The audit launcher is read-only with
-respect to these repository sources and does not modify them at runtime.
+The three learned-controller entry points now contain the selected post-impact
+recovery-velocity decrements from the complete 12-case grid record in
+`results/paper2_push_off_grid_12case/`. The fixed programs preserve their
+original path literals and are not advertised as standalone portable entry
+points. The grid-record validator checks both selected values in every entry
+point without modifying the sources.

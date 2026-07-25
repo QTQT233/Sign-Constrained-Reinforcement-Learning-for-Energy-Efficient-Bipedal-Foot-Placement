@@ -95,25 +95,32 @@ class ReferenceArtifactTests(unittest.TestCase):
         self.assertEqual(len(current_rows), 72)
         self.assertEqual(
             float(current[("raised_L1145_r1", "Discrete active PPO")]["cmt"]),
-            0.267040040566968,
+            0.25098054963443095,
         )
         self.assertEqual(
             float(current[("raised_L1145_r1", "Continuous-torque PPO")]["cmt"]),
-            0.2780932427752225,
+            0.25817243332390905,
         )
 
         primary = {row["case_id"]: row for row in read_rows(ROOT / "results/two_link_primary_12_cases.csv")}
         self.assertEqual(set(primary), {row["case_id"] for row in current_rows})
-        self.assertEqual(float(primary["raised_L1145_r1"]["discrete_active_ppo_cmt"]), 0.267040040566968)
+        self.assertEqual(
+            float(primary["raised_L1145_r1"]["proposed_selector_cmt"]),
+            0.14785439168930947,
+        )
+        self.assertEqual(
+            float(primary["raised_L1145_r1"]["discrete_active_ppo_cmt"]),
+            0.25098054963443095,
+        )
         self.assertEqual(
             float(primary["raised_L1145_r1"]["continuous_active_ppo_cmt"]),
-            0.2780932427752225,
+            0.25817243332390905,
         )
 
         table_v = {row["method"]: row for row in read_rows(ROOT / "results/paper2_current/table_v_current.csv")}
-        self.assertAlmostEqual(float(table_v["Proposed one-sided selector"]["mean_cmt"]), 0.123472869728)
-        self.assertAlmostEqual(float(table_v["Discrete active PPO"]["mean_cmt"]), 0.228756976684)
-        self.assertAlmostEqual(float(table_v["Continuous-torque PPO"]["mean_cmt"]), 0.240916227851)
+        self.assertAlmostEqual(float(table_v["Proposed one-sided selector"]["mean_cmt"]), 0.122346306417)
+        self.assertAlmostEqual(float(table_v["Discrete active PPO"]["mean_cmt"]), 0.226620152405)
+        self.assertAlmostEqual(float(table_v["Continuous-torque PPO"]["mean_cmt"]), 0.238107711255)
         self.assertAlmostEqual(float(table_v["Continuous-torque MPC"]["mean_cmt"]), 0.198945098769)
 
     def test_tvlqr_release_hashes_and_seeded_results(self) -> None:

@@ -1,0 +1,241 @@
+{
+  "scope": "one frozen selector and one frozen positive/negative expert pair",
+  "case_count": 2160,
+  "success": {
+    "n": 2160,
+    "both": 877,
+    "hold_only": 87,
+    "requery_only": 16,
+    "neither": 1180,
+    "hold_rate": 0.4462962962962963,
+    "requery_rate": 0.4134259259259259,
+    "requery_minus_hold_risk_difference": -0.03287037037037037,
+    "requery_minus_hold_percentage_points": -3.2870370370370368,
+    "paired_ci95": [
+      -0.04197445288595956,
+      -0.02376628785478118
+    ],
+    "paired_ci95_percentage_points": [
+      -4.197445288595956,
+      -2.376628785478118
+    ],
+    "paired_bootstrap_ci95": [
+      -0.041666666666666664,
+      -0.024074074074074074
+    ],
+    "paired_bootstrap_ci95_percentage_points": [
+      -4.166666666666666,
+      -2.4074074074074074
+    ],
+    "exact_mcnemar_p_two_sided": 5.394032051902122e-13
+  },
+  "valid_cmt": {
+    "n": 2160,
+    "both": 419,
+    "hold_only": 61,
+    "requery_only": 15,
+    "neither": 1665,
+    "hold_rate": 0.2222222222222222,
+    "requery_rate": 0.20092592592592592,
+    "requery_minus_hold_risk_difference": -0.021296296296296296,
+    "requery_minus_hold_percentage_points": -2.1296296296296298,
+    "paired_ci95": [
+      -0.02915559765587815,
+      -0.013436994936714441
+    ],
+    "paired_ci95_percentage_points": [
+      -2.915559765587815,
+      -1.3436994936714441
+    ],
+    "paired_bootstrap_ci95": [
+      -0.029166666666666667,
+      -0.013888888888888888
+    ],
+    "paired_bootstrap_ci95_percentage_points": [
+      -2.9166666666666665,
+      -1.3888888888888888
+    ],
+    "exact_mcnemar_p_two_sided": 9.842847414734724e-08
+  },
+  "cmt_on_both_valid": {
+    "n_both_valid": 419,
+    "hold_mean_cmt": 0.18761432646477522,
+    "requery_mean_cmt": 0.23220725887974938,
+    "mean_requery_minus_hold_cmt": 0.044592932414974196,
+    "bootstrap_ci95_mean_difference": [
+      -0.016721444185286503,
+      0.11426372613430084
+    ],
+    "requery_lower_count": 80,
+    "hold_lower_count": 90,
+    "tie_count": 249,
+    "requery_lower_fraction": 0.1909307875894988
+  },
+  "switch_strata": {
+    "no_requery_switch": {
+      "case_count": 841,
+      "success": {
+        "n": 841,
+        "both": 544,
+        "hold_only": 0,
+        "requery_only": 0,
+        "neither": 297,
+        "hold_rate": 0.6468489892984542,
+        "requery_rate": 0.6468489892984542,
+        "requery_minus_hold_risk_difference": 0.0,
+        "requery_minus_hold_percentage_points": 0.0,
+        "paired_ci95": [
+          0.0,
+          0.0
+        ],
+        "paired_ci95_percentage_points": [
+          0.0,
+          0.0
+        ],
+        "paired_bootstrap_ci95": [
+          0.0,
+          0.0
+        ],
+        "paired_bootstrap_ci95_percentage_points": [
+          0.0,
+          0.0
+        ],
+        "exact_mcnemar_p_two_sided": 1.0
+      },
+      "valid_cmt": {
+        "n": 841,
+        "both": 238,
+        "hold_only": 0,
+        "requery_only": 0,
+        "neither": 603,
+        "hold_rate": 0.28299643281807374,
+        "requery_rate": 0.28299643281807374,
+        "requery_minus_hold_risk_difference": 0.0,
+        "requery_minus_hold_percentage_points": 0.0,
+        "paired_ci95": [
+          0.0,
+          0.0
+        ],
+        "paired_ci95_percentage_points": [
+          0.0,
+          0.0
+        ],
+        "paired_bootstrap_ci95": [
+          0.0,
+          0.0
+        ],
+        "paired_bootstrap_ci95_percentage_points": [
+          0.0,
+          0.0
+        ],
+        "exact_mcnemar_p_two_sided": 1.0
+      },
+      "cmt_on_both_valid": {
+        "n_both_valid": 238,
+        "hold_mean_cmt": 0.11599515717251879,
+        "requery_mean_cmt": 0.11599515717251879,
+        "mean_requery_minus_hold_cmt": 0.0,
+        "bootstrap_ci95_mean_difference": [
+          0.0,
+          0.0
+        ],
+        "requery_lower_count": 0,
+        "hold_lower_count": 0,
+        "tie_count": 238,
+        "requery_lower_fraction": 0.0
+      }
+    },
+    "at_least_one_requery_switch": {
+      "case_count": 1319,
+      "success": {
+        "n": 1319,
+        "both": 333,
+        "hold_only": 87,
+        "requery_only": 16,
+        "neither": 883,
+        "hold_rate": 0.31842304776345715,
+        "requery_rate": 0.26459438968915844,
+        "requery_minus_hold_risk_difference": -0.053828658074298714,
+        "requery_minus_hold_percentage_points": -5.382865807429871,
+        "paired_ci95": [
+          -0.06862694114178279,
+          -0.03903037500681464
+        ],
+        "paired_ci95_percentage_points": [
+          -6.862694114178279,
+          -3.9030375006814637
+        ],
+        "paired_bootstrap_ci95": [
+          -0.06823351023502654,
+          -0.039423805913570885
+        ],
+        "paired_bootstrap_ci95_percentage_points": [
+          -6.823351023502654,
+          -3.9423805913570886
+        ],
+        "exact_mcnemar_p_two_sided": 5.394032051902122e-13
+      },
+      "valid_cmt": {
+        "n": 1319,
+        "both": 181,
+        "hold_only": 61,
+        "requery_only": 15,
+        "neither": 1062,
+        "hold_rate": 0.18347232752084913,
+        "requery_rate": 0.14859742228961334,
+        "requery_minus_hold_risk_difference": -0.034874905231235785,
+        "requery_minus_hold_percentage_points": -3.4874905231235784,
+        "paired_ci95": [
+          -0.047691639241901417,
+          -0.022058171220570154
+        ],
+        "paired_ci95_percentage_points": [
+          -4.769163924190142,
+          -2.2058171220570153
+        ],
+        "paired_bootstrap_ci95": [
+          -0.047763457164518575,
+          -0.021986353297952996
+        ],
+        "paired_bootstrap_ci95_percentage_points": [
+          -4.776345716451857,
+          -2.1986353297952994
+        ],
+        "exact_mcnemar_p_two_sided": 9.842847414734724e-08
+      },
+      "cmt_on_both_valid": {
+        "n_both_valid": 181,
+        "hold_mean_cmt": 0.28178759879381954,
+        "requery_mean_cmt": 0.3850165417875996,
+        "mean_requery_minus_hold_cmt": 0.10322894299378003,
+        "bootstrap_ci95_mean_difference": [
+          -0.035005841336269584,
+          0.2642822575649691
+        ],
+        "requery_lower_count": 80,
+        "hold_lower_count": 90,
+        "tie_count": 11,
+        "requery_lower_fraction": 0.4419889502762431
+      }
+    }
+  },
+  "requery_switch_count_distribution": {
+    "0": 841,
+    "1": 972,
+    "2": 120,
+    "3": 90,
+    "4": 46,
+    "5": 40,
+    "6": 16,
+    "7": 15,
+    "8": 8,
+    "9": 6,
+    "10": 2,
+    "11": 1,
+    "12": 3
+  },
+  "bootstrap_seed": 20260725,
+  "bootstrap_replicates": 10000,
+  "interpretation_boundary": "This is a paired inference-time query-schedule comparison conditional on the specified frozen selector and experts; it is not a comparison across independent training runs.",
+  "cmt_analysis_rule": "The all-valid hold and requery Cmt means use different validity sets and are descriptive only. The primary paired Cmt comparison is the within-case requery-minus-hold difference on the 419 both-valid cases."
+}

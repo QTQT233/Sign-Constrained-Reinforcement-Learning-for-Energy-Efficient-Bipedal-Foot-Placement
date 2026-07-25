@@ -5,12 +5,13 @@
 | Table I | three 30^4 action maps; `analysis/reproduce_table1.py`; `results/table1/table_i.csv` | reports full-grid counts and the 65.9% common feasible fraction |
 | Table II(a–c) | action-weight HDF5 package (Supplementary Data S2); `analysis/recompute_action_weight_table_ii.py`; current CSV/JSON summaries | fixed-checkpoint evaluation with seed 20260716 and the declared eligibility rule |
 | Table III | hardware apparatus record and Zenodo hardware DOI | apparatus parameters only |
-| Table IV | primary two-link entry points, current source-aligned records, and accepted MPC package | documents action generation, reset/recovery, metric, denominator, and source |
-| Table V | `results/two_link_primary_12_cases.csv`; `results/paper2_current/`; `analysis/reproduce_paper2_tables.py` | 12 matched case/checkpoint outputs and four condition means |
+| Table IV | primary two-link entry points, complete learned-controller recovery-grid records, and accepted MPC package | documents action generation, reset/recovery, metric, denominator, and source |
+| Table V | `results/paper2_push_off_grid_12case/`; `results/two_link_primary_12_cases.csv`; `results/paper2_current/`; `analysis/reproduce_paper2_tables.py` | 12 matched case/checkpoint outputs and four condition means |
 | Table VI | `data/four_link/true_action_mask_scratch_c090_epoch1275/controller_summary.csv` | five principal fixed-checkpoint controller rows |
 | Table VII | current paired CSVs and `analysis/four_link_true_action_mask_paired_inference.py` | conditional both-valid comparisons under the shared V22_3/V9 evaluator |
-| Appendix A | `results/paper2_current/paper2_combined_cases.csv`; accepted MPC records | case-level and descriptive two-link values |
-| Appendix B | `data/four_link/true_action_mask_scratch_c090_epoch1275/`; current statistical outputs | controller, command-grid, terminal-reason, and training-log diagnostics |
+| Appendix A | `configs/paper2_push_off_grid_12_cases.csv`; `results/paper2_push_off_grid_12case/`; `results/paper2_current/paper2_combined_cases.csv`; `supplementary/S4/landing_metric/`; accepted MPC records | selected recovery pairs, case-level values, pooled per-transition landing MAE, and descriptive two-link summaries |
+| Appendix B | `data/four_link/true_action_mask_scratch_c090_epoch1275/`; `supplementary/S4/fourlink_additional_batches/`; `supplementary/S4/hold_vs_requery/`; current statistical outputs | primary controller diagnostics, five additional randomized batches, and the frozen query-schedule control |
+| Supplementary Archive S4 | `supplementary/S4/` | compact repository mirror of the landing, 10,800-case, and hold-versus-requery evidence; duplicate canonical models, evaluator, and primary inputs are referenced by hash rather than copied |
 
 ## Figure boundary
 

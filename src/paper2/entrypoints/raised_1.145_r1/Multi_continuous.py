@@ -331,7 +331,7 @@ while step != 0:
         initial_theta2 = theta2_new
         Energy_pre = kinetic_energy(theta1_new, theta2_new, dtheta1_new, dtheta2_new, params)
         if stance_leg == 1:
-            dtheta1_new -= 1
+            dtheta1_new -= 0.92
             stop_flag += 1
             Energy_new = kinetic_energy(theta1_new, theta2_new, dtheta1_new, dtheta2_new, params)
             Energy_continuous += Energy_new - Energy_pre
@@ -342,7 +342,7 @@ while step != 0:
             print(f"  新摆动腿角速度 = {dtheta2_new:.4f} rad/s")
             stance_leg = 2
         elif stance_leg == 2:
-            dtheta1_new -= 0.89
+            dtheta1_new -= 0.80
             stop_flag += 1
             Energy_new = kinetic_energy(theta1_new, theta2_new, dtheta1_new, dtheta2_new, params)
             Energy_continuous += Energy_new - Energy_pre

@@ -55,8 +55,8 @@ class ReleaseCleanlinessTests(unittest.TestCase):
         ) as handle:
             rows = {row["case_id"]: row for row in csv.DictReader(handle)}
         row = rows["raised_L1145_r1"]
-        self.assertEqual(float(row["discrete_active_ppo_cmt"]), 0.267040040566968)
-        self.assertEqual(float(row["continuous_active_ppo_cmt"]), 0.2780932427752225)
+        self.assertEqual(float(row["discrete_active_ppo_cmt"]), 0.25098054963443095)
+        self.assertEqual(float(row["continuous_active_ppo_cmt"]), 0.25817243332390905)
 
     def test_public_text_has_no_retired_release_pins(self) -> None:
         targets = [ROOT / "README.md", *sorted((ROOT / "docs").glob("*.md"))]

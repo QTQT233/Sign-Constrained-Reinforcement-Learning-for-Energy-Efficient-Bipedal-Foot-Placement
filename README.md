@@ -19,6 +19,8 @@ branch and preserved in the authors' offline `Paper_store/Past` archive.
   evaluator, including the scratch-trained true per-step hard-action-mask PPO.
 - `src/paper2/mpc/`: repository-relative continuous-torque MPC implementation,
   accepted 12-case results, and validator.
+- `src/paper2/push_off_grid/`: validator for the complete learned-controller
+  recovery-grid record and its selected fixed-parameter replays.
 - `data/four_link/true_action_mask_scratch_c090_epoch1275/`: the current
   controller-level and trial-level four-link archive used for Tables VI–VII and
   Appendix B.
@@ -26,8 +28,13 @@ branch and preserved in the authors' offline `Paper_store/Past` archive.
   manuscript-facing Table IV–V summaries.
 - `results/paper2_mpc_unified_12case/`: accepted MPC cases, validation records,
   and deterministic replay checks.
+- `results/paper2_push_off_grid_12case/`: 518,400 candidate records, 36 selected
+  minima, fixed-parameter replay values, provenance, and scoped checksums.
 - `results/four_link_statistics/true_action_mask_scratch_c090_epoch1275/`:
   paired fixed-checkpoint inference for the true-mask comparison.
+- `supplementary/S4/`: portable code and machine-readable records for the
+  landing metric, five additional randomized four-link batches, and the frozen
+  hold-versus-requery query-schedule control.
 - `analysis/`: read-only numerical analysis and table-regeneration programs.
 - `docs/`: protocol, metric, provenance, availability, and submission records.
 
@@ -72,9 +79,12 @@ Key values are:
 
 The true-mask and selector policies share the formal evaluator and principal
 reward coefficients. Their architecture, initialization, soft thresholds, and
-training structure are not identical. The comparison is therefore reported as
-a method-level ablation: under the evaluated configuration, transition-level
-sign persistence is the component associated with the lower conditional `Cmt`.
+training structure are not identical, so their conditional `Cmt` difference is
+a method-level comparison rather than a one-factor estimate. The separate
+frozen hold-versus-requery control changes only query timing: transition-level
+holding increased success by 3.29 percentage points, while its paired
+conditional-`Cmt` interval included zero. The method-level `Cmt` difference
+therefore cannot be attributed to persistence alone.
 
 Regenerate the paired statistics:
 
@@ -90,20 +100,24 @@ python -m unittest tests.test_true_action_mask_release -v
 
 ## Two-link 12-case comparison
 
-The 12 matched multi-step cases use the current source-aligned records. Mean
-`Cmt` is 0.123472870 for the proposed controller, 0.228756977 for discrete
-active PPO, 0.240916228 for continuous-torque PPO, and 0.198945099 for
+The 12 matched multi-step cases use the current fixed-parameter replay records.
+Mean `Cmt` is 0.122346306 for the proposed controller, 0.226620152 for discrete
+active PPO, 0.238107711 for continuous-torque PPO, and 0.198945099 for
 continuous-torque MPC. The corresponding ratio-of-means reductions are 46.0%,
-48.7%, and 37.9%.
+48.6%, and 38.5%.
 
-The `raised_L1145_r1` discrete and continuous values are the source-aligned
-rerun values 0.267040041 and 0.278093243. The current summary file
-`results/two_link_primary_12_cases.csv` points to those records and no longer
-contains the superseded row.
+For each learned controller and case, both post-impact recovery-velocity
+decrements were evaluated on `0.00:0.01:1.19 rad/s`, giving 14,400 candidates
+per controller-case pair and 518,400 released candidate records. Eligibility
+requires completion of all three transitions, positive COM displacement, and
+finite `Cmt`. The selected within-grid minimum was replayed with the unchanged
+fixed-parameter evaluator; all 36 energy, displacement, and `Cmt` values agree
+with their search records within `1e-10`.
 
 Regenerate Tables IV–V:
 
 ```bash
+python src/paper2/push_off_grid/validate_release.py
 python analysis/reproduce_paper2_tables.py
 ```
 
@@ -152,12 +166,16 @@ interchangeable.
   manifests, checksums, and validators. Cite the exact `main` commit used for
   submission.
 - Zenodo DOI [10.5281/zenodo.21407986](https://doi.org/10.5281/zenodo.21407986):
-  hardware evidence and supplementary videos.
+  version-1.0.0 data/model artifacts and supplementary hardware videos.
 - Supplementary Archive S1: complete MPC candidate-level evidence.
 - Supplementary Data S2: 12-cell action-weight HDF5 package and schema.
 - Supplementary Data S3: frozen ATC-50 lookup table, schema, portable event-
   query implementation, and checksums. No byte-for-byte regeneration claim is
   made for the historical table artifact.
+- Supplementary Archive S4: landing-metric records and validation, 10,800
+  additional four-link matched trials, and the 2,160-case frozen
+  hold-versus-requery control. A compact copy is tracked under
+  `supplementary/S4/`.
 
 A separate GitHub Release is optional when the manuscript cites the immutable
 merged `main` commit. The hardware payload has not changed, so this code update
@@ -167,8 +185,13 @@ does not require a new Zenodo version.
 
 ```bash
 python -m unittest discover -s tests -v
+python src/paper2/push_off_grid/validate_release.py
 python src/paper2/mpc/validate_release.py
 python analysis/reproduce_paper2_tables.py
+python supplementary/S4/landing_metric/code/recompute_landing_metrics.py
+python supplementary/S4/fourlink_additional_batches/code/analyze_validity.py
+python supplementary/S4/hold_vs_requery/analyze_results.py
+python supplementary/S4/build_manifest.py
 python tools/build_manifest.py
 python tools/verify_manifest.py
 git diff --check

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Regenerate the revised Paper2 Tables IV and V from released case records."""
+"""Regenerate the current Paper2 two-link tables from released case records."""
 
 from __future__ import annotations
 
@@ -25,6 +25,11 @@ LEGACY_METHOD_LABELS = {
     "Proposed passive selector": "Proposed one-sided selector",
     "Continuous active MPC": "Continuous-torque MPC",
     "Continuous active PPO": "Continuous-torque PPO",
+}
+GRID_METHOD_LABELS = {
+    "passive": "Proposed one-sided selector",
+    "discrete": "Discrete active PPO",
+    "continuous": "Continuous-torque PPO",
 }
 GROUPS = [
     ("flat", "1.28", "flat_1.280"),
@@ -97,6 +102,32 @@ def load_non_mpc(path: Path) -> list[dict]:
     return retained
 
 
+def load_grid_learned(path: Path) -> list[dict]:
+    """Load the accepted fixed replays selected from the complete recovery grids."""
+    with path.open(encoding="utf-8-sig", newline="") as handle:
+        rows = list(csv.DictReader(handle))
+    retained = []
+    for row in rows:
+        method = GRID_METHOD_LABELS[row["controller"]]
+        case_id = canonical_case_id(row["case_id"])
+        retained.append(
+            {
+                "case_id": case_id,
+                "terrain": "flat" if case_id.startswith("flat_") else "raised_0.01m",
+                "nominal_length_m": "1.145" if "L1145" in case_id else "1.28",
+                "method": method,
+                "status": "ok",
+                "cmt": optional_float(row["cmt"]),
+                "time_s": optional_float(row["time_s"]),
+                "landing_error_m": optional_float(row["landing_error_m"]),
+                "source_record": (
+                    f"{path.as_posix()}#{row['case_id']}/{row['controller']}"
+                ),
+            }
+        )
+    return retained
+
+
 def load_tvlqr(path: Path) -> list[dict]:
     with path.open(encoding="utf-8-sig", newline="") as handle:
         rows = list(csv.DictReader(handle))
@@ -138,12 +169,16 @@ def load_mpc(path: Path) -> list[dict]:
     return retained
 
 
-def apply_source_aligned_overrides(rows: list[dict], path: Path) -> list[dict]:
+def apply_source_aligned_overrides(
+    rows: list[dict], path: Path, allowed_methods: set[str] | None = None
+) -> list[dict]:
     """Replace explicitly released case/method records without altering other rows."""
     with path.open(encoding="utf-8-sig", newline="") as handle:
         overrides = list(csv.DictReader(handle))
     by_key = {(row["case_id"], row["method"]): row for row in rows}
     for override in overrides:
+        if allowed_methods is not None and override["method"] not in allowed_methods:
+            continue
         key = (override["case_id"], override["method"])
         if key not in by_key:
             raise RuntimeError(f"source-aligned override has no baseline row: {key}")
@@ -188,13 +223,33 @@ def main() -> int:
             "results/paper2_source_aligned_r1_rerun_20260721/rerun_records.csv"
         ),
     )
+    parser.add_argument(
+        "--push-off-grid",
+        type=Path,
+        default=Path(
+            "results/paper2_push_off_grid_12case/accepted_cases.csv"
+        ),
+    )
     parser.add_argument("--output-dir", type=Path, default=Path("results/paper2_current"))
+    parser.add_argument(
+        "--primary-output",
+        type=Path,
+        default=Path("results/two_link_primary_12_cases.csv"),
+    )
     args = parser.parse_args()
 
-    non_mpc = apply_source_aligned_overrides(
-        load_non_mpc(args.rerun), args.source_aligned_overrides
+    lipm = [
+        row for row in load_non_mpc(args.rerun) if row["method"] == "LIPM COM"
+    ]
+    lipm = apply_source_aligned_overrides(
+        lipm, args.source_aligned_overrides, allowed_methods={"LIPM COM"}
     )
-    rows = non_mpc + load_tvlqr(args.tvlqr) + load_mpc(args.mpc)
+    rows = (
+        lipm
+        + load_grid_learned(args.push_off_grid)
+        + load_tvlqr(args.tvlqr)
+        + load_mpc(args.mpc)
+    )
     retained = [row for row in rows if row["status"] == "ok"]
 
     expected_cases = {
@@ -268,9 +323,41 @@ def main() -> int:
     for row in sorted(retained, key=lambda item: (METHODS.index(item["method"]), item["case_id"])):
         combined.append({key: "" if value is None else value for key, value in row.items()})
 
+    learned_by_case = {
+        (row["case_id"], row["method"]): row
+        for row in retained
+        if row["method"] in GRID_METHOD_LABELS.values()
+    }
+    primary = []
+    for case_id in sorted(expected_cases):
+        proposed = learned_by_case[(case_id, "Proposed one-sided selector")]
+        discrete = learned_by_case[(case_id, "Discrete active PPO")]
+        continuous = learned_by_case[(case_id, "Continuous-torque PPO")]
+        proposed_cmt = float(proposed["cmt"])
+        discrete_cmt = float(discrete["cmt"])
+        continuous_cmt = float(continuous["cmt"])
+        primary.append(
+            {
+                "case_id": case_id,
+                "terrain": proposed["terrain"],
+                "nominal_length_m": proposed["nominal_length_m"],
+                "proposed_selector_cmt": proposed_cmt,
+                "discrete_active_ppo_cmt": discrete_cmt,
+                "continuous_active_ppo_cmt": continuous_cmt,
+                "discrete_minus_proposed": discrete_cmt - proposed_cmt,
+                "continuous_minus_proposed": continuous_cmt - proposed_cmt,
+                "proposed_lower_than_discrete": proposed_cmt < discrete_cmt,
+                "proposed_lower_than_continuous": proposed_cmt < continuous_cmt,
+                "proposed_source_record": proposed["source_record"],
+                "discrete_source_record": discrete["source_record"],
+                "continuous_source_record": continuous["source_record"],
+            }
+        )
+
     write_csv(args.output_dir / "paper2_combined_cases.csv", combined)
     write_csv(args.output_dir / "table_iv_current.csv", table_iv)
     write_csv(args.output_dir / "table_v_current.csv", table_v)
+    write_csv(args.primary_output, primary)
     print(f"wrote {args.output_dir}")
     return 0
 

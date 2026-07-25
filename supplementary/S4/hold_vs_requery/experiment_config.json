@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "experiment_id": "frozen_hold_vs_requery_20260725",
+  "question": "Does querying the same frozen selector at every control step differ from querying it once and holding the selected expert for the complete transition?",
+  "formal_evaluator": "src/four_link/evaluation/paper_four_link_reachability_cmt_v22_3_grid_true_action_mask.py",
+  "case_source": "data/four_link/true_action_mask_scratch_c090_epoch1275/rollouts_active_vs_passive.csv",
+  "case_count": 2160,
+  "case_key": [
+    "seed",
+    "episode_index",
+    "walk_direction",
+    "reset_phase",
+    "commanded_step_length_m",
+    "commanded_step_height_m"
+  ],
+  "schedules": {
+    "hold": "Query at transition start and retain that expert through termination.",
+    "requery": "Query on the current state before every control action."
+  },
+  "shared_factors": [
+    "formal V22_3/V9 dynamics and integration",
+    "archived 2160 initial states and commands",
+    "frozen selector checkpoint",
+    "frozen positive and negative expert checkpoints",
+    "deterministic expert actions",
+    "4 N m hip and 0.2 N m knee torque limits",
+    "success and terminal-reason gates",
+    "positive mechanical-work integration",
+    "valid-Cmt requirement: success, at least one nonzero-torque step, and signed D > 0.001 m"
+  ],
+  "selector_input": "Current 8D state plus hip-direction coordinate 0, walk direction, step length, and step height.",
+  "expert_input": "Current 8D state plus the currently selected expert sign, walk direction, step length, and step height.",
+  "smoke_episode_indices": [
+    1, 40, 41, 120, 241, 360, 361, 540, 720, 721, 900,
+    1080, 1081, 1260, 1440, 1441, 1620, 1800, 1921, 2040,
+    2121, 2160
+  ],
+  "stop_rule": "Do not run the formal stage unless every smoke hold rollout reproduces the released formal selector within the declared exact/numeric tolerances."
+}

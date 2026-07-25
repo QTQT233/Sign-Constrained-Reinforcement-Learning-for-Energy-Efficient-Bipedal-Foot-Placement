@@ -1,0 +1,25 @@
+{
+  "stage": "formal",
+  "status": "PASS",
+  "case_count": 2160,
+  "hold_rows": 2160,
+  "requery_rows": 2160,
+  "mismatch_count": 0,
+  "numeric_abs_tolerance": 1e-10,
+  "numeric_rel_tolerance": 1e-09,
+  "energy_displacement_abs_tolerance": 1e-07,
+  "energy_displacement_rel_tolerance": 1e-07,
+  "cmt_abs_tolerance": 1e-07,
+  "cmt_rel_tolerance": 1e-07,
+  "final_angle_abs_tolerance_deg": 1e-06,
+  "formal_evaluator_device": "cuda:0",
+  "input_sha256": {
+    "src/four_link/evaluation/formal_v22_3_v9_evaluator.py": "c13c0c45b092fc43aa75fc091e870a14e4d8b6730cda5b2b8659c21a2d2bb186",
+    "models/four_link/paper_four_link_passive_sign_selector_v22_3_grid.pth": "99fdebbe1ecdccfdfd1d36902ff4dd6936712488065aa0e6cf5c8391b24979e1",
+    "models/four_link/v22_3_v9_uni_pos_400_grid/V22_3V9UniPos400Grid_c097_Policy_best.pth": "521962b8a3deea4411dc1b1c801cf9d8fcecfafa51d240f6752c07952ec1926a",
+    "models/four_link/v22_3_v9_uni_neg_400_grid/V22_3V9UniNeg400Grid_c100_Policy_best.pth": "4752c0c4632d5958ee64c7f3004a76e9a7bd7f3204dd914fdb7003bce9a92d7c",
+    "inputs/formal_rollouts_active_vs_passive.csv": "39557858bdee443dcfbb837b15a2c337570eb8b8828721fd5e4dfa00d42f6ade",
+    "inputs/formal_paired_trials.csv": "cab0475943a31109c386910f815e1a361fc68594c3ff1b61c872a51356db1f4d"
+  },
+  "elapsed_seconds": 357.2414653301239
+}

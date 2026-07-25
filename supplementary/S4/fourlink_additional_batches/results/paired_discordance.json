@@ -1,0 +1,35 @@
+[
+  {
+    "endpoint": "success",
+    "n_pairs": 10800,
+    "both_positive": 4714,
+    "active_only": 429,
+    "selector_only": 282,
+    "neither_positive": 5375,
+    "discordant_n": 711,
+    "selector_only_over_active_only": 0.6573426573426573,
+    "mcnemar_exact_two_sided_p": 3.922290715415657e-08
+  },
+  {
+    "endpoint": "valid_Cmt_A",
+    "n_pairs": 10800,
+    "both_positive": 2244,
+    "active_only": 282,
+    "selector_only": 367,
+    "neither_positive": 7907,
+    "discordant_n": 649,
+    "selector_only_over_active_only": 1.301418439716312,
+    "mcnemar_exact_two_sided_p": 0.000961716179631379
+  },
+  {
+    "endpoint": "valid_Cmt_B",
+    "n_pairs": 10800,
+    "both_positive": 2244,
+    "active_only": 282,
+    "selector_only": 367,
+    "neither_positive": 7907,
+    "discordant_n": 649,
+    "selector_only_over_active_only": 1.301418439716312,
+    "mcnemar_exact_two_sided_p": 0.000961716179631379
+  }
+]
