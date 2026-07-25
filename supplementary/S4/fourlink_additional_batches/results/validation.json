@@ -1,0 +1,26 @@
+{
+  "mass_times_gravity_N": 24.95276,
+  "n_batches": 5,
+  "n_seed_streams": 15,
+  "n_matched_records": 10800,
+  "duplicate_pair_keys": 0,
+  "failures_with_assigned_cmt_A": 0,
+  "failures_with_assigned_cmt_B": 0,
+  "validity_A_B_changed_active_records": 0,
+  "validity_A_B_changed_selector_records": 0,
+  "source_validity_disagrees_with_recomputed_A_active": 0,
+  "source_validity_disagrees_with_recomputed_A_selector": 0,
+  "max_abs_source_vs_recomputed_cmt_A_active": 5.7269744502264075e-12,
+  "max_abs_source_vs_recomputed_cmt_A_selector": 2.241762331323116e-12,
+  "pooling_method": "Raw matched records are concatenated before analysis; conditional Cmt means are weighted by the actual both-valid record count, not by equally averaging batch means.",
+  "bootstrap": {
+    "replicates": 4000,
+    "seed": 2026072504,
+    "strata": [
+      "seed",
+      "walk_direction",
+      "commanded_step_length_m",
+      "commanded_step_height_m"
+    ]
+  }
+}

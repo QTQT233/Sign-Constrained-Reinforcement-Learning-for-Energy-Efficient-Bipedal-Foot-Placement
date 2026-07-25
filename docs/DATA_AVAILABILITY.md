@@ -8,7 +8,11 @@ checkpoints, complete 518,400-row learned-controller recovery-grid records,
 36 selected fixed-parameter replays, two-link case-level outputs, fixed
 V22_3/V9 four-link trial-level records, paired analyses, manifests, and
 checksums supporting the reported simulation results are available from the
-GitHub repository at the exact commit cited in the manuscript. Exhaustive MPC
+GitHub repository at the exact commit cited in the manuscript. The repository
+also contains the terminal-state records and code for the pooled landing MAE,
+the 10,800 matched records from five additional randomized four-link batches,
+and the paired records and code for the frozen hold-versus-requery control.
+These materials are mirrored in Supplementary Archive S4. Exhaustive MPC
 candidate tables, solver traces,
 validation records, and two deterministic replay records are provided as
 Supplementary Archive S1. The 12-cell action-weight HDF5 archive and its schema,
@@ -25,6 +29,9 @@ needed to regenerate the manuscript tables and statistical results. Manuscript
 figure-rendering scripts and image assets are maintained in the authors'
 offline submission backup and are not cited as public numerical reproducibility
 evidence.
+
+Zenodo version 1.0.0 does not contain the three S4 analyses. Its DOI remains
+the immutable record for the unchanged hardware evidence and videos.
 
 The two-link hardware controller uses an event-updated ATC-50 action lookup.
 The two-link simulations use transition-start expert routing, and the four-link

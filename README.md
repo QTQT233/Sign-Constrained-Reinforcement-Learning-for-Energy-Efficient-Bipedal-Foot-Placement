@@ -32,6 +32,9 @@ branch and preserved in the authors' offline `Paper_store/Past` archive.
   minima, fixed-parameter replay values, provenance, and scoped checksums.
 - `results/four_link_statistics/true_action_mask_scratch_c090_epoch1275/`:
   paired fixed-checkpoint inference for the true-mask comparison.
+- `supplementary/S4/`: portable code and machine-readable records for the
+  landing metric, five additional randomized four-link batches, and the frozen
+  hold-versus-requery query-schedule control.
 - `analysis/`: read-only numerical analysis and table-regeneration programs.
 - `docs/`: protocol, metric, provenance, availability, and submission records.
 
@@ -76,9 +79,12 @@ Key values are:
 
 The true-mask and selector policies share the formal evaluator and principal
 reward coefficients. Their architecture, initialization, soft thresholds, and
-training structure are not identical. The comparison is therefore reported as
-a method-level ablation: under the evaluated configuration, transition-level
-sign persistence is the component associated with the lower conditional `Cmt`.
+training structure are not identical, so their conditional `Cmt` difference is
+a method-level comparison rather than a one-factor estimate. The separate
+frozen hold-versus-requery control changes only query timing: transition-level
+holding increased success by 3.29 percentage points, while its paired
+conditional-`Cmt` interval included zero. The method-level `Cmt` difference
+therefore cannot be attributed to persistence alone.
 
 Regenerate the paired statistics:
 
@@ -166,6 +172,10 @@ interchangeable.
 - Supplementary Data S3: frozen ATC-50 lookup table, schema, portable event-
   query implementation, and checksums. No byte-for-byte regeneration claim is
   made for the historical table artifact.
+- Supplementary Archive S4: landing-metric records and validation, 10,800
+  additional four-link matched trials, and the 2,160-case frozen
+  hold-versus-requery control. A compact copy is tracked under
+  `supplementary/S4/`.
 
 A separate GitHub Release is optional when the manuscript cites the immutable
 merged `main` commit. The hardware payload has not changed, so this code update
@@ -178,6 +188,10 @@ python -m unittest discover -s tests -v
 python src/paper2/push_off_grid/validate_release.py
 python src/paper2/mpc/validate_release.py
 python analysis/reproduce_paper2_tables.py
+python supplementary/S4/landing_metric/code/recompute_landing_metrics.py
+python supplementary/S4/fourlink_additional_batches/code/analyze_validity.py
+python supplementary/S4/hold_vs_requery/analyze_results.py
+python supplementary/S4/build_manifest.py
 python tools/build_manifest.py
 python tools/verify_manifest.py
 git diff --check

@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "checks": {
+    "hold_validation_pass": true,
+    "hold_mismatch_count_zero": true,
+    "row_counts": true,
+    "hold_unique_case_keys": true,
+    "requery_unique_case_keys": true,
+    "paired_unique_case_keys": true,
+    "hold_has_zero_switches": true,
+    "sign_sequence_lengths_equal_steps": true,
+    "sign_sequence_symbols_valid": true,
+    "recorded_switch_counts_match_sequences": true,
+    "no_switch_cases_identical_discrete_outcomes": true,
+    "no_switch_cases_identical_continuous_outputs": true,
+    "required_analysis_files_present": true
+  }
+}

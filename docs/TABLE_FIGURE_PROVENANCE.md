@@ -9,8 +9,9 @@
 | Table V | `results/paper2_push_off_grid_12case/`; `results/two_link_primary_12_cases.csv`; `results/paper2_current/`; `analysis/reproduce_paper2_tables.py` | 12 matched case/checkpoint outputs and four condition means |
 | Table VI | `data/four_link/true_action_mask_scratch_c090_epoch1275/controller_summary.csv` | five principal fixed-checkpoint controller rows |
 | Table VII | current paired CSVs and `analysis/four_link_true_action_mask_paired_inference.py` | conditional both-valid comparisons under the shared V22_3/V9 evaluator |
-| Appendix A | `configs/paper2_push_off_grid_12_cases.csv`; `results/paper2_push_off_grid_12case/`; `results/paper2_current/paper2_combined_cases.csv`; accepted MPC records | selected recovery pairs, case-level values, and descriptive two-link summaries |
-| Appendix B | `data/four_link/true_action_mask_scratch_c090_epoch1275/`; current statistical outputs | controller, command-grid, terminal-reason, and training-log diagnostics |
+| Appendix A | `configs/paper2_push_off_grid_12_cases.csv`; `results/paper2_push_off_grid_12case/`; `results/paper2_current/paper2_combined_cases.csv`; `supplementary/S4/landing_metric/`; accepted MPC records | selected recovery pairs, case-level values, pooled per-transition landing MAE, and descriptive two-link summaries |
+| Appendix B | `data/four_link/true_action_mask_scratch_c090_epoch1275/`; `supplementary/S4/fourlink_additional_batches/`; `supplementary/S4/hold_vs_requery/`; current statistical outputs | primary controller diagnostics, five additional randomized batches, and the frozen query-schedule control |
+| Supplementary Archive S4 | `supplementary/S4/` | compact repository mirror of the landing, 10,800-case, and hold-versus-requery evidence; duplicate canonical models, evaluator, and primary inputs are referenced by hash rather than copied |
 
 ## Figure boundary
 

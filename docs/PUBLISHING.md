@@ -53,6 +53,10 @@ historical table artifact.
 - all unit and reference-artifact tests pass;
 - the MPC validator reports 12/12 successful accepted cases and exact replay
   agreement;
+- the S4 landing, 10,800-case, and hold-versus-requery analyses reproduce the
+  published summaries, and `supplementary/S4/` contains no duplicate models,
+  evaluator snapshots, formal inputs, local paths, or physical-touchdown
+  diagnostics;
 - manuscript-facing tables regenerate without an uncommitted diff;
 - `MANIFEST.csv` and `CHECKSUMS.sha256` are current;
 - repository code and author-owned data are licensed under Apache-2.0;
@@ -66,4 +70,4 @@ historical table artifact.
   agreement;
 - the manuscript distinguishes the GitHub software commit, hardware Zenodo
   DOI, Supplementary Archive S1, Supplementary Data S2, and Supplementary Data
-  S3.
+  S3, and Supplementary Archive S4.
