@@ -57,8 +57,8 @@ SEARCH_SOURCE = MPC_DIR / "mpc_ppo_aligned_search_recovery_coarse_to_fine.py"
 # repository file changes, the harness stops instead of silently changing the
 # controller or evaluator.
 PINNED_SHA256 = {
-    CORE_SOURCE: "F8DC01BAC479F549FE6E7AAB6667771BE8B6B3DEAB215BA5406D510093A07760",
-    COMMON_SOURCE: "452791D164605F9A38E8F46BEBA4C407A9A6F409B9DC4B79D3935A7B62ABBBFE",
+    CORE_SOURCE: "16C70879099DD392A7F4D42E53541885C6DC8BB0AA6376913AB75BC19890D14E",
+    COMMON_SOURCE: "F7FCB09BA56DC9B05A461EBFB5BECEF4D315FE561502F3927101507CC65B39C5",
     SEARCH_SOURCE: "D778C44E345896C516CCD686A64F7CC9604CBCEAB7435FEA4AC8F4351C0E5E32",
 }
 
@@ -639,7 +639,7 @@ def run_case(case: Case, mode: str, output_root: Path, workers: int, resume: boo
         "energy_j": float(result.energy_j),
         "distance_m": float(result.distance_m),
         "time_s": float(result.time_s),
-        "foot_error_m": float(result.foot_error_m),
+        "landing_mae_per_transition_m": float(result.landing_mae_m),
         "terminal_reason": result.terminal_reason,
         "best_recovery_sequence": list(sequence),
         "wall_elapsed_seconds": elapsed,

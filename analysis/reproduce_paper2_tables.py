@@ -16,20 +16,28 @@ from scipy.stats import t
 METHODS = [
     "LIPM COM",
     "TVLQR tracking",
-    "Discrete active PPO",
+    "Unrestricted discrete PPO",
     "Continuous-torque PPO",
     "Continuous-torque MPC",
-    "Proposed one-sided selector",
+    "Transition-start lookup router",
 ]
 LEGACY_METHOD_LABELS = {
-    "Proposed passive selector": "Proposed one-sided selector",
+    "Proposed passive selector": "Transition-start lookup router",
+    "Proposed one-sided selector": "Transition-start lookup router",
+    "Discrete active PPO": "Unrestricted discrete PPO",
     "Continuous active MPC": "Continuous-torque MPC",
     "Continuous active PPO": "Continuous-torque PPO",
 }
 GRID_METHOD_LABELS = {
-    "passive": "Proposed one-sided selector",
-    "discrete": "Discrete active PPO",
+    "passive": "Transition-start lookup router",
+    "discrete": "Unrestricted discrete PPO",
     "continuous": "Continuous-torque PPO",
+}
+LANDING_METHOD_LABELS = {
+    "passive": "Transition-start lookup router",
+    "discrete": "Unrestricted discrete PPO",
+    "continuous": "Continuous-torque PPO",
+    "mpc": "Continuous-torque MPC",
 }
 GROUPS = [
     ("flat", "1.28", "flat_1.280"),
@@ -95,7 +103,9 @@ def load_non_mpc(path: Path) -> list[dict]:
                 "status": row["status"],
                 "cmt": optional_float(row["cmt"]),
                 "time_s": optional_float(row["time_s"]),
-                "landing_error_m": optional_float(row["foot_error_m"]),
+                "landing_transition_count": None,
+                "foot_placement_mae_per_transition_m": None,
+                "landing_metric_source": "",
                 "source_record": row["stdout_log"],
             }
         )
@@ -119,7 +129,9 @@ def load_grid_learned(path: Path) -> list[dict]:
                 "status": "ok",
                 "cmt": optional_float(row["cmt"]),
                 "time_s": optional_float(row["time_s"]),
-                "landing_error_m": optional_float(row["landing_error_m"]),
+                "landing_transition_count": None,
+                "foot_placement_mae_per_transition_m": None,
+                "landing_metric_source": "",
                 "source_record": (
                     f"{path.as_posix()}#{row['case_id']}/{row['controller']}"
                 ),
@@ -140,7 +152,9 @@ def load_tvlqr(path: Path) -> list[dict]:
             "status": row["status"],
             "cmt": optional_float(row["cmt"]),
             "time_s": None,
-            "landing_error_m": None,
+            "landing_transition_count": None,
+            "foot_placement_mae_per_transition_m": None,
+            "landing_metric_source": "",
             "source_record": row["stdout"],
         }
         for row in rows
@@ -162,7 +176,9 @@ def load_mpc(path: Path) -> list[dict]:
                 "status": "ok",
                 "cmt": optional_float(row["cmt"]),
                 "time_s": optional_float(row["time_s"]),
-                "landing_error_m": optional_float(row["foot_error_m"]),
+                "landing_transition_count": None,
+                "foot_placement_mae_per_transition_m": None,
+                "landing_metric_source": "",
                 "source_record": str(path.as_posix()),
             }
         )
@@ -188,9 +204,45 @@ def apply_source_aligned_overrides(
                 "status": override["status"],
                 "cmt": optional_float(override["cmt"]),
                 "time_s": optional_float(override["time_s"]),
-                "landing_error_m": optional_float(override["landing_error_m"]),
                 "source_record": override["source_record"],
             }
+        )
+    return rows
+
+
+def apply_landing_metrics(rows: list[dict], path: Path) -> list[dict]:
+    """Attach the corrected three-transition case MAE released in S4."""
+    with path.open(encoding="utf-8-sig", newline="") as handle:
+        metrics = list(csv.DictReader(handle))
+    by_key = {(row["case_id"], row["method"]): row for row in rows}
+    attached: set[tuple[str, str]] = set()
+    for metric in metrics:
+        method = LANDING_METHOD_LABELS[metric["controller"]]
+        key = (canonical_case_id(metric["case_id"]), method)
+        if key not in by_key:
+            raise RuntimeError(f"landing metric has no executable-controller row: {key}")
+        by_key[key].update(
+            {
+                "landing_transition_count": 3,
+                "foot_placement_mae_per_transition_m": optional_float(
+                    metric["corrected_per_transition_mae_m"]
+                ),
+                "landing_metric_source": (
+                    f"{path.as_posix()}#{metric['case_id']}/{metric['controller']}"
+                ),
+            }
+        )
+        attached.add(key)
+    expected = {
+        (row["case_id"], row["method"])
+        for row in rows
+        if row["method"] in LANDING_METHOD_LABELS.values()
+    }
+    if attached != expected:
+        raise RuntimeError(
+            "corrected landing-metric coverage differs from the 48 executable "
+            f"controller-case rows: missing={sorted(expected - attached)}, "
+            f"extra={sorted(attached - expected)}"
         )
     return rows
 
@@ -230,6 +282,13 @@ def main() -> int:
             "results/paper2_push_off_grid_12case/accepted_cases.csv"
         ),
     )
+    parser.add_argument(
+        "--landing-metrics",
+        type=Path,
+        default=Path(
+            "supplementary/S4/landing_metric/results/case_metrics.csv"
+        ),
+    )
     parser.add_argument("--output-dir", type=Path, default=Path("results/paper2_current"))
     parser.add_argument(
         "--primary-output",
@@ -250,6 +309,7 @@ def main() -> int:
         + load_tvlqr(args.tvlqr)
         + load_mpc(args.mpc)
     )
+    rows = apply_landing_metrics(rows, args.landing_metrics)
     retained = [row for row in rows if row["status"] == "ok"]
 
     expected_cases = {
@@ -295,11 +355,24 @@ def main() -> int:
         selected = by_method[method]
         cmt = summary([row["cmt"] for row in selected if row["cmt"] is not None])
         timing = [row["time_s"] for row in selected if row["time_s"] is not None]
-        absolute_error = [
-            abs(row["landing_error_m"])
+        landing_rows = [
+            row
             for row in selected
-            if row["landing_error_m"] is not None
+            if row["foot_placement_mae_per_transition_m"] is not None
         ]
+        landing_transition_count = sum(
+            int(row["landing_transition_count"]) for row in landing_rows
+        )
+        pooled_landing_mae = (
+            sum(
+                int(row["landing_transition_count"])
+                * float(row["foot_placement_mae_per_transition_m"])
+                for row in landing_rows
+            )
+            / landing_transition_count
+            if landing_transition_count
+            else None
+        )
         if cmt["n"] != 12:
             raise RuntimeError(f"{method}: expected 12 Cmt values, found {cmt['n']}")
         table_v.append(
@@ -312,10 +385,8 @@ def main() -> int:
                 "ci95_high": format_number(cmt["hi"]),
                 "n_time": len(timing),
                 "mean_time_s": format_number(statistics.fmean(timing) if timing else None),
-                "n_landing_error": len(absolute_error),
-                "mean_absolute_landing_error_m": format_number(
-                    statistics.fmean(absolute_error) if absolute_error else None
-                ),
+                "n_landing_transitions": landing_transition_count,
+                "pooled_foot_placement_mae_m": format_number(pooled_landing_mae),
             }
         )
 
@@ -330,8 +401,8 @@ def main() -> int:
     }
     primary = []
     for case_id in sorted(expected_cases):
-        proposed = learned_by_case[(case_id, "Proposed one-sided selector")]
-        discrete = learned_by_case[(case_id, "Discrete active PPO")]
+        proposed = learned_by_case[(case_id, "Transition-start lookup router")]
+        discrete = learned_by_case[(case_id, "Unrestricted discrete PPO")]
         continuous = learned_by_case[(case_id, "Continuous-torque PPO")]
         proposed_cmt = float(proposed["cmt"])
         discrete_cmt = float(discrete["cmt"])

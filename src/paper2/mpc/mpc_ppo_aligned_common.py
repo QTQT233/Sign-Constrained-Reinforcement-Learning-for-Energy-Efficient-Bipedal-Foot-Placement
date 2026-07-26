@@ -512,7 +512,7 @@ def run_three_step_simulation_ppo_aligned(
     global_step = 0
     energy = 0.0
     distance = 0.0
-    foot_d = 0.0
+    landing_residuals: List[float] = []
     initial_theta1 = float(state[0])
     initial_theta2 = float(state[2])
     trace: List[core.TraceRow] = []
@@ -589,7 +589,10 @@ def run_three_step_simulation_ppo_aligned(
         initial_center = core.com_x(initial_theta1, initial_theta2, env)
         final_center = core.com_x(final_theta1, final_theta2, env)
         distance += abs(final_center - initial_center)
-        foot_d += core.foot_distance(final_theta1, final_theta2, env)
+        landing_residuals.append(
+            core.foot_x(final_theta1, final_theta2, env)
+            - core.target_foot_x(env)
+        )
 
         if recovery_sequence is None:
             recovery_delta = float(recovery_map[int(stance_leg)])
@@ -613,7 +616,11 @@ def run_three_step_simulation_ppo_aligned(
 
     success = walking_step >= total_steps
     cmt = energy / (core.W * distance) if distance > 1e-12 else float("nan")
-    foot_error = total_steps * core.PARAMS1["l1"] - foot_d
+    landing_mae = (
+        float(np.mean(np.abs(landing_residuals)))
+        if landing_residuals
+        else float("nan")
+    )
     extra: Dict[str, float] = {
         "recovery_sequence": ";".join(f"{v:.6g}" for v in recovery_used),
         "recovery_energy_sequence": ";".join(f"{v:.6g}" for v in recovery_energy_used),
@@ -638,7 +645,7 @@ def run_three_step_simulation_ppo_aligned(
         energy_j=float(energy),
         distance_m=float(distance),
         time_s=float(global_step * core.PARAMS1["dt"]),
-        foot_error_m=float(foot_error),
+        landing_mae_m=landing_mae,
         steps=int(global_step),
         terminal_reason=terminal_reason,
         trace=trace,

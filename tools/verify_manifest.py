@@ -15,15 +15,25 @@ def digest(path: Path) -> str:
     return value.hexdigest()
 
 
+def is_generated_or_cache(path: Path, root: Path) -> bool:
+    relative = path.relative_to(root)
+    return (
+        ".git" in relative.parts
+        or "__pycache__" in relative.parts
+        or "_generated" in relative.parts
+        or relative.parts[:4]
+        == ("supplementary", "S4", "hold_vs_requery", "outputs")
+        or path.suffix == ".pyc"
+    )
+
+
 def current_files(root: Path) -> dict[str, Path]:
     excluded = {root / "MANIFEST.csv", root / "CHECKSUMS.sha256"}
     return {
         path.relative_to(root).as_posix(): path
         for path in root.rglob("*")
         if path.is_file()
-        and ".git" not in path.parts
-        and "__pycache__" not in path.parts
-        and path.suffix != ".pyc"
+        and not is_generated_or_cache(path, root)
         and path not in excluded
     }
 

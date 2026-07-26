@@ -1,73 +1,42 @@
-# Publishing corrected code and evidence
+# Release and archive record
 
 Target repository:
 `QTQT233/Sign-Constrained-Reinforcement-Learning-for-Energy-Efficient-Bipedal-Foot-Placement`.
 
-All changes should be reviewed on a branch and merged through a pull request.
-Do not force-push or replace the historical repository.
+The manuscript cites an immutable commit on `main` as the software version of
+record.
 
-## Code-only correction workflow
+## Verification
 
-1. Inspect the complete diff against `main` and exclude unrelated files.
-2. Run:
+The release is verified from the repository root with:
 
-   ```bash
-   python -m unittest discover -s tests -v
-   python src/paper2/mpc/validate_release.py
-   python analysis/reproduce_paper2_tables.py
-   python tools/build_manifest.py
-   git diff --check
-   ```
+```bash
+python analysis/synchronize_landing_metric_outputs.py
+python analysis/reproduce_paper2_tables.py
+python supplementary/S4/landing_metric/code/recompute_landing_metrics.py
+python src/paper2/push_off_grid/validate_release.py
+python src/paper2/mpc/validate_release.py
+python -m unittest discover -s tests -v
+python supplementary/S4/build_manifest.py
+python tools/build_manifest.py
+python tools/verify_manifest.py
+git diff --check
+```
 
-3. Re-run the tests after rebuilding `MANIFEST.csv` and `CHECKSUMS.sha256`.
-4. Push the audited branch and merge it into `main` without rewriting history.
-5. Record the immutable public Git commit in the manuscript's Code
-   Availability statement.
+These commands verify the generated numerical files, repository and S4
+manifests, and the absence of workstation paths or credentials from portable
+files.
 
-A separate GitHub Release or tag is optional. For the current correction, the
-public commit on `main` is the authoritative software version pin.
+## Archive scope
 
-## Zenodo boundary
-
-The unchanged hardware evidence is archived separately at
-<https://doi.org/10.5281/zenodo.21407986>. The DOI must not be represented as
-containing the corrected software or unified MPC result. Because the hardware
-payload is unchanged, this code merge does not require a new Zenodo version.
-Create a new Zenodo version only when deposited hardware files or their
-metadata/checksums change.
-
-The complete MPC candidate-level record is supplied separately as
-Supplementary Archive S1. Its README and checksum sidecar should identify the
-exact Git commit used for the submission.
-
-The 12-cell action-weight HDF5 record is supplied separately as Supplementary
-Data S2 with its schema, manifest, and checksum sidecar.
-
-The frozen ATC-50 table and portable event-query implementation are supplied
-separately as Supplementary Data S3 with an axis/action schema, manifest, and
-checksum sidecar. S3 does not claim byte-for-byte regeneration of the
-historical table artifact.
-
-## Merge gate
-
-- all unit and reference-artifact tests pass;
-- the MPC validator reports 12/12 successful accepted cases and exact replay
-  agreement;
-- the S4 landing, 10,800-case, and hold-versus-requery analyses reproduce the
-  published summaries, and `supplementary/S4/` contains no duplicate models,
-  evaluator snapshots, formal inputs, local paths, or physical-touchdown
-  diagnostics;
-- manuscript-facing tables regenerate without an uncommitted diff;
-- `MANIFEST.csv` and `CHECKSUMS.sha256` are current;
-- repository code and author-owned data are licensed under Apache-2.0;
-- portable executables and public metadata contain no private paths,
-  credentials, cache files, or bracketed DOI placeholders; original frozen
-  source snapshots are explicitly identified as provenance-only rather than
-  portable entry points;
-- no superseded result tables, manuscript drafts, alternate figure-rendering
-  scripts, or generated figure assets are present on the submission branch;
-- `tools/verify_manifest.py` confirms complete file-set, size, and SHA-256
-  agreement;
-- the manuscript distinguishes the GitHub software commit, hardware Zenodo
-  DOI, Supplementary Archive S1, Supplementary Data S2, and Supplementary Data
-  S3, and Supplementary Archive S4.
+- Zenodo v1.0.0 (`10.5281/zenodo.21407986`) contains released data/model
+  artifacts and hardware videos, including the ATC-50 artifact used by S3.
+  S1, the strict-\(D>0.01\) S2 package, and S4 are not part of this version.
+- S1 contains the complete MPC candidate-level evidence and is supplied with
+  the journal submission.
+- S2 is the submission-supplied strict-\(D>0.01\) 12-cell action-weight HDF5
+  package, schema, manifest, and checksums used for Table II.
+- S3 combines the frozen ATC-50 artifact with the schema and portable query
+  implementation.
+- S4 contains the landing, additional-batch, and hold-versus-requery records,
+  is mirrored at the cited GitHub commit, and is not part of Zenodo v1.0.0.

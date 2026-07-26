@@ -85,18 +85,23 @@ class UnifiedMPCReleaseTests(unittest.TestCase):
         values = [float(row["cmt"]) for row in rows]
         self.assertAlmostEqual(statistics.fmean(values), 0.19894509876853902, places=14)
         self.assertAlmostEqual(statistics.stdev(values), 0.021963452200466357, places=14)
-        absolute_errors = [float(row["absolute_foot_error_m"]) for row in rows]
-        self.assertTrue(
-            all(
-                value == abs(float(row["foot_error_m"]))
-                for value, row in zip(absolute_errors, rows)
-            )
+        landing_case_mae = [
+            float(row["foot_placement_mae_per_transition_m"]) for row in rows
+        ]
+        self.assertEqual(
+            sum(int(row["landing_transition_count"]) for row in rows), 36
         )
-        self.assertAlmostEqual(statistics.fmean(absolute_errors), 0.06382515890169439, places=14)
+        self.assertAlmostEqual(
+            statistics.fmean(landing_case_mae),
+            0.03028463968177649,
+            places=14,
+        )
         summary = json.loads((RESULT_DIR / "accepted_summary.json").read_text(encoding="utf-8"))
         self.assertAlmostEqual(
-            summary["overall_landing_error"]["mean_absolute_m"],
-            0.06382515890169439,
+            summary["overall_foot_placement_mae"][
+                "pooled_per_transition_mae_m"
+            ],
+            0.03028463968177649,
             places=14,
         )
 
@@ -125,15 +130,37 @@ class UnifiedMPCReleaseTests(unittest.TestCase):
             encoding="utf-8", newline=""
         ) as handle:
             rows = {(row["case_id"], row["method"]): row for row in csv.DictReader(handle)}
-        discrete = rows[("raised_L1145_r1", "Discrete active PPO")]
+        discrete = rows[("raised_L1145_r1", "Unrestricted discrete PPO")]
         continuous = rows[("raised_L1145_r1", "Continuous-torque PPO")]
         lipm = rows[("raised_L1145_r1", "LIPM COM")]
         self.assertEqual(float(discrete["cmt"]), 0.267040040566968)
         self.assertEqual(float(continuous["cmt"]), 0.2780932427752225)
         self.assertEqual(float(lipm["cmt"]), 0.301544)
-        self.assertEqual(discrete["repository_entrypoint_reproduces_record"], "true")
-        self.assertEqual(continuous["repository_entrypoint_reproduces_record"], "true")
-        self.assertEqual(lipm["repository_entrypoint_reproduces_record"], "true")
+        self.assertEqual(
+            discrete["current_repository_entrypoint_reproduces_historical_record"],
+            "false",
+        )
+        self.assertEqual(
+            continuous["current_repository_entrypoint_reproduces_historical_record"],
+            "false",
+        )
+        self.assertEqual(
+            lipm["current_repository_entrypoint_reproduces_historical_record"],
+            "true",
+        )
+        self.assertEqual(
+            discrete["current_repository_entrypoint_sha256"],
+            sha256(
+                ROOT
+                / "src/paper2/entrypoints/raised_1.145_r1/Qi_multi_ac_discrete_sim.py"
+            ).upper(),
+        )
+        self.assertEqual(
+            continuous["current_repository_entrypoint_sha256"],
+            sha256(
+                ROOT / "src/paper2/entrypoints/raised_1.145_r1/Multi_continuous.py"
+            ).upper(),
+        )
         self.assertEqual(continuous["recovery_setting"], "1.00/0.89")
         self.assertEqual(lipm["recovery_setting"], "0.95/0.89")
 
@@ -168,17 +195,17 @@ class UnifiedMPCReleaseTests(unittest.TestCase):
         self.assertEqual({row["case_id"] for row in combined_rows}, expected_cases)
         for case_id in expected_cases:
             self.assertEqual(sum(row["case_id"] == case_id for row in combined_rows), 6)
-        self.assertEqual(float(current[("raised_L1145_r1", "Discrete active PPO")]["cmt"]), 0.25098054963443095)
+        self.assertEqual(float(current[("raised_L1145_r1", "Unrestricted discrete PPO")]["cmt"]), 0.25098054963443095)
         self.assertEqual(float(current[("raised_L1145_r1", "Continuous-torque PPO")]["cmt"]), 0.25817243332390905)
 
         with (ROOT / "results/paper2_current/table_v_current.csv").open(
             encoding="utf-8", newline=""
         ) as handle:
             table_v = {row["method"]: row for row in csv.DictReader(handle)}
-        self.assertNotIn("mean_landing_error_m", next(iter(table_v.values())))
+        self.assertNotIn("mean_absolute_landing_error_m", next(iter(table_v.values())))
         self.assertEqual(
-            float(table_v["Continuous-torque MPC"]["mean_absolute_landing_error_m"]),
-            0.063825158902,
+            float(table_v["Continuous-torque MPC"]["pooled_foot_placement_mae_m"]),
+            0.030284639682,
         )
 
     def test_release_validator(self) -> None:

@@ -18,7 +18,8 @@ two-expert evaluation/fusion concept used for the `60,30(0.33m)` /
 points. The repository contains the portable event-lookup implementation; the
 frozen table, schema, and checksums are provided as Supplementary Data S3. S3
 does not claim an independently reproducible table-generation script. The
-hardware-only Zenodo record is not the source of this simulation table. The
+Zenodo data-and-model record is not the executable source of this simulation
+table. The
 table is not an online comparison of critic return estimates. In the coarse
 transition router, `-1` selects the negative expert and the covered codes `0`
 and `+1` select the positive expert; `0` is a tie/zero-route code, not a third

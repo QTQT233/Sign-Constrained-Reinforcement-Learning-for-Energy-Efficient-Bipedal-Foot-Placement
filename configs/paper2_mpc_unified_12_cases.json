@@ -3,8 +3,8 @@
   "protocol_date": "2026-07-20",
   "description": "Repository-relative configuration for the accepted unified two-link MPC rerun.",
   "source_files": {
-    "src/paper2/mpc/two_link_mpc_multistep_compare.py": "f8dc01bac479f549fe6e7aab6667771be8b6b3deab215ba5406d510093a07760",
-    "src/paper2/mpc/mpc_ppo_aligned_common.py": "452791d164605f9a38e8f46beba4c407a9a6f409b9dc4b79d3935a7b62abbbfe",
+    "src/paper2/mpc/two_link_mpc_multistep_compare.py": "16c70879099dd392a7f4d42e53541885c6dc8bb0aa6376913ab75bc19890d14e",
+    "src/paper2/mpc/mpc_ppo_aligned_common.py": "f7fcb09ba56dc9b05a461ebfb5becef4d315fe561502f3927101507cc65b39c5",
     "src/paper2/mpc/mpc_ppo_aligned_search_recovery_coarse_to_fine.py": "d778c44e345896c516ccd686a64f7cc9604cbceab7435fea4ac8f4351c0e5e32"
   },
   "accepted_source_sha256_before_path_porting": {

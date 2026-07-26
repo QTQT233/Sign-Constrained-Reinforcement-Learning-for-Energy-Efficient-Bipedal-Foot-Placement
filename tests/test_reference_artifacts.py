@@ -94,7 +94,7 @@ class ReferenceArtifactTests(unittest.TestCase):
         current = {(row["case_id"], row["method"]): row for row in current_rows}
         self.assertEqual(len(current_rows), 72)
         self.assertEqual(
-            float(current[("raised_L1145_r1", "Discrete active PPO")]["cmt"]),
+            float(current[("raised_L1145_r1", "Unrestricted discrete PPO")]["cmt"]),
             0.25098054963443095,
         )
         self.assertEqual(
@@ -118,10 +118,23 @@ class ReferenceArtifactTests(unittest.TestCase):
         )
 
         table_v = {row["method"]: row for row in read_rows(ROOT / "results/paper2_current/table_v_current.csv")}
-        self.assertAlmostEqual(float(table_v["Proposed one-sided selector"]["mean_cmt"]), 0.122346306417)
-        self.assertAlmostEqual(float(table_v["Discrete active PPO"]["mean_cmt"]), 0.226620152405)
+        self.assertAlmostEqual(float(table_v["Transition-start lookup router"]["mean_cmt"]), 0.122346306417)
+        self.assertAlmostEqual(float(table_v["Unrestricted discrete PPO"]["mean_cmt"]), 0.226620152405)
         self.assertAlmostEqual(float(table_v["Continuous-torque PPO"]["mean_cmt"]), 0.238107711255)
         self.assertAlmostEqual(float(table_v["Continuous-torque MPC"]["mean_cmt"]), 0.198945098769)
+        expected_landing_mae = {
+            "Unrestricted discrete PPO": 0.044260284304,
+            "Continuous-torque PPO": 0.040952732815,
+            "Continuous-torque MPC": 0.030284639682,
+            "Transition-start lookup router": 0.041389074712,
+        }
+        for method, expected in expected_landing_mae.items():
+            self.assertEqual(int(table_v[method]["n_landing_transitions"]), 36)
+            self.assertAlmostEqual(
+                float(table_v[method]["pooled_foot_placement_mae_m"]),
+                expected,
+                places=12,
+            )
 
     def test_tvlqr_release_hashes_and_seeded_results(self) -> None:
         config = json.loads((ROOT / "configs/tvlqr_release.json").read_text(encoding="utf-8"))

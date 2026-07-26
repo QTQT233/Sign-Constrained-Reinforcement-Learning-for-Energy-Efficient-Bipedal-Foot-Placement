@@ -18,20 +18,37 @@
     "min": 0.16465844581543587,
     "max": 0.2336846609099357
   },
-  "overall_landing_error": {
-    "n": 12,
-    "definition": "mean of absolute_foot_error_m; foot_error_m remains the signed raw residual",
-    "mean_absolute_m": 0.06382515890169439
-  },
   "conditions": {
-    "flat_1.28": {"n": 3, "mean_cmt": 0.18870520803041568, "sample_sd": 0.012507092046881333},
-    "flat_1.145": {"n": 3, "mean_cmt": 0.20820414033919085, "sample_sd": 0.016585376319357928},
-    "raised_0.01m_1.28": {"n": 3, "mean_cmt": 0.1782837669187109, "sample_sd": 0.015569171748830941},
-    "raised_0.01m_1.145": {"n": 3, "mean_cmt": 0.22058727978583867, "sample_sd": 0.018720893189919784}
+    "flat_1.28": {
+      "n": 3,
+      "mean_cmt": 0.18870520803041568,
+      "sample_sd": 0.012507092046881333
+    },
+    "flat_1.145": {
+      "n": 3,
+      "mean_cmt": 0.20820414033919085,
+      "sample_sd": 0.016585376319357928
+    },
+    "raised_0.01m_1.28": {
+      "n": 3,
+      "mean_cmt": 0.1782837669187109,
+      "sample_sd": 0.015569171748830941
+    },
+    "raised_0.01m_1.145": {
+      "n": 3,
+      "mean_cmt": 0.22058727978583867,
+      "sample_sd": 0.018720893189919784
+    }
   },
   "files": {
     "case_table": "results/paper2_mpc_unified_12case/accepted_cases.csv",
     "formal_validation": "results/paper2_mpc_unified_12case/formal_validation.json",
     "configuration": "configs/paper2_mpc_unified_12_cases.json"
+  },
+  "overall_foot_placement_mae": {
+    "n_transitions": 36,
+    "definition": "pooled mean absolute horizontal foot-position residual at angular-target entry",
+    "pooled_per_transition_mae_m": 0.030284639681776488,
+    "source": "supplementary/S4/landing_metric/results/case_metrics.csv"
   }
 }

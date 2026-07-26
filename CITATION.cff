@@ -1,6 +1,6 @@
 cff-version: 1.2.0
-message: "If you use this software, please cite the associated manuscript and identify the exact Git commit used. Cite the hardware-data record separately using its Zenodo DOI."
-title: "Reproducibility materials for Mechanical-Work-Aware Routing of One-Sided PPO Experts for Planar Bipedal Foot Placement"
+message: "Please cite the associated manuscript and identify the exact Git commit used. Cite the Zenodo data record separately."
+title: "Reducing Simulated Mechanical Transport Cost in Bipedal Foot Placement via Torque-Sign-Constrained Expert Routing"
 type: software
 authors:
   - family-names: Tao
