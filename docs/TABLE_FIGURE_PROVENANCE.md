@@ -22,10 +22,9 @@ or image assets. Figure-level numerical values remain traceable as follows:
 - Figures 5–6: the two-link controller implementations and illustrated rollout
   definitions in the manuscript;
 - Figures 7–8: the separate hardware evidence record;
-- Figure 9: the formal shared-evaluator record with seed `20260719`, episode
-  `1155`, direction `-1`, touchdown reset, 0.30 m command length, and 0.01 m
-  command height, selected from the archived 2,160-case comparison for
-  qualitative visualization;
+- Figure 9: a qualitative manuscript illustration of a four-link controller
+  comparison. It is not used to compute any reported statistic and is not
+  mapped to a specific archived evaluation row;
 - Figure 10: the current controller summary and paired four-link analysis.
 
 Figure-rendering code and source images are outside the public numerical
