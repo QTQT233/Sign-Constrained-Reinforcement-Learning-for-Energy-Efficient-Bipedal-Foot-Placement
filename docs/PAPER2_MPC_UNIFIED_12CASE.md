@@ -4,9 +4,13 @@
 
 The repository-relative continuous-torque MPC completed all 12 prescribed
 three-step cases. The accepted mean `Cmt` is `0.198945098769`, with sample SD
-`0.021963452200`. Mean absolute landing error is
-`0.06382515890169439 m`. Two fresh-process replays reproduced every accepted
-scientific value exactly, and the formal validator reports zero errors.
+`0.021963452200`. The pooled horizontal foot-placement MAE is
+`0.030284639682 m` over 36 transitions, using
+`X_foot = l1*cos(theta1) + l2*sin(theta2)` and the corresponding
+target-foot position at angular-target entry. Two independent verification
+replays reproduced every accepted scientific value exactly, and the validator
+reports zero errors. Transition-level values and the metric validation report
+are released under `supplementary/S4/landing_metric/`.
 
 | Condition | n | Mean Cmt | Sample SD |
 |---|---:|---:|---:|
@@ -36,9 +40,6 @@ specified grids.
 - `results/paper2_mpc_unified_12case/formal_validation.json`: integrity and
   replay checks; and
 - `results/paper2_mpc_current_12_cases.csv`: manuscript-facing current table.
-
-Superseded tables are not distributed on the submission branch; they are held
-in the authors' offline `Paper_store/Past` archive.
 
 ## Validation
 

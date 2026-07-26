@@ -76,7 +76,7 @@ def main() -> int:
         "energy_j": float(result.energy_j),
         "distance_m": float(result.distance_m),
         "time_s": float(result.time_s),
-        "foot_error_m": float(result.foot_error_m),
+        "landing_mae_per_transition_m": float(result.landing_mae_m),
         "terminal_reason": str(result.terminal_reason),
         "best_recovery_sequence": [float(v) for v in sequence],
         "grid1": args.grid1,

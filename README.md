@@ -1,13 +1,12 @@
-# Sign-Constrained Reinforcement Learning for Bipedal Foot Placement
+# Reducing Simulated Mechanical Transport Cost in Bipedal Foot Placement via Torque-Sign-Constrained Expert Routing
 
-Reproducibility materials for *Mechanical-Work-Aware Routing of One-Sided PPO
-Experts for Planar Bipedal Foot Placement* by Qi Tao, Yiyou Liu, Amir Degani,
-and Mingyi Liu.
+Reproducibility materials for *Reducing Simulated Mechanical Transport Cost in
+Bipedal Foot Placement via Torque-Sign-Constrained Expert Routing* by Qi Tao,
+Yiyou Liu, Amir Degani, and Mingyi Liu.
 
-This `main` branch contains the current manuscript-facing simulation code,
-repository-hosted model checkpoints, numerical outputs, provenance records, validators,
-and checksums. Superseded public artifacts were removed from the submission
-branch and preserved in the authors' offline `Paper_store/Past` archive.
+This repository contains the manuscript-facing simulation code,
+repository-hosted model checkpoints, numerical outputs, provenance records,
+validators, and checksums.
 
 ## Evidence map
 
@@ -24,7 +23,7 @@ branch and preserved in the authors' offline `Paper_store/Past` archive.
 - `data/four_link/true_action_mask_scratch_c090_epoch1275/`: the current
   controller-level and trial-level four-link archive used for Tables VI–VII and
   Appendix B.
-- `results/paper2_current/`: the current 72-row two-link comparison and the
+- `results/paper2_current/`: the 72-row two-link comparison and the
   manuscript-facing Table IV–V summaries.
 - `results/paper2_mpc_unified_12case/`: accepted MPC cases, validation records,
   and deterministic replay checks.
@@ -35,15 +34,14 @@ branch and preserved in the authors' offline `Paper_store/Past` archive.
 - `supplementary/S4/`: portable code and machine-readable records for the
   landing metric, five additional randomized four-link batches, and the frozen
   hold-versus-requery query-schedule control.
-- `analysis/`: read-only numerical analysis and table-regeneration programs.
-- `docs/`: protocol, metric, provenance, availability, and submission records.
+- `analysis/`: non-simulation analysis, validation, and table-regeneration
+  programs.
+- `docs/`: protocol, metric, provenance, and availability records.
 
 The repository does not publish manuscript figure-rendering scripts or image
 assets because they are not part of the numerical reproducibility record. All
-numerical values plotted in the manuscript remain traceable to the current CSV
-and JSON records above. The plotting sources and submitted image assets are
-preserved in the authors' offline `Paper_store/New` submission backup, while
-earlier figure candidates are preserved under `Paper_store/Past`.
+numerical values plotted in the manuscript remain traceable to the released CSV
+and JSON records above.
 
 ## Environment
 
@@ -100,11 +98,13 @@ python -m unittest tests.test_true_action_mask_release -v
 
 ## Two-link 12-case comparison
 
-The 12 matched multi-step cases use the current fixed-parameter replay records.
-Mean `Cmt` is 0.122346306 for the proposed controller, 0.226620152 for discrete
-active PPO, 0.238107711 for continuous-torque PPO, and 0.198945099 for
-continuous-torque MPC. The corresponding ratio-of-means reductions are 46.0%,
-48.6%, and 38.5%.
+The 12 matched multi-step cases use the accepted fixed-parameter replay
+records. Mean `Cmt` is 0.122346306 for the transition-start lookup router,
+0.226620152 for unrestricted discrete PPO, 0.238107711 for continuous-torque
+PPO, and 0.198945099 for continuous-torque MPC. The corresponding
+ratio-of-means reductions are 46.0%, 48.6%, and 38.5%. The pooled
+per-transition foot-placement MAEs are 0.041389, 0.044260, 0.040953, and
+0.030285 m, respectively.
 
 For each learned controller and case, both post-impact recovery-velocity
 decrements were evaluated on `0.00:0.01:1.19 rad/s`, giving 14,400 candidates
@@ -118,6 +118,7 @@ Regenerate Tables IV–V:
 
 ```bash
 python src/paper2/push_off_grid/validate_release.py
+python analysis/synchronize_landing_metric_outputs.py
 python analysis/reproduce_paper2_tables.py
 ```
 
@@ -128,19 +129,18 @@ python src/paper2/mpc/validate_release.py
 python -m unittest tests.test_paper2_mpc_unified -v
 ```
 
-The full candidate-level MPC search, solver traces, and two fresh-process
-replays are prepared separately as Supplementary Archive S1.
+The full candidate-level MPC search, solver traces, and two independent
+verification replays per accepted case are supplied as Supplementary Archive S1.
 
 ## Action-weight evaluation
 
-The 12 current `Whole_energy_comparison_low_dim.py` source snapshots use RNG
-seed `20260716`, write the negative expert's `Cmt` to the negative-expert array,
-and accumulate continuous-controller positive commanded work from applied
-physical torque once per step. A value is eligible only when center-of-mass
-displacement is greater than 0.01 m. The fusion rule remains complete: if both
-experts succeed, the lower finite `Cmt` is used; if only one succeeds, that
-expert is used. These scripts preserve the workstation paths used for the
-completed runs and are explicitly provenance-only; see
+The 12 action-weight source snapshots use RNG seed `20260716`, write the
+non-positive expert's `Cmt` to the corresponding array, and accumulate
+continuous-controller positive commanded work from applied physical torque
+once per step. A value is eligible only when center-of-mass displacement is
+greater than 0.01 m. The fusion rule remains complete: if both experts succeed,
+the lower finite `Cmt` is used; if only one succeeds, that expert is used. The
+source snapshots are provenance records; portable regeneration is described in
 `src/two_link/action_weight/README.md`.
 
 The 12-cell HDF5 package and its schema/checksums are supplied separately as
@@ -166,20 +166,20 @@ interchangeable.
   manifests, checksums, and validators. Cite the exact `main` commit used for
   submission.
 - Zenodo DOI [10.5281/zenodo.21407986](https://doi.org/10.5281/zenodo.21407986):
-  version-1.0.0 data/model artifacts and supplementary hardware videos.
-- Supplementary Archive S1: complete MPC candidate-level evidence.
-- Supplementary Data S2: 12-cell action-weight HDF5 package and schema.
-- Supplementary Data S3: frozen ATC-50 lookup table, schema, portable event-
-  query implementation, and checksums. No byte-for-byte regeneration claim is
-  made for the historical table artifact.
+  version-1.0.0 data/model artifacts and supplementary hardware videos. S1, the
+  strict-\(D>0.01\) S2 package, and S4 are not part of this Zenodo version.
+- Supplementary Archive S1: complete MPC candidate-level evidence supplied
+  with the journal submission.
+- Supplementary Data S2: submission-supplied strict-\(D>0.01\) 12-cell
+  action-weight HDF5 package, schema, manifest, and checksums used for Table II.
+- Supplementary Data S3: frozen ATC-50 lookup table and checksums from Zenodo
+  version 1.0.0, together with the schema and portable event-query
+  implementation. No byte-for-byte regeneration claim is made for the
+  historical table artifact.
 - Supplementary Archive S4: landing-metric records and validation, 10,800
   additional four-link matched trials, and the 2,160-case frozen
   hold-versus-requery control. A compact copy is tracked under
-  `supplementary/S4/`.
-
-A separate GitHub Release is optional when the manuscript cites the immutable
-merged `main` commit. The hardware payload has not changed, so this code update
-does not require a new Zenodo version.
+  `supplementary/S4/` and is not part of Zenodo version 1.0.0.
 
 ## Release verification
 
@@ -187,6 +187,7 @@ does not require a new Zenodo version.
 python -m unittest discover -s tests -v
 python src/paper2/push_off_grid/validate_release.py
 python src/paper2/mpc/validate_release.py
+python analysis/synchronize_landing_metric_outputs.py
 python analysis/reproduce_paper2_tables.py
 python supplementary/S4/landing_metric/code/recompute_landing_metrics.py
 python supplementary/S4/fourlink_additional_batches/code/analyze_validity.py

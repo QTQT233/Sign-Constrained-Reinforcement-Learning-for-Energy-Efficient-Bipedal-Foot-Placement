@@ -3,7 +3,7 @@
   "boundary_optima": [
     {
       "case_id": "raised_L1280_r2",
-      "controller": "Proposed one-sided selector",
+      "controller": "Transition-start lookup router",
       "push_off_1_rad_s": 0.67,
       "push_off_2_rad_s": 1.19
     }

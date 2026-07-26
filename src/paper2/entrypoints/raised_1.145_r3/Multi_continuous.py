@@ -258,7 +258,7 @@ final_theta1 = 0
 final_theta2 = 0
 D = 0
 count_step = 0
-Foot_D = 0
+landing_residuals = []
 while step != 0:
     if count > 0:
         y = np.array([theta1_new, dtheta1_new, theta2_new, dtheta2_new])
@@ -300,7 +300,12 @@ while step != 0:
                       (env.l1 * np.cos(final_theta1) + env.l2_s * np.sin(final_theta2))) / (env.m1 + env.m2)
     D += abs(final_center_x - initial_center_x)
     if reward1:
-        Foot_D += 0.521 * (np.cos(final_theta1) + np.sin(final_theta2))
+        actual_foot_x = env.l1 * np.cos(final_theta1) + env.l2 * np.sin(final_theta2)
+        target_foot_x = (
+            env.l1 * np.cos(env.target1_rad)
+            + env.l2 * np.sin(env.target2_rad)
+        )
+        landing_residuals.append(actual_foot_x - target_foot_x)
         print("碰撞触发！计算碰撞后状态...")
         params = {
             'm1': env.m1,
@@ -357,4 +362,9 @@ while step != 0:
 Cmt_active_continuous = Energy_continuous / (W * D)
 print("连续力矩Cmt：", Cmt_active_continuous)
 print("Time", count_step * 0.01)
-print("Foot_error:", (3 * 0.521) - Foot_D)
+landing_mae = (
+    float(np.mean(np.abs(landing_residuals)))
+    if landing_residuals
+    else float("nan")
+)
+print("Landing_MAE:", landing_mae)

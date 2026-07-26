@@ -6,7 +6,7 @@
 | Table II(a–c) | action-weight HDF5 package (Supplementary Data S2); `analysis/recompute_action_weight_table_ii.py`; current CSV/JSON summaries | fixed-checkpoint evaluation with seed 20260716 and the declared eligibility rule |
 | Table III | hardware apparatus record and Zenodo hardware DOI | apparatus parameters only |
 | Table IV | primary two-link entry points, complete learned-controller recovery-grid records, and accepted MPC package | documents action generation, reset/recovery, metric, denominator, and source |
-| Table V | `results/paper2_push_off_grid_12case/`; `results/two_link_primary_12_cases.csv`; `results/paper2_current/`; `analysis/reproduce_paper2_tables.py` | 12 matched case/checkpoint outputs and four condition means |
+| Table V | `results/paper2_push_off_grid_12case/`; `results/two_link_primary_12_cases.csv`; `results/paper2_current/`; `supplementary/S4/landing_metric/`; `analysis/synchronize_landing_metric_outputs.py`; `analysis/reproduce_paper2_tables.py` | 12 matched case/checkpoint outputs, four condition means, and pooled per-transition horizontal foot-placement MAE |
 | Table VI | `data/four_link/true_action_mask_scratch_c090_epoch1275/controller_summary.csv` | five principal fixed-checkpoint controller rows |
 | Table VII | current paired CSVs and `analysis/four_link_true_action_mask_paired_inference.py` | conditional both-valid comparisons under the shared V22_3/V9 evaluator |
 | Appendix A | `configs/paper2_push_off_grid_12_cases.csv`; `results/paper2_push_off_grid_12case/`; `results/paper2_current/paper2_combined_cases.csv`; `supplementary/S4/landing_metric/`; accepted MPC records | selected recovery pairs, case-level values, pooled per-transition landing MAE, and descriptive two-link summaries |
@@ -28,10 +28,8 @@ or image assets. Figure-level numerical values remain traceable as follows:
   qualitative visualization;
 - Figure 10: the current controller summary and paired four-link analysis.
 
-The submitted drawing code and source images are stored in the authors'
-offline `Paper_store/New` submission backup. Earlier figure candidates are
-stored under `Paper_store/Past`. Neither set is represented as part of the
-public numerical reproducibility record.
+Figure-rendering code and source images are outside the public numerical
+reproducibility record.
 
 ## Controller implementation map
 

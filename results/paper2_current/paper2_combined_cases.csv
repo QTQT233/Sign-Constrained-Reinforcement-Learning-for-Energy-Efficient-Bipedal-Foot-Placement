@@ -1,73 +1,73 @@
-case_id,terrain,nominal_length_m,method,status,cmt,time_s,landing_error_m,source_record
-flat_L1145_r1,flat,1.145,LIPM COM,ok,0.287705,,,data/paper2/readonly_rerun/flat_L1145_r1__lipm.stdout.txt
-flat_L1145_r2,flat,1.145,LIPM COM,ok,0.265392,,,data/paper2/readonly_rerun/flat_L1145_r2__lipm.stdout.txt
-flat_L1145_r3,flat,1.145,LIPM COM,ok,0.222893,,,data/paper2/readonly_rerun/flat_L1145_r3__lipm.stdout.txt
-flat_L1280_r1,flat,1.28,LIPM COM,ok,0.227665,,,data/paper2/readonly_rerun/flat_L128_r1__lipm.stdout.txt
-flat_L1280_r2,flat,1.28,LIPM COM,ok,0.220897,,,data/paper2/readonly_rerun/flat_L128_r2__lipm.stdout.txt
-flat_L1280_r3,flat,1.28,LIPM COM,ok,0.209072,,,data/paper2/readonly_rerun/flat_L128_r3__lipm.stdout.txt
-raised_L1145_r1,raised_0.01m,1.145,LIPM COM,ok,0.301544,,,results/paper2_source_aligned_r1_rerun_20260721/raised_L1145_r1_lipm_source_aligned_recovery_0p95.stdout.txt
-raised_L1145_r2,raised_0.01m,1.145,LIPM COM,ok,0.246012,,,data/paper2/readonly_rerun/raised_L1145_r2__lipm.stdout.txt
-raised_L1145_r3,raised_0.01m,1.145,LIPM COM,ok,0.209884,,,data/paper2/readonly_rerun/raised_L1145_r3__lipm.stdout.txt
-raised_L1280_r1,raised_0.01m,1.28,LIPM COM,ok,0.218385,,,data/paper2/readonly_rerun/raised_L128_r1__lipm.stdout.txt
-raised_L1280_r2,raised_0.01m,1.28,LIPM COM,ok,0.204051,,,data/paper2/readonly_rerun/raised_L128_r2__lipm.stdout.txt
-raised_L1280_r3,raised_0.01m,1.28,LIPM COM,ok,0.200457,,,data/paper2/readonly_rerun/raised_L128_r3__lipm.stdout.txt
-flat_L1145_r1,flat,1.145,TVLQR tracking,ok,0.26225,,,results/tvlqr_seed0/flat_1.145_r1.stdout.txt
-flat_L1145_r2,flat,1.145,TVLQR tracking,ok,0.251662,,,results/tvlqr_seed0/flat_1.145_r2.stdout.txt
-flat_L1145_r3,flat,1.145,TVLQR tracking,ok,0.221758,,,results/tvlqr_seed0/flat_1.145_r3.stdout.txt
-flat_L1280_r1,flat,1.28,TVLQR tracking,ok,0.235297,,,results/tvlqr_seed0/flat_1.28_r1.stdout.txt
-flat_L1280_r2,flat,1.28,TVLQR tracking,ok,0.223641,,,results/tvlqr_seed0/flat_1.28_r2.stdout.txt
-flat_L1280_r3,flat,1.28,TVLQR tracking,ok,0.217185,,,results/tvlqr_seed0/flat_1.28_r3.stdout.txt
-raised_L1145_r1,raised_0.01m,1.145,TVLQR tracking,ok,0.278501,,,results/tvlqr_seed0/raised_1.145_r1.stdout.txt
-raised_L1145_r2,raised_0.01m,1.145,TVLQR tracking,ok,0.23999,,,results/tvlqr_seed0/raised_1.145_r2.stdout.txt
-raised_L1145_r3,raised_0.01m,1.145,TVLQR tracking,ok,0.225175,,,results/tvlqr_seed0/raised_1.145_r3.stdout.txt
-raised_L1280_r1,raised_0.01m,1.28,TVLQR tracking,ok,0.224081,,,results/tvlqr_seed0/raised_1.28_r1.stdout.txt
-raised_L1280_r2,raised_0.01m,1.28,TVLQR tracking,ok,0.217898,,,results/tvlqr_seed0/raised_1.28_r2.stdout.txt
-raised_L1280_r3,raised_0.01m,1.28,TVLQR tracking,ok,0.218291,,,results/tvlqr_seed0/raised_1.28_r3.stdout.txt
-flat_L1145_r1,flat,1.145,Discrete active PPO,ok,0.24260058154419423,1.99,0.12684528102720005,results/paper2_push_off_grid_12case/accepted_cases.csv#flat_1.145_r1/discrete
-flat_L1145_r2,flat,1.145,Discrete active PPO,ok,0.23219516008024402,2.5500000000000003,0.15231721676541943,results/paper2_push_off_grid_12case/accepted_cases.csv#flat_1.145_r2/discrete
-flat_L1145_r3,flat,1.145,Discrete active PPO,ok,0.22488253448370082,2.1,0.1520505514401167,results/paper2_push_off_grid_12case/accepted_cases.csv#flat_1.145_r3/discrete
-flat_L1280_r1,flat,1.28,Discrete active PPO,ok,0.2171195951298242,2.35,0.12454114581054054,results/paper2_push_off_grid_12case/accepted_cases.csv#flat_1.28_r1/discrete
-flat_L1280_r2,flat,1.28,Discrete active PPO,ok,0.2150008954864457,3.39,0.12078724422435028,results/paper2_push_off_grid_12case/accepted_cases.csv#flat_1.28_r2/discrete
-flat_L1280_r3,flat,1.28,Discrete active PPO,ok,0.18946016402734994,3.31,0.13179523596713327,results/paper2_push_off_grid_12case/accepted_cases.csv#flat_1.28_r3/discrete
-raised_L1145_r1,raised_0.01m,1.145,Discrete active PPO,ok,0.25098054963443095,2.42,0.12955070927378998,results/paper2_push_off_grid_12case/accepted_cases.csv#raised_1.145_r1/discrete
-raised_L1145_r2,raised_0.01m,1.145,Discrete active PPO,ok,0.24133085679392913,2.72,0.1549283434931863,results/paper2_push_off_grid_12case/accepted_cases.csv#raised_1.145_r2/discrete
-raised_L1145_r3,raised_0.01m,1.145,Discrete active PPO,ok,0.24010378326288317,2.7800000000000002,0.1494888461423165,results/paper2_push_off_grid_12case/accepted_cases.csv#raised_1.145_r3/discrete
-raised_L1280_r1,raised_0.01m,1.28,Discrete active PPO,ok,0.224470194060896,3.11,0.15049186478676968,results/paper2_push_off_grid_12case/accepted_cases.csv#raised_1.28_r1/discrete
-raised_L1280_r2,raised_0.01m,1.28,Discrete active PPO,ok,0.22253973480066633,2.96,0.13151615520087856,results/paper2_push_off_grid_12case/accepted_cases.csv#raised_1.28_r2/discrete
-raised_L1280_r3,raised_0.01m,1.28,Discrete active PPO,ok,0.21875777955676068,3.24,0.1549925346777763,results/paper2_push_off_grid_12case/accepted_cases.csv#raised_1.28_r3/discrete
-flat_L1145_r1,flat,1.145,Continuous-torque PPO,ok,0.2640318671094211,3.47,0.12124624785220695,results/paper2_push_off_grid_12case/accepted_cases.csv#flat_1.145_r1/continuous
-flat_L1145_r2,flat,1.145,Continuous-torque PPO,ok,0.2533720497336921,3.5500000000000003,0.1301115663914283,results/paper2_push_off_grid_12case/accepted_cases.csv#flat_1.145_r2/continuous
-flat_L1145_r3,flat,1.145,Continuous-torque PPO,ok,0.22773734251528494,3.93,0.14917213967289178,results/paper2_push_off_grid_12case/accepted_cases.csv#flat_1.145_r3/continuous
-flat_L1280_r1,flat,1.28,Continuous-torque PPO,ok,0.24068401421752703,3.84,0.09929070838842424,results/paper2_push_off_grid_12case/accepted_cases.csv#flat_1.28_r1/continuous
-flat_L1280_r2,flat,1.28,Continuous-torque PPO,ok,0.23014756046001517,3.5700000000000003,0.12666963983323165,results/paper2_push_off_grid_12case/accepted_cases.csv#flat_1.28_r2/continuous
-flat_L1280_r3,flat,1.28,Continuous-torque PPO,ok,0.22320854424596995,3.38,0.14733320291124574,results/paper2_push_off_grid_12case/accepted_cases.csv#flat_1.28_r3/continuous
-raised_L1145_r1,raised_0.01m,1.145,Continuous-torque PPO,ok,0.25817243332390905,3.5,0.13373676585990957,results/paper2_push_off_grid_12case/accepted_cases.csv#raised_1.145_r1/continuous
-raised_L1145_r2,raised_0.01m,1.145,Continuous-torque PPO,ok,0.24736340282300093,3.3200000000000003,0.1281237757893665,results/paper2_push_off_grid_12case/accepted_cases.csv#raised_1.145_r2/continuous
-raised_L1145_r3,raised_0.01m,1.145,Continuous-torque PPO,ok,0.23083457521884124,3.9,0.14316232321420075,results/paper2_push_off_grid_12case/accepted_cases.csv#raised_1.145_r3/continuous
-raised_L1280_r1,raised_0.01m,1.28,Continuous-torque PPO,ok,0.23140221463914637,3.3000000000000003,0.13588136209868296,results/paper2_push_off_grid_12case/accepted_cases.csv#raised_1.28_r1/continuous
-raised_L1280_r2,raised_0.01m,1.28,Continuous-torque PPO,ok,0.22497154385730195,3.92,0.11678660675107588,results/paper2_push_off_grid_12case/accepted_cases.csv#raised_1.28_r2/continuous
-raised_L1280_r3,raised_0.01m,1.28,Continuous-torque PPO,ok,0.2253669869175364,3.74,0.12677963457978692,results/paper2_push_off_grid_12case/accepted_cases.csv#raised_1.28_r3/continuous
-flat_L1145_r1,flat,1.145,Continuous-torque MPC,ok,0.19511386157200397,2.25,0.08279658608741558,results/paper2_mpc_current_12_cases.csv
-flat_L1145_r2,flat,1.145,Continuous-torque MPC,ok,0.20264315899801366,3.42,0.09246794192345953,results/paper2_mpc_current_12_cases.csv
-flat_L1145_r3,flat,1.145,Continuous-torque MPC,ok,0.22685540044755492,2.64,0.01375862584949572,results/paper2_mpc_current_12_cases.csv
-flat_L1280_r1,flat,1.28,Continuous-torque MPC,ok,0.18714936044447653,2.54,0.09691597940375485,results/paper2_mpc_current_12_cases.csv
-flat_L1280_r2,flat,1.28,Continuous-torque MPC,ok,0.20191743337940996,2.82,0.08177916395749363,results/paper2_mpc_current_12_cases.csv
-flat_L1280_r3,flat,1.28,Continuous-torque MPC,ok,0.1770488302673606,2.99,0.1314056310567644,results/paper2_mpc_current_12_cases.csv
-raised_L1145_r1,raised_0.01m,1.145,Continuous-torque MPC,ok,0.22893207093882226,2.29,0.05753561801696194,results/paper2_mpc_current_12_cases.csv
-raised_L1145_r2,raised_0.01m,1.145,Continuous-torque MPC,ok,0.19914510750875808,2.69,0.031816402005401034,results/paper2_mpc_current_12_cases.csv
-raised_L1145_r3,raised_0.01m,1.145,Continuous-torque MPC,ok,0.2336846609099357,2.79,-0.012919673547641786,results/paper2_mpc_current_12_cases.csv
-raised_L1280_r1,raised_0.01m,1.28,Continuous-torque MPC,ok,0.16465844581543587,2.48,0.026109130567324668,results/paper2_mpc_current_12_cases.csv
-raised_L1280_r2,raised_0.01m,1.28,Continuous-torque MPC,ok,0.17493955405531159,2.7,0.027077642520611622,results/paper2_mpc_current_12_cases.csv
-raised_L1280_r3,raised_0.01m,1.28,Continuous-torque MPC,ok,0.19525330088538523,2.08,0.11131951188400802,results/paper2_mpc_current_12_cases.csv
-flat_L1145_r1,flat,1.145,Proposed one-sided selector,ok,0.10874651379127698,2.5500000000000003,0.026814986496168203,results/paper2_push_off_grid_12case/accepted_cases.csv#flat_1.145_r1/passive
-flat_L1145_r2,flat,1.145,Proposed one-sided selector,ok,0.1185792601677367,2.61,0.021824064814923272,results/paper2_push_off_grid_12case/accepted_cases.csv#flat_1.145_r2/passive
-flat_L1145_r3,flat,1.145,Proposed one-sided selector,ok,0.12143080143077968,2.84,0.0972730978841081,results/paper2_push_off_grid_12case/accepted_cases.csv#flat_1.145_r3/passive
-flat_L1280_r1,flat,1.28,Proposed one-sided selector,ok,0.11319157587430137,2.67,0.03371478741545153,results/paper2_push_off_grid_12case/accepted_cases.csv#flat_1.28_r1/passive
-flat_L1280_r2,flat,1.28,Proposed one-sided selector,ok,0.11225498534642357,2.7800000000000002,0.035464581676681206,results/paper2_push_off_grid_12case/accepted_cases.csv#flat_1.28_r2/passive
-flat_L1280_r3,flat,1.28,Proposed one-sided selector,ok,0.11551109964541492,2.81,0.03441548621294288,results/paper2_push_off_grid_12case/accepted_cases.csv#flat_1.28_r3/passive
-raised_L1145_r1,raised_0.01m,1.145,Proposed one-sided selector,ok,0.14785439168930947,2.3000000000000003,0.10767834951502708,results/paper2_push_off_grid_12case/accepted_cases.csv#raised_1.145_r1/passive
-raised_L1145_r2,raised_0.01m,1.145,Proposed one-sided selector,ok,0.13557148640344793,2.4,0.1255016597541394,results/paper2_push_off_grid_12case/accepted_cases.csv#raised_1.145_r2/passive
-raised_L1145_r3,raised_0.01m,1.145,Proposed one-sided selector,ok,0.13212368445931796,3.19,0.09649707897328286,results/paper2_push_off_grid_12case/accepted_cases.csv#raised_1.145_r3/passive
-raised_L1280_r1,raised_0.01m,1.28,Proposed one-sided selector,ok,0.12320914014917492,3.21,0.1071597656818255,results/paper2_push_off_grid_12case/accepted_cases.csv#raised_1.28_r1/passive
-raised_L1280_r2,raised_0.01m,1.28,Proposed one-sided selector,ok,0.11919749326798594,3.18,0.11375699923219962,results/paper2_push_off_grid_12case/accepted_cases.csv#raised_1.28_r2/passive
-raised_L1280_r3,raised_0.01m,1.28,Proposed one-sided selector,ok,0.12048524477893445,3.17,0.12484323160028632,results/paper2_push_off_grid_12case/accepted_cases.csv#raised_1.28_r3/passive
+case_id,terrain,nominal_length_m,method,status,cmt,time_s,landing_transition_count,foot_placement_mae_per_transition_m,landing_metric_source,source_record
+flat_L1145_r1,flat,1.145,LIPM COM,ok,0.287705,,,,,data/paper2/readonly_rerun/flat_L1145_r1__lipm.stdout.txt
+flat_L1145_r2,flat,1.145,LIPM COM,ok,0.265392,,,,,data/paper2/readonly_rerun/flat_L1145_r2__lipm.stdout.txt
+flat_L1145_r3,flat,1.145,LIPM COM,ok,0.222893,,,,,data/paper2/readonly_rerun/flat_L1145_r3__lipm.stdout.txt
+flat_L1280_r1,flat,1.28,LIPM COM,ok,0.227665,,,,,data/paper2/readonly_rerun/flat_L128_r1__lipm.stdout.txt
+flat_L1280_r2,flat,1.28,LIPM COM,ok,0.220897,,,,,data/paper2/readonly_rerun/flat_L128_r2__lipm.stdout.txt
+flat_L1280_r3,flat,1.28,LIPM COM,ok,0.209072,,,,,data/paper2/readonly_rerun/flat_L128_r3__lipm.stdout.txt
+raised_L1145_r1,raised_0.01m,1.145,LIPM COM,ok,0.301544,,,,,results/paper2_source_aligned_r1_rerun_20260721/raised_L1145_r1_lipm_source_aligned_recovery_0p95.stdout.txt
+raised_L1145_r2,raised_0.01m,1.145,LIPM COM,ok,0.246012,,,,,data/paper2/readonly_rerun/raised_L1145_r2__lipm.stdout.txt
+raised_L1145_r3,raised_0.01m,1.145,LIPM COM,ok,0.209884,,,,,data/paper2/readonly_rerun/raised_L1145_r3__lipm.stdout.txt
+raised_L1280_r1,raised_0.01m,1.28,LIPM COM,ok,0.218385,,,,,data/paper2/readonly_rerun/raised_L128_r1__lipm.stdout.txt
+raised_L1280_r2,raised_0.01m,1.28,LIPM COM,ok,0.204051,,,,,data/paper2/readonly_rerun/raised_L128_r2__lipm.stdout.txt
+raised_L1280_r3,raised_0.01m,1.28,LIPM COM,ok,0.200457,,,,,data/paper2/readonly_rerun/raised_L128_r3__lipm.stdout.txt
+flat_L1145_r1,flat,1.145,TVLQR tracking,ok,0.26225,,,,,results/tvlqr_seed0/flat_1.145_r1.stdout.txt
+flat_L1145_r2,flat,1.145,TVLQR tracking,ok,0.251662,,,,,results/tvlqr_seed0/flat_1.145_r2.stdout.txt
+flat_L1145_r3,flat,1.145,TVLQR tracking,ok,0.221758,,,,,results/tvlqr_seed0/flat_1.145_r3.stdout.txt
+flat_L1280_r1,flat,1.28,TVLQR tracking,ok,0.235297,,,,,results/tvlqr_seed0/flat_1.28_r1.stdout.txt
+flat_L1280_r2,flat,1.28,TVLQR tracking,ok,0.223641,,,,,results/tvlqr_seed0/flat_1.28_r2.stdout.txt
+flat_L1280_r3,flat,1.28,TVLQR tracking,ok,0.217185,,,,,results/tvlqr_seed0/flat_1.28_r3.stdout.txt
+raised_L1145_r1,raised_0.01m,1.145,TVLQR tracking,ok,0.278501,,,,,results/tvlqr_seed0/raised_1.145_r1.stdout.txt
+raised_L1145_r2,raised_0.01m,1.145,TVLQR tracking,ok,0.23999,,,,,results/tvlqr_seed0/raised_1.145_r2.stdout.txt
+raised_L1145_r3,raised_0.01m,1.145,TVLQR tracking,ok,0.225175,,,,,results/tvlqr_seed0/raised_1.145_r3.stdout.txt
+raised_L1280_r1,raised_0.01m,1.28,TVLQR tracking,ok,0.224081,,,,,results/tvlqr_seed0/raised_1.28_r1.stdout.txt
+raised_L1280_r2,raised_0.01m,1.28,TVLQR tracking,ok,0.217898,,,,,results/tvlqr_seed0/raised_1.28_r2.stdout.txt
+raised_L1280_r3,raised_0.01m,1.28,TVLQR tracking,ok,0.218291,,,,,results/tvlqr_seed0/raised_1.28_r3.stdout.txt
+flat_L1145_r1,flat,1.145,Unrestricted discrete PPO,ok,0.24260058154419423,1.99,3,0.04056526031165886,supplementary/S4/landing_metric/results/case_metrics.csv#flat_1.145_r1/discrete,results/paper2_push_off_grid_12case/accepted_cases.csv#flat_1.145_r1/discrete
+flat_L1145_r2,flat,1.145,Unrestricted discrete PPO,ok,0.23219516008024402,2.5500000000000003,3,0.048438333592766745,supplementary/S4/landing_metric/results/case_metrics.csv#flat_1.145_r2/discrete,results/paper2_push_off_grid_12case/accepted_cases.csv#flat_1.145_r2/discrete
+flat_L1145_r3,flat,1.145,Unrestricted discrete PPO,ok,0.22488253448370082,2.1,3,0.04865924187409402,supplementary/S4/landing_metric/results/case_metrics.csv#flat_1.145_r3/discrete,results/paper2_push_off_grid_12case/accepted_cases.csv#flat_1.145_r3/discrete
+flat_L1280_r1,flat,1.28,Unrestricted discrete PPO,ok,0.2171195951298242,2.35,3,0.039687177259941676,supplementary/S4/landing_metric/results/case_metrics.csv#flat_1.28_r1/discrete,results/paper2_push_off_grid_12case/accepted_cases.csv#flat_1.28_r1/discrete
+flat_L1280_r2,flat,1.28,Unrestricted discrete PPO,ok,0.2150008954864457,3.39,3,0.03833028291272526,supplementary/S4/landing_metric/results/case_metrics.csv#flat_1.28_r2/discrete,results/paper2_push_off_grid_12case/accepted_cases.csv#flat_1.28_r2/discrete
+flat_L1280_r3,flat,1.28,Unrestricted discrete PPO,ok,0.18946016402734994,3.31,3,0.041966032858576786,supplementary/S4/landing_metric/results/case_metrics.csv#flat_1.28_r3/discrete,results/paper2_push_off_grid_12case/accepted_cases.csv#flat_1.28_r3/discrete
+raised_L1145_r1,raised_0.01m,1.145,Unrestricted discrete PPO,ok,0.25098054963443095,2.42,3,0.040662862411584066,supplementary/S4/landing_metric/results/case_metrics.csv#raised_1.145_r1/discrete,results/paper2_push_off_grid_12case/accepted_cases.csv#raised_1.145_r1/discrete
+raised_L1145_r2,raised_0.01m,1.145,Unrestricted discrete PPO,ok,0.24133085679392913,2.72,3,0.0487080956108259,supplementary/S4/landing_metric/results/case_metrics.csv#raised_1.145_r2/discrete,results/paper2_push_off_grid_12case/accepted_cases.csv#raised_1.145_r2/discrete
+raised_L1145_r3,raised_0.01m,1.145,Unrestricted discrete PPO,ok,0.24010378326288317,2.7800000000000002,3,0.04689271101405832,supplementary/S4/landing_metric/results/case_metrics.csv#raised_1.145_r3/discrete,results/paper2_push_off_grid_12case/accepted_cases.csv#raised_1.145_r3/discrete
+raised_L1280_r1,raised_0.01m,1.28,Unrestricted discrete PPO,ok,0.224470194060896,3.11,3,0.04735843558039075,supplementary/S4/landing_metric/results/case_metrics.csv#raised_1.28_r1/discrete,results/paper2_push_off_grid_12case/accepted_cases.csv#raised_1.28_r1/discrete
+raised_L1280_r2,raised_0.01m,1.28,Unrestricted discrete PPO,ok,0.22253973480066633,2.96,3,0.0411523026259946,supplementary/S4/landing_metric/results/case_metrics.csv#raised_1.28_r2/discrete,results/paper2_push_off_grid_12case/accepted_cases.csv#raised_1.28_r2/discrete
+raised_L1280_r3,raised_0.01m,1.28,Unrestricted discrete PPO,ok,0.21875777955676068,3.24,3,0.04870267559446271,supplementary/S4/landing_metric/results/case_metrics.csv#raised_1.28_r3/discrete,results/paper2_push_off_grid_12case/accepted_cases.csv#raised_1.28_r3/discrete
+flat_L1145_r1,flat,1.145,Continuous-torque PPO,ok,0.2640318671094211,3.47,3,0.03916727316813806,supplementary/S4/landing_metric/results/case_metrics.csv#flat_1.145_r1/continuous,results/paper2_push_off_grid_12case/accepted_cases.csv#flat_1.145_r1/continuous
+flat_L1145_r2,flat,1.145,Continuous-torque PPO,ok,0.2533720497336921,3.5500000000000003,3,0.04195012478347162,supplementary/S4/landing_metric/results/case_metrics.csv#flat_1.145_r2/continuous,results/paper2_push_off_grid_12case/accepted_cases.csv#flat_1.145_r2/continuous
+flat_L1145_r3,flat,1.145,Continuous-torque PPO,ok,0.22773734251528494,3.93,3,0.04777903685284013,supplementary/S4/landing_metric/results/case_metrics.csv#flat_1.145_r3/continuous,results/paper2_push_off_grid_12case/accepted_cases.csv#flat_1.145_r3/continuous
+flat_L1280_r1,flat,1.28,Continuous-torque PPO,ok,0.24068401421752703,3.84,3,0.03222482725759779,supplementary/S4/landing_metric/results/case_metrics.csv#flat_1.28_r1/continuous,results/paper2_push_off_grid_12case/accepted_cases.csv#flat_1.28_r1/continuous
+flat_L1280_r2,flat,1.28,Continuous-torque PPO,ok,0.23014756046001517,3.5700000000000003,3,0.040918827027986125,supplementary/S4/landing_metric/results/case_metrics.csv#flat_1.28_r2/continuous,results/paper2_push_off_grid_12case/accepted_cases.csv#flat_1.28_r2/continuous
+flat_L1280_r3,flat,1.28,Continuous-torque PPO,ok,0.22320854424596995,3.38,3,0.04730543807394264,supplementary/S4/landing_metric/results/case_metrics.csv#flat_1.28_r3/continuous,results/paper2_push_off_grid_12case/accepted_cases.csv#flat_1.28_r3/continuous
+raised_L1145_r1,raised_0.01m,1.145,Continuous-torque PPO,ok,0.25817243332390905,3.5,3,0.04129446488918953,supplementary/S4/landing_metric/results/case_metrics.csv#raised_1.145_r1/continuous,results/paper2_push_off_grid_12case/accepted_cases.csv#raised_1.145_r1/continuous
+raised_L1145_r2,raised_0.01m,1.145,Continuous-torque PPO,ok,0.24736340282300093,3.3200000000000003,3,0.039513356944825516,supplementary/S4/landing_metric/results/case_metrics.csv#raised_1.145_r2/continuous,results/paper2_push_off_grid_12case/accepted_cases.csv#raised_1.145_r2/continuous
+raised_L1145_r3,raised_0.01m,1.145,Continuous-torque PPO,ok,0.23083457521884124,3.9,3,0.04400960200397308,supplementary/S4/landing_metric/results/case_metrics.csv#raised_1.145_r3/continuous,results/paper2_push_off_grid_12case/accepted_cases.csv#raised_1.145_r3/continuous
+raised_L1280_r1,raised_0.01m,1.28,Continuous-torque PPO,ok,0.23140221463914637,3.3000000000000003,3,0.04231975381868643,supplementary/S4/landing_metric/results/case_metrics.csv#raised_1.28_r1/continuous,results/paper2_push_off_grid_12case/accepted_cases.csv#raised_1.28_r1/continuous
+raised_L1280_r2,raised_0.01m,1.28,Continuous-torque PPO,ok,0.22497154385730195,3.92,3,0.03589406217109764,supplementary/S4/landing_metric/results/case_metrics.csv#raised_1.28_r2/continuous,results/paper2_push_off_grid_12case/accepted_cases.csv#raised_1.28_r2/continuous
+raised_L1280_r3,raised_0.01m,1.28,Continuous-torque PPO,ok,0.2253669869175364,3.74,3,0.039056026791800626,supplementary/S4/landing_metric/results/case_metrics.csv#raised_1.28_r3/continuous,results/paper2_push_off_grid_12case/accepted_cases.csv#raised_1.28_r3/continuous
+flat_L1145_r1,flat,1.145,Continuous-torque MPC,ok,0.19511386157200397,2.25,3,0.02813011002224891,supplementary/S4/landing_metric/results/case_metrics.csv#flat_1.145_r1/mpc,results/paper2_mpc_current_12_cases.csv
+flat_L1145_r2,flat,1.145,Continuous-torque MPC,ok,0.20264315899801366,3.42,3,0.030981285544883885,supplementary/S4/landing_metric/results/case_metrics.csv#flat_1.145_r2/mpc,results/paper2_mpc_current_12_cases.csv
+flat_L1145_r3,flat,1.145,Continuous-torque MPC,ok,0.22685540044755492,2.64,3,0.027496725914280262,supplementary/S4/landing_metric/results/case_metrics.csv#flat_1.145_r3/mpc,results/paper2_mpc_current_12_cases.csv
+flat_L1280_r1,flat,1.28,Continuous-torque MPC,ok,0.18714936044447653,2.54,3,0.03163224302552784,supplementary/S4/landing_metric/results/case_metrics.csv#flat_1.28_r1/mpc,results/paper2_mpc_current_12_cases.csv
+flat_L1280_r2,flat,1.28,Continuous-torque MPC,ok,0.20191743337940996,2.82,3,0.02765920732566231,supplementary/S4/landing_metric/results/case_metrics.csv#flat_1.28_r2/mpc,results/paper2_mpc_current_12_cases.csv
+flat_L1280_r3,flat,1.28,Continuous-torque MPC,ok,0.1770488302673606,2.99,3,0.04297507899820311,supplementary/S4/landing_metric/results/case_metrics.csv#flat_1.28_r3/mpc,results/paper2_mpc_current_12_cases.csv
+raised_L1145_r1,raised_0.01m,1.145,Continuous-torque MPC,ok,0.22893207093882226,2.29,3,0.03176062662988969,supplementary/S4/landing_metric/results/case_metrics.csv#raised_1.145_r1/mpc,results/paper2_mpc_current_12_cases.csv
+raised_L1145_r2,raised_0.01m,1.145,Continuous-torque MPC,ok,0.19914510750875808,2.69,3,0.028620037064754984,supplementary/S4/landing_metric/results/case_metrics.csv#raised_1.145_r2/mpc,results/paper2_mpc_current_12_cases.csv
+raised_L1145_r3,raised_0.01m,1.145,Continuous-torque MPC,ok,0.2336846609099357,2.79,3,0.023433797532590284,supplementary/S4/landing_metric/results/case_metrics.csv#raised_1.145_r3/mpc,results/paper2_mpc_current_12_cases.csv
+raised_L1280_r1,raised_0.01m,1.28,Continuous-torque MPC,ok,0.16465844581543587,2.48,3,0.027463542993726314,supplementary/S4/landing_metric/results/case_metrics.csv#raised_1.28_r1/mpc,results/paper2_mpc_current_12_cases.csv
+raised_L1280_r2,raised_0.01m,1.28,Continuous-torque MPC,ok,0.17493955405531159,2.7,3,0.027994093116874952,supplementary/S4/landing_metric/results/case_metrics.csv#raised_1.28_r2/mpc,results/paper2_mpc_current_12_cases.csv
+raised_L1280_r3,raised_0.01m,1.28,Continuous-torque MPC,ok,0.19525330088538523,2.08,3,0.03526892801267536,supplementary/S4/landing_metric/results/case_metrics.csv#raised_1.28_r3/mpc,results/paper2_mpc_current_12_cases.csv
+flat_L1145_r1,flat,1.145,Transition-start lookup router,ok,0.10874651379127698,2.5500000000000003,3,0.04755038062772534,supplementary/S4/landing_metric/results/case_metrics.csv#flat_1.145_r1/passive,results/paper2_push_off_grid_12case/accepted_cases.csv#flat_1.145_r1/passive
+flat_L1145_r2,flat,1.145,Transition-start lookup router,ok,0.1185792601677367,2.61,3,0.044085660787390124,supplementary/S4/landing_metric/results/case_metrics.csv#flat_1.145_r2/passive,results/paper2_push_off_grid_12case/accepted_cases.csv#flat_1.145_r2/passive
+flat_L1145_r3,flat,1.145,Transition-start lookup router,ok,0.12143080143077968,2.84,3,0.05603427166188648,supplementary/S4/landing_metric/results/case_metrics.csv#flat_1.145_r3/passive,results/paper2_push_off_grid_12case/accepted_cases.csv#flat_1.145_r3/passive
+flat_L1280_r1,flat,1.28,Transition-start lookup router,ok,0.11319157587430137,2.67,3,0.03467352921613979,supplementary/S4/landing_metric/results/case_metrics.csv#flat_1.28_r1/passive,results/paper2_push_off_grid_12case/accepted_cases.csv#flat_1.28_r1/passive
+flat_L1280_r2,flat,1.28,Transition-start lookup router,ok,0.11225498534642357,2.7800000000000002,3,0.044391729279741665,supplementary/S4/landing_metric/results/case_metrics.csv#flat_1.28_r2/passive,results/paper2_push_off_grid_12case/accepted_cases.csv#flat_1.28_r2/passive
+flat_L1280_r3,flat,1.28,Transition-start lookup router,ok,0.11551109964541492,2.81,3,0.0569517889780759,supplementary/S4/landing_metric/results/case_metrics.csv#flat_1.28_r3/passive,results/paper2_push_off_grid_12case/accepted_cases.csv#flat_1.28_r3/passive
+raised_L1145_r1,raised_0.01m,1.145,Transition-start lookup router,ok,0.14785439168930947,2.3000000000000003,3,0.035954432734400986,supplementary/S4/landing_metric/results/case_metrics.csv#raised_1.145_r1/passive,results/paper2_push_off_grid_12case/accepted_cases.csv#raised_1.145_r1/passive
+raised_L1145_r2,raised_0.01m,1.145,Transition-start lookup router,ok,0.13557148640344793,2.4,3,0.04031171043077555,supplementary/S4/landing_metric/results/case_metrics.csv#raised_1.145_r2/passive,results/paper2_push_off_grid_12case/accepted_cases.csv#raised_1.145_r2/passive
+raised_L1145_r3,raised_0.01m,1.145,Transition-start lookup router,ok,0.13212368445931796,3.19,3,0.029919810888665504,supplementary/S4/landing_metric/results/case_metrics.csv#raised_1.145_r3/passive,results/paper2_push_off_grid_12case/accepted_cases.csv#raised_1.145_r3/passive
+raised_L1280_r1,raised_0.01m,1.28,Transition-start lookup router,ok,0.12320914014917492,3.21,3,0.03295040519951755,supplementary/S4/landing_metric/results/case_metrics.csv#raised_1.28_r1/passive,results/paper2_push_off_grid_12case/accepted_cases.csv#raised_1.28_r1/passive
+raised_L1280_r2,raised_0.01m,1.28,Transition-start lookup router,ok,0.11919749326798594,3.18,3,0.03514654011221583,supplementary/S4/landing_metric/results/case_metrics.csv#raised_1.28_r2/passive,results/paper2_push_off_grid_12case/accepted_cases.csv#raised_1.28_r2/passive
+raised_L1280_r3,raised_0.01m,1.28,Transition-start lookup router,ok,0.12048524477893445,3.17,3,0.03869863662220927,supplementary/S4/landing_metric/results/case_metrics.csv#raised_1.28_r3/passive,results/paper2_push_off_grid_12case/accepted_cases.csv#raised_1.28_r3/passive

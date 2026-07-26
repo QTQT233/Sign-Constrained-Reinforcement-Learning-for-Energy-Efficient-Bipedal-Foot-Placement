@@ -1,4 +1,4 @@
-# Current two-link 12-case protocol
+# Two-link 12-case protocol
 
 The manuscript uses 12 prespecified terrain/length/case checkpoints. All four
 executed controller families use their case-specific initial state and the
@@ -7,22 +7,27 @@ and reset equations. Recovery parameters are selected separately for each
 controller and case. The three learned controllers use the complete grid
 protocol below; MPC retains its documented coarse-to-fine recovery search.
 
-## Current values
+## Reported values
 
 `results/paper2_current/paper2_combined_cases.csv` contains six records per
-case: LIPM, TVLQR, discrete active PPO, continuous-torque PPO,
-continuous-torque MPC, and the proposed one-sided selector. The four executed
+case: LIPM, TVLQR, unrestricted discrete PPO, continuous-torque PPO,
+continuous-torque MPC, and the transition-start lookup router. The four executed
 controller means used in the primary comparison are:
 
 | Method | Mean Cmt |
 |---|---:|
-| Proposed one-sided selector | 0.122346306417 |
-| Discrete active PPO | 0.226620152405 |
+| Transition-start lookup router | 0.122346306417 |
+| Unrestricted discrete PPO | 0.226620152405 |
 | Continuous-torque PPO | 0.238107711255 |
 | Continuous-torque MPC | 0.198945098769 |
 
-The current primary CSV and Table V builder read the 36 fixed-parameter replay
-rows from `results/paper2_push_off_grid_12case/accepted_cases.csv`.
+The primary CSV and Table V builder read the 36 fixed-parameter replay rows
+from `results/paper2_push_off_grid_12case/accepted_cases.csv`. Corrected
+foot-placement metrics are joined from the 144 transition records in
+`supplementary/S4/landing_metric/`. Each executed controller contributes 36
+transitions; the pooled MAEs are 0.041389 m for the router, 0.044260 m for
+unrestricted discrete PPO, 0.040953 m for continuous-torque PPO, and 0.030285 m
+for MPC.
 
 ## Learned-controller recovery grid
 
@@ -52,6 +57,7 @@ separately.
 
 ```bash
 python src/paper2/push_off_grid/validate_release.py
+python analysis/synchronize_landing_metric_outputs.py
 python analysis/reproduce_paper2_tables.py
 python src/paper2/mpc/validate_release.py
 python -m unittest tests.test_paper2_mpc_unified -v

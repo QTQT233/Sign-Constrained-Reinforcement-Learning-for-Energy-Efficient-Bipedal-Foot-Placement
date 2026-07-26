@@ -104,19 +104,21 @@ def main() -> int:
         require(sha256(RESULT_DIR / relative) == expected, f"release checksum mismatch: {relative}")
 
     cmt = [float(row["cmt"]) for row in rows]
-    absolute_foot_error = [float(row["absolute_foot_error_m"]) for row in rows]
-    require(
-        all(close(value, abs(float(row["foot_error_m"]))) for value, row in zip(absolute_foot_error, rows)),
-        "absolute foot-error column differs from abs(foot_error_m)",
-    )
+    landing_case_mae = [
+        float(row["foot_placement_mae_per_transition_m"]) for row in rows
+    ]
+    landing_transitions = sum(int(row["landing_transition_count"]) for row in rows)
+    require(landing_transitions == 36, "expected 36 MPC landing transitions")
     require(close(statistics.fmean(cmt), summary["overall_cmt"]["mean"]), "overall Cmt mean mismatch")
     require(close(statistics.stdev(cmt), summary["overall_cmt"]["sample_sd"]), "overall Cmt SD mismatch")
     require(
         close(
-            statistics.fmean(absolute_foot_error),
-            summary["overall_landing_error"]["mean_absolute_m"],
+            statistics.fmean(landing_case_mae),
+            summary["overall_foot_placement_mae"][
+                "pooled_per_transition_mae_m"
+            ],
         ),
-        "mean absolute foot error mismatch",
+        "pooled per-transition foot-placement MAE mismatch",
     )
 
     current = {row["case_id"]: row for row in read_csv(CURRENT)}
@@ -126,8 +128,15 @@ def main() -> int:
         require(close(float(row["cmt"]), float(accepted_by_id[case_id]["cmt"])), f"Cmt mismatch: {case_id}")
         require(close(float(row["time_s"]), float(accepted_by_id[case_id]["time_s"])), f"time mismatch: {case_id}")
         require(
-            close(float(row["foot_error_m"]), float(accepted_by_id[case_id]["foot_error_m"])),
-            f"foot error mismatch: {case_id}",
+            close(
+                float(row["foot_placement_mae_per_transition_m"]),
+                float(
+                    accepted_by_id[case_id][
+                        "foot_placement_mae_per_transition_m"
+                    ]
+                ),
+            ),
+            f"foot-placement MAE mismatch: {case_id}",
         )
 
     public_files = [CONFIG, CASES, SUMMARY, FORMAL, CURRENT]
@@ -139,7 +148,10 @@ def main() -> int:
     print("Unified MPC release validation: PASS")
     print(f"Cases: {len(rows)}/12 successful; replay pairs exact")
     print(f"Cmt mean: {statistics.fmean(cmt):.12f}; sample SD: {statistics.stdev(cmt):.12f}")
-    print(f"Mean absolute landing error: {statistics.fmean(absolute_foot_error):.12f} m")
+    print(
+        "Pooled per-transition foot-placement MAE: "
+        f"{statistics.fmean(landing_case_mae):.12f} m"
+    )
     print(f"Pinned sources: {len(pinned)}; formal validation errors: {formal['error_count']}")
     return 0
 

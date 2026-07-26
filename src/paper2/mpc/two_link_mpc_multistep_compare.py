@@ -148,8 +148,14 @@ def com_x(theta1: float, theta2: float, env: "TwoLinkEnv") -> float:
     )
 
 
-def foot_distance(theta1: float, theta2: float, env: "TwoLinkEnv") -> float:
-    return float(env.l1 * (np.cos(theta1) + np.sin(theta2)))
+def foot_x(theta1: float, theta2: float, env: "TwoLinkEnv") -> float:
+    """Return horizontal swing-foot position in the implemented coordinates."""
+    return float(env.l1 * np.cos(theta1) + env.l2 * np.sin(theta2))
+
+
+def target_foot_x(env: "TwoLinkEnv") -> float:
+    """Return the horizontal position at the centre of the primary target box."""
+    return foot_x(env.target1_rad, env.target2_rad, env)
 
 
 def collision_dynamics_full(theta1: float, theta2: float, dtheta1_pre: float, dtheta2_pre: float,
@@ -374,7 +380,7 @@ class SimulationResult:
     energy_j: float
     distance_m: float
     time_s: float
-    foot_error_m: float
+    landing_mae_m: float
     steps: int
     terminal_reason: str
     trace: List[TraceRow]
@@ -555,7 +561,7 @@ def run_three_step_simulation(controller: ControllerBase,
     global_step = 0
     energy = 0.0
     distance = 0.0
-    foot_d = 0.0
+    landing_residuals: List[float] = []
     initial_theta1 = float(state[0])
     initial_theta2 = float(state[2])
     trace: List[TraceRow] = []
@@ -615,7 +621,9 @@ def run_three_step_simulation(controller: ControllerBase,
         initial_center = com_x(initial_theta1, initial_theta2, env)
         final_center = com_x(final_theta1, final_theta2, env)
         distance += abs(final_center - initial_center)
-        foot_d += foot_distance(final_theta1, final_theta2, env)
+        landing_residuals.append(
+            foot_x(final_theta1, final_theta2, env) - target_foot_x(env)
+        )
 
         state, energy, collision_delta = handle_collision_with_recovery(state, stance_leg, env.param, energy, recovery_map)
         initial_theta1 = float(state[0])
@@ -634,7 +642,11 @@ def run_three_step_simulation(controller: ControllerBase,
     # Keep their energy and distance as diagnostics, but never expose a
     # partial-trajectory Cmt that could be mistaken for a completed result.
     cmt = energy / (W * distance) if success and distance > 1e-12 else float("nan")
-    foot_error = total_steps * PARAMS1["l1"] - foot_d
+    landing_mae = (
+        float(np.mean(np.abs(landing_residuals)))
+        if landing_residuals
+        else float("nan")
+    )
     extra: Dict[str, float] = {}
     if isinstance(controller, TwoLinkMPCController):
         extra["mpc_num_solves"] = float(len(controller.solve_log))
@@ -646,7 +658,7 @@ def run_three_step_simulation(controller: ControllerBase,
         energy_j=float(energy),
         distance_m=float(distance),
         time_s=float(global_step * PARAMS1["dt"]),
-        foot_error_m=float(foot_error),
+        landing_mae_m=landing_mae,
         steps=int(global_step),
         terminal_reason=terminal_reason,
         trace=trace,
@@ -673,7 +685,7 @@ def result_summary_row(result: SimulationResult) -> Dict[str, object]:
         "energy_j": result.energy_j,
         "distance_m": result.distance_m,
         "time_s": result.time_s,
-        "foot_error_m": result.foot_error_m,
+        "landing_mae_per_transition_m": result.landing_mae_m,
         "steps": result.steps,
         "terminal_reason": result.terminal_reason,
     }

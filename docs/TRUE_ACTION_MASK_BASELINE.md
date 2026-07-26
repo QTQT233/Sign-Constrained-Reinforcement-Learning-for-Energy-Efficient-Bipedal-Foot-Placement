@@ -88,6 +88,5 @@ python -m unittest tests.test_true_action_mask_release -v
 ```
 
 Manuscript figure-rendering scripts and image assets are not published in this
-repository. Their final versions are stored in the authors' offline submission
-backup; manuscript numerical values derive from the current CSV and JSON
+repository; manuscript numerical values derive from the released CSV and JSON
 records above.

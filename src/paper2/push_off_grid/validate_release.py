@@ -27,12 +27,12 @@ CONTROLLERS = {
     },
     "discrete": {
         "slug": "discrete_active_ppo",
-        "label": "Discrete active PPO",
+        "label": "Unrestricted discrete PPO",
         "entrypoint": "Qi_multi_ac_discrete_sim.py",
     },
     "passive": {
         "slug": "proposed_selector",
-        "label": "Proposed one-sided selector",
+        "label": "Transition-start lookup router",
         "entrypoint": "Qi_multi_passive_sim.py",
     },
 }
@@ -325,9 +325,9 @@ def validate(refresh_metadata: bool) -> dict[str, object]:
         "fixed_parameter_replays": 36,
         "source_code_boundary": (
             "The case entry points contain the selected recovery decrements. "
-            "The original workstation search generators are excluded because "
-            "they contain machine-specific paths; this release validates the "
-            "complete candidate records without claiming a standalone training rerun."
+            "The complete candidate records and fixed-parameter replays are "
+            "validated independently of the environment-specific search "
+            "orchestration used for the completed runs."
         ),
         "files": provenance_files,
     }

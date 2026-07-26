@@ -103,7 +103,9 @@ def last_match(pattern: str, text: str) -> Optional[float]:
         return None
 
 
-def parse_metrics(kind: str, stdout: str) -> Tuple[Optional[float], Optional[float], Optional[float], str]:
+def parse_metrics(
+    kind: str, stdout: str
+) -> Tuple[Optional[float], Optional[float], Optional[float], str]:
     cmt_patterns = {
         "passive": rf"离散被动力矩Cmt\s*[：:]\s*({NUMBER})",
         "discrete": rf"离散主动力矩Cmt\s*[：:]\s*({NUMBER})",
@@ -113,10 +115,12 @@ def parse_metrics(kind: str, stdout: str) -> Tuple[Optional[float], Optional[flo
     }
     cmt = last_match(cmt_patterns[kind], stdout)
     time_s = last_match(rf"^Time\s*:?[ \t]*({NUMBER})\s*$", stdout)
-    foot_error = last_match(rf"^Foot_error\s*:?[ \t]*({NUMBER})\s*$", stdout)
+    foot_placement_mae = last_match(
+        rf"^Landing_MAE\s*:?[ \t]*({NUMBER})\s*$", stdout
+    )
     missing = [name for name, value in (("Cmt", cmt),) if value is None]
     notes = "" if not missing else "missing " + ", ".join(missing)
-    return cmt, time_s, foot_error, notes
+    return cmt, time_s, foot_placement_mae, notes
 
 
 def write_text(path: Path, text: str) -> None:
@@ -146,7 +150,8 @@ def run_one(case, method, timeout_s: int) -> dict:
         "elapsed_seconds": "",
         "cmt": "",
         "time_s": "",
-        "foot_error_m": "",
+        "n_landing_transitions": "",
+        "foot_placement_mae_per_transition_m": "",
         "source_sha256": "",
         "source_scan_hits": "",
         "source_tree_changed": "",
@@ -258,10 +263,12 @@ def run_one(case, method, timeout_s: int) -> dict:
     else:
         row["source_tree_changed"] = "false"
 
-    cmt, time_s, foot_error, parse_notes = parse_metrics(kind, stdout)
+    cmt, time_s, foot_placement_mae, parse_notes = parse_metrics(kind, stdout)
     row["cmt"] = "" if cmt is None else repr(cmt)
     row["time_s"] = "" if time_s is None else repr(time_s)
-    row["foot_error_m"] = "" if foot_error is None else repr(foot_error)
+    if foot_placement_mae is not None:
+        row["n_landing_transitions"] = 3
+        row["foot_placement_mae_per_transition_m"] = repr(foot_placement_mae)
     if parse_notes:
         row["parse_notes"] = (row["parse_notes"] + "; " if row["parse_notes"] else "") + parse_notes
 

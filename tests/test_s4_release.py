@@ -165,6 +165,16 @@ class SupplementaryS4Tests(unittest.TestCase):
             self.assertEqual(int(indexed[relative]["size_bytes"]), path.stat().st_size)
             self.assertEqual(indexed[relative]["sha256"], sha256(path))
 
+        checksums = {}
+        for line in (S4 / "CHECKSUMS.sha256").read_text(
+            encoding="utf-8"
+        ).splitlines():
+            digest, relative = line.split("  ", 1)
+            checksums[relative] = digest
+        self.assertEqual(set(checksums), set(actual))
+        for relative, path in actual.items():
+            self.assertEqual(checksums[relative], sha256(path))
+
 
 if __name__ == "__main__":
     unittest.main()
