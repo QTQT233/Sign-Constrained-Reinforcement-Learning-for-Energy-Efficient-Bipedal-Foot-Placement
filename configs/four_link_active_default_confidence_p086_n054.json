@@ -1,0 +1,22 @@
+{
+  "schema": "four-link-active-default-confidence-config/v1",
+  "controller": "active_default_confidence_selector",
+  "gate_checkpoint": "models/four_link/three_expert_selector_v22_3/V22_3_three_expert_selector.pth",
+  "gate_checkpoint_sha256": "d7f63ce349fda4f670a343f8b579f1512420616471d3ec4650e3c6c07105b954",
+  "route": {
+    "default": "active",
+    "nonnegative_gate_probability_minimum": 0.86,
+    "nonpositive_gate_probability_minimum": 0.54,
+    "both_pass_rule": "larger gate probability",
+    "query_schedule": "transition start",
+    "persistence": "hold selected expert until termination"
+  },
+  "threshold_selection": {
+    "source": "development data",
+    "evaluation_seeds": [
+      20261301,
+      20261302,
+      20261303
+    ]
+  }
+}

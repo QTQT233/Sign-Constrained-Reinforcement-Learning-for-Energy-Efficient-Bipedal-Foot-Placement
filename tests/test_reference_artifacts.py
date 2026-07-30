@@ -29,9 +29,16 @@ class ReferenceArtifactTests(unittest.TestCase):
             row["controller_or_set"]: row
             for row in read_rows(ROOT / "results/table1/table_i.csv")
         }
-        self.assertEqual(int(rows["Active PPO"]["feasible_states"]), 630328)
-        self.assertEqual(int(rows["Sign-constrained union"]["feasible_states"]), 582861)
-        self.assertEqual(int(rows["Common feasible intersection"]["feasible_states"]), 534042)
+        self.assertEqual(int(rows["Unrestricted Active PPO"]["feasible_states"]), 647160)
+        self.assertEqual(int(rows["One-sided expert union"]["feasible_states"]), 562003)
+        self.assertEqual(
+            int(rows["Active-default three-expert lookup"]["feasible_states"]),
+            672382,
+        )
+        self.assertEqual(
+            int(rows["Active and one-sided feasible"]["feasible_states"]),
+            536781,
+        )
 
     def test_table2_uses_strict_archived_displacement_mask(self) -> None:
         rows = read_rows(ROOT / "results/action_weight_table_ii_seed_20260716.csv")
@@ -94,26 +101,26 @@ class ReferenceArtifactTests(unittest.TestCase):
         current = {(row["case_id"], row["method"]): row for row in current_rows}
         self.assertEqual(len(current_rows), 72)
         self.assertEqual(
-            float(current[("raised_L1145_r1", "Discrete active PPO")]["cmt"]),
-            0.267040040566968,
+            float(current[("raised_L1145_r1", "Unrestricted discrete PPO")]["cmt"]),
+            0.25098054963443095,
         )
         self.assertEqual(
             float(current[("raised_L1145_r1", "Continuous-torque PPO")]["cmt"]),
-            0.2780932427752225,
+            0.25817243332390905,
         )
 
         primary = {row["case_id"]: row for row in read_rows(ROOT / "results/two_link_primary_12_cases.csv")}
         self.assertEqual(set(primary), {row["case_id"] for row in current_rows})
-        self.assertEqual(float(primary["raised_L1145_r1"]["discrete_active_ppo_cmt"]), 0.267040040566968)
+        self.assertEqual(float(primary["raised_L1145_r1"]["discrete_active_ppo_cmt"]), 0.25098054963443095)
         self.assertEqual(
             float(primary["raised_L1145_r1"]["continuous_active_ppo_cmt"]),
-            0.2780932427752225,
+            0.25817243332390905,
         )
 
         table_v = {row["method"]: row for row in read_rows(ROOT / "results/paper2_current/table_v_current.csv")}
-        self.assertAlmostEqual(float(table_v["Proposed one-sided selector"]["mean_cmt"]), 0.123472869728)
-        self.assertAlmostEqual(float(table_v["Discrete active PPO"]["mean_cmt"]), 0.228756976684)
-        self.assertAlmostEqual(float(table_v["Continuous-torque PPO"]["mean_cmt"]), 0.240916227851)
+        self.assertAlmostEqual(float(table_v["Transition-start lookup router"]["mean_cmt"]), 0.122346306417)
+        self.assertAlmostEqual(float(table_v["Unrestricted discrete PPO"]["mean_cmt"]), 0.226620152407)
+        self.assertAlmostEqual(float(table_v["Continuous-torque PPO"]["mean_cmt"]), 0.238107711255)
         self.assertAlmostEqual(float(table_v["Continuous-torque MPC"]["mean_cmt"]), 0.198945098769)
 
     def test_tvlqr_release_hashes_and_seeded_results(self) -> None:

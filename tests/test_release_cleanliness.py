@@ -55,8 +55,14 @@ class ReleaseCleanlinessTests(unittest.TestCase):
         ) as handle:
             rows = {row["case_id"]: row for row in csv.DictReader(handle)}
         row = rows["raised_L1145_r1"]
-        self.assertEqual(float(row["discrete_active_ppo_cmt"]), 0.267040040566968)
-        self.assertEqual(float(row["continuous_active_ppo_cmt"]), 0.2780932427752225)
+        self.assertEqual(
+            float(row["discrete_active_ppo_cmt"]),
+            0.25098054963443095,
+        )
+        self.assertEqual(
+            float(row["continuous_active_ppo_cmt"]),
+            0.25817243332390905,
+        )
 
     def test_public_text_has_no_retired_release_pins(self) -> None:
         targets = [ROOT / "README.md", *sorted((ROOT / "docs").glob("*.md"))]
@@ -80,6 +86,17 @@ class ReleaseCleanlinessTests(unittest.TestCase):
 
         action_map = ROOT / "data/two_link/action_map"
         self.assertFalse(any("10,30" in path.name for path in action_map.iterdir()))
+
+    def test_paper2_entrypoints_use_portable_artifact_resolution(self) -> None:
+        resolver = ROOT / "src/paper2/artifact_paths.py"
+        self.assertTrue(resolver.is_file())
+        entrypoints = ROOT / "src/paper2/entrypoints"
+        for path in entrypoints.glob("*/*.py"):
+            text = path.read_text(encoding="utf-8")
+            self.assertNotIn("D:/", text, path)
+            self.assertNotIn("D:\\", text, path)
+            if "torch.load(" in text or "h5py.File(" in text:
+                self.assertIn("_resolve_artifact", text, path)
 
 
 if __name__ == "__main__":

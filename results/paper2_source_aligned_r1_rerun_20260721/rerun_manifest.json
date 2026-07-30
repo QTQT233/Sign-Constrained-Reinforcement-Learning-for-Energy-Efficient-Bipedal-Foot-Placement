@@ -45,7 +45,7 @@
       "landing_error_m": null,
       "recovery_setting": "0.95/0.89",
       "repository_entrypoint": "src/paper2/entrypoints/raised_1.145_r1/LIPM.py",
-      "source_sha256": "41CEB5E7F102780EF7CD6FF43D5B1CCA52A8505C08ABA26CB0BB84A31DB6B874",
+      "source_sha256": "0A7971448038A99C9F54FFA2CE177DCA67C2AE6A966F8A74214E31347CB16A30",
       "accepted_local_source_sha256": "CEAA15B5B0CA4C373E68C4C8A57082088BE31EF969986B27E445813147F75BE7",
       "repository_entrypoint_reproduces_record": true,
       "repository_difference": "accepted local source and repository entrypoint differ only by line-ending normalization",

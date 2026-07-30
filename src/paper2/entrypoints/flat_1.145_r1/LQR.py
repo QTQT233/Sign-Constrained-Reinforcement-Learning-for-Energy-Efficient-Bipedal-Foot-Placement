@@ -1,3 +1,11 @@
+import sys as _sys
+from pathlib import Path as _Path
+
+_REPOSITORY_ROOT = _Path(__file__).resolve().parents[4]
+if str(_REPOSITORY_ROOT) not in _sys.path:
+    _sys.path.insert(0, str(_REPOSITORY_ROOT))
+from src.paper2.artifact_paths import resolve_artifact as _resolve_artifact
+
 import os
 import torch
 import numpy as np
@@ -98,12 +106,12 @@ def load_policy_and_env(stance_leg_fun, params1, params2):
     """根据站立腿和Q值返回环境、策略和动作列表"""
     if stance_leg_fun == 1:
         params_fun = params1
-        policy_path = 'D:/L&S/Mas/Project/Paper2/l1_stand_continuous_1252.pth'
+        policy_path = _resolve_artifact(__file__, "l1_stand_continuous_1252.pth")
         actions_fun = [-1, 0, 1]
 
     else:
         params_fun = params2
-        policy_path = 'D:/L&S/Mas/Project/Paper2/l2_stand_continuous_1329.pth'
+        policy_path = _resolve_artifact(__file__, "l2_stand_continuous_1329.pth")
         actions_fun = [-1, 0, 1]
 
     env_fun = PendulumEnv(params_fun)

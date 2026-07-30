@@ -4,23 +4,30 @@
   "sampled_states": 810000,
   "files": {
     "active": {
-      "path": "data/two_link/action_map/working_save(-1,0,1)-30,30_from_2-2",
-      "sha256": "f0d9311df4ad5af41998c2e0df2e79b7c7c3141f396d292c77a7dcf802836d5f"
+      "path": "data/two_link/action_map_source_aligned/candidate_active_30x30x30x30.h5",
+      "sha256": "e9c01ebaa0cd4143a7aa1d7bf094e88d92c51de1bef64593199006a2650e520c"
     },
     "negative_only": {
-      "path": "data/two_link/action_map/working_save(-1,0)-30,30",
-      "sha256": "f66e0ca5f0a548c5015c5e08b4df4b6bdc0b84be0e4cc9e11e28b7c57d3abeab"
+      "path": "data/two_link/action_map_source_aligned/negative_30x30x30x30.h5",
+      "sha256": "74b6ef600b570661d35b6e4c919c2cd919c44639db17be4ee40f48ed10620894"
     },
     "positive_only": {
-      "path": "data/two_link/action_map/working_save(0,1)-30,30",
-      "sha256": "b28cf90c594b07f40bc7f495a4fd4f230197a4845c8dfc52e3c2abd519e4bf7f"
+      "path": "data/two_link/action_map_source_aligned/positive_30x30x30x30.h5",
+      "sha256": "3c2249b5657a53d0fbecaf3ef790bf1ddd3a3385ff3b4c9feaefb628372b3052"
+    },
+    "active_default_route": {
+      "path": "data/two_link/action_map_source_aligned/active_default_route_30x30x30x30.h5",
+      "sha256": "aae91e23f19dc3f229b3b5fbd97909f737beec82534ac01f58c98cda7b94ba1d"
     }
   },
-  "analysis": "analysis/reproduce_table1.py",
+  "analysis": "analysis/reproduce_table1_active_fallback.py",
   "expected": {
-    "active_feasible": 630328,
-    "sign_constrained_union_feasible": 582861,
-    "common_feasible": 534042
-  },
-  "continuous_row_status": "unsupported_no_matching_30_power_4_map"
+    "active_feasible": 647160,
+    "sign_constrained_union_feasible": 562003,
+    "active_default_feasible": 672382,
+    "common_feasible": 536781,
+    "active_only": 110379,
+    "sign_only": 25222,
+    "neither": 137618
+  }
 }

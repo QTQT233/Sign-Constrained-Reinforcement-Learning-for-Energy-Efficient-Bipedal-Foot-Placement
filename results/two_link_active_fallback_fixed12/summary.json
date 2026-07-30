@@ -1,0 +1,19 @@
+{
+  "schema": "two-link-active-fallback-fixed12/v1",
+  "cases": 12,
+  "transitions": 36,
+  "successful_cases": 12,
+  "active_fallback_transitions": 0,
+  "non_negative_expert_transitions": 36,
+  "non_positive_expert_transitions": 0,
+  "mean_cmt": 0.12234630641701309,
+  "continuous_torque_ppo_reference_mean_cmt": 0.2381077112551372,
+  "ratio_of_means_reduction": 0.486172431072942,
+  "cases_below_continuous_torque_ppo": 12,
+  "push_off_grid_rad_s": {
+    "start": 0.0,
+    "stop": 1.19,
+    "step": 0.01
+  },
+  "interpretation": "The Active fallback was available but was not selected in these 36 transitions; the fixed-case Cmt therefore equals the energy-ranked two-sign route."
+}

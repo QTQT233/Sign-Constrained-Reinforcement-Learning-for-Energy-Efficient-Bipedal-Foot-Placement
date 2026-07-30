@@ -1,21 +1,26 @@
 # Paper2 source-aligned entry points
 
 This directory contains provenance-preserving source snapshots for the five
-non-MPC method families across the 12 case directories. The current raised-1.145-r1
-Continuous-torque PPO, LIPM, and TVLQR sources are synchronized to the accepted
-source-aligned runs; their current SHA-256 values and provenance are recorded
-in the repository manifests and the corresponding result documentation.
+non-MPC method families across the 12 case directories. The three learned
+controller entry points contain the fixed post-reset recovery pairs selected by
+the complete \(120\times120\) grid searches in
+`results/paper2_push_off_grid_12case/`. Their selected values are checked
+directly by `src/paper2/push_off_grid/validate_release.py`. LIPM and TVLQR
+remain separate reference-based diagnostics.
 
-The TVLQR entry points are self-contained except for four policy checkpoints,
-which are released under `models/paper2/tvlqr/`. Run them portably with
-`tools/run_frozen_tvlqr.py`; it verifies hashes and changes paths only in a
-temporary copy. The other four method families load additional relative
-artifacts from their original case directories. Their complete 12-case trees
-must be supplied from the original case bundle under the names in
-`configs/paper2_cases.csv` and audited with `tools/audit_paper2_readonly.py`.
-They are distinct from the hardware-only Zenodo record; when required for
-submission, distribute them through Supplementary Archive S1.
+The entry points resolve their external checkpoints and action maps through
+`src/paper2/artifact_paths.py`; no workstation-specific path is required.
+Extract Supplementary Archive S1 and set `PAPER2_ARTIFACT_ROOT` to its artifact
+directory. The resolver accepts either `flat/` and `raised/` subdirectories or
+one directory containing the requested files. The four frozen TVLQR
+checkpoints stored under `models/paper2/tvlqr/` are discovered automatically.
 
-The remaining snapshots preserve original path literals and are not advertised
-as standalone portable entry points. The audit launcher is read-only with
-respect to these repository sources and does not modify them at runtime.
+The released candidate tables, selected minima, fixed replay values, and
+validation program are fully portable. A source entry point can be run from
+any working directory, for example:
+
+```powershell
+$env:PAPER2_ARTIFACT_ROOT = "X:\extracted_S1\paper2_artifacts"
+$env:CMT_REPLAY_JSON = "replay.json"
+python src/paper2/entrypoints/flat_1.145_r1/Qi_multi_passive_sim.py
+```

@@ -1,0 +1,52 @@
+{
+  "schema": "four-link-active-default-confidence-publication-summary/v1",
+  "n": 2160,
+  "seeds": [
+    20261301,
+    20261302,
+    20261303
+  ],
+  "thresholds": {
+    "nonnegative": 0.86,
+    "nonpositive": 0.54,
+    "default": "active",
+    "selection_source": "development data"
+  },
+  "active_success_count": 1061,
+  "selector_success_count": 1063,
+  "active_success_rate": 0.4912037037037037,
+  "selector_success_rate": 0.49212962962962964,
+  "success_difference_pp": 0.0925925925925926,
+  "success_difference_pp_95_ci": [
+    -0.6018518518518519,
+    0.787037037037037
+  ],
+  "selector_only_success_count": 31,
+  "active_only_success_count": 29,
+  "active_valid_count": 529,
+  "selector_valid_count": 552,
+  "valid_difference_pp": 1.0648148148148149,
+  "valid_difference_pp_95_ci": [
+    0.3703703703703704,
+    1.8055555555555554
+  ],
+  "selector_only_valid_count": 43,
+  "active_only_valid_count": 20,
+  "common_valid_count": 509,
+  "active_common_mean_cmt": 1.50424431451462,
+  "selector_common_mean_cmt": 0.6688318479590704,
+  "selector_minus_active_mean_cmt": -0.8354124665555498,
+  "cmt_difference_95_ci": [
+    -1.0643271185613965,
+    -0.6316522444577718
+  ],
+  "ratio_of_means_reduction": 0.5553702005017151,
+  "selector_lower_count": 255,
+  "selector_equal_count": 226,
+  "selector_higher_count": 28,
+  "route_counts": {
+    "confidence_active_default": 1373,
+    "confidence_nonnegative": 249,
+    "confidence_nonpositive": 538
+  }
+}

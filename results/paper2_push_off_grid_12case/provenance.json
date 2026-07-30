@@ -1,0 +1,297 @@
+{
+  "candidate_records": 518400,
+  "description": "Complete candidate-level records and fixed-parameter replay outputs for 12 two-link cases and three learned controllers.",
+  "files": [
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/flat_L1145_r1/continuous_torque_ppo.csv",
+      "candidate_sha256": "30db06eba352bd528088f9607ce5c60dffd4bdd2d39dbd09e61d9dcb08dcd48e",
+      "case_id": "flat_L1145_r1",
+      "controller": "Continuous-torque PPO",
+      "entrypoint": "src/paper2/entrypoints/flat_1.145_r1/Multi_continuous.py",
+      "entrypoint_sha256": "1dd0c94eb1bf6adf12447c2e6c98a5d935351440af3678cd61deb542230c01eb"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/flat_L1145_r1/discrete_active_ppo.csv",
+      "candidate_sha256": "c2528cb907c22a4ec14e04152cca40c4ce366fcba1642a003762e44e819e37e8",
+      "case_id": "flat_L1145_r1",
+      "controller": "Unrestricted discrete PPO",
+      "entrypoint": "src/paper2/entrypoints/flat_1.145_r1/Qi_multi_ac_discrete_sim.py",
+      "entrypoint_sha256": "c3d6431e5b9661b4bc3d862a48c647bd2c3869af542f2a6d656f20e04f19f265"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/flat_L1145_r1/proposed_selector.csv",
+      "candidate_sha256": "69fa9ff1c3dcef18a7e1e601bec25088346ae1a0dc88f146b22f9b2c5d0bcaf9",
+      "case_id": "flat_L1145_r1",
+      "controller": "Transition-start lookup router",
+      "entrypoint": "src/paper2/entrypoints/flat_1.145_r1/Qi_multi_passive_sim.py",
+      "entrypoint_sha256": "7cf8fc9f44ad7599d03fb4ca41a6e192c4ed4a21167e3651e705f1525647c719"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/flat_L1145_r2/continuous_torque_ppo.csv",
+      "candidate_sha256": "af78fef42f32557f89ac340cf6b6f2ddf8ccbbea9a0729fe65bae158604de8ee",
+      "case_id": "flat_L1145_r2",
+      "controller": "Continuous-torque PPO",
+      "entrypoint": "src/paper2/entrypoints/flat_1.145_r2/Multi_continuous.py",
+      "entrypoint_sha256": "a9b68989a705a2a64a4f052ee1640a8db18fc3362093aa4d567701874a1c295b"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/flat_L1145_r2/discrete_active_ppo.csv",
+      "candidate_sha256": "ad63eaa955d53a80cba34215017010456dd9110e6268674430ff059a8d014e4c",
+      "case_id": "flat_L1145_r2",
+      "controller": "Unrestricted discrete PPO",
+      "entrypoint": "src/paper2/entrypoints/flat_1.145_r2/Qi_multi_ac_discrete_sim.py",
+      "entrypoint_sha256": "e5aa8c6bc94327ea1e2b0ce357371b3fa45dd644e81cd42ff48c5b5ded40f3f9"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/flat_L1145_r2/proposed_selector.csv",
+      "candidate_sha256": "c9a84be45a68918348bcebab2ef200e98bcc8c7cb6904e8134f780e955a7dbef",
+      "case_id": "flat_L1145_r2",
+      "controller": "Transition-start lookup router",
+      "entrypoint": "src/paper2/entrypoints/flat_1.145_r2/Qi_multi_passive_sim.py",
+      "entrypoint_sha256": "6bc768e9fdd7dad640eba80dba3f9ad0f14c9fdb4053c5af8825fe41da119a6c"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/flat_L1145_r3/continuous_torque_ppo.csv",
+      "candidate_sha256": "b439a454c45911f709bf690ca67eb1cb86594eac8fe23685f9618a01044fa4fa",
+      "case_id": "flat_L1145_r3",
+      "controller": "Continuous-torque PPO",
+      "entrypoint": "src/paper2/entrypoints/flat_1.145_r3/Multi_continuous.py",
+      "entrypoint_sha256": "413130eed14cf1a76718ef2af074289a3c2e16950e5344844ad52ad0e67349c8"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/flat_L1145_r3/discrete_active_ppo.csv",
+      "candidate_sha256": "b4f66da40d4352b267135c0508bc581b13abfb55ee8809014e2fcfacb0420714",
+      "case_id": "flat_L1145_r3",
+      "controller": "Unrestricted discrete PPO",
+      "entrypoint": "src/paper2/entrypoints/flat_1.145_r3/Qi_multi_ac_discrete_sim.py",
+      "entrypoint_sha256": "eaf51b1945a1139ed2e360dbec59c3e67397203ee021c6deb3712f5a82d4bcf4"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/flat_L1145_r3/proposed_selector.csv",
+      "candidate_sha256": "9dd2efca63ff4a11fb9453aeaf5c09aa894e04fd4823a3954d108f6be5999c6c",
+      "case_id": "flat_L1145_r3",
+      "controller": "Transition-start lookup router",
+      "entrypoint": "src/paper2/entrypoints/flat_1.145_r3/Qi_multi_passive_sim.py",
+      "entrypoint_sha256": "a718bb9b24227ae1e80726016e0331756b65760c29fc51fb750f8db0fc828653"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/flat_L1280_r1/continuous_torque_ppo.csv",
+      "candidate_sha256": "b1fa1c34f312ef300f1afb2deded91d4237002a2f737f07f2b80cb838e06378c",
+      "case_id": "flat_L1280_r1",
+      "controller": "Continuous-torque PPO",
+      "entrypoint": "src/paper2/entrypoints/flat_1.28_r1/Multi_continuous.py",
+      "entrypoint_sha256": "8a3eb448241b7140ad8c6aa8e16dc2742ca6ff1eba1bf8bc3837e0dcea0a19cd"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/flat_L1280_r1/discrete_active_ppo.csv",
+      "candidate_sha256": "5bd47983d9fdc0c490d968ded4ed7e0f966e428bc9431fb306066bee9841461b",
+      "case_id": "flat_L1280_r1",
+      "controller": "Unrestricted discrete PPO",
+      "entrypoint": "src/paper2/entrypoints/flat_1.28_r1/Qi_multi_ac_discrete_sim.py",
+      "entrypoint_sha256": "fbf72ce6e1e9054e12cf6686e8b2c84ec06e8ac7f5cb034d0d7f80557a2ec1bd"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/flat_L1280_r1/proposed_selector.csv",
+      "candidate_sha256": "e9df5b52bf0bf6d7d0d47ef99519254dcf658a6b273c7ed7915fef03d32d2f7b",
+      "case_id": "flat_L1280_r1",
+      "controller": "Transition-start lookup router",
+      "entrypoint": "src/paper2/entrypoints/flat_1.28_r1/Qi_multi_passive_sim.py",
+      "entrypoint_sha256": "87d68b55f12999a830ec35f10eef39f69504dbad4b58072a3ca6576071cde384"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/flat_L1280_r2/continuous_torque_ppo.csv",
+      "candidate_sha256": "a9d8cada4f1aa2213ddaa5b2bdaeeceb6c389acd395836e49aee9e66caa93718",
+      "case_id": "flat_L1280_r2",
+      "controller": "Continuous-torque PPO",
+      "entrypoint": "src/paper2/entrypoints/flat_1.28_r2/Multi_continuous.py",
+      "entrypoint_sha256": "ca08109f34ab23c02a2b3812bd242f662e3dbbdf8e8e51200a603f51d5beda1b"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/flat_L1280_r2/discrete_active_ppo.csv",
+      "candidate_sha256": "6fd170d368d529620259c0a6ffc7f3d60a3cca23c41f273d0bccfd8578933ad9",
+      "case_id": "flat_L1280_r2",
+      "controller": "Unrestricted discrete PPO",
+      "entrypoint": "src/paper2/entrypoints/flat_1.28_r2/Qi_multi_ac_discrete_sim.py",
+      "entrypoint_sha256": "b254272fa05a5c3972b76638d1b6d40f28f060a468549d7e4badb0cc1f0d7a16"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/flat_L1280_r2/proposed_selector.csv",
+      "candidate_sha256": "87bc822307434d2e1c86f55f692a220c77e949e5847904db2b3aedf3178ab672",
+      "case_id": "flat_L1280_r2",
+      "controller": "Transition-start lookup router",
+      "entrypoint": "src/paper2/entrypoints/flat_1.28_r2/Qi_multi_passive_sim.py",
+      "entrypoint_sha256": "618f0dd1c6c1aee247df9a5f162235b4a5577b27a9068c889331106b51556c75"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/flat_L1280_r3/continuous_torque_ppo.csv",
+      "candidate_sha256": "30032306dd678209f41883968ab56a0cd5da979288aaa75b811d8e84ba0d1af6",
+      "case_id": "flat_L1280_r3",
+      "controller": "Continuous-torque PPO",
+      "entrypoint": "src/paper2/entrypoints/flat_1.28_r3/Multi_continuous.py",
+      "entrypoint_sha256": "8458cf2f66b446ee7beaab33b57bd92e8f4c891b5a5b566ba127b429e7537812"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/flat_L1280_r3/discrete_active_ppo.csv",
+      "candidate_sha256": "7e41d9f800c635b3e488a3973f14b447375c924987c641285973f63c87bf1d98",
+      "case_id": "flat_L1280_r3",
+      "controller": "Unrestricted discrete PPO",
+      "entrypoint": "src/paper2/entrypoints/flat_1.28_r3/Qi_multi_ac_discrete_sim.py",
+      "entrypoint_sha256": "5d9d11de830578d9cc2eea0bfb417a1a0e4d6d517e09c987f8c8f8eddea8c28b"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/flat_L1280_r3/proposed_selector.csv",
+      "candidate_sha256": "a54bcd7a701d267da57dcf086182cde2bb53e4dfcc0c14fa36d41c596d21b673",
+      "case_id": "flat_L1280_r3",
+      "controller": "Transition-start lookup router",
+      "entrypoint": "src/paper2/entrypoints/flat_1.28_r3/Qi_multi_passive_sim.py",
+      "entrypoint_sha256": "20669b266599554f2c7162e0419e241f915a30ec65ccab63f66f20351244e420"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/raised_L1145_r1/continuous_torque_ppo.csv",
+      "candidate_sha256": "aa090af04eff1027d4b09bf499ce20fc02b86fa61b0061aa207265db7dcf8f97",
+      "case_id": "raised_L1145_r1",
+      "controller": "Continuous-torque PPO",
+      "entrypoint": "src/paper2/entrypoints/raised_1.145_r1/Multi_continuous.py",
+      "entrypoint_sha256": "584847fec7535376dcc7b7d2dcef348e369f73556144a4a7c2802a163deed9df"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/raised_L1145_r1/discrete_active_ppo.csv",
+      "candidate_sha256": "79a687ce208136d8706af7b15c765d9e29fd6a4e9ee0d43fe722833b320404fc",
+      "case_id": "raised_L1145_r1",
+      "controller": "Unrestricted discrete PPO",
+      "entrypoint": "src/paper2/entrypoints/raised_1.145_r1/Qi_multi_ac_discrete_sim.py",
+      "entrypoint_sha256": "761701a301a545409be7b463211e7c9df9d1dc77b3d2deb5b3e14352f6d99003"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/raised_L1145_r1/proposed_selector.csv",
+      "candidate_sha256": "fcf9b9d67e2f5d6ae412de0d0b3f4a34c24c2ee00c54b2b8520b6e2b63a9884f",
+      "case_id": "raised_L1145_r1",
+      "controller": "Transition-start lookup router",
+      "entrypoint": "src/paper2/entrypoints/raised_1.145_r1/Qi_multi_passive_sim.py",
+      "entrypoint_sha256": "202e42b83e54d6581065500df52ac9263f0e80f158582c3139b6c3f31866833c"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/raised_L1145_r2/continuous_torque_ppo.csv",
+      "candidate_sha256": "12c8002d1551bc7635d018fd470d48ae5559b7bf03271c5df6c122c2eedf0db9",
+      "case_id": "raised_L1145_r2",
+      "controller": "Continuous-torque PPO",
+      "entrypoint": "src/paper2/entrypoints/raised_1.145_r2/Multi_continuous.py",
+      "entrypoint_sha256": "0cbb5ae0a8bf22b5efe2c3b26abb3d0b371a368f9e4d41d99215f1d1ce742529"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/raised_L1145_r2/discrete_active_ppo.csv",
+      "candidate_sha256": "83eb6bf67b470b7ef6ec7428c825f8cce335c745b90190ffdd0db0361a30d16d",
+      "case_id": "raised_L1145_r2",
+      "controller": "Unrestricted discrete PPO",
+      "entrypoint": "src/paper2/entrypoints/raised_1.145_r2/Qi_multi_ac_discrete_sim.py",
+      "entrypoint_sha256": "8e348d2b630a9a273fb1e1b4dbc21cb1a37b3e36e31851aff328cc7fb429a6b2"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/raised_L1145_r2/proposed_selector.csv",
+      "candidate_sha256": "ea30c62082f6e0a6a2eb9c81147037bf3291275d38e44240711fcb6a5e9eab11",
+      "case_id": "raised_L1145_r2",
+      "controller": "Transition-start lookup router",
+      "entrypoint": "src/paper2/entrypoints/raised_1.145_r2/Qi_multi_passive_sim.py",
+      "entrypoint_sha256": "c1d3eed6b48d7551534b4d88fef3e2b46b69c755ddcdf97110788aa977bdbed7"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/raised_L1145_r3/continuous_torque_ppo.csv",
+      "candidate_sha256": "0281f1e75844911ed6d52bb7d3d0eb663347430e03ba359a8109e6422f0895d4",
+      "case_id": "raised_L1145_r3",
+      "controller": "Continuous-torque PPO",
+      "entrypoint": "src/paper2/entrypoints/raised_1.145_r3/Multi_continuous.py",
+      "entrypoint_sha256": "0380d47e69c86bf0c8ebc9f2549fbf47cdb4a4aa333a2957a67e8dde75640d9a"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/raised_L1145_r3/discrete_active_ppo.csv",
+      "candidate_sha256": "90490e2f511862912b5c83715c12e71001202714c56f4a3b55b4d4cbe87436c9",
+      "case_id": "raised_L1145_r3",
+      "controller": "Unrestricted discrete PPO",
+      "entrypoint": "src/paper2/entrypoints/raised_1.145_r3/Qi_multi_ac_discrete_sim.py",
+      "entrypoint_sha256": "4527be9c1b058b46f12a14fccf6f394ef8923c5f6611ded829b9ffbbfdcb4c82"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/raised_L1145_r3/proposed_selector.csv",
+      "candidate_sha256": "a3b310267b7b6b3e74d6df8e84b2809ac181a6408e2c97ec425781b6e8f099ba",
+      "case_id": "raised_L1145_r3",
+      "controller": "Transition-start lookup router",
+      "entrypoint": "src/paper2/entrypoints/raised_1.145_r3/Qi_multi_passive_sim.py",
+      "entrypoint_sha256": "b51b42ea53ceaadf12ce3b57423a908b7136dca9fa77eada2c16dfa3cf93d333"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/raised_L1280_r1/continuous_torque_ppo.csv",
+      "candidate_sha256": "309af45045883d3587a9efa8177f40e3bb41ec7e6a3cc347a461004a91f31b5c",
+      "case_id": "raised_L1280_r1",
+      "controller": "Continuous-torque PPO",
+      "entrypoint": "src/paper2/entrypoints/raised_1.28_r1/Multi_continuous.py",
+      "entrypoint_sha256": "0f1f8adfb52600a861f9aae57b74040532d16a601228974fec757807b33cdb09"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/raised_L1280_r1/discrete_active_ppo.csv",
+      "candidate_sha256": "01ea11a4e0f7f1005ac90c8776741ed46ec0f82e073ca8567e534a97f2f0628f",
+      "case_id": "raised_L1280_r1",
+      "controller": "Unrestricted discrete PPO",
+      "entrypoint": "src/paper2/entrypoints/raised_1.28_r1/Qi_multi_ac_discrete_sim.py",
+      "entrypoint_sha256": "89b8af626de29428904eaea99569c92d3d60144d57777914902c1ad492366a87"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/raised_L1280_r1/proposed_selector.csv",
+      "candidate_sha256": "35e87c06566f78d7e625e71ea0a387ad1c84bf2cb4aa62ca310458e64e424396",
+      "case_id": "raised_L1280_r1",
+      "controller": "Transition-start lookup router",
+      "entrypoint": "src/paper2/entrypoints/raised_1.28_r1/Qi_multi_passive_sim.py",
+      "entrypoint_sha256": "3683d70302e18a775b1ed61571711de4a3187c7957ddcffa91f137ebb5734004"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/raised_L1280_r2/continuous_torque_ppo.csv",
+      "candidate_sha256": "e00fa3cdba13176d49b404230dda127f6020c3a472388b9cdeb791a373efdb2c",
+      "case_id": "raised_L1280_r2",
+      "controller": "Continuous-torque PPO",
+      "entrypoint": "src/paper2/entrypoints/raised_1.28_r2/Multi_continuous.py",
+      "entrypoint_sha256": "ed9ea725d4548c62414cd0f6256af6414997ad9c51970fef20cba0245ecd1355"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/raised_L1280_r2/discrete_active_ppo.csv",
+      "candidate_sha256": "1928a2fe4c8f1d85f2f78da13dc83927c2128cedfd803877e109e376c850bec8",
+      "case_id": "raised_L1280_r2",
+      "controller": "Unrestricted discrete PPO",
+      "entrypoint": "src/paper2/entrypoints/raised_1.28_r2/Qi_multi_ac_discrete_sim.py",
+      "entrypoint_sha256": "34621a9875300d6c4121a0fac049b0906cf77a94adc7eb2488742c39c9949866"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/raised_L1280_r2/proposed_selector.csv",
+      "candidate_sha256": "12399c08602b3b50591c308ac616ed34e5d9b609fb03c7d289ca9bd38817918c",
+      "case_id": "raised_L1280_r2",
+      "controller": "Transition-start lookup router",
+      "entrypoint": "src/paper2/entrypoints/raised_1.28_r2/Qi_multi_passive_sim.py",
+      "entrypoint_sha256": "0d681e07f4dd54586a5fe232770b986c4b85baab3fa127cc4486e59dc08dd71a"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/raised_L1280_r3/continuous_torque_ppo.csv",
+      "candidate_sha256": "cf1a95a97bbcd07b43ba2ebc1c32cf97563999c2d6b42b2bff8ff73eb060a63e",
+      "case_id": "raised_L1280_r3",
+      "controller": "Continuous-torque PPO",
+      "entrypoint": "src/paper2/entrypoints/raised_1.28_r3/Multi_continuous.py",
+      "entrypoint_sha256": "871b649e37cf425ef78cc7506c2ba4f35d8cbfb3c41a6fb3d9a9040b4bb1054b"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/raised_L1280_r3/discrete_active_ppo.csv",
+      "candidate_sha256": "2334f6760053fe2857d14405958e680458fbbefe02296f7f3ac774b9f562978b",
+      "case_id": "raised_L1280_r3",
+      "controller": "Unrestricted discrete PPO",
+      "entrypoint": "src/paper2/entrypoints/raised_1.28_r3/Qi_multi_ac_discrete_sim.py",
+      "entrypoint_sha256": "c7836fa6db4c37e10bef2854ebc67fd9fdeee5283213b8169aea78730a108236"
+    },
+    {
+      "candidate_record": "results/paper2_push_off_grid_12case/candidates/raised_L1280_r3/proposed_selector.csv",
+      "candidate_sha256": "e17b0930bced8dc76964e7b429593c20d2da6c1902add27aa896088f8e7dc559",
+      "case_id": "raised_L1280_r3",
+      "controller": "Transition-start lookup router",
+      "entrypoint": "src/paper2/entrypoints/raised_1.28_r3/Qi_multi_passive_sim.py",
+      "entrypoint_sha256": "32ded5dd2374acaee9a43c92c5132454b8a14bb49160c36470732d3b254cb833"
+    }
+  ],
+  "fixed_parameter_replays": 36,
+  "schema": "paper2-push-off-grid-provenance/v1",
+  "source_code_boundary": "The case entry points contain the selected recovery decrements. The complete candidate records and fixed-parameter replays are validated independently of the environment-specific search orchestration used for the completed runs."
+}

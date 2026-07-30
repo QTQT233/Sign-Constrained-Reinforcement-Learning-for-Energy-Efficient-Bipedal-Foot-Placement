@@ -1,0 +1,32 @@
+{
+  "all_checks_passed": true,
+  "counts": {
+    "controller_case_rows": 48,
+    "controllers": 4,
+    "transitions": 144
+  },
+  "formula": {
+    "actual_foot_x": "l1*cos(q1)+l2*sin(q2)",
+    "primary_summary": "mean(abs(actual_foot_x-target_foot_x))",
+    "target_foot_x": "l1*cos(q1_target)+l2*sin(q2_target)"
+  },
+  "max_recomputed_field_error_m": 0.0,
+  "parameters": {
+    "l1_m": 0.521,
+    "l2_m": 0.481
+  },
+  "pooled_per_transition_mae_m": {
+    "continuous": 0.04095273281529577,
+    "discrete": 0.04426028430392331,
+    "mpc": 0.030284639681776488,
+    "passive": 0.041389074711561995
+  },
+  "reporting_only_invariants": {
+    "cmt_changed": false,
+    "com_displacement_changed": false,
+    "controller_actions_reexecuted": false,
+    "energy_changed": false,
+    "success_changed": false
+  },
+  "schema": "S4-landing-metric-verification-v1"
+}

@@ -1,0 +1,26 @@
+{
+  "schema": "table1-source-aligned-active-fallback/v1",
+  "grid_shape": [
+    30,
+    30,
+    30,
+    30
+  ],
+  "sampled_states": 810000,
+  "route_codes": {
+    "-1": "uncovered",
+    "0": "non-positive expert",
+    "1": "non-negative expert",
+    "2": "unrestricted Active PPO fallback"
+  },
+  "counts": {
+    "active": 647160,
+    "sign_union": 562003,
+    "both": 536781,
+    "active_only": 110379,
+    "sign_only": 25222,
+    "neither": 137618,
+    "active_default": 672382
+  },
+  "active_default_gain_over_active_percentage_points": 3.1138271604938272
+}

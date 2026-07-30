@@ -1,0 +1,144 @@
+{
+  "schema": "table1-source-aligned-rebuild/v1",
+  "dynamics": "training_source",
+  "initial_target_check": false,
+  "states": 810000,
+  "statistics": {
+    "baseline_active": {
+      "feasible_states": 606994,
+      "feasible_percent": 74.93753086419753,
+      "mean_positive_work_J_feasible": 0.603969947897697,
+      "median_positive_work_J_feasible": 0.4530724836499377,
+      "mean_steps_feasible": 22.562002260318884,
+      "action_counts": {
+        "-2": 203006,
+        "-1": 228011,
+        "0": 158305,
+        "1": 220678
+      }
+    },
+    "candidate_active": {
+      "feasible_states": 647160,
+      "feasible_percent": 79.8962962962963,
+      "mean_positive_work_J_feasible": 0.5372919559308423,
+      "median_positive_work_J_feasible": 0.4191927357069646,
+      "mean_steps_feasible": 22.514214413746213,
+      "action_counts": {
+        "-2": 162840,
+        "-1": 240780,
+        "0": 170410,
+        "1": 235970
+      }
+    },
+    "negative": {
+      "feasible_states": 341657,
+      "feasible_percent": 42.17987654320988,
+      "mean_positive_work_J_feasible": 0.4452962242613926,
+      "median_positive_work_J_feasible": 0.3677521172264221,
+      "mean_steps_feasible": 23.277734687127733,
+      "action_counts": {
+        "-2": 468343,
+        "-1": 62839,
+        "0": 278818
+      }
+    },
+    "positive": {
+      "feasible_states": 310171,
+      "feasible_percent": 38.29271604938272,
+      "mean_positive_work_J_feasible": 0.44082166907308107,
+      "median_positive_work_J_feasible": 0.4286823458229172,
+      "mean_steps_feasible": 24.09184288666574,
+      "action_counts": {
+        "-2": 499829,
+        "0": 282825,
+        "1": 27346
+      }
+    }
+  },
+  "baseline_partition": {
+    "active_feasible": {
+      "count": 606994,
+      "percent": 74.93753086419753
+    },
+    "one_sided_union": {
+      "count": 562003,
+      "percent": 69.38308641975308
+    },
+    "both": {
+      "count": 502907,
+      "percent": 62.087283950617284
+    },
+    "active_only": {
+      "count": 104087,
+      "percent": 12.850246913580246
+    },
+    "one_sided_only": {
+      "count": 59096,
+      "percent": 7.295802469135802
+    },
+    "neither": {
+      "count": 143910,
+      "percent": 17.766666666666666
+    },
+    "oracle_union": {
+      "count": 666090,
+      "percent": 82.23333333333333
+    }
+  },
+  "candidate_partition": {
+    "active_feasible": {
+      "count": 647160,
+      "percent": 79.8962962962963
+    },
+    "one_sided_union": {
+      "count": 562003,
+      "percent": 69.38308641975308
+    },
+    "both": {
+      "count": 536781,
+      "percent": 66.26925925925926
+    },
+    "active_only": {
+      "count": 110379,
+      "percent": 13.627037037037036
+    },
+    "one_sided_only": {
+      "count": 25222,
+      "percent": 3.1138271604938272
+    },
+    "neither": {
+      "count": 137618,
+      "percent": 16.989876543209878
+    },
+    "oracle_union": {
+      "count": 672382,
+      "percent": 83.01012345679013
+    }
+  },
+  "artifacts": {
+    "baseline_active": {
+      "checkpoint": "models/two_link/action_map/Policy_Net_Pytorch(-1,0,1).pth",
+      "checkpoint_sha256": "f017eca01172ab72a04faf4615fc0ed730d952205bacd268d1d26b3acd4de398",
+      "map": "data/two_link/action_map_source_aligned/baseline_active_30x30x30x30.h5",
+      "map_sha256": "1d17db045d032b879f2c467bbc977a2d45ee81e148a6785b7101571bab0a6e4a"
+    },
+    "candidate_active": {
+      "checkpoint": "models/two_link/action_map/Policy_Net_Pytorch_active_source_aligned_seed38.pth",
+      "checkpoint_sha256": "356a6ab526f9dac4f81c4cd6e43a09ed753a133a0af62ff17004bb6ee002bf03",
+      "map": "data/two_link/action_map_source_aligned/candidate_active_30x30x30x30.h5",
+      "map_sha256": "e9c01ebaa0cd4143a7aa1d7bf094e88d92c51de1bef64593199006a2650e520c"
+    },
+    "negative": {
+      "checkpoint": "models/two_link/action_map/Policy_Net_Pytorch(-1,0)_1046.pth",
+      "checkpoint_sha256": "e0f526f3dacf52ab9495b88cf8bddbb7c57c1f0670764f068b2be3f5eb6704ee",
+      "map": "data/two_link/action_map_source_aligned/negative_30x30x30x30.h5",
+      "map_sha256": "74b6ef600b570661d35b6e4c919c2cd919c44639db17be4ee40f48ed10620894"
+    },
+    "positive": {
+      "checkpoint": "models/two_link/action_map/Policy_Net_Pytorch(1,0)_900.pth",
+      "checkpoint_sha256": "8cf8628d08211d3bc65db69b909ca5a80954042eee21633dd90c6facc9fbddee",
+      "map": "data/two_link/action_map_source_aligned/positive_30x30x30x30.h5",
+      "map_sha256": "3c2249b5657a53d0fbecaf3ef790bf1ddd3a3385ff3b4c9feaefb628372b3052"
+    }
+  }
+}

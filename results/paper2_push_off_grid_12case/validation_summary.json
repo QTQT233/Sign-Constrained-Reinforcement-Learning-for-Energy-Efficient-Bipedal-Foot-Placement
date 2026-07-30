@@ -1,0 +1,57 @@
+{
+  "all_checks_passed": true,
+  "boundary_optima": [
+    {
+      "case_id": "raised_L1280_r2",
+      "controller": "Transition-start lookup router",
+      "push_off_1_rad_s": 0.67,
+      "push_off_2_rad_s": 1.19
+    }
+  ],
+  "candidate_count": 518400,
+  "case_count": 12,
+  "controller_case_count": 36,
+  "controller_cmt": {
+    "continuous": {
+      "mean_cmt": 0.2381077112551372,
+      "n_cases": 12,
+      "sample_sd_cmt": 0.014224182322766895
+    },
+    "discrete": {
+      "mean_cmt": 0.22662015240511044,
+      "n_cases": 12,
+      "sample_sd_cmt": 0.01643261090198187
+    },
+    "passive": {
+      "mean_cmt": 0.12234630641700867,
+      "n_cases": 12,
+      "sample_sd_cmt": 0.011150356815281223
+    }
+  },
+  "eligible_candidate_count": 42718,
+  "fixed_replay_count": 36,
+  "fixed_replays_completed_three_steps": 36,
+  "grid": {
+    "pairs_per_controller_case": 14400,
+    "r1_rad_s": {
+      "count": 120,
+      "max": 1.19,
+      "min": 0.0,
+      "step": 0.01
+    },
+    "r2_rad_s": {
+      "count": 120,
+      "max": 1.19,
+      "min": 0.0,
+      "step": 0.01
+    },
+    "seed_per_candidate": 0
+  },
+  "max_absolute_fixed_replay_difference": {
+    "cmt": 5.162537064506978e-15,
+    "displacement_m": 6.505906924303417e-14,
+    "energy_J": 2.1582735598713043e-13
+  },
+  "schema": "paper2-push-off-grid-validation/v1",
+  "selection_rule": "complete all three transitions, positive COM displacement, finite Cmt; minimize Cmt, breaking exact ties by r1 then r2 grid index"
+}

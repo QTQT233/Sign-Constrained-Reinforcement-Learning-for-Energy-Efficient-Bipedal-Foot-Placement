@@ -1,4 +1,14 @@
+import sys as _sys
+from pathlib import Path as _Path
+
+_REPOSITORY_ROOT = _Path(__file__).resolve().parents[4]
+if str(_REPOSITORY_ROOT) not in _sys.path:
+    _sys.path.insert(0, str(_REPOSITORY_ROOT))
+from src.paper2.artifact_paths import resolve_artifact as _resolve_artifact
+
+import json
 import os
+from pathlib import Path
 import h5py
 import torch
 import numpy as np
@@ -101,21 +111,21 @@ def load_policy_and_env(stance_leg_fun, q_val, params1, params2):
         params_fun = params1
         if q_val == -1:
             torque_dir = -1
-            policy_path = 'D:/L&S/Mas/Project/Paper2/l1_stand(0,-1)_696.pth'
+            policy_path = _resolve_artifact(__file__, "l1_stand(0,-1)_696.pth")
             actions_fun = [0, -1]
         else:
             torque_dir = 1
-            policy_path = 'D:/L&S/Mas/Project/Paper2/l1_stand(0,1)_676.pth'
+            policy_path = _resolve_artifact(__file__, "l1_stand(0,1)_676.pth")
             actions_fun = [0, 1]
     else:
         params_fun = params2
         if q_val == -1:
             torque_dir = -1
-            policy_path = 'D:/L&S/Mas/Project/Paper2/l2_stand(0,-1)_829.pth'
+            policy_path = _resolve_artifact(__file__, "l2_stand(0,-1)_829.pth")
             actions_fun = [0, -1]
         else:
             torque_dir = 1
-            policy_path = 'D:/L&S/Mas/Project/Paper2/l2_stand(0,1)_815.pth'
+            policy_path = _resolve_artifact(__file__, "l2_stand(0,1)_815.pth")
             actions_fun = [0, 1]
 
     env_fun = PendulumEnv(params_fun, torque_dir)
@@ -160,6 +170,12 @@ def handle_collision(state_fun, stance_leg_fun, params_fun, energy_passive_fun):
 
 step = 3
 stop_flag = 0
+
+CMT_REPLAY_SEED = int(os.environ.get('CMT_REPLAY_SEED', '0'))
+torch.manual_seed(CMT_REPLAY_SEED)
+np.random.seed(CMT_REPLAY_SEED)
+torch.set_num_threads(1)
+
 
 BASE_PARAMS = {
     'g': 9.8, 'dt': 0.01, 'max_torque': 4,
@@ -275,13 +291,13 @@ class PendulumEnv:
         return self.state
 
 
-with h5py.File('D:/L&S/Mas/Project/Paper2/working_l1_stand_save_passive_1(-1,0,1)-30,60', 'r') as h5f:
+with h5py.File(_resolve_artifact(__file__, "working_l1_stand_save_passive_1(-1,0,1)-30,60"), 'r') as h5f:
     Q1 = np.array(h5f['working_save_passive'][:])
-with h5py.File('D:/L&S/Mas/Project/Paper2/working_l2_stand_save_passive_1(-1,0,1)-30,60', 'r') as h5f:
+with h5py.File(_resolve_artifact(__file__, "working_l2_stand_save_passive_1(-1,0,1)-30,60"), 'r') as h5f:
     Q2 = np.array(h5f['working_save_passive'][:])
-with h5py.File('D:/L&S/Mas/Project/Paper2/reward_check_l1_stand_passive_1(-1,0,1)-30,60', 'r') as h5f:
+with h5py.File(_resolve_artifact(__file__, "reward_check_l1_stand_passive_1(-1,0,1)-30,60"), 'r') as h5f:
     C1 = np.array(h5f['reward_check'][:])
-with h5py.File('D:/L&S/Mas/Project/Paper2/reward_check_l2_stand_passive_1(-1,0,1)-30,60', 'r') as h5f:
+with h5py.File(_resolve_artifact(__file__, "reward_check_l2_stand_passive_1(-1,0,1)-30,60"), 'r') as h5f:
     C2 = np.array(h5f['reward_check'][:])
 N1, N2 = 30, 60
 # for i_ in range(N1):
@@ -377,3 +393,52 @@ Cmt_passive = Energy_Passive / (W * D)
 print("离散被动力矩Cmt：", Cmt_passive)
 print("Time", count_step * 0.01)
 print("Foot_error:", (3 * 0.521) - Foot_D)
+
+# ---- read-only structured export of values already computed above ----------
+_landing_error = (
+    float((3 * 0.521) - Foot_D) if "Foot_D" in globals() else None
+)
+_replay = {
+    "schema": "paper2-multistep-fixed-push-off-replay/v2",
+    "case_id": 'flat_1.145_r3',
+    "controller": 'passive',
+    "seed": int(CMT_REPLAY_SEED),
+    "push_off_1_rad_s": 0.61,
+    "push_off_2_rad_s": 0.59,
+    "energy_J": float(Energy_Passive),
+    "com_displacement_m": float(D),
+    "cmt": float(Cmt_passive),
+    "completed_steps": int(globals().get("count", globals().get("stop_flag", 0))),
+    "control_steps": int(globals().get("count_step", 0)),
+    "time_s": float(globals().get("count_step", 0) * 0.01),
+    "foot_displacement_m": (
+        float(Foot_D) if "Foot_D" in globals() else None
+    ),
+    "landing_error_m": _landing_error,
+    "landing_error_abs_m": (
+        abs(_landing_error) if _landing_error is not None else None
+    ),
+    "landing_error_available": _landing_error is not None,
+    "foot_d_reporting_instrumented": False,
+    "source_fixed_sha256": '368a3f5686d15500a457d771954a50a56e084b90dcadd9b671e8736ab37198e4',
+    "old_push_off_1_rad_s": 0.61,
+    "old_push_off_2_rad_s": 0.59,
+    "search_cmt": 0.12143080143077968,
+    "search_energy_J": 3.2177259709112502,
+    "search_com_displacement_m": 1.202598179750182,
+}
+_replay["cmt_minus_search"] = _replay["cmt"] - _replay["search_cmt"]
+_replay["energy_minus_search_J"] = (
+    _replay["energy_J"] - _replay["search_energy_J"]
+)
+_replay["displacement_minus_search_m"] = (
+    _replay["com_displacement_m"] - _replay["search_com_displacement_m"]
+)
+_output = Path(os.environ["CMT_REPLAY_JSON"]).resolve()
+_output.parent.mkdir(parents=True, exist_ok=True)
+_output.write_text(
+    json.dumps(_replay, indent=2, sort_keys=True) + "\n",
+    encoding="utf-8",
+)
+print("CMT_REPLAY_SUMMARY=" + json.dumps(_replay, sort_keys=True))
+# ---------------------------------------------------------------------------
