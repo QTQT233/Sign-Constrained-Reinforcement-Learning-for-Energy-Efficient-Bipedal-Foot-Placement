@@ -9,3 +9,4 @@ results/figures/
 data/_downloads/
 *.tmp
 *.log
+src/two_link/action_weight/**/generated/

@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 os.environ["OMP_NUM_THREADS"] = "1"
 os.environ["MKL_NUM_THREADS"] = "1"
@@ -10,6 +11,16 @@ import random
 import matplotlib.pyplot as plt
 from numba import njit
 import h5py
+
+
+SCRIPT_DIR = Path(__file__).resolve().parent
+MODEL_DIR = Path(
+    os.environ.get("ACTION_WEIGHT_MODEL_DIR", SCRIPT_DIR / "models")
+).expanduser()
+OUTPUT_DIR = Path(
+    os.environ.get("ACTION_WEIGHT_OUTPUT_DIR", SCRIPT_DIR / "generated")
+).expanduser()
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 
 RANDOM_SEED = 20260716
@@ -63,23 +74,13 @@ policy_active_continuous = torch.nn.Sequential(
 )
 
 policy_active_continuous.load_state_dict(
-    torch.load(f'D:/L&S/Mas/Project/Paper1/Energy_Comparison/action_weight=0.02/70,20,(0.225m),0.01m/'
-               'Policy_Net_Pytorch(-1,0,1)_1350_continuous.pth'))
+    torch.load(MODEL_DIR / 'Policy_Net_Pytorch(-1,0,1)_1350_continuous.pth', map_location=device))
 policy_active_continuous.to(device)
-policy_passive_discrete.load_state_dict(torch.load
-                                        (f'D:/L&S/Mas/Project/Paper1/Energy_Comparison/action_weight=0.02/70,20,(0.225m),0.01m/'
-                                         'Policy_Net_Pytorch(1,0)_532.pth'))
+policy_passive_discrete.load_state_dict(torch.load(MODEL_DIR / 'Policy_Net_Pytorch(1,0)_532.pth', map_location=device))
 policy_passive_discrete.to(device)
-policy_passive_discrete_1.load_state_dict(torch.load
-                                          (f'D:/L&S/Mas/Project/Paper1/Energy_Comparison/action_weight=0.02/70,20,(0.225m),0.01m/'
-                                           'Policy_Net_Pytorch(-1,0)_832.pth'))
+policy_passive_discrete_1.load_state_dict(torch.load(MODEL_DIR / 'Policy_Net_Pytorch(-1,0)_832.pth', map_location=device))
 policy_passive_discrete_1.to(device)
-policy_active_discrete.load_state_dict(torch.load
-                                       (f'D:/L&S/Mas/Project/Paper1/Energy_Comparison/action_weight=0.02/70,20,(0.225m),0.01m/'
-                                        'Policy_Net_Pytorch(-1,0,1)_1614.pth'))
-# policy_active_discrete.load_state_dict(torch.load
-#                                        ('C:/Users/Admin/Desktop/paper-code - F'
-#                                         '/Policy_Net_Pytorch(-1,0,1).pth'))
+policy_active_discrete.load_state_dict(torch.load(MODEL_DIR / 'Policy_Net_Pytorch(-1,0,1)_1614.pth', map_location=device))
 policy_active_discrete.to(device)
 
 # 系统参数
@@ -197,13 +198,13 @@ for i_ in tqdm(range(N1)):
                         D_save01[i_, j, k, ll] = D
                         Cmt_save01[i_, j, k, ll] = E / (W * D) if D > MIN_COM_DISPLACEMENT_M else np.nan
                         break
-with h5py.File('D:/L&S/Mas/Project/Paper1/Energy_Comparison/action_weight=0.02/70,20,(0.225m),0.01m/working_save(0,1)-10-30', 'w') as h5f:
+with h5py.File(OUTPUT_DIR / 'working_save(0,1)-10-30', 'w') as h5f:
     h5f.create_dataset('working_save', data=working_save01)
-with h5py.File('D:/L&S/Mas/Project/Paper1/Energy_Comparison/action_weight=0.02/70,20,(0.225m),0.01m/Cmt_save(0,1)-10-30', 'w') as h5f:
+with h5py.File(OUTPUT_DIR / 'Cmt_save(0,1)-10-30', 'w') as h5f:
     h5f.create_dataset('Cmt_save', data=Cmt_save01)
-with h5py.File('D:/L&S/Mas/Project/Paper1/Energy_Comparison/action_weight=0.02/70,20,(0.225m),0.01m/D_save(0,1)-10-30', 'w') as h5f:
+with h5py.File(OUTPUT_DIR / 'D_save(0,1)-10-30', 'w') as h5f:
     h5f.create_dataset('D_save', data=D_save01)
-with h5py.File('D:/L&S/Mas/Project/Paper1/Energy_Comparison/action_weight=0.02/70,20,(0.225m),0.01m/Energy_save(0,1)-10-30', 'w') as h5f:
+with h5py.File(OUTPUT_DIR / 'Energy_save(0,1)-10-30', 'w') as h5f:
     h5f.create_dataset('Energy_save', data=Energy_save01)
 
 N1 = 10
@@ -289,13 +290,13 @@ for i_ in tqdm(range(N1)):
                         D_save0_1[i_, j, k, ll] = D
                         Cmt_save0_1[i_, j, k, ll] = E / (W * D) if D > MIN_COM_DISPLACEMENT_M else np.nan
                         break
-with h5py.File('D:/L&S/Mas/Project/Paper1/Energy_Comparison/action_weight=0.02/70,20,(0.225m),0.01m/working_save(-1,0)-10-30', 'w') as h5f:
+with h5py.File(OUTPUT_DIR / 'working_save(-1,0)-10-30', 'w') as h5f:
     h5f.create_dataset('working_save', data=working_save0_1)
-with h5py.File('D:/L&S/Mas/Project/Paper1/Energy_Comparison/action_weight=0.02/70,20,(0.225m),0.01m/Cmt_save(-1,0)-10-30', 'w') as h5f:
+with h5py.File(OUTPUT_DIR / 'Cmt_save(-1,0)-10-30', 'w') as h5f:
     h5f.create_dataset('Cmt_save', data=Cmt_save0_1)
-with h5py.File('D:/L&S/Mas/Project/Paper1/Energy_Comparison/action_weight=0.02/70,20,(0.225m),0.01m/D_save(-1,0)-10-30', 'w') as h5f:
+with h5py.File(OUTPUT_DIR / 'D_save(-1,0)-10-30', 'w') as h5f:
     h5f.create_dataset('D_save', data=D_save0_1)
-with h5py.File('D:/L&S/Mas/Project/Paper1/Energy_Comparison/action_weight=0.02/70,20,(0.225m),0.01m/Energy_save(-1,0)-10-30', 'w') as h5f:
+with h5py.File(OUTPUT_DIR / 'Energy_save(-1,0)-10-30', 'w') as h5f:
     h5f.create_dataset('Energy_save', data=Energy_save0_1)
 
 working_save_passive = np.zeros((N1, N2, N1, N2))
@@ -343,9 +344,9 @@ for i in tqdm(range(N1)):
                         Cmt_save_passive[i, j, k, ll] = Cmt_save0_1[i, j, k, ll]
                 else:
                     Cmt_save_passive[i, j, k, ll] = -2
-with h5py.File('D:/L&S/Mas/Project/Paper1/Energy_Comparison/action_weight=0.02/70,20,(0.225m),0.01m/working_save_passive-10-30', 'w') as h5f:
+with h5py.File(OUTPUT_DIR / 'working_save_passive-10-30', 'w') as h5f:
     h5f.create_dataset('working_save_passive', data=working_save_passive)
-with h5py.File('D:/L&S/Mas/Project/Paper1/Energy_Comparison/action_weight=0.02/70,20,(0.225m),0.01m/Cmt_save_passive-10-30', 'w') as h5f:
+with h5py.File(OUTPUT_DIR / 'Cmt_save_passive-10-30', 'w') as h5f:
     h5f.create_dataset('Cmt_save_passive', data=Cmt_save_passive)
 
 N1 = 10
@@ -423,13 +424,13 @@ for i_ in tqdm(range(N1)):
                         D_save_active_discrete[i_, j, k, ll] = D
                         Cmt_save_active_discrete[i_, j, k, ll] = E / (W * D) if D > MIN_COM_DISPLACEMENT_M else np.nan
                         break
-with h5py.File('D:/L&S/Mas/Project/Paper1/Energy_Comparison/action_weight=0.02/70,20,(0.225m),0.01m/working_save_active_discrete-10-30', 'w') as h5f:
+with h5py.File(OUTPUT_DIR / 'working_save_active_discrete-10-30', 'w') as h5f:
     h5f.create_dataset('working_save_active_discrete', data=working_save_active_discrete)
-with h5py.File('D:/L&S/Mas/Project/Paper1/Energy_Comparison/action_weight=0.02/70,20,(0.225m),0.01m/Energy_save_active_discrete-10-30', 'w') as h5f:
+with h5py.File(OUTPUT_DIR / 'Energy_save_active_discrete-10-30', 'w') as h5f:
     h5f.create_dataset('Energy_save_active_discrete', data=Energy_save_active_discrete)
-with h5py.File('D:/L&S/Mas/Project/Paper1/Energy_Comparison/action_weight=0.02/70,20,(0.225m),0.01m/Cmt_save_active_discrete(0,1)-10-30', 'w') as h5f:
+with h5py.File(OUTPUT_DIR / 'Cmt_save_active_discrete(0,1)-10-30', 'w') as h5f:
     h5f.create_dataset('Cmt_save', data=Cmt_save_active_discrete)
-with h5py.File('D:/L&S/Mas/Project/Paper1/Energy_Comparison/action_weight=0.02/70,20,(0.225m),0.01m/D_save_active_discrete-10-30', 'w') as h5f:
+with h5py.File(OUTPUT_DIR / 'D_save_active_discrete-10-30', 'w') as h5f:
     h5f.create_dataset('D_save', data=D_save_active_discrete)
 
 N1 = 10
@@ -510,13 +511,13 @@ for i_ in tqdm(range(N1)):
                         Cmt_save_active_continuous[i_, j, k, ll] = E / (W * D) if D > MIN_COM_DISPLACEMENT_M else np.nan
                         break
 
-with h5py.File('D:/L&S/Mas/Project/Paper1/Energy_Comparison/action_weight=0.02/70,20,(0.225m),0.01m/working_save_active_continuous-10-30', 'w') as h5f:
+with h5py.File(OUTPUT_DIR / 'working_save_active_continuous-10-30', 'w') as h5f:
     h5f.create_dataset('working_save_active_continuous', data=working_save_active_continuous)
-with h5py.File('D:/L&S/Mas/Project/Paper1/Energy_Comparison/action_weight=0.02/70,20,(0.225m),0.01m/Energy_save_active_continuous-10-30', 'w') as h5f:
+with h5py.File(OUTPUT_DIR / 'Energy_save_active_continuous-10-30', 'w') as h5f:
     h5f.create_dataset('Energy_save_active_continuous', data=Energy_save_active_continuous)
-with h5py.File('D:/L&S/Mas/Project/Paper1/Energy_Comparison/action_weight=0.02/70,20,(0.225m),0.01m/Cmt_save_active_continuous-10-30', 'w') as h5f:
+with h5py.File(OUTPUT_DIR / 'Cmt_save_active_continuous-10-30', 'w') as h5f:
     h5f.create_dataset('Cmt_save', data=Cmt_save_active_continuous)
-with h5py.File('D:/L&S/Mas/Project/Paper1/Energy_Comparison/action_weight=0.02/70,20,(0.225m),0.01m/D_save_active_continuous-10-30', 'w') as h5f:
+with h5py.File(OUTPUT_DIR / 'D_save_active_continuous-10-30', 'w') as h5f:
     h5f.create_dataset('D_save', data=D_save_active_continuous)
 
 Passive_energy = 0

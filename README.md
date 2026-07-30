@@ -162,15 +162,17 @@ provided separately as Supplementary Archive S1.
 
 ## Action-weight evaluation
 
-The 12 current `Whole_energy_comparison_low_dim.py` source snapshots use RNG
+The 12 current `Whole_energy_comparison_low_dim.py` evaluators use RNG
 seed `20260716`, write the negative expert's `Cmt` to the negative-expert array,
 and accumulate continuous-controller positive commanded work from applied
 physical torque once per step. A value is eligible only when center-of-mass
 displacement is greater than 0.01 m. The fusion rule remains complete: if both
 experts succeed, the lower finite `Cmt` is used; if only one succeeds, that
-expert is used. These scripts preserve the workstation paths used for the
-completed runs and are explicitly provenance-only; see
-`src/two_link/action_weight/README.md`.
+expert is used. The checkpoint and output roots are configurable through
+`ACTION_WEIGHT_MODEL_DIR` and `ACTION_WEIGHT_OUTPUT_DIR`; see
+`src/two_link/action_weight/README.md`. Each evaluator uses a separate
+case-specific checkpoint directory, with filenames and SHA-256 values pinned in
+`configs/action_weight_checkpoint_manifest.json`.
 
 The 12-cell HDF5 package and its schema/checksums are supplied separately as
 Supplementary Data S2. Recompute the manuscript table from that package with:

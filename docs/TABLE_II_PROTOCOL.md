@@ -2,12 +2,15 @@
 
 ## Evaluation design
 
-The 12 condition-specific `Whole_energy_comparison_low_dim.py` source snapshots
+The 12 condition-specific `Whole_energy_comparison_low_dim.py` evaluators
 cover three action weights (`0.02`, `0.04`, and `0.06`) and four physical
 conditions. Each completed run used RNG seed `20260716`; every HDF5 array has
-shape `10 × 30 × 10 × 30`. The snapshots preserve the original workstation
-paths and are provenance-only. Portable numerical verification uses the S2
-HDF5 archive and `analysis/recompute_action_weight_table_ii.py`.
+shape `10 × 30 × 10 × 30`. Checkpoint and output directories are configured
+with `ACTION_WEIGHT_MODEL_DIR` and `ACTION_WEIGHT_OUTPUT_DIR`. Portable
+full reruns use one case-specific checkpoint directory at a time, bound by
+`configs/action_weight_checkpoint_manifest.json`. Numerical verification of
+the manuscript values uses the S2 HDF5 archive and
+`analysis/recompute_action_weight_table_ii.py`.
 
 The manuscript comparison set is
 

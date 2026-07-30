@@ -37,8 +37,8 @@ specified grids.
   replay checks; and
 - `results/paper2_mpc_current_12_cases.csv`: manuscript-facing current table.
 
-Superseded tables are not distributed on the submission branch; they are held
-in the authors' offline `Paper_store/Past` archive.
+Only the source-aligned current tables are distributed on the submission
+branch.
 
 ## Validation
 

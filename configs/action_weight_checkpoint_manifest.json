@@ -1,0 +1,393 @@
+{
+  "schema_version": 1,
+  "protocol": "Table II case-specific fixed-checkpoint evaluator binding",
+  "random_seed": 20260716,
+  "model_directory_rule": "ACTION_WEIGHT_MODEL_DIR must point to the four-checkpoint directory for exactly one case. Case directories must not be flattened or shared.",
+  "output_directory_rule": "ACTION_WEIGHT_OUTPUT_DIR must be case-specific because output basenames repeat across the 12 evaluators.",
+  "cases": [
+    {
+      "case": "action_weight=0.02/60,30(0.33m)",
+      "evaluator": "src/two_link/action_weight/action_weight=0.02/60,30(0.33m)/Whole_energy_comparison_low_dim.py",
+      "evaluator_bytes": 30971,
+      "evaluator_sha256": "95a18504d0e842a379df33f3ad3dee9c98586d4183a74d3c84e50f5effb6873d",
+      "checkpoints": [
+        {
+          "policy_variable": "policy_active_continuous",
+          "filename": "Policy_Net_Pytorch(-1,0,1)_1421_continuous.pth",
+          "bytes": 2127353,
+          "sha256": "3be61adb80d275c9fdecd1417ecd5c704d5dc4f84bb4d1423c0a0c30c280d2a0"
+        },
+        {
+          "policy_variable": "policy_passive_discrete",
+          "filename": "Policy_Net_Pytorch(1,0)_846.pth",
+          "bytes": 2127173,
+          "sha256": "023ba8e4681e1108b1d891201bc70f374c014ffbdd3c3d5dee2810427f8974c7"
+        },
+        {
+          "policy_variable": "policy_passive_discrete_1",
+          "filename": "Policy_Net_Pytorch(-1,0)_830.pth",
+          "bytes": 2127185,
+          "sha256": "26134196a8f37a2f9f0b4447df9dfd1ce781b2f04f2b2e4811bc33f748728663"
+        },
+        {
+          "policy_variable": "policy_active_discrete",
+          "filename": "Policy_Net_Pytorch(-1,0,1)_1663.pth",
+          "bytes": 2129269,
+          "sha256": "4c3142735cb9960210f692a0ba8ee756319b5109cfa8a1535c8feff78802968e"
+        }
+      ]
+    },
+    {
+      "case": "action_weight=0.02/60,30(0.33m),0.01m",
+      "evaluator": "src/two_link/action_weight/action_weight=0.02/60,30(0.33m),0.01m/Whole_energy_comparison_low_dim.py",
+      "evaluator_bytes": 31001,
+      "evaluator_sha256": "266dae09780f5615ef5d8904d51bfaa200efde2f487ad6f7a5d274c1a94d0e74",
+      "checkpoints": [
+        {
+          "policy_variable": "policy_active_continuous",
+          "filename": "Policy_Net_Pytorch(-1,0,1)_1398_continuous.pth",
+          "bytes": 2127353,
+          "sha256": "9324cdb892510d526cc98554bfdbbd6f1b4ab8f7005736c208b1ee140fb3d74a"
+        },
+        {
+          "policy_variable": "policy_passive_discrete",
+          "filename": "Policy_Net_Pytorch(1,0)_829.pth",
+          "bytes": 2127173,
+          "sha256": "4221a4030b13d3245a256363b1dc5f18d5fdae3962e6d4bbf33a1e7960b149aa"
+        },
+        {
+          "policy_variable": "policy_passive_discrete_1",
+          "filename": "Policy_Net_Pytorch(-1,0)_827.pth",
+          "bytes": 2127185,
+          "sha256": "4223a71d033d88db5347875c3031d5897322723ee92fc912ed0f1644aad124c9"
+        },
+        {
+          "policy_variable": "policy_active_discrete",
+          "filename": "Policy_Net_Pytorch(-1,0,1)_1640.pth",
+          "bytes": 2129269,
+          "sha256": "a9f67f13af6e11d3a5f945f4b3af4e4e27eab92fb7dd30015ceb11d1f068c04b"
+        }
+      ]
+    },
+    {
+      "case": "action_weight=0.02/70,20(0.225m)",
+      "evaluator": "src/two_link/action_weight/action_weight=0.02/70,20(0.225m)/Whole_energy_comparison_low_dim.py",
+      "evaluator_bytes": 30969,
+      "evaluator_sha256": "7eb47613b12144ebf996b6a3a00b5b5d1c8eb2934c2c98f85cdcfc83b1780d51",
+      "checkpoints": [
+        {
+          "policy_variable": "policy_active_continuous",
+          "filename": "Policy_Net_Pytorch(-1,0,1)_1455_continuous.pth",
+          "bytes": 2127353,
+          "sha256": "75f427f92c122576cce4b2e21267e355acd517b871068fceb1e109b1bf13ea88"
+        },
+        {
+          "policy_variable": "policy_passive_discrete",
+          "filename": "Policy_Net_Pytorch(1,0)_560.pth",
+          "bytes": 2127173,
+          "sha256": "150df6fa15363a7c4511940684db889504216cd4b5e6ffee49e79e2c188114b8"
+        },
+        {
+          "policy_variable": "policy_passive_discrete_1",
+          "filename": "Policy_Net_Pytorch(-1,0)_858.pth",
+          "bytes": 2127185,
+          "sha256": "24475927d719b1a7beb04c1270df01d27053e6c5cdcb6cf2204358f66259f6a1"
+        },
+        {
+          "policy_variable": "policy_active_discrete",
+          "filename": "Policy_Net_Pytorch(-1,0,1)_1634.pth",
+          "bytes": 2129269,
+          "sha256": "910668155aba42173fc3e1a5bd12696c807fe47d674fcdce25725bc39690ae91"
+        }
+      ]
+    },
+    {
+      "case": "action_weight=0.02/70,20,(0.225m),0.01m",
+      "evaluator": "src/two_link/action_weight/action_weight=0.02/70,20,(0.225m),0.01m/Whole_energy_comparison_low_dim.py",
+      "evaluator_bytes": 31001,
+      "evaluator_sha256": "301c9762f5124cef5a0b7683a821258575924f579d5de8853600ef3cae65696c",
+      "checkpoints": [
+        {
+          "policy_variable": "policy_active_continuous",
+          "filename": "Policy_Net_Pytorch(-1,0,1)_1350_continuous.pth",
+          "bytes": 2127353,
+          "sha256": "a576143c5bf105bdfd6f7a96ff522be868d247e2bba25186a688a367785f4740"
+        },
+        {
+          "policy_variable": "policy_passive_discrete",
+          "filename": "Policy_Net_Pytorch(1,0)_532.pth",
+          "bytes": 2127173,
+          "sha256": "92ac2501973efc5c9f308d61e1b4df7d75c0f3d8a00c0db0e39bd10b0c3b65a7"
+        },
+        {
+          "policy_variable": "policy_passive_discrete_1",
+          "filename": "Policy_Net_Pytorch(-1,0)_832.pth",
+          "bytes": 2127185,
+          "sha256": "1747a4c3285d9c240db08a11490c2d6a1796346d8b4245ff1f7d51ac8021d6fe"
+        },
+        {
+          "policy_variable": "policy_active_discrete",
+          "filename": "Policy_Net_Pytorch(-1,0,1)_1614.pth",
+          "bytes": 2129269,
+          "sha256": "2405adf1719267ea8760473c85ddad6fc03c0e7585dead76f850237959d32d8f"
+        }
+      ]
+    },
+    {
+      "case": "action_weight=0.04/60,30(0.33m)",
+      "evaluator": "src/two_link/action_weight/action_weight=0.04/60,30(0.33m)/Whole_energy_comparison_low_dim.py",
+      "evaluator_bytes": 30979,
+      "evaluator_sha256": "45a132e32579b87f7741a4b7453d2c05675fc789962f68d358bba4c148a881fd",
+      "checkpoints": [
+        {
+          "policy_variable": "policy_active_continuous",
+          "filename": "Policy_Net_Pytorch(-1,0,1)_1560_continuous_old_form.pth",
+          "bytes": 2126906,
+          "sha256": "72402cec2d26499713abbb84550e7272c903bd63c0c5145cf5135a6eba20f25c"
+        },
+        {
+          "policy_variable": "policy_passive_discrete",
+          "filename": "Policy_Net_Pytorch(1,0)_900.pth",
+          "bytes": 2126736,
+          "sha256": "8cf8628d08211d3bc65db69b909ca5a80954042eee21633dd90c6facc9fbddee"
+        },
+        {
+          "policy_variable": "policy_passive_discrete_1",
+          "filename": "Policy_Net_Pytorch(-1,0)_1046.pth",
+          "bytes": 2126746,
+          "sha256": "e0f526f3dacf52ab9495b88cf8bddbb7c57c1f0670764f068b2be3f5eb6704ee"
+        },
+        {
+          "policy_variable": "policy_active_discrete",
+          "filename": "Policy_Net_Pytorch(-1,0,1)_1635.pth",
+          "bytes": 2128824,
+          "sha256": "bfeba966d711e484cbbbdda3fbb1a1d253d8c67ed37b4fc0a85cf866ab1cd05b"
+        }
+      ]
+    },
+    {
+      "case": "action_weight=0.04/60,30(0.33m),0.01m",
+      "evaluator": "src/two_link/action_weight/action_weight=0.04/60,30(0.33m),0.01m/Whole_energy_comparison_low_dim.py",
+      "evaluator_bytes": 30998,
+      "evaluator_sha256": "e78c7c0a81b6662c3faa5f96007872c9842519a2938eb7c93afa9ed990425a9a",
+      "checkpoints": [
+        {
+          "policy_variable": "policy_active_continuous",
+          "filename": "Policy_Net_Pytorch(-1,0,1)_1348_continuous.pth",
+          "bytes": 2126886,
+          "sha256": "912a1b8a6017f87f600a1c7a2b6d9cca9791b53760b47b987de6636aa458fe41"
+        },
+        {
+          "policy_variable": "policy_passive_discrete",
+          "filename": "Policy_Net_Pytorch_(1,0).pth",
+          "bytes": 2126706,
+          "sha256": "aee4fedcf7049a8981bcbd3855111604eb9b7e1ce9f663892b4aa60a2f590ec5"
+        },
+        {
+          "policy_variable": "policy_passive_discrete_1",
+          "filename": "Policy_Net_Pytorch(-1,0)_834.pth",
+          "bytes": 2126746,
+          "sha256": "a3f30b1912a614d492a45c9830a6eb9ebcb650f1c6810b16850e64606fb39d20"
+        },
+        {
+          "policy_variable": "policy_active_discrete",
+          "filename": "Policy_Net_Pytorch(-1,0,1)_1613.pth",
+          "bytes": 2128824,
+          "sha256": "8df1994167e5db62a0032ee78f0818af355675feee2b071de53085273920477f"
+        }
+      ]
+    },
+    {
+      "case": "action_weight=0.04/70,20(0.225m)",
+      "evaluator": "src/two_link/action_weight/action_weight=0.04/70,20(0.225m)/Whole_energy_comparison_low_dim.py",
+      "evaluator_bytes": 30969,
+      "evaluator_sha256": "83ecd73d17c5d702b81924e7d52da84f073db5866f7d38340afffad54fe58779",
+      "checkpoints": [
+        {
+          "policy_variable": "policy_active_continuous",
+          "filename": "Policy_Net_Pytorch(-1,0,1)_1485_continuous.pth",
+          "bytes": 2126886,
+          "sha256": "ad06b9283c8ca2d9839ac27baf7bfb037ea5f883fa86fff26c381bda06be9b6d"
+        },
+        {
+          "policy_variable": "policy_passive_discrete",
+          "filename": "Policy_Net_Pytorch(1,0)_557.pth",
+          "bytes": 2126736,
+          "sha256": "c3f6a5b7af083b55c3f1ad71e6670caa958692f05e2059916d8499f6b9dc90f6"
+        },
+        {
+          "policy_variable": "policy_passive_discrete_1",
+          "filename": "Policy_Net_Pytorch(-1,0)_836.pth",
+          "bytes": 2126746,
+          "sha256": "81e8e98c5cabae6f2e17b7e76d484730376a62acad14da28b5d3e1cc7c3ee598"
+        },
+        {
+          "policy_variable": "policy_active_discrete",
+          "filename": "Policy_Net_Pytorch(-1,0,1)_1645.pth",
+          "bytes": 2128824,
+          "sha256": "9c186949b93ca6a182dbb910f73a05e03eacf1487e58b7136c7b3f274728d2c1"
+        }
+      ]
+    },
+    {
+      "case": "action_weight=0.04/70,20,(0.225m),0.01m",
+      "evaluator": "src/two_link/action_weight/action_weight=0.04/70,20,(0.225m),0.01m/Whole_energy_comparison_low_dim.py",
+      "evaluator_bytes": 30989,
+      "evaluator_sha256": "190c3681d41ab103df6bdb40a0dc9bcf240eb7dfda1191bffe7b711babdac5c4",
+      "checkpoints": [
+        {
+          "policy_variable": "policy_active_continuous",
+          "filename": "Policy_Net_Pytorch(-1,0,1)_1345_continuous.pth",
+          "bytes": 2126886,
+          "sha256": "828a862b220585943ffde09fffffdd099d8e5d33379bec61fd5f9a317bc0b814"
+        },
+        {
+          "policy_variable": "policy_passive_discrete",
+          "filename": "Policy_Net_Pytorch(1,0)_569.pth",
+          "bytes": 2126736,
+          "sha256": "a9e1025fc8fc1a569e2a981095d814a1e796798d7d978374b035086138bb9322"
+        },
+        {
+          "policy_variable": "policy_passive_discrete_1",
+          "filename": "Policy_Net_Pytorch(-1,0)_861.pth",
+          "bytes": 2126746,
+          "sha256": "c9486e8420b0ebeca913d545cb404ab2040484c53d0ba77cf1533b8a59406717"
+        },
+        {
+          "policy_variable": "policy_active_discrete",
+          "filename": "Policy_Net_Pytorch(-1,0,1)_1590.pth",
+          "bytes": 2128824,
+          "sha256": "2d2c9f82f49c0fce4d99ba2e2173046af34c9c8c97ba3d49291b905886cfa231"
+        }
+      ]
+    },
+    {
+      "case": "action_weight=0.06/60,30(0.33m)",
+      "evaluator": "src/two_link/action_weight/action_weight=0.06/60,30(0.33m)/Whole_energy_comparison_low_dim.py",
+      "evaluator_bytes": 30969,
+      "evaluator_sha256": "ef1006dd01c60b5ce1113a80dfecb94253dea481a3b76b690f441255c1579df5",
+      "checkpoints": [
+        {
+          "policy_variable": "policy_active_continuous",
+          "filename": "Policy_Net_Pytorch(-1,0,1)_1432_continuous.pth",
+          "bytes": 2127353,
+          "sha256": "4e99961a7c848ec6de4ef55a426f1a3d92b61202f3e9d2c3649cdc4104b6af3b"
+        },
+        {
+          "policy_variable": "policy_passive_discrete",
+          "filename": "Policy_Net_Pytorch(1,0)_823.pth",
+          "bytes": 2127173,
+          "sha256": "7acaaead6f6c41ac98cbbeae1d47a05766805282d2881825813e69ff4cbbcee6"
+        },
+        {
+          "policy_variable": "policy_passive_discrete_1",
+          "filename": "Policy_Net_Pytorch(-1,0)_821.pth",
+          "bytes": 2127185,
+          "sha256": "df2370a8787c26ad9eee4f9e3dba9db576a15031bbe77fbf243dd58d49e34c45"
+        },
+        {
+          "policy_variable": "policy_active_discrete",
+          "filename": "Policy_Net_Pytorch(-1,0,1)_1636.pth",
+          "bytes": 2129269,
+          "sha256": "db5a1c731d53206a03a23704af1af436623ee373b1996f37b9914241e8a1d6f3"
+        }
+      ]
+    },
+    {
+      "case": "action_weight=0.06/60,30(0.33m),0.01m",
+      "evaluator": "src/two_link/action_weight/action_weight=0.06/60,30(0.33m),0.01m/Whole_energy_comparison_low_dim.py",
+      "evaluator_bytes": 30989,
+      "evaluator_sha256": "93496f7e777066cb6b04896fba134d67e07706f21f9be8592eb91de50893a77a",
+      "checkpoints": [
+        {
+          "policy_variable": "policy_active_continuous",
+          "filename": "Policy_Net_Pytorch(-1,0,1)_1398_continuous.pth",
+          "bytes": 2127353,
+          "sha256": "d9a98447609c47a43b25035a798ec8d1c6d3dbd7b0516830a933b85d200c6957"
+        },
+        {
+          "policy_variable": "policy_passive_discrete",
+          "filename": "Policy_Net_Pytorch(1,0)_830.pth",
+          "bytes": 2127173,
+          "sha256": "ce1c3a739146e3a56b629346a7d036a4d44b4f34ef3aa17449898fe311c7027f"
+        },
+        {
+          "policy_variable": "policy_passive_discrete_1",
+          "filename": "Policy_Net_Pytorch(-1,0)_815.pth",
+          "bytes": 2127185,
+          "sha256": "854c4d15e595a95be88abd3a6a94ece15ab893dc248bba0c64c02c5144b0fa89"
+        },
+        {
+          "policy_variable": "policy_active_discrete",
+          "filename": "Policy_Net_Pytorch(-1,0,1)_1610.pth",
+          "bytes": 2129269,
+          "sha256": "117fa733c533ffde73151b6f2989e14d5de844504ff820be1243397e2c437b90"
+        }
+      ]
+    },
+    {
+      "case": "action_weight=0.06/70,20(0.225m)",
+      "evaluator": "src/two_link/action_weight/action_weight=0.06/70,20(0.225m)/Whole_energy_comparison_low_dim.py",
+      "evaluator_bytes": 30969,
+      "evaluator_sha256": "60c375a06847a7920ef7f5f9035750b7386f35b37f719e30f70f398e7b471cda",
+      "checkpoints": [
+        {
+          "policy_variable": "policy_active_continuous",
+          "filename": "Policy_Net_Pytorch(-1,0,1)_1418_continuous.pth",
+          "bytes": 2127353,
+          "sha256": "21aa815368bb5b58499a59d7f9e90b6ddc7311c8f15295bb4a04fe035abff890"
+        },
+        {
+          "policy_variable": "policy_passive_discrete",
+          "filename": "Policy_Net_Pytorch(1,0)_544.pth",
+          "bytes": 2127173,
+          "sha256": "bdcaf2a6bc8b24c232bbfa64785522f852eae8544c77305dfd0d138712a36155"
+        },
+        {
+          "policy_variable": "policy_passive_discrete_1",
+          "filename": "Policy_Net_Pytorch(-1,0)_870.pth",
+          "bytes": 2127185,
+          "sha256": "42bb494cc88adef6aaf96627d994789962f216681052e9ca04302be125f56347"
+        },
+        {
+          "policy_variable": "policy_active_discrete",
+          "filename": "Policy_Net_Pytorch(-1,0,1)_1621.pth",
+          "bytes": 2129269,
+          "sha256": "fc6308905f3ff8901814f0b3186aadc4c49dc725647c3d93436b1e0940486e7d"
+        }
+      ]
+    },
+    {
+      "case": "action_weight=0.06/70,20,(0.225m),0.01m",
+      "evaluator": "src/two_link/action_weight/action_weight=0.06/70,20,(0.225m),0.01m/Whole_energy_comparison_low_dim.py",
+      "evaluator_bytes": 30989,
+      "evaluator_sha256": "1bb38e529bf47f49c51bd4c17ebb331c36640e35bf324958485258e1d579f32f",
+      "checkpoints": [
+        {
+          "policy_variable": "policy_active_continuous",
+          "filename": "Policy_Net_Pytorch(-1,0,1)_1378_continuous.pth",
+          "bytes": 2127353,
+          "sha256": "7a90e36ce737e316a652692f25242e3426b8b772902afa5d2f24d75588cc22b4"
+        },
+        {
+          "policy_variable": "policy_passive_discrete",
+          "filename": "Policy_Net_Pytorch(1,0)_541.pth",
+          "bytes": 2127173,
+          "sha256": "e5160ec605571a1f58359d8987c1ad9afdcda64b6a49ae7cc78dce95d422f12a"
+        },
+        {
+          "policy_variable": "policy_passive_discrete_1",
+          "filename": "Policy_Net_Pytorch(-1,0)_820.pth",
+          "bytes": 2127185,
+          "sha256": "76aae8f50f6c88ce9d76ed7ebd75bcda9d138610aab25fafdea2507e00f820ed"
+        },
+        {
+          "policy_variable": "policy_active_discrete",
+          "filename": "Policy_Net_Pytorch(-1,0,1)_1607.pth",
+          "bytes": 2129269,
+          "sha256": "6c34dbe8df0498ab90080d72b64441eda913c6ee957bbc424e45cee871aaa171"
+        }
+      ]
+    }
+  ]
+}
