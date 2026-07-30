@@ -1,0 +1,4 @@
+endpoint,n_pairs,both_positive,active_only,selector_only,neither_positive,discordant_n,selector_only_over_active_only,mcnemar_exact_two_sided_p
+success,10800,4714,429,282,5375,711,0.6573426573426573,3.922290715415657e-08
+valid_Cmt_A,10800,2244,282,367,7907,649,1.301418439716312,0.000961716179631379
+valid_Cmt_B,10800,2244,282,367,7907,649,1.301418439716312,0.000961716179631379

@@ -1,11 +1,12 @@
-"""Portable artifact resolution for the source-aligned Paper2 entry points.
+"""Portable artifact resolution for the Paper2 fixed-case entry points.
 
 The complete learned-controller case bundle is distributed with the
 supplementary material rather than duplicated in this repository.  Set
-``PAPER2_ARTIFACT_ROOT`` to the extracted bundle root.  The root may either
-contain ``flat`` and ``raised`` subdirectories or contain the files directly.
-Frozen TVLQR checkpoints bundled in this repository are discovered
-automatically.
+``PAPER2_ARTIFACT_ROOT`` to the extracted ``paper2_artifacts`` directory,
+which must contain separate ``flat`` and ``raised`` subdirectories.  Keeping
+the terrain directories separate is required because several artifact
+filenames occur in both directories with different contents.  Frozen TVLQR
+checkpoints bundled in this repository are discovered automatically.
 """
 
 from __future__ import annotations
@@ -27,7 +28,7 @@ def resolve_artifact(entrypoint_file: str, filename: str) -> str:
     configured_root = os.environ.get("PAPER2_ARTIFACT_ROOT")
     if configured_root:
         root = Path(configured_root).expanduser().resolve()
-        candidates.extend((root / terrain / filename, root / filename))
+        candidates.append(root / terrain / filename)
 
     candidates.extend(
         (

@@ -1,9 +1,10 @@
 # Raised L=1.145, repetition-1 source-aligned rerun
 
-The current Paper2 tables use exact rerun records for the raised-terrain,
-nominal-length-1.145, repetition-1 Discrete PPO, Continuous-torque PPO, and
-LIPM cases. All executions used initial index `(19, 11, 15, 1)` and the same
-case environment.
+This directory preserves the 2026-07-21 source-alignment rerun for the
+raised-terrain, nominal-length-1.145, repetition-1 Discrete PPO,
+Continuous-torque PPO, and LIPM cases. All executions used initial index
+`(19, 11, 15, 1)` and the same case environment. These records are historical
+provenance; they are not the selected minima used by the current manuscript.
 
 | Method | Cmt | Time (s) | Landing error (m) | Recovery |
 |---|---:|---:|---:|---|
@@ -19,6 +20,10 @@ accepted local sources are text-identical apart from line-ending normalization.
 
 Machine-readable values, source hashes, logical commands, environment versions,
 source snapshots or pinned repository entrypoints, and raw stdout are in
-`results/paper2_source_aligned_r1_rerun_20260721/`. The current table generator
-applies only these three explicitly keyed overrides; all other non-MPC rows remain
-unchanged.
+`results/paper2_source_aligned_r1_rerun_20260721/`.
+
+The current manuscript uses the accepted complete push-off-grid minima in
+`results/paper2_push_off_grid_12case/` and
+`results/paper2_current/paper2_combined_cases.csv`. For `raised_L1145_r1`,
+these are 0.250980549634431 for discrete active PPO and 0.258172433323909 for
+continuous-torque PPO.

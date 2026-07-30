@@ -15,14 +15,15 @@ controller means used in the primary comparison are:
 
 | Method | Mean Cmt |
 |---|---:|
-| Proposed one-sided selector | 0.123472869728 |
-| Discrete active PPO | 0.228756976684 |
-| Continuous-torque PPO | 0.240916227851 |
+| Proposed Active-default lookup router | 0.122346306417 |
+| Discrete active PPO | 0.226620152405 |
+| Continuous-torque PPO | 0.238107711255 |
 | Continuous-torque MPC | 0.198945098769 |
 
-The rerun `raised_L1145_r1` values are 0.267040040566968 for discrete active PPO
-and 0.2780932427752225 for continuous-torque PPO. The current primary CSV and
-Table V builder both use these values.
+The current `raised_L1145_r1` values are 0.250980549634431 for discrete active
+PPO and 0.258172433323909 for continuous-torque PPO. The primary CSV, Table V
+builder, and `results/paper2_push_off_grid_12case/accepted_cases.csv` use the
+same accepted recovery-grid results.
 
 ## Initial-state and reset map
 

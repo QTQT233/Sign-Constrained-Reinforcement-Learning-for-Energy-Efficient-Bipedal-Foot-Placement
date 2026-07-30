@@ -1,0 +1,48 @@
+{
+  "experiment_id": "fourlink_multibatch_validity_20260725_current_formal",
+  "formal_evaluator_sha256": "c13c0c45b092fc43aa75fc091e870a14e4d8b6730cda5b2b8659c21a2d2bb186",
+  "fixed_checkpoints_sha256": {
+    "active": "0ca5581f39f5598ceb9c3283704e532a5efe441beb499a6c361402bf92e4720f",
+    "passive_positive": "521962b8a3deea4411dc1b1c801cf9d8fcecfafa51d240f6752c07952ec1926a",
+    "passive_negative": "4752c0c4632d5958ee64c7f3004a76e9a7bd7f3204dd914fdb7003bce9a92d7c",
+    "selector": "99fdebbe1ecdccfdfd1d36902ff4dd6936712488065aa0e6cf5c8391b24979e1"
+  },
+  "touchdown_safe_q_low_deg": [35.0, 8.0, -115.0, 5.0],
+  "command_step_length_grid_m": [0.30, 0.35, 0.40],
+  "command_step_height_grid_m": [0.00, 0.01, 0.02],
+  "walk_directions": [1.0, -1.0],
+  "episodes_per_grid_cell_direction": 40,
+  "reset_phase_mode": "random",
+  "max_steps": 500,
+  "deterministic_policy": true,
+  "validity_A_original": {
+    "requires_success": true,
+    "requires_nonzero_torque_steps": 1,
+    "minimum_signed_com_displacement_m_exclusive": 0.001
+  },
+  "validity_B_relaxed": {
+    "requires_success": true,
+    "requires_finite_energy_and_cmt": true,
+    "requires_at_least_control_steps": 1,
+    "minimum_signed_com_displacement_m_exclusive": 0.001,
+    "requires_nonzero_torque": false
+  },
+  "formal_reference_batch": {
+    "formal_reference": [20260702, 20260719, 20260803]
+  },
+  "fresh_batches": {
+    "batch01": [20261101, 20261102, 20261103],
+    "batch02": [20261111, 20261112, 20261113],
+    "batch03": [20261121, 20261122, 20261123],
+    "batch04": [20261201, 20261202, 20261203],
+    "batch05": [20261211, 20261212, 20261213]
+  },
+  "notes": [
+    "Each seed contributes 3 lengths x 3 heights x 2 directions x 40 episodes = 720 matched states.",
+    "Each batch contains three seeds and therefore 2160 matched states.",
+    "Only the current formal V22_3/V9 active controller and current formal selector plus its positive/negative experts are evaluated.",
+    "The formal_reference batch is used only for reproduction validation and is excluded from fresh-batch pooling.",
+    "No failure trajectory is assigned a Cmt value.",
+    "Obsolete V23/ac09 diagnostics are excluded from this release and every reported statistic."
+  ]
+}

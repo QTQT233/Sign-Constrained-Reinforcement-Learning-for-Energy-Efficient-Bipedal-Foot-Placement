@@ -120,7 +120,7 @@ class UnifiedMPCReleaseTests(unittest.TestCase):
             text = path.read_text(encoding="utf-8-sig")
             self.assertFalse(any(token in text for token in forbidden), path)
 
-    def test_source_aligned_r1_records_and_boundary(self) -> None:
+    def test_historical_source_aligned_r1_records_and_boundary(self) -> None:
         with (SOURCE_ALIGNED_DIR / "rerun_records.csv").open(
             encoding="utf-8", newline=""
         ) as handle:

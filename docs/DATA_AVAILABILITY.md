@@ -15,10 +15,11 @@ validation records, two deterministic replay records, and the two-link
 checkpoint/action-map bundle required by the portable fixed-case entry points
 are provided as Supplementary Archive S1. The action-weight archive is designated
 Supplementary Data S2, and the ATC-50 table, schema, portable event-query
-implementation, and checksums are designated Supplementary Data S3; no
-byte-for-byte table-regeneration claim is made. Author-generated software and
-released data are licensed under the Apache License 2.0; third-party components
-remain subject to their original terms.
+implementation, and checksums are designated Supplementary Data S3.
+Supplementary Archive S4 contains the released landing-metric records,
+additional four-link batches, and hold-versus-requery analysis. Author-generated
+software and released data are licensed under the Apache License 2.0;
+third-party components remain subject to their original terms.
 
 ## Repository scope
 
@@ -29,6 +30,6 @@ numerical reproducibility record.
 
 The two-link hardware controller uses an event-updated ATC-50 action lookup.
 The two-link simulations use transition-start Active-default expert routing.
-The four-link stress test reports the two-expert learned transition-start
+The four-link benchmark reports the two-expert learned transition-start
 selector and a separate Active-default confidence-gated three-expert
 confirmation.

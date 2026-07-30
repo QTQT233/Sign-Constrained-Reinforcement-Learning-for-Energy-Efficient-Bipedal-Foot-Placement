@@ -1,4 +1,4 @@
-# Paper2 source-aligned entry points
+# Paper2 fixed-case entry points
 
 This directory contains provenance-preserving source snapshots for the five
 non-MPC method families across the 12 case directories. The three learned
@@ -11,9 +11,10 @@ remain separate reference-based diagnostics.
 The entry points resolve their external checkpoints and action maps through
 `src/paper2/artifact_paths.py`; no workstation-specific path is required.
 Extract Supplementary Archive S1 and set `PAPER2_ARTIFACT_ROOT` to its artifact
-directory. The resolver accepts either `flat/` and `raised/` subdirectories or
-one directory containing the requested files. The four frozen TVLQR
-checkpoints stored under `models/paper2/tvlqr/` are discovered automatically.
+directory. This directory must contain separate `flat/` and `raised/`
+subdirectories; do not combine them because several repeated filenames have
+terrain-specific contents. The four frozen TVLQR checkpoints stored under
+`models/paper2/tvlqr/` are discovered automatically.
 
 The released candidate tables, selected minima, fixed replay values, and
 validation program are fully portable. A source entry point can be run from

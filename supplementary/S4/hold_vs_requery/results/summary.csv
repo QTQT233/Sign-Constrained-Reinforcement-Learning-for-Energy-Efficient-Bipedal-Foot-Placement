@@ -1,0 +1,36 @@
+metric,value
+case_count,2160
+hold_success_count,964
+requery_success_count,893
+both_success_count,877
+hold_only_success_count,87
+requery_only_success_count,16
+neither_success_count,1180
+hold_valid_cmt_count,480
+requery_valid_cmt_count,434
+both_valid_cmt_count,419
+hold_mean_cmt_all_valid,0.4270115173863903
+requery_mean_cmt_all_valid,0.2565039107488293
+hold_mean_cmt_both_valid,0.18761432646477522
+requery_mean_cmt_both_valid,0.23220725887974938
+mean_requery_minus_hold_cmt_both_valid,0.044592932414974196
+bootstrap_ci95_mean_requery_minus_hold_cmt,"[-0.016721444185286503, 0.11426372613430084]"
+requery_lower_cmt_count,80
+hold_lower_cmt_count,90
+cmt_tie_count,249
+requery_lower_cmt_fraction_both_valid,0.1909307875894988
+requery_sign_switch_case_count,1319
+requery_no_switch_case_count,841
+requery_total_sign_switches,2252
+requery_mean_sign_switches_per_case,1.0425925925925925
+requery_mean_sign_switches_among_switched_cases,1.7073540561031084
+hold_terminal_reason_counts,"{""success"": 961, ""clearance_ground+foot_ground_before_ready"": 950, ""clearance"": 61, ""clearance_ground+foot_ground_bad_clearance"": 85, ""clearance_ground+foot_ground_after_ready"": 36, ""q1_low_limit"": 20, ""speed"": 9, ""q3_high_limit"": 1, ""success+touchdown_event"": 3, ""clearance_ground+knee_ground"": 32, ""q1_low_limit+q3_high_limit"": 1, ""q1_high_limit"": 1}"
+requery_terminal_reason_counts,"{""success"": 891, ""clearance_ground+foot_ground_before_ready"": 996, ""clearance_ground+foot_ground_bad_clearance"": 142, ""clearance"": 66, ""clearance_ground+foot_ground_after_ready"": 31, ""speed"": 7, ""success+touchdown_event"": 2, ""q1_low_limit"": 8, ""clearance_ground+knee_ground"": 17}"
+stage,formal
+comparison,frozen selector/expert hold versus per-control-step requery
+all_non_query_factors_shared,True
+formal_hold_reproduction,PASS
+input_sha256,"{""src/four_link/evaluation/formal_v22_3_v9_evaluator.py"": ""c13c0c45b092fc43aa75fc091e870a14e4d8b6730cda5b2b8659c21a2d2bb186"", ""models/four_link/paper_four_link_passive_sign_selector_v22_3_grid.pth"": ""99fdebbe1ecdccfdfd1d36902ff4dd6936712488065aa0e6cf5c8391b24979e1"", ""models/four_link/v22_3_v9_uni_pos_400_grid/V22_3V9UniPos400Grid_c097_Policy_best.pth"": ""521962b8a3deea4411dc1b1c801cf9d8fcecfafa51d240f6752c07952ec1926a"", ""models/four_link/v22_3_v9_uni_neg_400_grid/V22_3V9UniNeg400Grid_c100_Policy_best.pth"": ""4752c0c4632d5958ee64c7f3004a76e9a7bd7f3204dd914fdb7003bce9a92d7c"", ""inputs/formal_rollouts_active_vs_passive.csv"": ""39557858bdee443dcfbb837b15a2c337570eb8b8828721fd5e4dfa00d42f6ade"", ""inputs/formal_paired_trials.csv"": ""cab0475943a31109c386910f815e1a361fc68594c3ff1b61c872a51356db1f4d""}"
+bootstrap_seed,20260725
+bootstrap_replicates,10000
+elapsed_seconds,357.77190947532654

@@ -7,8 +7,9 @@ The public records have separate roles:
 - Zenodo DOI <https://doi.org/10.5281/zenodo.21407986>: immutable version 1.0.0
   dataset/model archive, including action-weight arrays, lookup tables,
   two-link records, legacy four-link records, checkpoints, and hardware videos;
-- Supplementary Archive S1: exhaustive MPC candidate tables, traces, logs, and
-  replay evidence that are impractical or unnecessary to duplicate in Git.
+- Supplementary Archive S1: exhaustive MPC candidate tables, traces, logs,
+  replay evidence, and the terrain-separated checkpoint/action-map bundle used
+  by the Paper2 fixed-case entry points.
 - Supplementary Data S2: the 12-cell action-weight HDF5 package, schema,
   manifest, and checksums.
 - Supplementary Data S3: the frozen ATC-50 lookup table, schema, portable
@@ -54,8 +55,11 @@ unless the deposited dataset files or their metadata/checksums are changed.
 1. Include the unified 12-case MPC package README, environment specification,
    accepted case table, complete candidate searches, traces, solve logs,
    validation report, and two fresh-process replays per accepted case.
-2. Include a machine-readable manifest and an external ZIP SHA-256 sidecar.
-3. State that S1 supports the corrected MPC result and is not contained in
+2. Include the 24 audited Paper2 artifacts under
+   `paper2_artifacts/flat/` and `paper2_artifacts/raised/`; never flatten these
+   directories because repeated filenames can have terrain-specific contents.
+3. Include a machine-readable manifest and an external ZIP SHA-256 sidecar.
+4. State that S1 supports the corrected MPC result and is not contained in
    Zenodo dataset version 1.0.0.
 
 ## Supplementary Data S2 audit
@@ -79,8 +83,8 @@ unless the deposited dataset files or their metadata/checksums are changed.
 
 ## Limitations to disclose
 
-- Some Paper2 case entry points require their complete relative dependencies;
-  these are simulation materials and are not part of the hardware DOI.
+- The Paper2 fixed-case entry points require the terrain-separated S1 artifact
+  bundle; these simulation materials are not part of Zenodo version 1.0.0.
 - The two-link hardware lookup is event-updated and must not be described as a
   transition-locked expert route.
 - A hardware success rate should not be inferred unless every attempted trial

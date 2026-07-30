@@ -205,11 +205,15 @@ interchangeable.
   released model checkpoints, manifests, checksums, and the two hardware
   feasibility videos. The current true-hard-mask comparison and corrected
   executable sources are pinned by the manuscript's GitHub commit.
-- Supplementary Archive S1: complete MPC candidate-level evidence.
+- Supplementary Archive S1: complete MPC candidate-level evidence and the
+  terrain-separated checkpoint/action-map bundle used by the Paper2 fixed-case
+  entry points.
 - Supplementary Data S2: 12-cell action-weight HDF5 package and schema.
 - Supplementary Data S3: frozen ATC-50 lookup table, schema, portable event-
   query implementation, and checksums. No byte-for-byte regeneration claim is
   made for the historical table artifact.
+- Supplementary Archive S4: landing-metric records, additional four-link
+  batches, hold-versus-requery analysis, manifests, and checksums.
 
 This code update does not alter the hardware videos or archived model artifacts
 in Zenodo version 1.0.0.

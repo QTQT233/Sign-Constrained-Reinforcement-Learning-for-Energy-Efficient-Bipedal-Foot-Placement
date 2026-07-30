@@ -181,6 +181,9 @@ class ReleaseCleanlinessTests(unittest.TestCase):
     def test_paper2_entrypoints_use_portable_artifact_resolution(self) -> None:
         resolver = ROOT / "src/paper2/artifact_paths.py"
         self.assertTrue(resolver.is_file())
+        resolver_text = resolver.read_text(encoding="utf-8")
+        self.assertIn("root / terrain / filename", resolver_text)
+        self.assertNotIn("root / filename", resolver_text)
         entrypoints = ROOT / "src/paper2/entrypoints"
         for path in entrypoints.glob("*/*.py"):
             text = path.read_text(encoding="utf-8")

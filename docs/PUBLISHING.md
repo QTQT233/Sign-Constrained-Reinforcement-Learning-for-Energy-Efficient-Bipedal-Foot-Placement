@@ -38,9 +38,10 @@ This code merge does not require a new Zenodo version because it does not alter
 the deposited payload. Create a new Zenodo version only when deposited files or
 their metadata/checksums change.
 
-The complete MPC candidate-level record is supplied separately as
-Supplementary Archive S1. Its README and checksum sidecar should identify the
-exact Git commit used for the submission.
+The complete MPC candidate-level record and the terrain-separated
+checkpoint/action-map bundle required by the Paper2 fixed-case entry points are
+supplied as Supplementary Archive S1. Its README and checksum sidecar should
+identify the exact Git commit used for the submission.
 
 The 12-cell action-weight HDF5 record is supplied separately as Supplementary
 Data S2 with its schema, manifest, and checksum sidecar.
