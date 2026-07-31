@@ -220,6 +220,24 @@ class FiveBatchPhaseAwareReleaseTests(unittest.TestCase):
             readme,
         )
 
+    def test_hash_only_provenance_mapping_is_complete(self) -> None:
+        provenance = (BUNDLE / "PROVENANCE.md").read_text(encoding="utf-8")
+        mappings = {
+            "FROZEN_PROTOCOL.json": "protocol.json",
+            "code/run_new_seed_route_bank.py": "code/run_route_bank_seed.py",
+            "code/replay_hard_mask_on_confirmation_states.py":
+                "code/replay_hard_mask.py",
+            "code/run_validated_route_bank.py": "code/run_route_bank_seed.py",
+        }
+        for ledger_name, public_name in mappings.items():
+            self.assertIn(ledger_name, provenance)
+            self.assertIn(public_name, provenance)
+
+        self.assertEqual(
+            sha256(BUNDLE / "protocol.json"),
+            "3ee4fc567e0ae922fd9379ff0eb7cd3eb2bb5dd850cc26e199230ea45bda642f",
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

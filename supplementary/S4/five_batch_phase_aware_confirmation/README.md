@@ -10,8 +10,10 @@ case; policy actions are deterministic.
 The frozen protocol, controller hashes, route thresholds, statistical
 endpoints, stopping rule, and bootstrap design are recorded in
 `protocol.json`. `FROZEN_SHA256SUMS.txt` and the execution-amendment files
-document the pre-analysis source state and the metadata-only compatibility
-change used by the route-bank wrapper.
+document the pre-analysis author-workspace source state and the metadata-only
+compatibility change used by the route-bank wrapper. `PROVENANCE.md` maps
+their hash-only source names to the portable public entry points; the two
+frozen ledgers are not current-payload checksum inventories.
 
 ## Contents
 
@@ -26,6 +28,8 @@ change used by the route-bank wrapper.
 - `code/build_manuscript_metrics.py`: controller, actuator-component,
   target-cell, batch, sensitivity, and three-way common-valid tables.
 - `code/plot_figure10.py`: Figure 10 regeneration in the manuscript layout.
+- `PROVENANCE.md`: mapping from the frozen author-workspace source-hash ledger
+  to the portable public entry points.
 - `results/`: immutable pooled, batch, seed, target-cell, integrity, and
   matched-case outputs.
 - `manuscript_metrics/`: machine-readable values used in Tables VI--VIII and
