@@ -1,0 +1,576 @@
+{
+  "schema": "phase-aware-three-expert-five-batch-final-analysis/v1",
+  "protocol": {
+    "schema": "phase-aware-three-expert-five-batch-confirmation/v1",
+    "frozen_at_local_date": "2026-07-30",
+    "purpose": "Independent five-batch confirmation of the manuscript's phase-aware three-expert four-link controller.",
+    "development_data_excluded": [
+      "formal_reference",
+      "historical batch01--batch05",
+      "seeds 20261401--20261403"
+    ],
+    "batches": {
+      "batch01": [
+        20263101,
+        20263102,
+        20263103
+      ],
+      "batch02": [
+        20263104,
+        20263105,
+        20263106
+      ],
+      "batch03": [
+        20263107,
+        20263108,
+        20263109
+      ],
+      "batch04": [
+        20263110,
+        20263111,
+        20263112
+      ],
+      "batch05": [
+        20263113,
+        20263114,
+        20263115
+      ]
+    },
+    "design": {
+      "cases_per_seed": 720,
+      "cases_per_batch": 2160,
+      "total_cases_per_controller": 10800,
+      "endpoint_target_cells": 9,
+      "walking_directions": [
+        1.0,
+        -1.0
+      ],
+      "rollouts_per_seed_cell_direction": 40,
+      "initial_state_and_reset_phase_sampling": "random under each evaluation seed",
+      "matched_case_rule": "Every controller receives the same sampled initial state, command, direction, and reset phase.",
+      "deterministic_policy_actions": true
+    },
+    "proposed_rule": {
+      "decision_time": "transition_start",
+      "persistence": "hold_selected_expert_until_termination",
+      "thresholds": {
+        "pre_cross": {
+          "non_negative": 0.35,
+          "non_positive": 0.3
+        },
+        "mid_cross": {
+          "non_negative": 0.51,
+          "non_positive": 0.5
+        },
+        "touchdown": {
+          "non_negative": 0.85,
+          "non_positive": 0.54
+        }
+      },
+      "both_pass": "select_larger_gate_probability",
+      "neither_pass": "select_unrestricted_expert"
+    },
+    "controllers": [
+      "active_ppo",
+      "non_negative_expert",
+      "non_positive_expert",
+      "proposed_phase_aware_three_expert",
+      "released_two_expert_selector",
+      "hard_mask"
+    ],
+    "primary_acceptance_criteria": {
+      "proposed_minus_active_success_point_estimate": "at_least_zero",
+      "proposed_minus_active_success_one_sided_95_lower_bound_percentage_points": -1.0,
+      "proposed_vs_active_common_valid_fraction_of_active_valid_minimum": 0.95,
+      "proposed_minus_active_paired_cmt_difference_95_interval": "upper_bound_below_zero",
+      "proposed_vs_active_ratio_of_means_cmt_reduction_minimum": 0.2,
+      "proposed_minus_hard_mask_success_point_estimate": "at_least_zero",
+      "proposed_minus_hard_mask_paired_cmt_difference_95_interval": "upper_bound_below_zero"
+    },
+    "secondary_reporting": {
+      "two_expert_comparison": "Report the success-energy trade-off without requiring proposed Cmt to beat the two-expert energy-focused route.",
+      "per_batch_consistency": "Report all five batch estimates; do not omit unfavorable batches.",
+      "grid_cell_results": "Report all nine endpoint-target cells."
+    },
+    "analysis": {
+      "bootstrap_replicates": 20000,
+      "bootstrap_seed": 20263130,
+      "bootstrap_strata": [
+        "evaluation_seed",
+        "walking_direction",
+        "commanded_horizontal_target",
+        "commanded_height_target"
+      ],
+      "binary_paired_test": "exact_two_sided_mcnemar",
+      "stopping_rule": "Run and analyze all 15 seeds once. Do not retune the router after inspecting any new-batch outcome."
+    },
+    "frozen_sha256": {
+      "evaluator": "6f4d5717ade86c4906d7ea472c3a46c146d8041d1febd5028551ee4e57c0396c",
+      "active_policy": "0ca5581f39f5598ceb9c3283704e532a5efe441beb499a6c361402bf92e4720f",
+      "non_negative_policy": "521962b8a3deea4411dc1b1c801cf9d8fcecfafa51d240f6752c07952ec1926a",
+      "non_positive_policy": "4752c0c4632d5958ee64c7f3004a76e9a7bd7f3204dd914fdb7003bce9a92d7c",
+      "released_two_expert_gate": "99fdebbe1ecdccfdfd1d36902ff4dd6936712488065aa0e6cf5c8391b24979e1",
+      "hard_mask_policy": "74d26501c32e10892e8766f4980c291f6471aeeed0806225ad878919fc9d0b72"
+    }
+  },
+  "n_cases_per_controller": 10800,
+  "n_batches": 5,
+  "n_evaluation_seeds": 15,
+  "raw_integrity": {
+    "all_15_seed_banks_and_hard_replays_pass": true,
+    "seed_files": [
+      {
+        "batch": "batch01",
+        "seed": 20263101,
+        "route_manifest_schema": "validated-three-source-route-bank/v1",
+        "route_bank_sha256": "12cf99c9421f365de0cc37b6f798464582a240846c9dfb36065e862ebd80bc87",
+        "hard_mask_replay_sha256": "dc486085790fc3147e553664b9b2fe5b1d832101d357a53b839df671ffdde534",
+        "validation": "PASS"
+      },
+      {
+        "batch": "batch01",
+        "seed": 20263102,
+        "route_manifest_schema": "phase-aware-three-expert-route-bank-seed/v1",
+        "route_bank_sha256": "0f0973295d0e18559045df3acc76b4f292463375f2ba5127a4cc270cb08bdf92",
+        "hard_mask_replay_sha256": "68b14641432e1e24e83192ef1d4f7a5e8cae5cc6aec24ac954555180c17e03c0",
+        "validation": "PASS"
+      },
+      {
+        "batch": "batch01",
+        "seed": 20263103,
+        "route_manifest_schema": "phase-aware-three-expert-route-bank-seed/v1",
+        "route_bank_sha256": "82134ad65cf3764bdb826a76f1dbd2150c66a05fa7385fdf5474c708c695059b",
+        "hard_mask_replay_sha256": "2608e651cde4fb1b629728cd235ad1ca0db5ec5358b3171370b2fc07572c6af2",
+        "validation": "PASS"
+      },
+      {
+        "batch": "batch02",
+        "seed": 20263104,
+        "route_manifest_schema": "phase-aware-three-expert-route-bank-seed/v1",
+        "route_bank_sha256": "5d5aee9d893743d1ad3d9095e0c88836ad8383352451784a1bf375b36ffaae3f",
+        "hard_mask_replay_sha256": "010e9de13d36ec0ac69e0b933df50eff81d15ad05be792cba74693dcf64fb30a",
+        "validation": "PASS"
+      },
+      {
+        "batch": "batch02",
+        "seed": 20263105,
+        "route_manifest_schema": "phase-aware-three-expert-route-bank-seed/v1",
+        "route_bank_sha256": "b2e4e9ffa3703abb9390961ebf4ce4d4b7993954b4ba1c29316e7c9ac14e1000",
+        "hard_mask_replay_sha256": "308958788c5a4b1eb3d0541c6502662dcb4af709b2ef02cfd56dc077377ca84d",
+        "validation": "PASS"
+      },
+      {
+        "batch": "batch02",
+        "seed": 20263106,
+        "route_manifest_schema": "phase-aware-three-expert-route-bank-seed/v1",
+        "route_bank_sha256": "ba3fcce882a719d8eec9812ad3ab35d5eda6a2f7a0609c233d492cfdbb40dd18",
+        "hard_mask_replay_sha256": "23e3fbf8851bf901c1362594b1ab947c9bdf6677cb3f2e50dfda6c66c77cd393",
+        "validation": "PASS"
+      },
+      {
+        "batch": "batch03",
+        "seed": 20263107,
+        "route_manifest_schema": "phase-aware-three-expert-route-bank-seed/v1",
+        "route_bank_sha256": "ec769de6100eb7ddf08c2cb611932b38d1fd4f185fbaeeb018a62983870d39c1",
+        "hard_mask_replay_sha256": "1aa15a46a43a206edc0cdcfec4497bd88e3b1bd79051bd664a33dabfcea07d33",
+        "validation": "PASS"
+      },
+      {
+        "batch": "batch03",
+        "seed": 20263108,
+        "route_manifest_schema": "phase-aware-three-expert-route-bank-seed/v1",
+        "route_bank_sha256": "30a5124760ccd818570f6f5a10cf725534e093dd5bc2d9a8f09d9fb7c422e6ed",
+        "hard_mask_replay_sha256": "b38e55712e49339d2038e48f544e9fa948bd2bbaf4b0e855cdc645217bb80f9f",
+        "validation": "PASS"
+      },
+      {
+        "batch": "batch03",
+        "seed": 20263109,
+        "route_manifest_schema": "phase-aware-three-expert-route-bank-seed/v1",
+        "route_bank_sha256": "7568d6d5e36d3f6396536260fdd9b583994cb4de8dcce9d0a47e73e865f013f6",
+        "hard_mask_replay_sha256": "428cb931b2464546054e5d9005a00fce8b8a4f05729b6a9481dd482c0f517429",
+        "validation": "PASS"
+      },
+      {
+        "batch": "batch04",
+        "seed": 20263110,
+        "route_manifest_schema": "phase-aware-three-expert-route-bank-seed/v1",
+        "route_bank_sha256": "36ce578470705f8966509324188befaf3a5989883cecd65553f01d1b09b07ea1",
+        "hard_mask_replay_sha256": "065cc0b391fc952400e79c27d0f388985b3c97c88a5dd570eb42da5ee522c6ad",
+        "validation": "PASS"
+      },
+      {
+        "batch": "batch04",
+        "seed": 20263111,
+        "route_manifest_schema": "phase-aware-three-expert-route-bank-seed/v1",
+        "route_bank_sha256": "f59a86400d9a41e6c653b6d88cb142ed82ef76a9564361834be636f69ec66333",
+        "hard_mask_replay_sha256": "9a8cdebff5662243a00c0424c0b77e203ad8ae58a1ff8cec84b1993201ff83b7",
+        "validation": "PASS"
+      },
+      {
+        "batch": "batch04",
+        "seed": 20263112,
+        "route_manifest_schema": "phase-aware-three-expert-route-bank-seed/v1",
+        "route_bank_sha256": "3abded02ffc40007eeb90fb10bbec04f2ccef92902041dec9501d1f59d13dbcb",
+        "hard_mask_replay_sha256": "4a9c8b96f206abaafcc54a5741b41f7d081672138643d1b5a14d5b6674fee97a",
+        "validation": "PASS"
+      },
+      {
+        "batch": "batch05",
+        "seed": 20263113,
+        "route_manifest_schema": "phase-aware-three-expert-route-bank-seed/v1",
+        "route_bank_sha256": "a8057cf56f37de8e020aa4006f492041781114b16485ba87a3ed4b83bd089cea",
+        "hard_mask_replay_sha256": "f4a55c367a39995c881accb5f1f7737ab7dbc3a2d3363ff91a85f2c128fd706b",
+        "validation": "PASS"
+      },
+      {
+        "batch": "batch05",
+        "seed": 20263114,
+        "route_manifest_schema": "phase-aware-three-expert-route-bank-seed/v1",
+        "route_bank_sha256": "ab7ab2afd97200fceb74aca4e607166e40b82e073f16dbddc628de3de7529574",
+        "hard_mask_replay_sha256": "e09e6401136b0ed860d288d7a1764b85f26bd219eef8e2d282b95903aedc2d7b",
+        "validation": "PASS"
+      },
+      {
+        "batch": "batch05",
+        "seed": 20263115,
+        "route_manifest_schema": "phase-aware-three-expert-route-bank-seed/v1",
+        "route_bank_sha256": "56410bb46ba05629bafa98a4c0aedc1301f9a8df5d78b0d5a0cae0daafd9a391",
+        "hard_mask_replay_sha256": "36fbf01c584ce1978beaf7d14374e73febee96f96f19ccddcefb78150f62a2d1",
+        "validation": "PASS"
+      }
+    ]
+  },
+  "artifact_hashes": {
+    "protocol": "3ee4fc567e0ae922fd9379ff0eb7cd3eb2bb5dd850cc26e199230ea45bda642f",
+    "analysis_script": "e359767129ddf5dae311792a96505db731034daa60c127353e88226f1167f52e",
+    "evaluator": "6f4d5717ade86c4906d7ea472c3a46c146d8041d1febd5028551ee4e57c0396c",
+    "active_policy": "0ca5581f39f5598ceb9c3283704e532a5efe441beb499a6c361402bf92e4720f",
+    "non_negative_policy": "521962b8a3deea4411dc1b1c801cf9d8fcecfafa51d240f6752c07952ec1926a",
+    "non_positive_policy": "4752c0c4632d5958ee64c7f3004a76e9a7bd7f3204dd914fdb7003bce9a92d7c",
+    "three_expert_gate": "d7f63ce349fda4f670a343f8b579f1512420616471d3ec4650e3c6c07105b954",
+    "released_two_expert_gate": "99fdebbe1ecdccfdfd1d36902ff4dd6936712488065aa0e6cf5c8391b24979e1",
+    "hard_mask_policy": "74d26501c32e10892e8766f4980c291f6471aeeed0806225ad878919fc9d0b72"
+  },
+  "artifact_checks_against_frozen_protocol": {
+    "evaluator": true,
+    "active_policy": true,
+    "non_negative_policy": true,
+    "non_positive_policy": true,
+    "released_two_expert_gate": true,
+    "hard_mask_policy": true
+  },
+  "controllers": {
+    "active": {
+      "n": 10800,
+      "success_count": 5229,
+      "success_rate": 0.4841666666666667,
+      "success_wilson_95_low": 0.47474881862916685,
+      "success_wilson_95_high": 0.49359577423592205,
+      "valid_count": 2652,
+      "valid_rate": 0.24555555555555555,
+      "valid_wilson_95_low": 0.23752942050113213,
+      "valid_wilson_95_high": 0.2537626332606488,
+      "self_valid_mean_cmt": 1.7045000987256749,
+      "self_valid_sample_sd_cmt": 3.797322206013329,
+      "self_valid_median_cmt": 0.6073360484369694,
+      "self_valid_q25_cmt": 0.18495893117167933,
+      "self_valid_q75_cmt": 1.6541391137492623,
+      "route_counts": {
+        "positive": 0,
+        "negative": 0,
+        "active": 10800,
+        "hard_mask": 0
+      }
+    },
+    "positive_expert": {
+      "n": 10800,
+      "success_count": 4061,
+      "success_rate": 0.37601851851851853,
+      "success_wilson_95_low": 0.36692873842344703,
+      "success_wilson_95_high": 0.3851964653564018,
+      "valid_count": 2367,
+      "valid_rate": 0.21916666666666668,
+      "valid_wilson_95_low": 0.2114653284627801,
+      "valid_wilson_95_high": 0.2270677134074825,
+      "self_valid_mean_cmt": 0.16517636484518666,
+      "self_valid_sample_sd_cmt": 0.44950385664312936,
+      "self_valid_median_cmt": 0.04986727090556759,
+      "self_valid_q25_cmt": 0.02171706450882285,
+      "self_valid_q75_cmt": 0.13430399001812685,
+      "route_counts": {
+        "positive": 10800,
+        "negative": 0,
+        "active": 0,
+        "hard_mask": 0
+      }
+    },
+    "negative_expert": {
+      "n": 10800,
+      "success_count": 4862,
+      "success_rate": 0.4501851851851852,
+      "success_wilson_95_low": 0.4408215854953025,
+      "success_wilson_95_high": 0.45958420960070834,
+      "valid_count": 2547,
+      "valid_rate": 0.23583333333333334,
+      "valid_wilson_95_low": 0.22792181567257738,
+      "valid_wilson_95_high": 0.24393270739232834,
+      "self_valid_mean_cmt": 0.7567095980514261,
+      "self_valid_sample_sd_cmt": 2.285514619401243,
+      "self_valid_median_cmt": 0.14527669216236194,
+      "self_valid_q25_cmt": 0.05747486717474281,
+      "self_valid_q75_cmt": 0.5702558581308272,
+      "route_counts": {
+        "positive": 0,
+        "negative": 10800,
+        "active": 0,
+        "hard_mask": 0
+      }
+    },
+    "proposed_phase_aware_three_expert": {
+      "n": 10800,
+      "success_count": 5247,
+      "success_rate": 0.48583333333333334,
+      "success_wilson_95_low": 0.4764139497781164,
+      "success_wilson_95_high": 0.49526279120643685,
+      "valid_count": 2836,
+      "valid_rate": 0.2625925925925926,
+      "valid_wilson_95_low": 0.25437894854949067,
+      "valid_wilson_95_high": 0.2709750637668143,
+      "self_valid_mean_cmt": 0.7666933164724797,
+      "self_valid_sample_sd_cmt": 2.537978425357301,
+      "self_valid_median_cmt": 0.10713251035214517,
+      "self_valid_q25_cmt": 0.03387267453722488,
+      "self_valid_q75_cmt": 0.6097391649563351,
+      "route_counts": {
+        "positive": 1401,
+        "negative": 2608,
+        "active": 6791,
+        "hard_mask": 0
+      }
+    },
+    "released_two_expert_selector": {
+      "n": 10800,
+      "success_count": 5083,
+      "success_rate": 0.47064814814814815,
+      "success_wilson_95_low": 0.461246633728983,
+      "success_wilson_95_high": 0.48007053550045087,
+      "valid_count": 2728,
+      "valid_rate": 0.2525925925925926,
+      "valid_wilson_95_low": 0.24448699448870634,
+      "valid_wilson_95_high": 0.26087412911081276,
+      "self_valid_mean_cmt": 0.46310058338301613,
+      "self_valid_sample_sd_cmt": 1.9855356173192558,
+      "self_valid_median_cmt": 0.056153531332801945,
+      "self_valid_q25_cmt": 0.02348196356328106,
+      "self_valid_q75_cmt": 0.2199024538274594,
+      "route_counts": {
+        "positive": 5145,
+        "negative": 5655,
+        "active": 0,
+        "hard_mask": 0
+      }
+    },
+    "true_hard_mask": {
+      "n": 10800,
+      "success_count": 5030,
+      "success_rate": 0.46574074074074073,
+      "success_wilson_95_low": 0.4563468674581917,
+      "success_wilson_95_high": 0.47515897675281943,
+      "valid_count": 2446,
+      "valid_rate": 0.22648148148148148,
+      "valid_wilson_95_low": 0.21868570646534077,
+      "valid_wilson_95_high": 0.23447176326257071,
+      "self_valid_mean_cmt": 1.5132414410056052,
+      "self_valid_sample_sd_cmt": 2.291820845198669,
+      "self_valid_median_cmt": 0.782439296946402,
+      "self_valid_q25_cmt": 0.38935117256531393,
+      "self_valid_q75_cmt": 1.644777536616266,
+      "route_counts": {
+        "positive": 0,
+        "negative": 0,
+        "active": 0,
+        "hard_mask": 10800
+      }
+    }
+  },
+  "pairs": {
+    "active_vs_proposed_phase_aware_three_expert": {
+      "first": "active",
+      "second": "proposed_phase_aware_three_expert",
+      "n": 10800,
+      "first_success_count": 5229,
+      "second_success_count": 5247,
+      "success_difference_pp": 0.16666666666666496,
+      "second_only_success_count": 193,
+      "first_only_success_count": 175,
+      "exact_two_sided_mcnemar_p": 0.3755407854902249,
+      "common_valid_count": 2539,
+      "common_valid_fraction_of_first_valid": 0.9573906485671192,
+      "common_valid_fraction_of_second_valid": 0.8952750352609309,
+      "first_common_mean_cmt": 1.5227479958654666,
+      "first_common_sample_sd_cmt": 3.1736175251308985,
+      "second_common_mean_cmt": 0.79543058182879,
+      "second_common_sample_sd_cmt": 2.637891711790039,
+      "second_minus_first_mean_cmt": -0.7273174140366768,
+      "ratio_of_means_reduction": 0.4776347865907383,
+      "second_lower_fraction": 0.526191413942497,
+      "cmt_tie_fraction": 0.42418274911382436,
+      "replicates": 20000,
+      "seed": 20263130,
+      "strata": [
+        "evaluation_seed",
+        "walking_direction",
+        "commanded_horizontal_target",
+        "commanded_height_target"
+      ],
+      "success_difference_95_ci_pp": [
+        -0.17592592592592593,
+        0.5092592592592593
+      ],
+      "success_difference_one_sided_95_lower_pp": -0.12037037037037038,
+      "cmt_difference_95_ci": [
+        -0.8008787007842397,
+        -0.6558543475794177
+      ],
+      "ratio_of_means_reduction_95_ci": [
+        0.4361598766413925,
+        0.5185086361885632
+      ]
+    },
+    "true_hard_mask_vs_proposed_phase_aware_three_expert": {
+      "first": "true_hard_mask",
+      "second": "proposed_phase_aware_three_expert",
+      "n": 10800,
+      "first_success_count": 5030,
+      "second_success_count": 5247,
+      "success_difference_pp": 2.0092592592592604,
+      "second_only_success_count": 487,
+      "first_only_success_count": 270,
+      "exact_two_sided_mcnemar_p": 2.686707096147063e-15,
+      "common_valid_count": 2303,
+      "common_valid_fraction_of_first_valid": 0.9415372035977105,
+      "common_valid_fraction_of_second_valid": 0.8120592383638928,
+      "first_common_mean_cmt": 1.4106998033709741,
+      "first_common_sample_sd_cmt": 2.0466582907521036,
+      "second_common_mean_cmt": 0.6144220259560842,
+      "second_common_sample_sd_cmt": 1.7611045234845717,
+      "second_minus_first_mean_cmt": -0.79627777741489,
+      "ratio_of_means_reduction": 0.5644558647503344,
+      "second_lower_fraction": 0.8085106382978723,
+      "cmt_tie_fraction": 0.0182370820668693,
+      "replicates": 20000,
+      "seed": 20263130,
+      "strata": [
+        "evaluation_seed",
+        "walking_direction",
+        "commanded_horizontal_target",
+        "commanded_height_target"
+      ],
+      "success_difference_95_ci_pp": [
+        1.5185185185185186,
+        2.5
+      ],
+      "success_difference_one_sided_95_lower_pp": 1.5925925925925926,
+      "cmt_difference_95_ci": [
+        -0.8790539937911981,
+        -0.7148183970082117
+      ],
+      "ratio_of_means_reduction_95_ci": [
+        0.5178731599391517,
+        0.6082940550330211
+      ]
+    },
+    "released_two_expert_selector_vs_proposed_phase_aware_three_expert": {
+      "first": "released_two_expert_selector",
+      "second": "proposed_phase_aware_three_expert",
+      "n": 10800,
+      "first_success_count": 5083,
+      "second_success_count": 5247,
+      "success_difference_pp": 1.518518518518519,
+      "second_only_success_count": 289,
+      "first_only_success_count": 125,
+      "exact_two_sided_mcnemar_p": 4.69761462530071e-16,
+      "common_valid_count": 2639,
+      "common_valid_fraction_of_first_valid": 0.967375366568915,
+      "common_valid_fraction_of_second_valid": 0.9305359661495064,
+      "first_common_mean_cmt": 0.4540829524249196,
+      "first_common_sample_sd_cmt": 1.9756817060223728,
+      "second_common_mean_cmt": 0.6547044083141518,
+      "second_common_sample_sd_cmt": 2.128660796541266,
+      "second_minus_first_mean_cmt": 0.2006214558892322,
+      "ratio_of_means_reduction": -0.4418167535642157,
+      "second_lower_fraction": 0.07161803713527852,
+      "cmt_tie_fraction": 0.6714664645699129,
+      "replicates": 20000,
+      "seed": 20263130,
+      "strata": [
+        "evaluation_seed",
+        "walking_direction",
+        "commanded_horizontal_target",
+        "commanded_height_target"
+      ],
+      "success_difference_95_ci_pp": [
+        1.1574074074074074,
+        1.8796296296296298
+      ],
+      "success_difference_one_sided_95_lower_pp": 1.2129629629629628,
+      "cmt_difference_95_ci": [
+        0.16552744653573725,
+        0.2372947199570915
+      ],
+      "ratio_of_means_reduction_95_ci": [
+        -0.5651898006621852,
+        -0.34253646338107735
+      ]
+    },
+    "active_vs_true_hard_mask": {
+      "first": "active",
+      "second": "true_hard_mask",
+      "n": 10800,
+      "first_success_count": 5229,
+      "second_success_count": 5030,
+      "success_difference_pp": -1.8425925925925957,
+      "second_only_success_count": 230,
+      "first_only_success_count": 429,
+      "exact_two_sided_mcnemar_p": 7.726979045225219e-15,
+      "common_valid_count": 2293,
+      "common_valid_fraction_of_first_valid": 0.8646304675716441,
+      "common_valid_fraction_of_second_valid": 0.937448896156991,
+      "first_common_mean_cmt": 1.3120839856660236,
+      "first_common_sample_sd_cmt": 2.4530609551473685,
+      "second_common_mean_cmt": 1.3895614642406708,
+      "second_common_sample_sd_cmt": 1.9860989475073485,
+      "second_minus_first_mean_cmt": 0.07747747857464715,
+      "ratio_of_means_reduction": -0.0590491762882992,
+      "second_lower_fraction": 0.3911905800261666,
+      "cmt_tie_fraction": 0.02573048408198866
+    }
+  },
+  "bootstrap": {
+    "replicates": 20000,
+    "seed": 20263130,
+    "strata": [
+      "evaluation_seed",
+      "walking_direction",
+      "commanded_horizontal_target",
+      "commanded_height_target"
+    ]
+  },
+  "primary_acceptance": {
+    "proposed_minus_active_success_point_estimate_at_least_zero": true,
+    "proposed_minus_active_success_one_sided_95_lower_at_least_minus_1pp": true,
+    "proposed_vs_active_common_valid_fraction_of_active_valid_at_least_0_95": true,
+    "proposed_minus_active_paired_cmt_95_upper_below_zero": true,
+    "proposed_vs_active_ratio_of_means_cmt_reduction_at_least_0_20": true,
+    "proposed_minus_hard_mask_success_point_estimate_at_least_zero": true,
+    "proposed_minus_hard_mask_paired_cmt_95_upper_below_zero": true
+  },
+  "all_primary_acceptance_criteria_met": true,
+  "table_i_diagnostic": {
+    "proposed_success_active_failure_count": 193,
+    "active_success_proposed_failure_count": 175,
+    "proposed_success_and_all_three_source_experts_fail_count": 0,
+    "interpretation": "The last count must be zero because the proposed controller selects exactly one of the three frozen source experts. Thus an 'only three-expert feasible' category relative to all three constituents is not a meaningful extra Table-I partition. A 'proposed feasible / Active infeasible' comparison is meaningful but is a matched evaluation result, not an independent-expert reachability category."
+  }
+}

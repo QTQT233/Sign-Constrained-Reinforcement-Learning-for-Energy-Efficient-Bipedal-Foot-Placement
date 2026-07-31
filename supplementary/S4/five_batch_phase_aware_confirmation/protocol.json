@@ -1,0 +1,81 @@
+{
+  "schema": "phase-aware-three-expert-five-batch-confirmation/v1",
+  "frozen_at_local_date": "2026-07-30",
+  "purpose": "Independent five-batch confirmation of the manuscript's phase-aware three-expert four-link controller.",
+  "development_data_excluded": [
+    "formal_reference",
+    "historical batch01--batch05",
+    "seeds 20261401--20261403"
+  ],
+  "batches": {
+    "batch01": [20263101, 20263102, 20263103],
+    "batch02": [20263104, 20263105, 20263106],
+    "batch03": [20263107, 20263108, 20263109],
+    "batch04": [20263110, 20263111, 20263112],
+    "batch05": [20263113, 20263114, 20263115]
+  },
+  "design": {
+    "cases_per_seed": 720,
+    "cases_per_batch": 2160,
+    "total_cases_per_controller": 10800,
+    "endpoint_target_cells": 9,
+    "walking_directions": [1.0, -1.0],
+    "rollouts_per_seed_cell_direction": 40,
+    "initial_state_and_reset_phase_sampling": "random under each evaluation seed",
+    "matched_case_rule": "Every controller receives the same sampled initial state, command, direction, and reset phase.",
+    "deterministic_policy_actions": true
+  },
+  "proposed_rule": {
+    "decision_time": "transition_start",
+    "persistence": "hold_selected_expert_until_termination",
+    "thresholds": {
+      "pre_cross": {"non_negative": 0.35, "non_positive": 0.30},
+      "mid_cross": {"non_negative": 0.51, "non_positive": 0.50},
+      "touchdown": {"non_negative": 0.85, "non_positive": 0.54}
+    },
+    "both_pass": "select_larger_gate_probability",
+    "neither_pass": "select_unrestricted_expert"
+  },
+  "controllers": [
+    "active_ppo",
+    "non_negative_expert",
+    "non_positive_expert",
+    "proposed_phase_aware_three_expert",
+    "released_two_expert_selector",
+    "hard_mask"
+  ],
+  "primary_acceptance_criteria": {
+    "proposed_minus_active_success_point_estimate": "at_least_zero",
+    "proposed_minus_active_success_one_sided_95_lower_bound_percentage_points": -1.0,
+    "proposed_vs_active_common_valid_fraction_of_active_valid_minimum": 0.95,
+    "proposed_minus_active_paired_cmt_difference_95_interval": "upper_bound_below_zero",
+    "proposed_vs_active_ratio_of_means_cmt_reduction_minimum": 0.20,
+    "proposed_minus_hard_mask_success_point_estimate": "at_least_zero",
+    "proposed_minus_hard_mask_paired_cmt_difference_95_interval": "upper_bound_below_zero"
+  },
+  "secondary_reporting": {
+    "two_expert_comparison": "Report the success-energy trade-off without requiring proposed Cmt to beat the two-expert energy-focused route.",
+    "per_batch_consistency": "Report all five batch estimates; do not omit unfavorable batches.",
+    "grid_cell_results": "Report all nine endpoint-target cells."
+  },
+  "analysis": {
+    "bootstrap_replicates": 20000,
+    "bootstrap_seed": 20263130,
+    "bootstrap_strata": [
+      "evaluation_seed",
+      "walking_direction",
+      "commanded_horizontal_target",
+      "commanded_height_target"
+    ],
+    "binary_paired_test": "exact_two_sided_mcnemar",
+    "stopping_rule": "Run and analyze all 15 seeds once. Do not retune the router after inspecting any new-batch outcome."
+  },
+  "frozen_sha256": {
+    "evaluator": "6f4d5717ade86c4906d7ea472c3a46c146d8041d1febd5028551ee4e57c0396c",
+    "active_policy": "0ca5581f39f5598ceb9c3283704e532a5efe441beb499a6c361402bf92e4720f",
+    "non_negative_policy": "521962b8a3deea4411dc1b1c801cf9d8fcecfafa51d240f6752c07952ec1926a",
+    "non_positive_policy": "4752c0c4632d5958ee64c7f3004a76e9a7bd7f3204dd914fdb7003bce9a92d7c",
+    "released_two_expert_gate": "99fdebbe1ecdccfdfd1d36902ff4dd6936712488065aa0e6cf5c8391b24979e1",
+    "hard_mask_policy": "74d26501c32e10892e8766f4980c291f6471aeeed0806225ad878919fc9d0b72"
+  }
+}

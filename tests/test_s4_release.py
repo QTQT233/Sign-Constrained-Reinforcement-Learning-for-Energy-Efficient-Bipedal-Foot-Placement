@@ -156,8 +156,13 @@ class SupplementaryS4Tests(unittest.TestCase):
             for path in S4.rglob("*")
             if path.is_file()
             and path.name not in {"MANIFEST.csv", "CHECKSUMS.sha256"}
-            and "outputs" not in path.parts
-            and "__pycache__" not in path.parts
+            and not {
+                "outputs",
+                "__pycache__",
+                "generated_figures",
+                "reproduced_results",
+                "reproduced_manuscript_metrics",
+            }.intersection(path.parts)
         }
         self.assertEqual(set(indexed), set(actual))
         for relative, path in actual.items():

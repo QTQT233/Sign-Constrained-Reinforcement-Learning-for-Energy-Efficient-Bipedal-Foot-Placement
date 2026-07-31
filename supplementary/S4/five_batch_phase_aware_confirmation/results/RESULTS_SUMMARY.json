@@ -1,0 +1,229 @@
+{
+  "all_primary_acceptance_criteria_met": true,
+  "primary_acceptance": {
+    "proposed_minus_active_success_point_estimate_at_least_zero": true,
+    "proposed_minus_active_success_one_sided_95_lower_at_least_minus_1pp": true,
+    "proposed_vs_active_common_valid_fraction_of_active_valid_at_least_0_95": true,
+    "proposed_minus_active_paired_cmt_95_upper_below_zero": true,
+    "proposed_vs_active_ratio_of_means_cmt_reduction_at_least_0_20": true,
+    "proposed_minus_hard_mask_success_point_estimate_at_least_zero": true,
+    "proposed_minus_hard_mask_paired_cmt_95_upper_below_zero": true
+  },
+  "controllers": {
+    "active": {
+      "success_count": 5229,
+      "success_rate": 0.4841666666666667,
+      "valid_count": 2652,
+      "self_valid_mean_cmt": 1.7045000987256749,
+      "self_valid_sample_sd_cmt": 3.797322206013329,
+      "route_counts": {
+        "positive": 0,
+        "negative": 0,
+        "active": 10800,
+        "hard_mask": 0
+      }
+    },
+    "positive_expert": {
+      "success_count": 4061,
+      "success_rate": 0.37601851851851853,
+      "valid_count": 2367,
+      "self_valid_mean_cmt": 0.16517636484518666,
+      "self_valid_sample_sd_cmt": 0.44950385664312936,
+      "route_counts": {
+        "positive": 10800,
+        "negative": 0,
+        "active": 0,
+        "hard_mask": 0
+      }
+    },
+    "negative_expert": {
+      "success_count": 4862,
+      "success_rate": 0.4501851851851852,
+      "valid_count": 2547,
+      "self_valid_mean_cmt": 0.7567095980514261,
+      "self_valid_sample_sd_cmt": 2.285514619401243,
+      "route_counts": {
+        "positive": 0,
+        "negative": 10800,
+        "active": 0,
+        "hard_mask": 0
+      }
+    },
+    "proposed_phase_aware_three_expert": {
+      "success_count": 5247,
+      "success_rate": 0.48583333333333334,
+      "valid_count": 2836,
+      "self_valid_mean_cmt": 0.7666933164724797,
+      "self_valid_sample_sd_cmt": 2.537978425357301,
+      "route_counts": {
+        "positive": 1401,
+        "negative": 2608,
+        "active": 6791,
+        "hard_mask": 0
+      }
+    },
+    "released_two_expert_selector": {
+      "success_count": 5083,
+      "success_rate": 0.47064814814814815,
+      "valid_count": 2728,
+      "self_valid_mean_cmt": 0.46310058338301613,
+      "self_valid_sample_sd_cmt": 1.9855356173192558,
+      "route_counts": {
+        "positive": 5145,
+        "negative": 5655,
+        "active": 0,
+        "hard_mask": 0
+      }
+    },
+    "true_hard_mask": {
+      "success_count": 5030,
+      "success_rate": 0.46574074074074073,
+      "valid_count": 2446,
+      "self_valid_mean_cmt": 1.5132414410056052,
+      "self_valid_sample_sd_cmt": 2.291820845198669,
+      "route_counts": {
+        "positive": 0,
+        "negative": 0,
+        "active": 0,
+        "hard_mask": 10800
+      }
+    }
+  },
+  "primary_pairs": {
+    "active_vs_proposed_phase_aware_three_expert": {
+      "first": "active",
+      "second": "proposed_phase_aware_three_expert",
+      "n": 10800,
+      "first_success_count": 5229,
+      "second_success_count": 5247,
+      "success_difference_pp": 0.16666666666666496,
+      "second_only_success_count": 193,
+      "first_only_success_count": 175,
+      "exact_two_sided_mcnemar_p": 0.3755407854902249,
+      "common_valid_count": 2539,
+      "common_valid_fraction_of_first_valid": 0.9573906485671192,
+      "common_valid_fraction_of_second_valid": 0.8952750352609309,
+      "first_common_mean_cmt": 1.5227479958654666,
+      "first_common_sample_sd_cmt": 3.1736175251308985,
+      "second_common_mean_cmt": 0.79543058182879,
+      "second_common_sample_sd_cmt": 2.637891711790039,
+      "second_minus_first_mean_cmt": -0.7273174140366768,
+      "ratio_of_means_reduction": 0.4776347865907383,
+      "second_lower_fraction": 0.526191413942497,
+      "cmt_tie_fraction": 0.42418274911382436,
+      "replicates": 20000,
+      "seed": 20263130,
+      "strata": [
+        "evaluation_seed",
+        "walking_direction",
+        "commanded_horizontal_target",
+        "commanded_height_target"
+      ],
+      "success_difference_95_ci_pp": [
+        -0.17592592592592593,
+        0.5092592592592593
+      ],
+      "success_difference_one_sided_95_lower_pp": -0.12037037037037038,
+      "cmt_difference_95_ci": [
+        -0.8008787007842397,
+        -0.6558543475794177
+      ],
+      "ratio_of_means_reduction_95_ci": [
+        0.4361598766413925,
+        0.5185086361885632
+      ]
+    },
+    "true_hard_mask_vs_proposed_phase_aware_three_expert": {
+      "first": "true_hard_mask",
+      "second": "proposed_phase_aware_three_expert",
+      "n": 10800,
+      "first_success_count": 5030,
+      "second_success_count": 5247,
+      "success_difference_pp": 2.0092592592592604,
+      "second_only_success_count": 487,
+      "first_only_success_count": 270,
+      "exact_two_sided_mcnemar_p": 2.686707096147063e-15,
+      "common_valid_count": 2303,
+      "common_valid_fraction_of_first_valid": 0.9415372035977105,
+      "common_valid_fraction_of_second_valid": 0.8120592383638928,
+      "first_common_mean_cmt": 1.4106998033709741,
+      "first_common_sample_sd_cmt": 2.0466582907521036,
+      "second_common_mean_cmt": 0.6144220259560842,
+      "second_common_sample_sd_cmt": 1.7611045234845717,
+      "second_minus_first_mean_cmt": -0.79627777741489,
+      "ratio_of_means_reduction": 0.5644558647503344,
+      "second_lower_fraction": 0.8085106382978723,
+      "cmt_tie_fraction": 0.0182370820668693,
+      "replicates": 20000,
+      "seed": 20263130,
+      "strata": [
+        "evaluation_seed",
+        "walking_direction",
+        "commanded_horizontal_target",
+        "commanded_height_target"
+      ],
+      "success_difference_95_ci_pp": [
+        1.5185185185185186,
+        2.5
+      ],
+      "success_difference_one_sided_95_lower_pp": 1.5925925925925926,
+      "cmt_difference_95_ci": [
+        -0.8790539937911981,
+        -0.7148183970082117
+      ],
+      "ratio_of_means_reduction_95_ci": [
+        0.5178731599391517,
+        0.6082940550330211
+      ]
+    },
+    "released_two_expert_selector_vs_proposed_phase_aware_three_expert": {
+      "first": "released_two_expert_selector",
+      "second": "proposed_phase_aware_three_expert",
+      "n": 10800,
+      "first_success_count": 5083,
+      "second_success_count": 5247,
+      "success_difference_pp": 1.518518518518519,
+      "second_only_success_count": 289,
+      "first_only_success_count": 125,
+      "exact_two_sided_mcnemar_p": 4.69761462530071e-16,
+      "common_valid_count": 2639,
+      "common_valid_fraction_of_first_valid": 0.967375366568915,
+      "common_valid_fraction_of_second_valid": 0.9305359661495064,
+      "first_common_mean_cmt": 0.4540829524249196,
+      "first_common_sample_sd_cmt": 1.9756817060223728,
+      "second_common_mean_cmt": 0.6547044083141518,
+      "second_common_sample_sd_cmt": 2.128660796541266,
+      "second_minus_first_mean_cmt": 0.2006214558892322,
+      "ratio_of_means_reduction": -0.4418167535642157,
+      "second_lower_fraction": 0.07161803713527852,
+      "cmt_tie_fraction": 0.6714664645699129,
+      "replicates": 20000,
+      "seed": 20263130,
+      "strata": [
+        "evaluation_seed",
+        "walking_direction",
+        "commanded_horizontal_target",
+        "commanded_height_target"
+      ],
+      "success_difference_95_ci_pp": [
+        1.1574074074074074,
+        1.8796296296296298
+      ],
+      "success_difference_one_sided_95_lower_pp": 1.2129629629629628,
+      "cmt_difference_95_ci": [
+        0.16552744653573725,
+        0.2372947199570915
+      ],
+      "ratio_of_means_reduction_95_ci": [
+        -0.5651898006621852,
+        -0.34253646338107735
+      ]
+    }
+  },
+  "table_i_diagnostic": {
+    "proposed_success_active_failure_count": 193,
+    "active_success_proposed_failure_count": 175,
+    "proposed_success_and_all_three_source_experts_fail_count": 0,
+    "interpretation": "The last count must be zero because the proposed controller selects exactly one of the three frozen source experts. Thus an 'only three-expert feasible' category relative to all three constituents is not a meaningful extra Table-I partition. A 'proposed feasible / Active infeasible' comparison is meaningful but is a matched evaluation result, not an independent-expert reachability category."
+  }
+}

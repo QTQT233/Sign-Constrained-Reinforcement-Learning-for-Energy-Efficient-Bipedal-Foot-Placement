@@ -10,7 +10,13 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 ROOT_INVENTORY_FILES = {"MANIFEST.csv", "CHECKSUMS.sha256"}
-TRANSIENT_DIRECTORIES = {"outputs", "__pycache__"}
+TRANSIENT_DIRECTORIES = {
+    "outputs",
+    "__pycache__",
+    "generated_figures",
+    "reproduced_results",
+    "reproduced_manuscript_metrics",
+}
 
 
 def sha256(path: Path) -> str:

@@ -10,3 +10,7 @@ data/_downloads/
 *.tmp
 *.log
 src/two_link/action_weight/**/generated/
+supplementary/S4/**/generated_figures/
+supplementary/S4/**/reproduced_results/
+supplementary/S4/**/reproduced_manuscript_metrics/
+supplementary/S4/five_batch_phase_aware_confirmation/raw/

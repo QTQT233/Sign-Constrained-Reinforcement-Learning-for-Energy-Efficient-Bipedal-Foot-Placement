@@ -7,6 +7,14 @@ import hashlib
 from pathlib import Path
 
 
+TRANSIENT_DIRECTORIES = {
+    "__pycache__",
+    "generated_figures",
+    "reproduced_results",
+    "reproduced_manuscript_metrics",
+}
+
+
 def digest(path: Path) -> str:
     value = hashlib.sha256()
     with path.open("rb") as handle:
@@ -22,7 +30,7 @@ def current_files(root: Path) -> dict[str, Path]:
         for path in root.rglob("*")
         if path.is_file()
         and ".git" not in path.parts
-        and "__pycache__" not in path.parts
+        and not TRANSIENT_DIRECTORIES.intersection(path.parts)
         and path.suffix != ".pyc"
         and path not in excluded
     }
