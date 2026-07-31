@@ -1,4 +1,8 @@
-controller_or_set,sampled_states,feasible_states,feasible_ratio,outside_set_states,outside_set_ratio
-Active PPO,810000,630328,0.7781827160493827,179672,0.22181728395061728
-Sign-constrained union,810000,582861,0.7195814814814815,227139,0.2804185185185185
-Common feasible intersection,810000,534042,0.6593111111111111,275958,0.34068888888888893
+controller_or_set,sampled_states,feasible_states,feasible_ratio,outside_set_states,outside_set_ratio,row_role
+Unrestricted discrete PPO,810000,630328,0.7781827160493827,179672,0.22181728395061728,marginal
+One-sided expert union,810000,582861,0.7195814814814815,227139,0.2804185185185185,marginal
+Proposed three-expert route,810000,679147,0.8384530864197531,130853,0.16154691358024692,marginal union
+Unrestricted discrete PPO and one-sided-expert union,810000,534042,0.6593111111111111,,,exclusive partition
+Unrestricted discrete PPO only,810000,96286,0.1188716049382716,,,exclusive partition
+One-sided-expert union only,810000,48819,0.06027037037037037,,,exclusive partition
+Neither,810000,130853,0.16154691358024692,,,exclusive partition

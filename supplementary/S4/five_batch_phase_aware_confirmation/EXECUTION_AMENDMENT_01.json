@@ -1,0 +1,18 @@
+{
+  "schema": "five-batch-execution-amendment/v1",
+  "reason": "The source evaluator's final publication-package metadata validator is hard-coded for a six-controller release and rejected the intentionally minimal three-source route bank after all core CSV files had been written.",
+  "discovered_on_seed": 20263101,
+  "scope": "metadata_and_output_validation_only",
+  "scientific_changes": {
+    "dynamics": false,
+    "initial_state_sampling": false,
+    "random_seed": false,
+    "controller_checkpoint": false,
+    "routing_threshold": false,
+    "terminal_rule": false,
+    "cmt_definition": false,
+    "validity_definition": false
+  },
+  "resolution": "Use a route-bank-specific wrapper that preserves the evaluator and policies, disables only the incompatible release-metadata callback, validates 720 matched cases and three source controllers, and writes route-bank-specific hashes.",
+  "seed_20263101_recovery": "Validate and retain the already completed core CSV files without rerunning or changing the seed."
+}

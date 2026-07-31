@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "release_id": "4DoF_V22_3_3x3_grid_4Nm_three_expert_selector_primary_2160",
+  "evidence_role": "transition-locked learned three-expert routing comparison",
+  "evaluation_label": "4DoF_V22_3_3x3_grid_4Nm_three_expert_selector_primary_2160",
+  "v22_3_touchdown_safe_q_low_deg": [
+    35.0,
+    8.0,
+    -115.0,
+    5.0
+  ],
+  "evaluation": {
+    "case_count_per_controller": 2160,
+    "rng_seeds": [
+      20260702,
+      20260719,
+      20260803
+    ],
+    "walk_directions": [
+      1.0,
+      -1.0
+    ],
+    "step_lengths_m": [
+      0.3,
+      0.35,
+      0.4
+    ],
+    "step_heights_m": [
+      0.0,
+      0.01,
+      0.02
+    ],
+    "episodes_per_grid_cell_direction": 40,
+    "deterministic_policy": true,
+    "hip_torque_limit_nm": 4.0,
+    "knee_torque_limit_nm": 0.2,
+    "output_directory": "results/four_link_three_expert_primary_2160"
+  },
+  "source": {
+    "path": "src/four_link/evaluation/paper_four_link_three_expert_selector_evaluation.py",
+    "sha256": "6f4d5717ade86c4906d7ea472c3a46c146d8041d1febd5028551ee4e57c0396c",
+    "role": "Executable repository-relative evaluator used for the three-expert routing archive."
+  },
+  "frozen_policy_files": {
+    "models/four_link/three_expert_selector_v22_3/V22_3_three_expert_selector.pth": "d7f63ce349fda4f670a343f8b579f1512420616471d3ec4650e3c6c07105b954",
+    "models/four_link/v22_3_v9_active_full_400_grid/V22_3V9ActiveFull400Grid_c090_Policy_best.pth": "43016fd53b43705694466739c70f1817c03e55e6596edb0e22380be1e8370d3f",
+    "models/four_link/v22_3_v9_bi_400_grid/V22_3V9Bi400Grid_c090_Policy_best.pth": "0ca5581f39f5598ceb9c3283704e532a5efe441beb499a6c361402bf92e4720f",
+    "models/four_link/v22_3_v9_per_step_sign_400_grid/V22_3V9PerStepSign400Grid_c091_Policy_258.pth": "655e77cebdffa54b42152fa1a08c8e99653ac162b3cfc45210404067a2782a29",
+    "models/four_link/v22_3_v9_true_action_mask_scratch_400_grid/V22_3V9TrueActionMaskScratch400Grid_c090_epoch1275_success250_Policy.pth": "74d26501c32e10892e8766f4980c291f6471aeeed0806225ad878919fc9d0b72",
+    "models/four_link/v22_3_v9_uni_neg_400_grid/V22_3V9UniNeg400Grid_c100_Policy_best.pth": "4752c0c4632d5958ee64c7f3004a76e9a7bd7f3204dd914fdb7003bce9a92d7c",
+    "models/four_link/v22_3_v9_uni_pos_400_grid/V22_3V9UniPos400Grid_c097_Policy_best.pth": "521962b8a3deea4411dc1b1c801cf9d8fcecfafa51d240f6752c07952ec1926a"
+  },
+  "result_csv_sha256": {
+    "active_reference_comparison_trials.csv": "c6ee68cc8de8ac624aff96768cf5f6016c626950f1f0fb3782b1f817a8ec248b",
+    "active_reference_summary.csv": "44b3b7a51f1c4f5b25417ad674e6f70c948a60b9fc8b07bac900b5fc81a6c900",
+    "controller_summary.csv": "bef312e7fc5a2ed991a126dffc702f38fb41ccd9dd25d7dd5e960fa2eee94ba3",
+    "paired_summary.csv": "ecd44a3268ef61fad5573d240753b5ffd932fcdf34b6aaeeb040e21eceb4c677",
+    "paired_trials.csv": "6c2bc90c91b046b091312e12bb55405b34d856d169dfa88e94401bee10a66b2b",
+    "passive_candidate_audit.csv": "f93acecb96edee03d6954e7530cc834b0403b1ca4d43b675fd15fe5a8bcc1757",
+    "representative_initial_states.csv": "2dd55f8b8db9d3fb2676baa9ee6c9f6b946e5e36ec36b622a72e556cb0086de3",
+    "representative_initial_states_passive_oracle_envelope.csv": "2dd55f8b8db9d3fb2676baa9ee6c9f6b946e5e36ec36b622a72e556cb0086de3",
+    "representative_initial_states_three_expert_selector.csv": "5162909397f6db2659643be5b44276d2942d5f9c90ccb85240426d2ee1a8a35c",
+    "rollouts_active_vs_passive.csv": "d7e4685d49f1631a41e2fccc9d76497a0defc4d06cfb42807678bacd2bab8dbb",
+    "success_case_breakdown.csv": "123884be19549975d912a0653870ceaa7eb265925dcfe88a424f66dbe146ff43",
+    "successful_initial_states_active.csv": "2ddb7e9ffe5a7757a564c99e583b37eb5b281f4b9048768af8ac09664c5d33df",
+    "successful_initial_states_active_full.csv": "e2045ba962af7653f299dc5852e64fd9bd4069a9a55b9de88c1ab604c8d38e1f",
+    "successful_initial_states_all_controllers.csv": "d30b8d0383853653c8b2f244c6069c0f0c788abd4f688e909459d6af387e6b7f",
+    "successful_initial_states_passive_oracle_envelope.csv": "ad573dd9f8f221a73d9bb178583379616934b0ce00288e3b483a5c9ce35ede53",
+    "successful_initial_states_per_step_sign.csv": "d5b072646d0e85cd50822a4a0eb96c35aa3c97f800e5f1f2467786733638ea7d",
+    "successful_initial_states_three_expert_selector.csv": "ec83a7af63c6d981efa44da09f67dd9a585314e3a8d6f416263bd16121f2aec3",
+    "successful_initial_states_true_action_mask_scratch.csv": "2c91de7d63e6b853c94d5c3107dd1788e3c102f03d699f105cd6a2983819cad8",
+    "terminal_reason_summary.csv": "0155f98bae53e269b630fb011921c3d70525cb6f502ba6f62210a834b824d99f",
+    "three_expert_vs_oracle_trials.csv": "77bde7f4d03b04987ee7ee5deddc5f645ec25750b2cc0b4296ace4683714d1f5",
+    "three_expert_vs_true_action_mask_summary.csv": "0ea91d147c43cec26357e7c37861b43d55354544d11369f83a61d50462798aff",
+    "three_expert_vs_true_action_mask_trials.csv": "d2e0c3eed415d03b10c6f761122c1b8d95b8d9f68e5d5385fa1b6199ab77d3a4"
+  },
+  "limitations": [
+    "The action-mask archive contains one scratch-trained checkpoint; its training seed was not fixed.",
+    "The evaluation cases are paired, but they are not independent training replications.",
+    "AM-step1 differs from the proposed transition-locked three-expert controller in architecture and routing timing; the separate hold-versus-requery archive is a two-class sign-selector diagnostic."
+  ]
+}

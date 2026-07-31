@@ -1,0 +1,27 @@
+{
+  "schema": "five-batch-gate-and-analysis-source-amendment/v1",
+  "source_protocol_sha256": "3ee4fc567e0ae922fd9379ff0eb7cd3eb2bb5dd850cc26e199230ea45bda642f",
+  "source_final_report_sha256": "a47446b53651a5cbc598cefcc28c5651243d16175748537b9f6c5973f3af592a",
+  "omitted_artifact": {
+    "name": "three_expert_gate",
+    "path": "models/four_link/three_expert_selector_v22_3/V22_3_three_expert_selector.pth",
+    "sha256": "d7f63ce349fda4f670a343f8b579f1512420616471d3ec4650e3c6c07105b954"
+  },
+  "analysis_source_boundary": {
+    "execution_time_sha256_recorded_in_final_report": "e359767129ddf5dae311792a96505db731034daa60c127353e88226f1167f52e",
+    "portable_release_sha256_before_device_portability_repair": "f2ab5e688e90d820dd0bc9c39caf3840c8f2d921fb29a5916ceb7126b30a48de",
+    "portable_release_sha256_after_device_portability_repair": "39a958ed5dc43151f249993beb9d728948ca8a0913743086e698cb899f089684",
+    "portable_release_note": "The public source uses repository-relative paths and validation-hardened entry points. The additional tensor-device repair changes no route or statistic."
+  },
+  "reason": "The gate was used and recorded by the frozen analysis, but its hash was omitted from protocol.frozen_sha256; the execution-time analysis hash also required an explicit mapping to the portable release source.",
+  "scientific_changes": {
+    "dynamics": false,
+    "sampled_cases": false,
+    "controller_checkpoint": false,
+    "routing_thresholds": false,
+    "routing_decisions": false,
+    "terminal_rule": false,
+    "cmt_definition": false,
+    "reported_outcomes": false
+  }
+}

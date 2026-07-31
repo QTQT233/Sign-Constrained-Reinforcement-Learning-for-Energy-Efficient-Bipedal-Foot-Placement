@@ -11,3 +11,5 @@ data/_downloads/
 *.log
 supplementary/S4/**/_generated/
 supplementary/S4/hold_vs_requery/outputs/
+supplementary/S4/**/generated_figures/
+

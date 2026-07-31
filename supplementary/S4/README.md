@@ -1,33 +1,39 @@
 # Supplementary Archive S4
 
 This directory contains the compact, repository-hosted form of Supplementary
-Archive S4. It supports three analyses reported in the manuscript:
+Archive S4. It supports four analyses reported in the manuscript:
 
 1. pooled per-transition horizontal foot-placement MAE for the 12 two-link
    cases;
-2. five additional randomized four-link evaluation batches, comprising 10,800
-   matched active-PPO/selector trials; and
-3. the frozen-checkpoint transition-start-hold versus per-control-step-requery
+2. the primary five-batch, 15-seed, 10,800-case phase-aware three-expert
+   confirmation;
+3. the matched 2,160-case source archive, its direct-argmax comparison, the
+   phase-aware Figure 7 reanalysis, and the historical randomized four-link
+   batches; and
+4. the frozen-checkpoint transition-start-hold versus per-control-step-requery
    comparison on 2,160 matched cases.
 
-The submission ZIP mirrors these materials and may contain additional execution
-logs. The repository copy omits byte-identical model, evaluator, and primary
-2,160-case input duplicates and instead references their canonical paths in the
-repository. It also omits smoke outputs, obsolete diagnostics, figure-rendering
-code, and the separate physical-touchdown diagnostic.
+The journal-supplement ZIP mirrors these materials and may contain additional execution
+logs. The repository copy references canonical model and evaluator paths and includes
+the compact primary confirmation and diagnostic records. It omits smoke
+outputs, obsolete diagnostics, manuscript figure-rendering code, rendered
+manuscript assets, and the separate physical-touchdown diagnostic.
 
 ## Directory map
 
 - `landing_metric/`: 144 terminal-state/target-angle records, portable geometry
   verification, case/controller summaries, and validation.
-- `fourlink_additional_batches/`: frozen seed configuration, portable batch
-  runner, 10,800 matched records, pooled and seed-stream statistics, and paired
-  endpoint tests.
+- `five_batch_phase_aware_confirmation/`: frozen primary protocol, portable
+  route/hard-mask/analysis entry points, 10,800 matched records, aggregate
+  metrics, provenance amendments, and checksums.
+- `fourlink_additional_batches/`: historical randomized batches retained for
+  provenance and secondary analyses.
+- `../results/four_link_three_expert_primary_2160/`: matched source rollouts and
+  direct-argmax learned-gate comparison.
+- `../results/four_link_phase_aware_primary_2160/`: phase-aware three-expert
+  reanalysis used for the manuscript summary figure.
 - `hold_vs_requery/`: portable single-factor runner, 2,160 paired trial
   records, sign-switch sequences, paired inference, and QA records.
 
 Run `python supplementary/S4/build_manifest.py` from the repository root to
 regenerate the scoped `MANIFEST.csv` and `CHECKSUMS.sha256`.
-
-The physical-touchdown diagnostic is not part of S4 and is not used in the
-manuscript.

@@ -3,6 +3,7 @@ from __future__ import annotations
 import csv
 import hashlib
 import json
+import re
 import subprocess
 import sys
 import tempfile
@@ -30,6 +31,7 @@ def read_csv(path: Path) -> list[dict[str, str]]:
 class SupplementaryS4Tests(unittest.TestCase):
     def test_compact_scope_and_portability(self) -> None:
         self.assertTrue((S4 / "README.md").is_file())
+        local_drive = re.compile(r"(?i)\b[a-z]:[\\/]")
         forbidden_parts = {
             "models",
             "formal_evaluator_snapshot.py",
@@ -42,15 +44,31 @@ class SupplementaryS4Tests(unittest.TestCase):
         for path in S4.rglob("*"):
             if path.suffix.lower() in {".md", ".py", ".json"} and path.is_file():
                 text = path.read_text(encoding="utf-8")
-                self.assertNotIn("D:\\L&S", text, path)
+                self.assertIsNone(local_drive.search(text), path)
                 self.assertNotIn("local-only", text.lower(), path)
                 self.assertNotIn("not synchronized to the manuscript", text.lower(), path)
+
+    def test_no_manuscript_renderers_or_generated_assets(self) -> None:
+        image_extensions = {".png", ".jpg", ".jpeg", ".tif", ".tiff", ".svg", ".pdf"}
+        for path in S4.rglob("*"):
+            if not path.is_file():
+                continue
+            relative = path.relative_to(S4).as_posix().lower()
+            if "__pycache__/" in relative:
+                continue
+            self.assertNotIn("plot_figure", relative, path)
+            self.assertNotIn("generated_figures/", relative, path)
+            self.assertNotEqual(path.suffix.lower(), ".pyc", path)
+            self.assertNotIn(path.suffix.lower(), image_extensions, path)
 
     def test_canonical_four_link_inputs_are_hash_pinned(self) -> None:
         expected = {
             "src/four_link/evaluation/"
-            "paper_four_link_reachability_cmt_v22_3_grid_true_action_mask.py":
-                "c13c0c45b092fc43aa75fc091e870a14e4d8b6730cda5b2b8659c21a2d2bb186",
+            "paper_four_link_three_expert_selector_evaluation.py":
+                "6f4d5717ade86c4906d7ea472c3a46c146d8041d1febd5028551ee4e57c0396c",
+            "models/four_link/three_expert_selector_v22_3/"
+            "V22_3_three_expert_selector.pth":
+                "d7f63ce349fda4f670a343f8b579f1512420616471d3ec4650e3c6c07105b954",
             "models/four_link/paper_four_link_passive_sign_selector_v22_3_grid.pth":
                 "99fdebbe1ecdccfdfd1d36902ff4dd6936712488065aa0e6cf5c8391b24979e1",
             "models/four_link/v22_3_v9_bi_400_grid/"

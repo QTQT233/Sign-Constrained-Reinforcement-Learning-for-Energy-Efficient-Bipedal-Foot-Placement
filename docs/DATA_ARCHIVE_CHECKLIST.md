@@ -8,33 +8,30 @@ The public records have separate roles:
   data/model artifacts and two hardware-feasibility videos;
 - Supplementary Archive S1: exhaustive MPC candidate tables, traces, logs, and
   replay evidence that are impractical or unnecessary to duplicate in Git.
-- Supplementary Data S2: the submission-supplied strict-\(D>0.01\) 12-cell
+- Supplementary Data S2: the journal-supplement strict-\(D>0.01\) 12-cell
   action-weight HDF5 package, schema, manifest, and checksums used for Table II;
   not included in Zenodo version 1.0.0.
 - Supplementary Data S3: the frozen ATC-50 lookup table, schema, portable
   event-query implementation, and checksums; the table artifact is in Zenodo
   version 1.0.0.
-- Supplementary Archive S4: landing-metric transition records, five
-  additional randomized four-link batches, and the hold-versus-requery
-  control, mirrored at the cited GitHub commit.
+- Supplementary Archive S4: landing-metric transition records, the primary
+  five-batch phase-aware three-expert confirmation, the direct-argmax
+  learned-gate 2,160-case comparison, its phase-aware Figure 7 reanalysis,
+  historical randomized batches, and the
+  hold-versus-requery control, mirrored at the cited GitHub commit.
 
-## GitHub release verification
+## GitHub version-of-record checks
 
-1. Merge the audited pull request into `main` without rewriting history.
-2. Record the immutable public commit in the manuscript and supplementary
-   README.
-3. Run the unit tests, MPC release validator, table-regeneration script, and
-   repository manifest/checksum audit.
-4. Confirm that portable executables, manifests, and public metadata contain no
-   workstation-absolute paths, credentials, or generated cache files. Original
-   source snapshots with path literals must be explicitly labeled as
-   provenance-only and must not be described as portable entry points.
-5. Keep `LICENSE`, `DATA_LICENSE.md`, `CITATION.cff`, and `NOTICE` synchronized.
-6. Confirm that no alternate plotting scripts, generated figure assets,
-   manuscript drafts, or superseded result tables are tracked.
-
-The immutable `main` commit cited by the manuscript is the software version of
-record.
+- The manuscript cites one immutable Git commit.
+- Unit tests, the MPC release validator, table-regeneration utilities, and the
+  repository manifest/checksum verifier cover the released numerical record.
+- Portable executables, manifests, and public metadata contain no credentials,
+  generated caches, or workstation-absolute paths. Provenance-only source
+  snapshots are identified separately from portable entry points.
+- `LICENSE`, `DATA_LICENSE.md`, `CITATION.cff`, and `NOTICE` describe the same
+  licensing and citation scope.
+- Dedicated manuscript-figure renderers, rendered manuscript assets,
+  manuscript source files, and superseded result tables are excluded.
 
 ## Zenodo version-1.0.0 record
 
@@ -46,7 +43,7 @@ record.
    (`Flat_walking.mp4` and `Ueven_foot_placement.mp4`).
 4. State Apache-2.0 for author-owned material and identify any third-party
    exceptions.
-5. Do not describe S1 or S4 as part of Zenodo version 1.0.0.
+5. Do not describe S1, strict S2, or S4 as part of Zenodo version 1.0.0.
 
 ## Supplementary Archive S1 contents
 
@@ -80,18 +77,21 @@ record.
 
 1. Include 144 transition-level landing records, current case/controller
    summaries, and the geometry/aggregation validator.
-2. Include the 10,800 additional randomized four-link matched trials and the
-   2,160-case hold-versus-requery control.
+2. Include the 10,800-case primary phase-aware three-expert matched record,
+   the direct-argmax learned-gate 2,160-case comparison, the phase-aware
+   Figure 7 reanalysis, historical randomized batches, and the 2,160-case
+   hold-versus-requery control.
 3. Include a scoped manifest and checksums, and verify the compact GitHub
    mirror against the journal supplement.
 4. State that S4 is not included in Zenodo version 1.0.0.
 
-## Limitations to disclose
+## Scope boundaries
 
-- Some historical Paper2 logs and source snapshots retain the deprecated
-  landing reporter as provenance; the manuscript metric is regenerated from
-  S4 transition records.
-- The two-link hardware lookup is event-updated and must not be described as a
-  transition-locked expert route.
-- A hardware success rate should not be inferred unless every attempted trial
-  and its outcome are represented in the archived evidence.
+- Historical Paper2 logs and source snapshots preserve the earlier landing
+  reporter as provenance; the manuscript metric is regenerated from S4
+  transition records.
+- The two-link hardware lookup is event-updated, whereas the simulation route
+  is transition-locked.
+- Hardware evidence establishes motion feasibility; no hardware success-rate
+  statistic is reported because the archive is not an attempt-complete trial
+  ledger.

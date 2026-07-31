@@ -7,25 +7,27 @@
 | Table III | hardware apparatus record and Zenodo hardware DOI | apparatus parameters only |
 | Table IV | primary two-link entry points, complete learned-controller recovery-grid records, and accepted MPC package | documents action generation, reset/recovery, metric, denominator, and source |
 | Table V | `results/paper2_push_off_grid_12case/`; `results/two_link_primary_12_cases.csv`; `results/paper2_current/`; `supplementary/S4/landing_metric/`; `analysis/synchronize_landing_metric_outputs.py`; `analysis/reproduce_paper2_tables.py` | 12 matched case/checkpoint outputs, four condition means, and pooled per-transition horizontal foot-placement MAE |
-| Table VI | `data/four_link/true_action_mask_scratch_c090_epoch1275/controller_summary.csv` | five principal fixed-checkpoint controller rows |
-| Table VII | current paired CSVs and `analysis/four_link_true_action_mask_paired_inference.py` | conditional both-valid comparisons under the shared V22_3/V9 evaluator |
+| Table VI | `supplementary/S4/five_batch_phase_aware_confirmation/manuscript_metrics/table_controller_summary.csv`; `supplementary/S4/five_batch_phase_aware_confirmation/results/controller_metrics_overall.csv` | primary 15-seed/10,800-case controller summary |
+| Table VII | `supplementary/S4/five_batch_phase_aware_confirmation/results/paired_metrics_overall.csv`; `supplementary/S4/five_batch_phase_aware_confirmation/results/final_confirmation_report.json` | primary matched success and common-valid `Cmt` comparisons |
+| Table VIII | `supplementary/S4/five_batch_phase_aware_confirmation/manuscript_metrics/five_batch_manuscript_metrics.json` | displacement-threshold sensitivity regenerated from the released 10,800-case matched record |
 | Appendix A | `configs/paper2_push_off_grid_12_cases.csv`; `results/paper2_push_off_grid_12case/`; `results/paper2_current/paper2_combined_cases.csv`; `supplementary/S4/landing_metric/`; accepted MPC records | selected recovery pairs, case-level values, pooled per-transition landing MAE, and descriptive two-link summaries |
-| Appendix B | `data/four_link/true_action_mask_scratch_c090_epoch1275/`; `supplementary/S4/fourlink_additional_batches/`; `supplementary/S4/hold_vs_requery/`; current statistical outputs | primary controller diagnostics, five additional randomized batches, and the frozen query-schedule control |
-| Supplementary Archive S4 | `supplementary/S4/` | compact repository mirror of the landing, 10,800-case, and hold-versus-requery evidence; duplicate canonical models, evaluator, and primary inputs are referenced by hash rather than copied |
+| Appendix B | `supplementary/S4/five_batch_phase_aware_confirmation/`; `results/four_link_three_expert_primary_2160/`; `results/four_link_phase_aware_primary_2160/`; `data/four_link/true_action_mask_scratch_c090_epoch1275/`; `supplementary/S4/fourlink_additional_batches/`; `supplementary/S4/hold_vs_requery/` | primary confirmation, matched 2,160-case comparison, historical controller records, and query-schedule control |
+| Supplementary Archive S4 | `supplementary/S4/`; `results/four_link_three_expert_primary_2160/`; `results/four_link_phase_aware_primary_2160/` | compact repository mirror of the landing, primary 10,800-case, matched 2,160-case, historical randomized-batch, and hold-versus-requery evidence |
 
 ## Figure boundary
 
 The public repository does not distribute manuscript figure-rendering scripts
 or image assets. Figure-level numerical values remain traceable as follows:
 
-- Figure 4: the same action-map records as Table I;
-- Figures 5–6: the two-link controller implementations and illustrated rollout
-  definitions in the manuscript;
-- Figures 7–8: the separate hardware evidence record;
-- Figure 9: a qualitative manuscript illustration of a four-link controller
-  comparison. It is not used to compute any reported statistic and is not
-  mapped to a specific archived evaluation row;
-- Figure 10: the current controller summary and paired four-link analysis.
+- Earlier conceptual, two-link, and hardware figures: manuscript captions and
+  the corresponding two-link implementations/Zenodo hardware record;
+- Figure 6: a qualitative manuscript illustration of a matched four-link
+  controller comparison; it is not used to compute a reported statistic;
+- Figure 7: `results/four_link_three_expert_primary_2160/` contains the matched
+  source-controller records and the other controller summaries;
+  `results/four_link_phase_aware_primary_2160/` contains the phase-aware
+  three-expert route assignments and summary values. The primary phase-aware
+  five-batch statistics are reported separately in Tables VI--VIII.
 
 Figure-rendering code and source images are outside the public numerical
 reproducibility record.
@@ -36,7 +38,9 @@ reproducibility record.
 |---|---|---|
 | Two-link simulation router | `src/two_link/offline_routing/transition_locked_router.py` and the case-level `Qi_multi_passive_sim.py` entry points | select an expert at transition onset and hold it to termination |
 | Two-link hardware lookup | `src/two_link/offline_lookup/atc50_event_lookup.py` and the frozen ATC-50 table in Supplementary Data S3 | query the 50^4 action table at approximately 1.8° directed stance-angle events |
-| Four-link online selector | V22_3/V9 evaluator and selector checkpoint | select a one-sided expert at transition onset |
+| Four-link phase-aware three-expert router (primary) | `src/four_link/evaluation/paper_four_link_three_expert_selector_evaluation.py`; released 12--128--64--3 gate; `supplementary/S4/five_batch_phase_aware_confirmation/` | query the learned gate once, apply reset-phase confidence thresholds, use Active PPO when neither one-sided branch passes, and hold the selected expert |
+| Direct-argmax three-expert gate (secondary comparison) | same evaluator/gate and `results/four_link_three_expert_primary_2160/` | choose the largest of the positive/negative/active gate outputs once at transition onset |
+| Historical two-expert selector | released two-class selector checkpoint and `supplementary/S4/hold_vs_requery/` | choose a one-sided expert and hold or requery according to the diagnostic condition |
 | True hard mask | scratch true-mask training/evaluation sources | refresh the admissible hip-torque sign at each control step |
 
 ## Verified Table I partitions
@@ -45,6 +49,7 @@ reproducibility record.
 |---|---:|---:|
 | active PPO | 630,328 | 77.818% |
 | one-sided expert union | 582,861 | 71.958% |
+| proposed three-expert route | 679,147 | 83.845% |
 | intersection | 534,042 | 65.931% |
 | active only | 96,286 | 11.887% |
 | one-sided union only | 48,819 | 6.027% |

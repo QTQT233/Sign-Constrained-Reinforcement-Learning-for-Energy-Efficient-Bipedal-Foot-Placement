@@ -1,0 +1,17 @@
+{
+  "controller": "phase_aware_three_expert",
+  "n_all": 2160,
+  "n_success": 987,
+  "success_rate": 0.45694444444444443,
+  "success_ci95_low": 0.43603186456519794,
+  "success_ci95_high": 0.47800989702422503,
+  "n_valid_cmt": 492,
+  "valid_cmt_rate": 0.22777777777777777,
+  "valid_cmt_ci95_low": 0.21058340211338553,
+  "valid_cmt_ci95_high": 0.24593870341974047,
+  "mean_cmt_valid": 0.6809030264976478,
+  "median_cmt_valid": 0.13777945040677025,
+  "mean_support_knee_cmt_valid": 0.007783815784717854,
+  "mean_hip_cmt_valid": 0.5818663188415184,
+  "mean_swing_knee_cmt_valid": 0.09125289187141163
+}

@@ -1,8 +1,8 @@
-# Reducing Simulated Mechanical Transport Cost in Bipedal Foot Placement via Torque-Sign-Constrained Expert Routing
+# Energy-Efficient Bipedal Foot Placement via Torque-Sign-Constrained Expert Routing
 
-Reproducibility materials for *Reducing Simulated Mechanical Transport Cost in
-Bipedal Foot Placement via Torque-Sign-Constrained Expert Routing* by Qi Tao,
-Yiyou Liu, Amir Degani, and Mingyi Liu.
+Reproducibility materials for *Energy-Efficient Bipedal Foot Placement via
+Torque-Sign-Constrained Expert Routing* by Qi Tao, Yiyou Liu, Amir Degani,
+and Mingyi Liu.
 
 This repository contains the manuscript-facing simulation code,
 repository-hosted model checkpoints, numerical outputs, provenance records,
@@ -14,15 +14,19 @@ validators, and checksums.
   and portable transition-locked and ATC-50 lookup implementations. Table I is
   regenerated from the released 30^4 HDF5 maps by `analysis/reproduce_table1.py`;
   the older 10x30 map-generator snapshots are not part of this release.
-- `src/four_link/`: V22_3/V9 four-link training and the shared 2,160-case
-  evaluator, including the scratch-trained true per-step hard-action-mask PPO.
+- `src/four_link/`: V22_3/V9 four-link training, the shared evaluator, the
+  learned 12--128--64--3 three-expert gate, and the scratch-trained true
+  per-step hard-action-mask PPO.
 - `src/paper2/mpc/`: repository-relative continuous-torque MPC implementation,
   accepted 12-case results, and validator.
 - `src/paper2/push_off_grid/`: validator for the complete learned-controller
   recovery-grid record and its selected fixed-parameter replays.
-- `data/four_link/true_action_mask_scratch_c090_epoch1275/`: the current
-  controller-level and trial-level four-link archive used for Tables VI–VII and
-  Appendix B.
+- `data/four_link/true_action_mask_scratch_c090_epoch1275/`: the historical
+  controller-level and trial-level true-mask comparison archive.
+- `results/four_link_three_expert_primary_2160/`: the matched 2,160-case
+  source rollouts and direct-argmax learned-gate comparison.
+- `results/four_link_phase_aware_primary_2160/`: the phase-aware reanalysis
+  used for the three-expert entries in the four-link summary figure.
 - `results/paper2_current/`: the 72-row two-link comparison and the
   manuscript-facing Table IV–V summaries.
 - `results/paper2_mpc_unified_12case/`: accepted MPC cases, validation records,
@@ -32,7 +36,8 @@ validators, and checksums.
 - `results/four_link_statistics/true_action_mask_scratch_c090_epoch1275/`:
   paired fixed-checkpoint inference for the true-mask comparison.
 - `supplementary/S4/`: portable code and machine-readable records for the
-  landing metric, five additional randomized four-link batches, and the frozen
+  landing metric, the primary 15-seed/10,800-case phase-aware three-expert
+  confirmation, the historical randomized batches, and the frozen
   hold-versus-requery query-schedule control.
 - `analysis/`: non-simulation analysis, validation, and table-regeneration
   programs.
@@ -58,42 +63,48 @@ Four-link checkpoint loading and evaluation use
 `environment/requirements-four-link.txt`; the captured rerun environment and
 its provenance boundary are documented under `environment/`.
 
-## Four-link command-grid comparison
+## Four-link three-expert confirmation
 
-The current archive evaluates six fixed controller records on the shared
-V22_3/V9 command grid. The manuscript's five principal rows are active PPO,
-active-full, the scratch-trained true per-step hard mask, the online
-transition-persistent selector, and the offline oracle envelope. Each controller
-has 2,160 matched trials.
+The primary four-link controller uses the released 12--128--64--3 learned gate
+once at transition start. The gate receives the normalized initial state and
+command. Its positive and negative probabilities are compared with
+reset-phase-specific confidence thresholds; unrestricted Active PPO is the
+fallback when neither one-sided threshold passes. The selected expert is held
+to termination.
 
-Key values are:
+The primary confirmation contains five independently seeded batches, 15 seed
+streams, and 10,800 matched cases per controller. Every controller receives the
+same sampled initial state, endpoint command, direction, and reset phase.
+Frozen low-level checkpoints are unchanged.
 
-- active PPO: 975/2,160 successes (45.1%) and 458 valid-`Cmt` trials;
-- true hard mask: 946/2,160 successes (43.8%) and 430 valid-`Cmt` trials;
-- online selector: 964/2,160 successes (44.6%) and 480 valid-`Cmt` trials;
-- active versus selector: 419 both-valid pairs, mean `Cmt` 1.417 versus 0.371;
-- hard mask versus selector: 395 both-valid pairs, mean `Cmt` 1.303 versus
-  0.278, with the selector lower in 354/395 pairs.
+Key pooled results are:
 
-The true-mask and selector policies share the formal evaluator and principal
-reward coefficients. Their architecture, initialization, soft thresholds, and
-training structure are not identical, so their conditional `Cmt` difference is
-a method-level comparison rather than a one-factor estimate. The separate
-frozen hold-versus-requery control changes only query timing: transition-level
-holding increased success by 3.29 percentage points, while its paired
-conditional-`Cmt` interval included zero. The method-level `Cmt` difference
-therefore cannot be attributed to persistence alone.
+- phase-aware three-expert router: 5,247/10,800 successes (48.6%);
+- Active PPO: 5,229/10,800 successes (48.4%);
+- true hard mask: 5,030/10,800 successes (46.6%);
+- Active/proposed common-valid cases (n=2,539): mean `Cmt` 1.523 versus
+  0.795;
+- hard-mask/proposed common-valid cases (n=2,303): mean `Cmt` 1.411 versus
+  0.614.
 
-Regenerate the paired statistics:
+The separate 2,160-case archive provides the matched source rollouts for both a
+direct three-class-argmax comparison and the phase-aware reanalysis used in the
+summary figure. These values are reported separately from the primary
+five-batch confirmation. The two-expert selector remains an energy-focused
+baseline.
+
+The original frozen protocol omitted the three-expert gate from its hash
+dictionary even though the analyzer used and recorded it. The original
+protocol and result remain unchanged;
+`GATE_HASH_AMENDMENT_02.json` binds the gate checkpoint and documents the
+execution-time/portable analysis-source boundary without changing any route or
+reported statistic.
+
+Verify the released record:
 
 ```bash
-python analysis/four_link_true_action_mask_paired_inference.py
-```
-
-Verify the current archive and source/checkpoint hashes:
-
-```bash
-python -m unittest tests.test_true_action_mask_release -v
+python -m unittest tests.test_five_batch_phase_aware_release tests.test_figure7_phase_aware_release tests.test_s4_release -v
+python supplementary/S4/build_manifest.py --check
 ```
 
 ## Two-link 12-case comparison
@@ -163,8 +174,8 @@ interchangeable.
 ## Data and archive boundary
 
 - GitHub: current simulation code, model checkpoints, numerical outputs,
-  manifests, checksums, and validators. Cite the exact `main` commit used for
-  submission.
+  manifests, checksums, and validators. Cite the exact immutable Git commit
+  used for submission.
 - Zenodo DOI [10.5281/zenodo.21407986](https://doi.org/10.5281/zenodo.21407986):
   version-1.0.0 data/model artifacts and supplementary hardware videos. S1, the
   strict-\(D>0.01\) S2 package, and S4 are not part of this Zenodo version.
@@ -176,14 +187,16 @@ interchangeable.
   version 1.0.0, together with the schema and portable event-query
   implementation. No byte-for-byte regeneration claim is made for the
   historical table artifact.
-- Supplementary Archive S4: landing-metric records and validation, 10,800
-  additional four-link matched trials, and the 2,160-case frozen
+- Supplementary Archive S4: landing-metric records and validation, the primary
+  10,800-case phase-aware three-expert confirmation, historical randomized
+  batches, the direct-argmax 2,160-case diagnostic, and the frozen
   hold-versus-requery control. A compact copy is tracked under
   `supplementary/S4/` and is not part of Zenodo version 1.0.0.
 
 ## Release verification
 
 ```bash
+python -m unittest tests.test_five_batch_phase_aware_release tests.test_s4_release -v
 python -m unittest discover -s tests -v
 python src/paper2/push_off_grid/validate_release.py
 python src/paper2/mpc/validate_release.py

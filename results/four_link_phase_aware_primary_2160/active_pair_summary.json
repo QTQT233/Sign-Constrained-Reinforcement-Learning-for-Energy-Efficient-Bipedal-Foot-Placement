@@ -1,0 +1,12 @@
+{
+  "pair": "active_vs_phase_aware_three_expert",
+  "both_valid_n": 445,
+  "active_mean_cmt": 1.4439053285305607,
+  "proposed_mean_cmt": 0.641155848225239,
+  "proposed_lower_count": 231,
+  "proposed_lower_fraction": 0.5191011235955056,
+  "proposed_lower_ci95": [
+    0.47271474444286404,
+    0.5651605446283963
+  ]
+}
