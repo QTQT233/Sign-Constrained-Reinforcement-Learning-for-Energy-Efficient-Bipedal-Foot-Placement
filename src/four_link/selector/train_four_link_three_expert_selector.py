@@ -1,15 +1,15 @@
 """Train the transition-locked four-link positive/negative/active expert gate.
 
 The expensive positive- and negative-expert rollouts are reused from the
-released 75,600-candidate selector audit.  Initial normalized states are
-reconstructed exactly from the archived seed/episode/command sequence.  The
-script refuses to train unless this reconstruction reproduces the released
+frozen 75,600-candidate selector record. Initial normalized states are
+reconstructed exactly from the archived seed/episode/command sequence. The
+script refuses to train unless this reconstruction reproduces the frozen
 two-class selector's validation accuracy.
 
 Routing labels follow the paper rule:
 
 * if only one sign-constrained expert succeeds, select that expert;
-* if both succeed, retain the released lower-Cmt label, resolving archived
+* if both succeed, retain the frozen lower-Cmt label, resolving archived
   Cmt ties by the lower Cmt and no-valid-Cmt ties by progress then work;
 * if neither sign-constrained expert succeeds, select the frozen Active PPO
   expert.

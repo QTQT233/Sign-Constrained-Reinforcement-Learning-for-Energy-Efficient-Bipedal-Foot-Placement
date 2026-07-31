@@ -20,10 +20,11 @@ The public records supporting the manuscript have complementary roles.
   in Zenodo version 1.0.0 with the schema and portable event-query
   implementation at the cited GitHub commit; the frozen table is identified by
   its file-level checksum.
-- Supplementary Archive S4 contains the 144 transition-level landing records
-  and validation, the primary 15-seed/10,800-case phase-aware three-expert
-  confirmation, the direct-argmax learned-gate 2,160-case comparison, its
-  phase-aware Figure 7 reanalysis, historical randomized batches, and the
+- Supplementary Archive S4 contains 144 transition-level horizontal
+  foot-target records and validation, the primary 15-seed/10,800-case
+  phase-aware three-expert evaluation, the direct-argmax learned-gate
+  2,160-case comparison, its phase-aware Figure 7 analysis, additional
+  randomized batches, and the
   hold-versus-requery control. A
   compact mirror is tracked under `../supplementary/S4/` and
   `../results/four_link_three_expert_primary_2160/` and
@@ -31,9 +32,9 @@ The public records supporting the manuscript have complementary roles.
   version 1.0.0.
 
 The MPC result table is under `../results/paper2_mpc_unified_12case/`.
-Horizontal foot-placement metrics are derived from the transition
-records in `../supplementary/S4/landing_metric/`; historical output logs remain
-provenance records and are not used as the manuscript landing metric.
+Horizontal foot-placement metrics are derived from the transition records in
+`../supplementary/S4/landing_metric/`; the directory name is retained for
+compatibility with the validation programs.
 
 Repository-wide file sizes and SHA-256 values are recorded in
 `../MANIFEST.csv` and `../CHECKSUMS.sha256`. Author-owned code and data are

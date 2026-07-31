@@ -23,10 +23,10 @@ The journal supplementary files have the following scope:
 - S3: frozen ATC-50 table and checksums from Zenodo version 1.0.0, together
   with the schema and portable event-query implementation at the cited GitHub
   commit.
-- S4: landing-metric transition records and validation, the primary
-  15-seed/10,800-case phase-aware three-expert confirmation, the direct-argmax
-  learned-gate 2,160-case comparison, its phase-aware Figure 7 reanalysis,
-  historical randomized batches, and the
+- S4: horizontal foot-target transition records and validation, the primary
+  15-seed/10,800-case phase-aware three-expert evaluation, the direct-argmax
+  learned-gate 2,160-case comparison, its phase-aware Figure 7 analysis,
+  additional randomized batches, and the
   hold-versus-requery control; mirrored under `supplementary/S4/` and
   `results/four_link_three_expert_primary_2160/` and
   `results/four_link_phase_aware_primary_2160/` at the cited GitHub commit and

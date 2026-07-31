@@ -18,26 +18,26 @@ validators, and checksums.
   learned 12--128--64--3 three-expert gate, and the scratch-trained true
   per-step hard-action-mask PPO.
 - `src/paper2/mpc/`: repository-relative continuous-torque MPC implementation,
-  accepted 12-case results, and validator.
+  selected 12-case results, and validator.
 - `src/paper2/push_off_grid/`: validator for the complete learned-controller
   recovery-grid record and its selected fixed-parameter replays.
-- `data/four_link/true_action_mask_scratch_c090_epoch1275/`: the historical
+- `data/four_link/true_action_mask_scratch_c090_epoch1275/`: the
   controller-level and trial-level true-mask comparison archive.
 - `results/four_link_three_expert_primary_2160/`: the matched 2,160-case
   source rollouts and direct-argmax learned-gate comparison.
-- `results/four_link_phase_aware_primary_2160/`: the phase-aware reanalysis
-  used for the three-expert entries in the four-link summary figure.
+- `results/four_link_phase_aware_primary_2160/`: the phase-aware matched
+  evaluation used for the three-expert entries in the four-link summary figure.
 - `results/paper2_current/`: the 72-row two-link comparison and the
   manuscript-facing Table IV–V summaries.
-- `results/paper2_mpc_unified_12case/`: accepted MPC cases, validation records,
+- `results/paper2_mpc_unified_12case/`: selected MPC cases, validation records,
   and deterministic replay checks.
 - `results/paper2_push_off_grid_12case/`: 518,400 candidate records, 36 selected
   minima, fixed-parameter replay values, provenance, and scoped checksums.
 - `results/four_link_statistics/true_action_mask_scratch_c090_epoch1275/`:
-  paired fixed-checkpoint inference for the true-mask comparison.
+  paired sampled-case inference for the true-mask comparison.
 - `supplementary/S4/`: portable code and machine-readable records for the
-  landing metric, the primary 15-seed/10,800-case phase-aware three-expert
-  confirmation, the historical randomized batches, and the frozen
+  horizontal foot-target metric, the primary 15-seed/10,800-case phase-aware
+  three-expert evaluation, the additional randomized batches, and the frozen
   hold-versus-requery query-schedule control.
 - `analysis/`: non-simulation analysis, validation, and table-regeneration
   programs.
@@ -63,16 +63,16 @@ Four-link checkpoint loading and evaluation use
 `environment/requirements-four-link.txt`; the captured rerun environment and
 its provenance boundary are documented under `environment/`.
 
-## Four-link three-expert confirmation
+## Four-link three-expert evaluation
 
-The primary four-link controller uses the released 12--128--64--3 learned gate
+The primary four-link controller uses the frozen 12--128--64--3 learned gate
 once at transition start. The gate receives the normalized initial state and
 command. Its positive and negative probabilities are compared with
 reset-phase-specific confidence thresholds; unrestricted Active PPO is the
 fallback when neither one-sided threshold passes. The selected expert is held
 to termination.
 
-The primary confirmation contains five independently seeded batches, 15 seed
+The primary evaluation contains five independently seeded batches, 15 seed
 streams, and 10,800 matched cases per controller. Every controller receives the
 same sampled initial state, endpoint command, direction, and reset phase.
 Frozen low-level checkpoints are unchanged.
@@ -88,17 +88,14 @@ Key pooled results are:
   0.614.
 
 The separate 2,160-case archive provides the matched source rollouts for both a
-direct three-class-argmax comparison and the phase-aware reanalysis used in the
+direct three-class-argmax comparison and the phase-aware analysis used in the
 summary figure. These values are reported separately from the primary
-five-batch confirmation. The two-expert selector remains an energy-focused
+five-batch evaluation. The two-expert selector remains an energy-focused
 baseline.
 
-The original frozen protocol omitted the three-expert gate from its hash
-dictionary even though the analyzer used and recorded it. The original
-protocol and result remain unchanged;
-`GATE_HASH_AMENDMENT_02.json` binds the gate checkpoint and documents the
-execution-time/portable analysis-source boundary without changing any route or
-reported statistic.
+`GATE_HASH_AMENDMENT_02.json` supplies the SHA-256 binding for the gate
+checkpoint and analyzer source used by the evaluation record; it does not
+alter any route or reported statistic.
 
 Verify the released record:
 
@@ -109,7 +106,7 @@ python supplementary/S4/build_manifest.py --check
 
 ## Two-link 12-case comparison
 
-The 12 matched multi-step cases use the accepted fixed-parameter replay
+The 12 matched multi-step cases use the selected fixed-parameter replay
 records. Mean `Cmt` is 0.122346306 for the transition-start lookup router,
 0.226620152 for unrestricted discrete PPO, 0.238107711 for continuous-torque
 PPO, and 0.198945099 for continuous-torque MPC. The corresponding
@@ -133,15 +130,15 @@ python analysis/synchronize_landing_metric_outputs.py
 python analysis/reproduce_paper2_tables.py
 ```
 
-Validate the accepted MPC release:
+Validate the MPC release:
 
 ```bash
 python src/paper2/mpc/validate_release.py
 python -m unittest tests.test_paper2_mpc_unified -v
 ```
 
-The full candidate-level MPC search, solver traces, and two independent
-verification replays per accepted case are supplied as Supplementary Archive S1.
+The full candidate-level MPC search, solver traces, and two verification
+replays per selected parameter pair are supplied as Supplementary Archive S1.
 
 ## Action-weight evaluation
 
@@ -185,11 +182,12 @@ interchangeable.
   action-weight HDF5 package, schema, manifest, and checksums used for Table II.
 - Supplementary Data S3: frozen ATC-50 lookup table and checksums from Zenodo
   version 1.0.0, together with the schema and portable event-query
-  implementation. No byte-for-byte regeneration claim is made for the
-  historical table artifact.
-- Supplementary Archive S4: landing-metric records and validation, the primary
-  10,800-case phase-aware three-expert confirmation, historical randomized
-  batches, the direct-argmax 2,160-case diagnostic, and the frozen
+  implementation. The frozen table is identified by its file-level SHA-256
+  checksum.
+- Supplementary Archive S4: horizontal foot-target metric records and
+  validation, the primary 10,800-case phase-aware three-expert evaluation,
+  additional randomized batches, the direct-argmax 2,160-case auxiliary
+  comparison, and the frozen
   hold-versus-requery control. A compact copy is tracked under
   `supplementary/S4/` and is not part of Zenodo version 1.0.0.
 

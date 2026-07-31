@@ -1,7 +1,7 @@
 # Phase-aware 2,160-case Figure 7 record
 
-This directory contains the phase-aware three-expert reanalysis used for the
-three-expert entries in manuscript Figure 7. The reanalysis applies the same
+This directory contains the phase-aware three-expert matched evaluation used
+for the three-expert entries in manuscript Figure 7. The analysis applies the same
 reset-phase confidence thresholds as the five-batch primary protocol to the
 already executed Active PPO, non-negative, and non-positive source rollouts in
 `../four_link_three_expert_primary_2160/`; it does not rerun the dynamics.

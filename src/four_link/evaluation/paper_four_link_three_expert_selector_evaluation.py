@@ -5,12 +5,13 @@ script at runtime, so the paper evaluation is not silently affected when a
 training file changes. All parameters that are likely to be edited for a paper
 comparison are collected in the first block below.
 
-The evaluator preserves the archived V22_3 touchdown gate used by the fixed
-four-link comparison.  It writes only to a new repository-local scratch
+The evaluator preserves the V22_3 endpoint-target gate used by the fixed
+four-link comparison; ``touchdown`` remains the internal name of its
+terminal-approach phase. It writes only to a new repository-local scratch
 directory unless ``--output-dir`` is supplied, and refuses to overwrite a
-    non-empty directory.  The learned gate chooses exactly one frozen expert
-    (positive, negative, or Active PPO) at transition onset and holds that
-    choice until termination.
+non-empty directory. The learned gate chooses exactly one frozen expert
+(positive, negative, or Active PPO) at transition onset and holds that choice
+until termination.
 """
 
 import argparse
