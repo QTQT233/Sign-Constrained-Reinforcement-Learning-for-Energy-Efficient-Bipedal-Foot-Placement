@@ -5,7 +5,10 @@ from __future__ import annotations
 import csv
 import gzip
 import hashlib
+import importlib.util
 import json
+import re
+import sys
 import unittest
 from collections import Counter
 from pathlib import Path
@@ -27,6 +30,19 @@ def sha256(path: Path) -> str:
         for block in iter(lambda: handle.read(1024 * 1024), b""):
             digest.update(block)
     return digest.hexdigest()
+
+
+def load_module(path: Path, name: str):
+    spec = importlib.util.spec_from_file_location(name, path)
+    if spec is None or spec.loader is None:
+        raise RuntimeError(f"Cannot import {path}")
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[name] = module
+    try:
+        spec.loader.exec_module(module)
+    finally:
+        sys.modules.pop(name, None)
+    return module
 
 
 class FiveBatchPhaseAwareReleaseTests(unittest.TestCase):
@@ -150,6 +166,59 @@ class FiveBatchPhaseAwareReleaseTests(unittest.TestCase):
             expected[relative] = digest
         for relative, digest in expected.items():
             self.assertEqual(sha256(RESULTS / relative), digest)
+
+    def test_public_entrypoints_resolve_repository_root(self) -> None:
+        code = BUNDLE / "code"
+        modules = {
+            "analysis": load_module(
+                code / "analyze_confirmation.py",
+                "_five_batch_analysis_path_test",
+            ),
+            "route": load_module(
+                code / "run_route_bank_seed.py",
+                "_five_batch_route_path_test",
+            ),
+            "hard": load_module(
+                code / "replay_hard_mask.py",
+                "_five_batch_hard_path_test",
+            ),
+        }
+        self.assertEqual(modules["analysis"].REPO_ROOT, ROOT)
+        self.assertEqual(modules["route"].REPO_ROOT, ROOT)
+        self.assertEqual(modules["hard"].REPO, ROOT)
+        for module in modules.values():
+            self.assertEqual(module.EVALUATOR_PATH.parents[3], ROOT)
+            self.assertTrue(module.EVALUATOR_PATH.is_file())
+
+    def test_published_readmes_have_no_local_drive_paths(self) -> None:
+        local_drive = re.compile(r"(?i)\b[a-z]:[\\/]")
+        for path in BUNDLE.rglob("README.md"):
+            contents = path.read_text(encoding="utf-8")
+            self.assertIsNone(
+                local_drive.search(contents),
+                f"Local absolute path in {path.relative_to(ROOT)}",
+            )
+
+    def test_five_batch_dependency_inventory(self) -> None:
+        requirements = (
+            ROOT / "environment" / "requirements-five-batch.txt"
+        ).read_text(encoding="utf-8").splitlines()
+        self.assertEqual(
+            {line.strip() for line in requirements if line.strip()},
+            {
+                "numpy==1.26.4",
+                "pandas==2.3.0",
+                "scipy==1.13.1",
+                "torch==2.7.0",
+                "tqdm==4.67.1",
+                "matplotlib==3.9.2",
+            },
+        )
+        readme = (BUNDLE / "README.md").read_text(encoding="utf-8")
+        self.assertIn(
+            "environment/requirements-five-batch.txt",
+            readme,
+        )
 
 
 if __name__ == "__main__":

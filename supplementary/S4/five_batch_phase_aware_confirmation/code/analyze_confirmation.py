@@ -5,7 +5,7 @@ and hard-mask replays, reconstructs the frozen phase-aware three-expert route,
 and writes new files only below ``analysis_final``.
 
 Run:
-    python analyze_frozen_five_batch_final.py
+    python supplementary/S4/five_batch_phase_aware_confirmation/code/analyze_confirmation.py
 """
 
 from __future__ import annotations
@@ -34,7 +34,7 @@ ROOT = HERE.parent
 RAW = ROOT / "raw"
 PROTOCOL_PATH = ROOT / "protocol.json"
 OUTPUT = ROOT / "reproduced_results"
-REPO_ROOT = HERE.parents[4]
+REPO_ROOT = HERE.parents[3]
 EVALUATOR_PATH = (
     REPO_ROOT
     / "src"

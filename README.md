@@ -15,13 +15,12 @@ and checksums.
   source-aligned Table I and executable Active-default route are regenerated
   from the released \(30^4\) HDF5 maps by
   `analysis/reproduce_table1_active_fallback.py`.
-- `src/four_link/`: V22_3/V9 four-link training and the shared 2,160-case
+- `src/four_link/`: V22_3/V9 four-link training and the shared matched-case
   evaluator, including the scratch-trained true per-step hard-action-mask PPO.
 - `src/paper2/mpc/`: repository-relative continuous-torque MPC implementation,
   accepted 12-case results, and validator.
-- `data/four_link/true_action_mask_scratch_c090_epoch1275/`: the current
-  controller-level and trial-level four-link archive used for Tables VI–VII and
-  Appendix B.
+- `data/four_link/true_action_mask_scratch_c090_epoch1275/`: the released
+  controller-level and trial-level hard-mask source archive.
 - `results/paper2_current/`: the current 72-row two-link comparison and the
   manuscript-facing Table IV–V summaries.
 - `results/two_link_active_fallback_fixed12/`: the fixed 12-case
@@ -31,14 +30,18 @@ and checksums.
 - `results/four_link_statistics/true_action_mask_scratch_c090_epoch1275/`:
   paired fixed-checkpoint inference for the true-mask comparison.
 - `results/four_link_active_default_confirmation/`: three held-out seed
-  streams, pooled matched trials, and regenerated Active-default confidence
-  selector statistics.
+  streams from the threshold-development-era Active-default experiment; these
+  records are not pooled with the primary confirmation.
+- `supplementary/S4/five_batch_phase_aware_confirmation/`: the primary
+  five-batch, 15-seed, 10,800-case phase-aware three-expert confirmation,
+  including the frozen protocol, matched records, analysis and Figure 10 code,
+  manuscript table inputs, and checksums.
 - `analysis/`: read-only numerical analysis and table-regeneration programs.
 - `docs/`: protocol, metric, provenance, availability, and submission records.
 
-Manuscript figure-rendering scripts and image assets are not part of this
-numerical reproducibility repository. All numerical values plotted in the
-manuscript remain traceable to the CSV and JSON records above.
+Figure 10 regeneration is included with the five-batch record because the
+figure is a direct visualization of released numerical results. Other
+manuscript illustration assets are outside this numerical repository.
 
 ## Environment
 
@@ -55,82 +58,50 @@ Four-link checkpoint loading and evaluation use
 `environment/requirements-four-link.txt`; the captured rerun environment and
 its provenance boundary are documented under `environment/`.
 
-## Four-link command-grid evidence
+## Four-link five-batch confirmation
 
-The primary two-expert archive evaluates six fixed controller records on the shared
-V22_3/V9 command grid. The manuscript's five principal rows are active PPO,
-active-full, the scratch-trained true per-step hard mask, the online
-transition-persistent selector, and the offline oracle envelope. Each controller
-has 2,160 matched trials.
+The manuscript's primary four-link result uses five independently seeded
+batches, 15 evaluation seed streams, and 10,800 matched trials per controller
+on the shared V22_3/V9 command grid. The low-level checkpoints remain frozen.
+The proposed router queries its three source experts once at transition start:
+it gives priority to an eligible one-sided expert and uses unrestricted Active
+PPO when neither one-sided branch is eligible.
 
-Key values are:
+Key pooled values are:
 
-- active PPO: 975/2,160 successes (45.1%) and 458 valid-`Cmt` trials;
-- true hard mask: 946/2,160 successes (43.8%) and 430 valid-`Cmt` trials;
-- online selector: 964/2,160 successes (44.6%) and 480 valid-`Cmt` trials;
-- active versus selector: 419 both-valid pairs, mean `Cmt` 1.417 versus 0.371;
-- hard mask versus selector: 395 both-valid pairs, mean `Cmt` 1.303 versus
-  0.278, with the selector lower in 354/395 pairs.
+- proposed three-expert selector: 5,247/10,800 successes (48.6%);
+- Active PPO: 5,229/10,800 successes (48.4%);
+- hard mask: 5,030/10,800 successes (46.6%);
+- Active versus proposed, 2,539 common-valid pairs: mean `Cmt` 1.523 versus
+  0.795, a 47.8% ratio-of-means reduction;
+- hard mask versus proposed, 2,303 common-valid pairs: mean `Cmt` 1.411 versus
+  0.614, a 56.4% ratio-of-means reduction.
 
-The true-mask and selector policies share the formal evaluator and principal
-reward coefficients. Their architecture, initialization, soft thresholds, and
-training structure are not identical. The comparison is therefore reported as
-a method-level ablation: under the evaluated configuration, transition-level
-sign persistence is the component associated with the lower conditional `Cmt`.
+The proposed-minus-Active success difference was +0.167 percentage points.
+Its prespecified one-sided 95% lower confidence bound was -0.120 percentage
+points, above the -1-point success-preservation margin. Relative to the hard
+mask, the proposed selector increased success by 2.009 percentage points.
 
-A separate Active-default confidence selector retains the same three frozen
-low-level experts and queries the learned three-class gate once per transition.
-Active PPO is the default; the non-negative and non-positive experts are
-released at gate probabilities 0.86 and 0.54, respectively. These thresholds
-were selected on development data. On three previously unused evaluation seeds
-(2,160 matched trials per controller), Active PPO and the selector achieved
-1,061 and 1,063 successes. Among 509 common-valid pairs, mean `Cmt` was
-1.504244 and 0.668832, respectively; the paired selector-minus-Active
-difference was -0.835412 (stratified-bootstrap 95% CI, -1.064327 to
--0.631652).
-
-Regenerate the confidence-selector statistics:
+Regenerate the complete confirmation from the repository root:
 
 ```bash
-python analysis/four_link_active_default_confidence_statistics.py
+python supplementary/S4/five_batch_phase_aware_confirmation/code/run_five_batches_parallel.py route --max-workers 3
+python supplementary/S4/five_batch_phase_aware_confirmation/code/run_five_batches_parallel.py hard --max-workers 5
+python supplementary/S4/five_batch_phase_aware_confirmation/code/analyze_confirmation.py
+python supplementary/S4/five_batch_phase_aware_confirmation/code/build_manuscript_metrics.py
+python supplementary/S4/five_batch_phase_aware_confirmation/code/plot_figure10.py --dpi 400
 ```
 
-Run a fresh confirmation:
+Audit the released numerical record without rerunning the simulations:
 
 ```bash
-python src/four_link/evaluation/run_active_default_confidence_confirmation.py \
-  --output-dir results/_scratch/active_default_confirmation
+python -m unittest tests.test_five_batch_phase_aware_release tests.test_s4_release -v
+python supplementary/S4/build_manifest.py --check
 ```
 
-The released selector was trained from 17,524 labels and validated on 2,880
-labels drawn from 75,600 candidate transitions. Label generation is
-success-first; when both one-sided experts succeed, valid `Cmt` requires at
-least one nonzero-torque step and signed COM displacement greater than 0.006 m,
-and differences below 0.01 are omitted as ties. The released checkpoint has
-86.5% validation accuracy. Formal controller evaluation separately uses the
-shared 0.001 m valid-`Cmt` threshold.
-
-The active-versus-selector displacement-threshold sensitivity table is
-regenerated by:
-
-```bash
-python analysis/four_link_paired_inference.py \
-  --paired data/four_link/true_action_mask_scratch_c090_epoch1275/paired_trials.csv \
-  --terminal data/four_link/true_action_mask_scratch_c090_epoch1275/terminal_reason_summary.csv \
-  --output results/four_link_statistics/active_vs_selector
-```
-
-Regenerate the paired statistics:
-
-```bash
-python analysis/four_link_true_action_mask_paired_inference.py
-```
-
-Verify the current archive and source/checkpoint hashes:
-
-```bash
-python -m unittest tests.test_true_action_mask_release -v
-```
+The earlier 2,160-case Active-default and transition-persistent records remain
+available for provenance and the independent hold-versus-requery
+query-schedule control. They are not pooled with the five-batch confirmation.
 
 ## Two-link 12-case comparison
 

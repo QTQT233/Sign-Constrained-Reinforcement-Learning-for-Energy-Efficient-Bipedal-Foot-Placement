@@ -39,9 +39,11 @@ with NumPy, pandas, SciPy, PyTorch, and Matplotlib.
 
 ## Full rerun
 
-From the repository root:
+Install the pinned evaluation and plotting dependencies, then run from the
+repository root:
 
 ```bash
+python -m pip install -r environment/requirements-five-batch.txt
 python supplementary/S4/five_batch_phase_aware_confirmation/code/run_five_batches_parallel.py route --max-workers 3
 python supplementary/S4/five_batch_phase_aware_confirmation/code/run_five_batches_parallel.py hard --max-workers 5
 python supplementary/S4/five_batch_phase_aware_confirmation/code/analyze_confirmation.py

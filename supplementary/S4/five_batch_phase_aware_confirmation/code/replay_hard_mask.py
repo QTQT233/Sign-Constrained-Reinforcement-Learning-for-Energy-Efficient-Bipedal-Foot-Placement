@@ -16,7 +16,7 @@ import torch
 
 
 HERE = Path(__file__).resolve().parent
-REPO = HERE.parents[4]
+REPO = HERE.parents[3]
 EVALUATOR_PATH = (
     REPO
     / "src"

@@ -1,9 +1,10 @@
 # Frozen five-batch final analysis
 
-This directory was produced by:
+This directory can be regenerated from the repository root after the route
+banks and hard-mask replays have been generated:
 
 ```
-D:\L-Environment\Anaconda3\envs\Pytorch\python.exe C:\Users\Admin\Documents\Review\four_link_phase_aware_five_batch_20260730\code\analyze_frozen_five_batch_final.py
+python supplementary/S4/five_batch_phase_aware_confirmation/code/analyze_confirmation.py
 ```
 
 - Matched cases per controller: 10,800

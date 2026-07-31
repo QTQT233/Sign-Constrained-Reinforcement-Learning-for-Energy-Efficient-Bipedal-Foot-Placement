@@ -21,7 +21,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 BUNDLE_ROOT = HERE.parent
-REPO_ROOT = HERE.parents[4]
+REPO_ROOT = HERE.parents[3]
 EVALUATOR_PATH = (
     REPO_ROOT
     / "src"
